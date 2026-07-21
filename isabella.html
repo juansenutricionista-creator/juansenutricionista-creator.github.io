@@ -225,10 +225,10 @@ const JSMO_NOTE={
 };
 
 const DAYS={
-  entreno:{kcal:'1.750',macros:{CHO:'200g',PRO:'115g',GRS:'52g'},proG:115,
-    note:'Dia de entrenamiento funcional: carbohidratos en su punto para el rendimiento. Pre-entreno a las 5pm obligatorio — no llegues al gym con el tanque vacio. Hidrata desde la manana (minimo 2 litros). Post-gym: la cena sencilla y reconfortante es suficiente para recuperarte.'},
-  descanso:{kcal:'1.550',macros:{CHO:'158g',PRO:'105g',GRS:'51g'},proG:105,
-    note:'Dia de descanso: carbohidratos moderados, proteina sostenida para preservar el musculo que ganaste. Dia perfecto para hidratarte bien y dejar recuperar el cuerpo. Myo-inositol + magnesio glicinato esta noche antes de dormir. Si tenes tiempo, prepara proteinas para los dias de gym.'}
+  entreno:{kcal:'1.850',macros:{CHO:'220g',PRO:'125g',GRS:'57g'},proG:125,
+    note:'Dia de entrenamiento funcional: 5 tomas para sostener energia todo el dia. La media manana a las 11am es nueva — respetala. Pre-entreno a las 5pm obligatorio — no llegues al gym con el tanque vacio. Hidrata desde la manana (minimo 2 litros). Post-gym: la cena sencilla y reconfortante es suficiente.'},
+  descanso:{kcal:'1.600',macros:{CHO:'180g',PRO:'110g',GRS:'52g'},proG:110,
+    note:'Dia de descanso: 4 tomas (sin pre-entreno). Carbohidratos moderados, proteina sostenida para preservar el musculo que ganaste. Dia perfecto para hidratarte bien y dejar recuperar el cuerpo. Myo-inositol + magnesio glicinato esta noche antes de dormir.'}
 };
 
 const MEALS=[
@@ -246,6 +246,20 @@ const MEALS=[
     {n:'Bowl de huevo y tostadas',s:'sencillo y efectivo',
      i:['2 claras + 1 huevo entero cocidos en rodajas','1 tajada jamon de pollo D1','2 tostadas maiz inflado Natri con tomates cherry','1/2 banano pequeno al lado']}
    ]},
+  {id:'tmm',variant:false,
+   lbl:'MED.MAÑ.',title:'Media Mañana',
+   time:'11:00-11:30 am · snack de media manana',
+   macros:{CHO:'20g',PRO:'10g',GRS:'5g',kcal:'~160'},proG:10,
+   opts:[
+    {n:'Yogurt con fruta',s:'probiotico extra + antioxidantes',
+     i:['5 cdas yogurt griego Alimentos Yen, Alpina o Vital Latti','7-9 fresas frescas o 1 punado de arandanos','6 almendras']},
+    {n:'Fruta con mantequilla de almendras',s:'fibra + grasa saludable · sin coccion',
+     i:['1 manzana verde o pera mediana','1 cda mantequilla de almendras o mani natural','Agua o te sin azucar']},
+    {n:'Tostadas ligeras con jamon',s:'rapido y practico',
+     i:['3 tostadas maiz inflado Natri','1 tajada de jamon de pollo D1 o Pietran','Tomates cherry al lado']},
+    {n:'Banano + almendras',s:'lo mas simple que hay',
+     i:['1 banano pequeno maduro','6 almendras','1 vaso de agua']}
+   ]},
   {id:'t2',variant:false,
    lbl:'ALMUERZO',title:'Almuerzo',
    time:'1:00-1:30 pm · comida principal del dia',
@@ -261,7 +275,7 @@ const MEALS=[
     {n:'Atun rapido',s:'sin mucha coccion',
      i:['1 lata atun en agua + tomate en cubos + cebolla morada + cilantro + limon','7 cdas arroz integral (entreno) / 5-6 cdas (descanso)','Ensalada abundante','1/4 aguacate']}
    ]},
-  {id:'t3',variant:true,
+  {id:'t3',variant:true,entOnly:true,
    e:{lbl:'PRE',title:'Pre-Entreno',
       time:'5:00 pm · 1 hora antes del entreno · NO saltarlo',
       macros:{CHO:'40g',PRO:'15g',GRS:'5g',kcal:'~265'},proG:15,
@@ -342,13 +356,14 @@ function pill(k,v,sm){
 }
 function getMdata(m){
   if(!m.variant) return m;
+  if(m.entOnly && day==='descanso') return null;
   return day==='entreno' ? m.e : m.d;
 }
 function getAccPro(){
   var t=0;
   MEALS.forEach(function(m){
     var mdata=getMdata(m);
-    if(checkedMeals.has(m.id)) t+=mdata.proG;
+    if(mdata && checkedMeals.has(m.id)) t+=mdata.proG;
   });
   return t;
 }
@@ -402,8 +417,9 @@ function renderPlate(){
 function renderMeals(){
   document.getElementById('meals').innerHTML=MEALS.map(function(m){
     var mdata=getMdata(m);
+    if(mdata===null) return '';
     var open=expanded.has(m.id), sel=selOpts[m.id]||0, done=checkedMeals.has(m.id);
-    var isColac=m.variant && day==='descanso';
+    var isColac=false;
     var macroHtml=Object.entries(mdata.macros).map(function(e){return pill(e[0],e[1],true);}).join('');
     var optTabs=mdata.opts.map(function(o,i){return '<button class="otab '+(i===sel?'active':'')+'" onclick="selOpt(\''+m.id+'\','+i+');event.stopPropagation()">Op '+(i+1)+'</button>';}).join('');
     var optContents=mdata.opts.map(function(o,i){
