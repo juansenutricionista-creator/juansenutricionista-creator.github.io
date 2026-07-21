@@ -136,7 +136,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Ar
     <span class="hdr-date" id="hdr-date"></span>
   </div>
   <div class="pname">Isabella Cruz</div>
-  <div class="pstats">27 anos · 55,9 kg · 158,6 cm · CrossFit Funcional 3-4x / semana</div>
+  <div class="pstats">27 anos · 55,9 kg · 158,6 cm · Entrenamiento Funcional 3-4x / semana</div>
   <span class="objetivo">Recomposicion Corporal · Σ6 Pliegues ↓ · Musculo: Mantener</span>
   <div class="day-tabs">
     <button class="dtab" onclick="setDayType('entreno')" id="tab-entreno"><span class="icon">&#128170;</span>Entrenamiento<div class="kcals">~1.750 kcal</div></button>
@@ -163,7 +163,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Ar
     <div class="obj-card"><div class="obj-label">Masa muscular</div><div class="obj-val">21,02 kg</div><div class="obj-arrow">&#8594; mantener &#8805;21 kg</div></div>
     <div class="obj-card"><div class="obj-label">% Masa grasa</div><div class="obj-val">16,74%</div><div class="obj-arrow">&#8594; &lt;15%</div></div>
     <div class="obj-card"><div class="obj-label">Suma 6 pliegues</div><div class="obj-val">85,0 mm</div><div class="obj-arrow">&#8594; &lt;78 mm</div></div>
-    <div class="obj-card"><div class="obj-label">Indice adi/muscular</div><div class="obj-val">0,82</div><div class="obj-arrow">&#8594; 0,70</div></div>
+    <div class="obj-card"><div class="obj-label">IMO (musculo/oseo)</div><div class="obj-val">2,42</div><div class="obj-arrow">&#8594; &#8805;2,78 Alto</div></div>
   </div>
 
   <!-- JSMO NOTE -->
@@ -198,7 +198,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Ar
   <div class="sec-title">S U P L E M E N T A C I O N</div>
   <div class="scard"><div class="sdot"></div><div><div class="sname">Probiotico (Jarrow Dophilus o Enteroplex)</div><div class="sdose">5-10 bill. UFC · cada manana · NO es opcional</div><div class="swhen">&#8594; En ayunas, 20 min antes del desayuno · dejalo visible en la cocina</div><div class="swhy">SII + estrenimiento cronico · minimo 8 semanas continuas para ver el efecto</div></div></div>
   <div class="scard"><div class="sdot" style="background:var(--green)"></div><div><div class="sname">Myo-Inositol</div><div class="sdose">2 g con desayuno + 2 g con cena</div><div class="swhen">&#8594; Con las comidas</div><div class="swhy">SOP activo desde los 15 anos · mejora sensibilidad a insulina, ciclo menstrual y cravings</div></div></div>
-  <div class="scard"><div class="sdot" style="background:#8E44AD"></div><div><div class="sname">Magnesio Glicinato</div><div class="sdose">300-400 mg · antes de dormir</div><div class="swhen">&#8594; Ultimo suplemento del dia</div><div class="swhy">Sueno · SOP · motilidad intestinal · recuperacion muscular post-CrossFit</div></div></div>
+  <div class="scard"><div class="sdot" style="background:#8E44AD"></div><div><div class="sname">Magnesio Glicinato</div><div class="sdose">300-400 mg · antes de dormir</div><div class="swhen">&#8594; Ultimo suplemento del dia</div><div class="swhy">Sueno · SOP · motilidad intestinal · recuperacion muscular post-entreno</div></div></div>
   <div class="scard"><div class="sdot" style="background:#1A5276"></div><div><div class="sname">Omega-3 EPA+DHA</div><div class="sdose">2 g / dia</div><div class="swhen">&#8594; Con el almuerzo</div><div class="swhy">Inflamacion del SII · SOP · recuperacion post-entreno · pendiente desde control anterior</div></div></div>
   <div class="scard"><div class="sdot" style="background:#D4AC0D"></div><div><div class="sname">Vitamina D3 + K2</div><div class="sdose">2.000 UI D3 / dia</div><div class="swhen">&#8594; Con el desayuno</div><div class="swhy">SOP (deficiencia muy prevalente) · funcion ovarica · animo y energia general</div></div></div>
   <div class="scard"><div class="sdot" style="background:#717D7E"></div><div><div class="sname">Creatina</div><div class="sdose">5 g / dia · sin ciclar</div><div class="swhen">&#8594; Con cualquier comida · post-entreno preferible</div><div class="swhy">Rendimiento funcional · preservacion muscular en deficit · ya la tenes</div></div></div>
@@ -220,13 +220,13 @@ const WATER_GOAL=8;
 const WATER_MSGS=['Primer vaso! Arrancamos Isa','Sigue asi, va bien!','Buen ritmo de hidratacion','Ya vas a la mitad','Excelente! El intestino te lo agradece','Faltan solo 2 vasos','Un vaso mas!','Meta cumplida! Eso es todo!'];
 
 const JSMO_NOTE={
-  msg:'Isabella, nuevo ciclo y nueva energia funcional! El cambio mas importante de este plan: el pre-entreno a las 5pm — no llegues al CrossFit con el tanque vacio, eso explica los cravings de dulce despues del gym. Los probioticos esta vez son parte del protocolo, tan obligatorios como el desayuno: ponlos visibles en la cocina. El arroz con huevo o la sopita de fideos en la cena son tus aliados cuando llegues sin energia a cocinar. Todo suma.',
+  msg:'Isabella, nuevo ciclo y nueva energia funcional! El cambio mas importante de este plan: el pre-entreno a las 5pm — no llegues al entreno con el tanque vacio, eso explica los cravings de dulce despues del gym. Los probioticos esta vez son parte del protocolo, tan obligatorios como el desayuno: ponlos visibles en la cocina. El arroz con huevo o la sopa de tomate en la cena son tus aliados cuando llegues sin energia a cocinar. Todo suma.',
   week:'Semana del 21 de julio 2026'
 };
 
 const DAYS={
   entreno:{kcal:'1.750',macros:{CHO:'200g',PRO:'115g',GRS:'52g'},proG:115,
-    note:'Dia de CrossFit: carbohidratos en su punto para el rendimiento funcional. Pre-entreno a las 5pm obligatorio — no llegues al gym con el tanque vacio. Hidrata desde la manana (minimo 2 litros). Post-gym: la cena sencilla y reconfortante es suficiente para recuperarte.'},
+    note:'Dia de entrenamiento funcional: carbohidratos en su punto para el rendimiento. Pre-entreno a las 5pm obligatorio — no llegues al gym con el tanque vacio. Hidrata desde la manana (minimo 2 litros). Post-gym: la cena sencilla y reconfortante es suficiente para recuperarte.'},
   descanso:{kcal:'1.550',macros:{CHO:'158g',PRO:'105g',GRS:'51g'},proG:105,
     note:'Dia de descanso: carbohidratos moderados, proteina sostenida para preservar el musculo que ganaste. Dia perfecto para hidratarte bien y dejar recuperar el cuerpo. Myo-inositol + magnesio glicinato esta noche antes de dormir. Si tenes tiempo, prepara proteinas para los dias de gym.'}
 };
@@ -263,7 +263,7 @@ const MEALS=[
    ]},
   {id:'t3',variant:true,
    e:{lbl:'PRE',title:'Pre-Entreno',
-      time:'5:00 pm · 1 hora antes del CrossFit · NO saltarlo',
+      time:'5:00 pm · 1 hora antes del entreno · NO saltarlo',
       macros:{CHO:'40g',PRO:'15g',GRS:'5g',kcal:'~265'},proG:15,
       opts:[
        {n:'Clasico energetico',s:'combustible directo',
@@ -291,16 +291,16 @@ const MEALS=[
   },
   {id:'t4',variant:false,
    lbl:'CENA',title:'Cena',
-   time:'8:00-8:30 pm · post-CrossFit · comfort + proteina',
+   time:'8:00-8:30 pm · post-entreno · comfort + proteina',
    macros:{CHO:'40g',PRO:'30g',GRS:'15g',kcal:'~410'},proG:30,
-   tip:'Si llegate sin hambre: minimo Op.1 o Op.2, no te acuestes sin proteina. La sopita de fideos (Op.3) es perfecta si llegaste agotada: lista en 15 minutos.',
+   tip:'Si llegate sin hambre: minimo Op.1 o Op.2, no te acuestes sin proteina. La sopa de tomate (Op.3) es perfecta si llegaste agotada: lista en 15 minutos.',
    opts:[
     {n:'Arroz con huevo',s:'el comfort colombiano clasico',
      i:['2 claras + 1 huevo entero revueltos con tomate, cebolla y cilantro','7 cdas arroz integral','1/4 aguacate en rodajas','Chorrito de salsa de soya light (opcional)']},
     {n:'Arepa con pollo y guacamole',s:'street food saludable',
      i:['1 arepa de maiz blanco o de quinoa','120g pollo desmechado con ajo, comino y cilantro','Guacamole: 1/4 aguacate + tomate + cebolla + limon','Tomates cherry al lado']},
-    {n:'Sopita de fideos con pollo',s:'el maximo comfort · lista en 15 min',
-     i:['Caldo de pollo casero (pechuga o muslo sin piel)','50g fideos cabello de angel o pasta pequena','Zanahoria, cebolla, 1 papa pequena y cilantro','Pollo desmechado dentro del caldo']},
+    {n:'Sopa de tomate con pollo',s:'comfort cremoso · lista en 15 min',
+     i:['3-4 tomates maduros o 1 lata de tomate triturado (400g)','80g pollo desmechado cocido dentro de la sopa','Ajo, cebolla, curcuma y albahaca al gusto','1 cdita aceite de oliva · 1 tostada de pan masa madre para acompanar']},
     {n:'Bowl asiatico express',s:'sabor diferente · rapido',
      i:['7 cdas arroz integral','120g pollo en tiras con salsa de soya light, ajo y jengibre rallado','Zanahoria juliana y pepino en rodajas','Semillas de ajonjoli al gusto']}
    ]}
