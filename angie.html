@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan Nutricional · Angie Paola Díaz · JSMO</title>
+<style>
+:root {
+  --primary: #9333EA;
+  --primary-dark: #6D28D9;
+  --primary-light: #A855F7;
+  --cream: #FAF5FF;
+  --light: #F3E8FF;
+  --border: #E9D5FF;
+  --text: #3B0764;
+  --text-soft: #7C3AED;
+  --card: #FFFFFF;
+  --shadow: rgba(147,51,234,0.10);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+/* ── HEADER ── */
+.header {
+  background: linear-gradient(135deg, #4C1D95 0%, #7C3AED 55%, #A855F7 100%);
+  color: white;
+  padding: 30px 20px 26px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -50px; right: -50px;
+  width: 160px; height: 160px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: -40px;
+  width: 120px; height: 120px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 50%;
+}
+.jsmo-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 20px;
+  padding: 4px 16px;
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.header h1 {
+  font-size: 27px;
+  font-weight: 800;
+  margin-bottom: 4px;
+  position: relative; z-index: 1;
+  letter-spacing: -0.5px;
+}
+.header .sub {
+  font-size: 13px;
+  opacity: 0.80;
+  position: relative; z-index: 1;
+}
+.kcal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 20px;
+  padding: 6px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 14px;
+  position: relative; z-index: 1;
+}
+
+/* ── TRAINING BANNER ── */
+.training-banner {
+  background: linear-gradient(90deg, #3B0764, #5B21B6);
+  color: white;
+  padding: 11px 20px;
+  text-align: center;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: 0.2px;
+}
+
+/* ── SECTION LABEL ── */
+.sec-label {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: var(--text-soft);
+  font-weight: 700;
+  margin: 22px 16px 10px;
+  opacity: 0.85;
+}
+
+/* ── WATER ── */
+.water-wrap {
+  background: white;
+  margin: 16px 16px 0;
+  border-radius: 16px;
+  padding: 16px 18px;
+  box-shadow: 0 2px 14px var(--shadow);
+  border: 1px solid var(--border);
+}
+.water-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.water-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.water-count {
+  font-size: 13px;
+  color: var(--primary);
+  font-weight: 700;
+}
+.glasses {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.glass {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.18s;
+  background: white;
+  user-select: none;
+}
+.glass.on {
+  background: var(--light);
+  border-color: var(--primary);
+}
+.water-note {
+  font-size: 11px;
+  color: var(--text-soft);
+  margin-top: 8px;
+  opacity: 0.8;
+}
+.btn-sm {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 3px 10px;
+  font-size: 11px;
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-sm:hover { background: var(--light); }
+
+/* ── METAS ── */
+.metas-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 0 16px;
+}
+.meta-card {
+  background: white;
+  border-radius: 14px;
+  padding: 13px 14px;
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 8px var(--shadow);
+}
+.meta-lbl {
+  font-size: 9.5px;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+  opacity: 0.9;
+}
+.meta-val {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1;
+}
+.meta-unit {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-soft);
+}
+.meta-arr { font-size: 11px; color: var(--primary); margin: 4px 0 2px; }
+.meta-goal { font-size: 12px; font-weight: 700; color: var(--primary); }
+
+.lipo-note {
+  margin: 8px 16px 0;
+  background: var(--light);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 11.5px;
+  color: var(--text-soft);
+  border: 1px solid var(--border);
+  line-height: 1.5;
+}
+
+/* ── PROGRESS ── */
+.prog-card {
+  background: white;
+  margin: 0 16px;
+  border-radius: 16px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 12px var(--shadow);
+}
+.prog-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.prog-row:last-of-type { margin-bottom: 0; }
+.prog-lbl { font-size: 12px; color: var(--text); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.prog-bar {
+  width: 110px;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.prog-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--primary-dark), var(--primary-light));
+  border-radius: 3px;
+}
+.prog-pct { font-size: 12px; font-weight: 700; color: var(--primary); min-width: 36px; text-align: right; }
+.prog-date {
+  font-size: 11px;
+  color: var(--text-soft);
+  text-align: center;
+  margin-top: 10px;
+  opacity: 0.75;
+}
+
+/* ── CHECKLIST ── */
+.checklist { margin: 0 16px; }
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 15px;
+  background: white;
+  border-radius: 13px;
+  border: 2px solid var(--border);
+  margin-bottom: 7px;
+  cursor: pointer;
+  transition: all 0.22s;
+  user-select: none;
+}
+.check-item.done {
+  background: var(--light);
+  border-color: var(--primary);
+  opacity: 0.78;
+}
+.check-box {
+  width: 24px; height: 24px;
+  border-radius: 7px;
+  border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 13px;
+  transition: all 0.18s;
+}
+.check-item.done .check-box {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+.check-label { font-size: 14px; font-weight: 600; color: var(--text); }
+.check-item.done .check-label { text-decoration: line-through; color: var(--text-soft); }
+.check-sub { font-size: 11px; color: var(--text-soft); margin-top: 1px; }
+.check-time { margin-left: auto; font-size: 11px; color: var(--text-soft); white-space: nowrap; }
+
+/* ── MEAL CARDS ── */
+.meals { margin: 0 16px; }
+.meal-card {
+  background: white;
+  border-radius: 18px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 14px var(--shadow);
+  overflow: hidden;
+}
+.meal-head {
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  cursor: pointer;
+  user-select: none;
+}
+.meal-ico {
+  width: 44px; height: 44px;
+  background: var(--light);
+  border-radius: 13px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 23px;
+  flex-shrink: 0;
+}
+.meal-info { flex: 1; }
+.meal-name { font-size: 16px; font-weight: 700; color: var(--text); }
+.meal-time { font-size: 12px; color: var(--text-soft); margin-top: 2px; }
+.chevron { color: var(--primary); font-size: 20px; transition: transform 0.28s; }
+.meal-card.open .chevron { transform: rotate(180deg); }
+
+.meal-body {
+  display: none;
+  padding: 0 18px 18px;
+  border-top: 1px solid var(--border);
+}
+.meal-card.open .meal-body { display: block; }
+
+.meal-note {
+  font-size: 12px;
+  color: var(--text-soft);
+  padding: 10px 0 13px;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.opt-pills {
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  margin-bottom: 14px;
+  scrollbar-width: none;
+}
+.opt-pills::-webkit-scrollbar { display: none; }
+.pill {
+  flex-shrink: 0;
+  padding: 5px 13px;
+  border-radius: 20px;
+  border: 2px solid var(--border);
+  background: white;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.pill.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.opt-detail {
+  background: var(--cream);
+  border-radius: 13px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+}
+.opt-name { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.opt-sub { font-size: 10.5px; color: var(--primary); font-weight: 600; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.6px; }
+.opt-ings { list-style: none; }
+.opt-ings li {
+  font-size: 13px;
+  color: #4B5563;
+  padding: 3.5px 0 3.5px 16px;
+  position: relative;
+  line-height: 1.45;
+}
+.opt-ings li::before {
+  content: '·';
+  position: absolute;
+  left: 4px;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.1;
+}
+
+.meal-footer {
+  margin-top: 12px;
+  padding: 9px 14px;
+  background: var(--light);
+  border-radius: 10px;
+  font-size: 12px;
+  color: var(--text-soft);
+  text-align: center;
+}
+
+/* ── COLLAPSIBLE SECTIONS ── */
+.coll {
+  background: white;
+  margin: 0 16px 12px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 12px var(--shadow);
+  overflow: hidden;
+}
+.coll-head {
+  padding: 15px 18px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  cursor: pointer;
+  user-select: none;
+}
+.coll-head h3 { font-size: 15px; font-weight: 700; color: var(--text); flex: 1; }
+.coll-ico { font-size: 22px; }
+.coll-body {
+  display: none;
+  padding: 0 18px 18px;
+  border-top: 1px solid var(--border);
+}
+.coll.open .coll-body { display: block; }
+.coll.open .chevron { transform: rotate(180deg); }
+
+/* bebidas */
+.beb-group { margin-top: 13px; }
+.beb-group-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--primary);
+  margin-bottom: 7px;
+}
+.beb-item {
+  font-size: 12.5px;
+  color: #4B5563;
+  padding: 3px 0 3px 14px;
+  position: relative;
+  line-height: 1.4;
+}
+.beb-item::before {
+  content: '·';
+  position: absolute;
+  left: 2px;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+/* suplementos */
+.supp-card {
+  background: var(--cream);
+  border-radius: 12px;
+  padding: 13px 15px;
+  margin-top: 12px;
+  border: 1px solid var(--border);
+}
+.supp-name { font-size: 14px; font-weight: 700; color: var(--text); }
+.supp-detail { font-size: 12px; color: var(--text-soft); margin-top: 3px; }
+.supp-why { font-size: 11px; color: var(--primary); margin-top: 5px; font-style: italic; }
+
+/* recomendaciones */
+.rec-item {
+  display: flex;
+  gap: 11px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  color: #374151;
+  line-height: 1.45;
+}
+.rec-item:last-child { border-bottom: none; }
+.rec-ico { flex-shrink: 0; font-size: 17px; }
+
+/* footer */
+.footer {
+  text-align: center;
+  padding: 28px 20px 20px;
+  font-size: 12px;
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+.footer strong { color: var(--primary); }
+.footer .quote {
+  font-size: 12px;
+  color: #9CA3AF;
+  font-style: italic;
+  margin-top: 6px;
+  display: block;
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<div class="header">
+  <div class="jsmo-badge">jsmo · nutricionista deportivo</div>
+  <h1>Angie Paola Díaz</h1>
+  <p class="sub">Plan Nutricional · Musculación · 29 años</p>
+  <div class="kcal-badge">⚡ 2.000 kcal · Mantenimiento activo</div>
+</div>
+
+<div class="training-banner">
+  ⏰ <strong>Entrena 5:00 am</strong> &nbsp;·&nbsp; Desayuno post-entreno ~7:00 am
+</div>
+
+<!-- ── HIDRATACIÓN ── -->
+<div class="water-wrap">
+  <div class="water-top">
+    <div class="water-title">💧 Hidratación diaria</div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span class="water-count" id="wCount">0 / 10</span>
+      <button class="btn-sm" onclick="resetWater()">↺</button>
+    </div>
+  </div>
+  <div class="glasses" id="wGlasses"></div>
+  <div class="water-note">Meta: 2.5 – 3 L/día · cada 💧 = 250 ml</div>
+</div>
+
+<!-- ── METAS ── -->
+<div class="sec-label">Metas de composición corporal</div>
+<div class="metas-grid">
+  <div class="meta-card">
+    <div class="meta-lbl">Tejido muscular</div>
+    <div class="meta-val">24,76 <span class="meta-unit">kg</span></div>
+    <div class="meta-arr">→</div>
+    <div class="meta-goal">≥ 25,5 kg</div>
+  </div>
+  <div class="meta-card">
+    <div class="meta-lbl">% Masa grasa</div>
+    <div class="meta-val">13,64 <span class="meta-unit">%</span></div>
+    <div class="meta-arr">→</div>
+    <div class="meta-goal">mantener 11 – 13 %</div>
+  </div>
+  <div class="meta-card">
+    <div class="meta-lbl">IMO (Índ. Músculo-Óseo)</div>
+    <div class="meta-val">2,70</div>
+    <div class="meta-arr">→</div>
+    <div class="meta-goal">≥ 2,78 (Alto)</div>
+  </div>
+  <div class="meta-card">
+    <div class="meta-lbl">Σ 6 pliegues</div>
+    <div class="meta-val">65,0 <span class="meta-unit">mm</span></div>
+    <div class="meta-arr">→</div>
+    <div class="meta-goal">mantener / mejorar</div>
+  </div>
+</div>
+<div class="lipo-note">
+  📌 Los pliegues abdominal, cresta ilíaca y supraespinal son bajos por procedimiento estético previo — el seguimiento se centra en IMO, subescapular, muslo y pierna.
+</div>
+
+<!-- ── PROGRESO ── -->
+<div class="sec-label">Progreso hacia metas</div>
+<div class="prog-card">
+  <div class="prog-row">
+    <div class="prog-lbl">Tejido muscular</div>
+    <div class="prog-bar"><div class="prog-fill" style="width:97%"></div></div>
+    <div class="prog-pct">97%</div>
+  </div>
+  <div class="prog-row">
+    <div class="prog-lbl">IMO → Alto</div>
+    <div class="prog-bar"><div class="prog-fill" style="width:97%"></div></div>
+    <div class="prog-pct">97%</div>
+  </div>
+  <div class="prog-date">Primera valoración · <strong>11 Jul 2026</strong> · próxima en ~3 meses</div>
+</div>
+
+<!-- ── CHECKLIST ── -->
+<div class="sec-label">Chequeo diario</div>
+<div class="checklist" id="checklistEl"></div>
+
+<!-- ── MEALS ── -->
+<div class="sec-label">Plan de alimentación</div>
+<div class="meals" id="mealsEl"></div>
+
+<!-- ── BEBIDAS ── -->
+<div class="sec-label">Bebidas recomendadas</div>
+<div class="coll" id="cBebidas">
+  <div class="coll-head" onclick="toggleColl('cBebidas')">
+    <span class="coll-ico">🥤</span>
+    <h3>Hidratación & bebidas</h3>
+    <span class="chevron">⌄</span>
+  </div>
+  <div class="coll-body">
+    <div class="beb-group">
+      <div class="beb-group-title">Desayuno</div>
+      <div class="beb-item">Agua aromática sin azúcar, fría o caliente</div>
+      <div class="beb-item">1 taza de café sin azúcar</div>
+      <div class="beb-item">Café con chorrito de leche favorita</div>
+      <div class="beb-item">Chocolyne sin azúcar</div>
+      <div class="beb-item">Batido verde: espinaca + piña + apio + zumo de limón</div>
+    </div>
+    <div class="beb-group">
+      <div class="beb-group-title">Almuerzo & tarde</div>
+      <div class="beb-item">Agua natural o con rodajas de limón, pepino o hierbas frescas</div>
+      <div class="beb-item">Agua de piña o flor de Jamaica</div>
+      <div class="beb-item">Soda sin azúcar con limón (con moderación)</div>
+    </div>
+    <div class="beb-group">
+      <div class="beb-group-title">Noche</div>
+      <div class="beb-item">Té chai, matcha o favorito en leche descremada caliente</div>
+      <div class="beb-item">Chocolate saludable: leche descremada + 1 cda cacao en polvo + stevia</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SUPLEMENTACIÓN ── -->
+<div class="sec-label">Suplementación</div>
+<div class="coll" id="cSupp">
+  <div class="coll-head" onclick="toggleColl('cSupp')">
+    <span class="coll-ico">💊</span>
+    <h3>Suplementos</h3>
+    <span class="chevron">⌄</span>
+  </div>
+  <div class="coll-body">
+    <p style="font-size:12px;color:var(--text-soft);padding-top:12px;line-height:1.5;">La base es la alimentación, el buen descanso y el entrenamiento. Los suplementos son apoyo respaldado científicamente:</p>
+    <div class="supp-card">
+      <div class="supp-name">🥛 Proteína en polvo</div>
+      <div class="supp-detail">ISO 100 · Gold Standard · Isolate Gourmet de Vitanas</div>
+      <div class="supp-why">Según prescripción nutricional — complementa tu aporte proteico diario</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── RECOMENDACIONES ── -->
+<div class="sec-label">Recomendaciones generales</div>
+<div class="coll" id="cRecs">
+  <div class="coll-head" onclick="toggleColl('cRecs')">
+    <span class="coll-ico">📋</span>
+    <h3>Tips del plan</h3>
+    <span class="chevron">⌄</span>
+  </div>
+  <div class="coll-body">
+    <div style="padding-top:12px;">
+      <div class="rec-item"><span class="rec-ico">🍳</span><span>Todas las preparaciones deben ser asadas o cocidas, no fritas.</span></div>
+      <div class="rec-item"><span class="rec-ico">🚫</span><span>No consumas bebidas con azúcar añadida.</span></div>
+      <div class="rec-item"><span class="rec-ico">💪</span><span>Incluye una fuente de proteína en cada tiempo de comida.</span></div>
+      <div class="rec-item"><span class="rec-ico">💧</span><span>Mantén un termo con agua contigo durante toda la jornada. Meta: 2.5 – 3 L/día.</span></div>
+      <div class="rec-item"><span class="rec-ico">🥗</span><span>Respeta las porciones del plan y familiarízate con ellas.</span></div>
+      <div class="rec-item"><span class="rec-ico">🥦</span><span>Incluye más frutas y verduras cada día.</span></div>
+      <div class="rec-item"><span class="rec-ico">⏰</span><span>Evita largos periodos de ayuno o saltar tiempos de comida.</span></div>
+      <div class="rec-item"><span class="rec-ico">😊</span><span>Disfruta la alimentación — sin restricciones extremas. Ser feliz es parte de este plan.</span></div>
+      <div class="rec-item"><span class="rec-ico">🎯</span><span>Regla 80/20: controla salidas los fines de semana y antojos entre semana.</span></div>
+      <div class="rec-item"><span class="rec-ico">🏋️</span><span>Si vas a salir a comer, hazlo un día que hayas entrenado — no en día de descanso.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<div class="footer">
+  <strong>Juan Sebastián Muñoz O.</strong><br>
+  Nutricionista Deportivo · JSMO
+  <span class="quote">"La disciplina es el puente entre lo que eres y lo que anhelas ser."<br>¡Sé que vamos a lograr tus objetivos, vamos con todo!</span>
+</div>
+
+<script>
+/* ── STORAGE KEY ── */
+const LS = 'jsmo_ap_';
+
+/* ── MEAL DATA ── */
+const MEALS = [
+  {
+    id: 't1',
+    name: 'Desayuno',
+    emoji: '🍳',
+    time: '~7:00 am · post-entreno',
+    note: 'Tu comida más importante del día — cárgala bien después del entrenamiento.',
+    options: [
+      {
+        n: 'Huevos napolitanos',
+        s: 'comfort italiano · proteína completa',
+        a: 'Nápoles',
+        i: [
+          '2 claras + 1 huevo entero en cacerola con tomate cocinado tipo puré',
+          'Sal, ajo en polvo y un chorrito de agua — salsa pomodoro',
+          '1 tajada de queso mozzarella para gratinar',
+          '1 arepa de yuca Yen Escobar tipo tela o ½ arepa de maíz',
+          '1 tajada de sandía'
+        ]
+      },
+      {
+        n: 'Montadito deviled egg',
+        s: 'creativo · proteína + probiótico',
+        a: 'Deviled',
+        i: [
+          '2 claras + 1 huevo entero cocidos · separar la yema',
+          'Revolver la yema con 3 cdas de yogurt griego, 1 cda de mostaza y 1 cda de miel',
+          'Integrar las claras picadas y armar montadito sobre tostada de pan',
+          '½ naranja'
+        ]
+      },
+      {
+        n: 'Sandwich de pollo napolitano',
+        s: 'rápido · práctico post-entreno',
+        a: 'Sandwich',
+        i: [
+          '2 tajadas de pan Bimbo Fit integral',
+          '120g de pollo desmechado en salsa napolitana casera',
+          '1 tajada de queso mozzarella',
+          '½ tomate en rodajas · 1 hoja de lechuga romana',
+          '1 kiwi picado'
+        ]
+      },
+      {
+        n: 'Omelette con jamón y verduras',
+        s: 'clásico gym · saciante',
+        a: 'Omelette',
+        i: [
+          '2 claras + 1 huevo entero en omelette',
+          '1 tajada de jamón de pavo o pollo',
+          '1 tajada de queso Vita Latti bajo en grasa',
+          '2 verduras favoritas dentro del omelette',
+          '1 paquete de Salmas Sanísimas'
+        ]
+      }
+    ]
+  },
+  {
+    id: 't2',
+    name: 'Snack AM',
+    emoji: '🫐',
+    time: '~10:00 am',
+    note: 'Mantén la energía activa — no dejes que pasen más de 3 horas sin comer.',
+    options: [
+      {
+        n: 'Cheese stick + yogurt',
+        s: 'fácil · listo en segundos',
+        a: 'Cheese',
+        i: [
+          '1 palito Cheese stick bajo en grasa (D1)',
+          '1 mandarina',
+          '1 vaso de yogurt Finesse o Vital Latti',
+          '1 paquete de rosquillas caleñas o Salmas Sanísimas'
+        ]
+      },
+      {
+        n: 'Pancakes banano & avena',
+        s: 'casero · nutritivo · rico rico',
+        a: 'Pancakes',
+        i: [
+          '1 huevo entero + 1 banano triturado + 2 cdas de avena · mezclar bien',
+          'Cocinar en sartén antiadherente por ambos lados',
+          '2 cdas de yogurt griego y tu fruta favorita encima'
+        ]
+      },
+      {
+        n: 'Avena trasnochada',
+        s: 'prep la noche anterior · sin complicaciones',
+        a: 'Avena',
+        i: [
+          '3 cdas de avena en hojuelas',
+          '2 cdas de yogurt griego · 1 chorrito de leche descremada',
+          '½ scoop de proteína en polvo · revolver bien',
+          '5 fresas picadas o 9 arándanos'
+        ]
+      }
+    ]
+  },
+  {
+    id: 't3',
+    name: 'Almuerzo',
+    emoji: '🍽️',
+    time: '~1:00 pm',
+    note: 'La comida más grande del día — proteína generosa, CHO de calidad y grasas saludables.',
+    footer: '🍊 Consume 1 porción de fruta después del almuerzo como postre',
+    options: [
+      {
+        n: 'Lomo estilo stroganoff + papa',
+        s: 'fit gourmet',
+        a: 'Stroganoff',
+        i: [
+          '160g de lomo de res en tiras salteado con 1 cdita de aceite de oliva',
+          '1 puñado de champiñones + 2 cdas de yogurt griego natural + ajo en polvo (tipo stroganoff)',
+          '1 papa mediana en cascos en airfryer',
+          'Pico de gallo: tomate, cebolla morada, ¼ aguacate, cilantro y limón'
+        ]
+      },
+      {
+        n: 'Carne a la plancha colombiana',
+        s: 'el clásico de siempre',
+        a: 'Carne',
+        i: [
+          '140g de carne de res magra a la plancha',
+          '4 cdas de arroz · 3 cdas de lentejas o frijoles guisados',
+          '¼ de aguacate',
+          'Ensalada de tomate y pepino con limón y sal'
+        ]
+      },
+      {
+        n: 'Filete de corvina o trucha',
+        s: 'omega natural · finas hierbas',
+        a: 'Corvina',
+        i: [
+          '170g de filete de corvina o trucha a las finas hierbas',
+          '4 cdas soperas de puré de papa sin crema ni mantequilla',
+          '3 verduras favoritas al vapor'
+        ]
+      },
+      {
+        n: 'Bowl de salmón asiático',
+        s: 'sabor diferente · antiinflamatorio',
+        a: 'Salmón',
+        i: [
+          '160g de salmón en salsa soya',
+          '5 cdas de arroz con limón y cilantro',
+          '4 tallos de brócoli salteados · zanahoria en bastones'
+        ]
+      }
+    ]
+  },
+  {
+    id: 't4',
+    name: 'Colación PM',
+    emoji: '💪',
+    time: '~5:30 pm',
+    note: 'Snack de la tarde — mantén la proteína alta para recuperación y síntesis muscular.',
+    options: [
+      {
+        n: 'Tostada de atún',
+        s: 'omega + proteína · rápido',
+        a: 'Atún',
+        i: [
+          '1 tajada de pan de masa madre del molino',
+          '1 lata de atún en agua + yogurt griego + limón + sal · mezclar bien',
+          '½ tomate en rodajas · 1 taza de café'
+        ]
+      },
+      {
+        n: 'Batido de proteína',
+        s: 'eficiente · post o pre movimiento',
+        a: 'Batido',
+        i: [
+          '1 scoop de proteína + 200 ml de agua + mucho hielo · licuar bien',
+          '🍌 Días de pierna, glúteo o cardio: añadir ½ banano a la mezcla'
+        ]
+      },
+      {
+        n: 'Bowl de mango y proteína',
+        s: 'dulce natural · tipo postre saludable',
+        a: 'Bowl mango',
+        i: [
+          '1 paquete de rosquillas caleñas',
+          '3 cdas de mango picado o 1 puñado de arándanos congelados',
+          '3 cdas de yogurt griego Yen Escobar',
+          '½ scoop de proteína · revolver bien · comer tipo postre',
+          '5 almendras'
+        ]
+      },
+      {
+        n: 'Capuccino de proteína',
+        s: 'energía de tarde sin azúcar ☕',
+        a: 'Capuccino',
+        i: [
+          '1 paquete de Salmas Sanísimas · 5 fresas picadas',
+          '1 taza de café + ½ scoop de proteína — te queda como un capuccino'
+        ]
+      }
+    ]
+  },
+  {
+    id: 't5',
+    name: 'Cena',
+    emoji: '🌙',
+    time: '~8:00 pm',
+    note: 'Cena equilibrada — la proteína nocturna apoya la síntesis muscular mientras duermes.',
+    options: [
+      {
+        n: 'Omelette de queso y champiñones',
+        s: 'comfort de noche · rápido',
+        a: 'Omelette',
+        i: [
+          '2 claras + 1 huevo entero en tortilla',
+          '1 puñado de champiñones salteados con 1 cdita de aceite de oliva',
+          '1 loncha de queso mozzarella Finesse o Vital Latti',
+          '3 papas amarillas en freidora (cuando tengas mucha hambre)',
+          'Ensalada favorita abundante'
+        ]
+      },
+      {
+        n: 'Fettuccini con camarones al ajillo',
+        s: 'gourmet fit · noche especial',
+        a: 'Fettuccini',
+        i: [
+          '½ plato sopero de fettuccini o espaguetis al dente',
+          '170g de camarones al ajillo (solo ajo, aceite de oliva y limón) o 140g de pollo en cubos',
+          'Ensalada de ¼ aguacate, cilantro y tomates cherry'
+        ]
+      },
+      {
+        n: 'Pollo guisado con plátano',
+        s: 'sabor colombiano · cena de campeona',
+        a: 'Pollo',
+        i: [
+          '160g de pollo desmenuzado guisado',
+          '½ plátano maduro en airfryer con 1 loncha de queso mozzarella',
+          'Ensalada de repollo blanco, tomate cherry y zanahoria rallada con limón y sal'
+        ]
+      },
+      {
+        n: 'Burrito de carne molida',
+        s: 'tex-mex saludable · wrap de noche',
+        a: 'Burrito',
+        i: [
+          '150g de carne molida magra',
+          '1 tortilla integral talla M o 1 arepa de arroz Yen Escobar',
+          '1 loncha de queso mozzarella Finesse · picadillo de tomate y cebolla morada',
+          '1 cda de guacamole'
+        ]
+      }
+    ]
+  }
+];
+
+const CHECKS = [
+  { id:'ck0', lbl:'Pre-entreno opcional',     sub:'algo pequeño si lo necesitas (ej. ½ banano)', time:'4:30 am' },
+  { id:'ck1', lbl:'Entrenamiento funcional',  sub:'',                                              time:'5:00 am' },
+  { id:'ck2', lbl:'Desayuno post-entreno',    sub:'tu comida más importante del día',              time:'~7:00 am' },
+  { id:'ck3', lbl:'Snack AM',                 sub:'',                                              time:'~10:00 am' },
+  { id:'ck4', lbl:'Almuerzo + fruta postre',  sub:'',                                              time:'~1:00 pm' },
+  { id:'ck5', lbl:'Colación PM',              sub:'',                                              time:'~5:30 pm' },
+  { id:'ck6', lbl:'Cena',                     sub:'',                                              time:'~8:00 pm' },
+];
+
+/* ── STATE ── */
+function ls(k)    { return localStorage.getItem(LS+k); }
+function lss(k,v) { localStorage.setItem(LS+k, typeof v==='object'?JSON.stringify(v):v); }
+
+let water   = parseInt(ls('w') || '0');
+let checked = JSON.parse(ls('c') || '{}');
+let opts    = JSON.parse(ls('o') || '{}');
+
+function save() { lss('w',water); lss('c',checked); lss('o',opts); }
+
+/* ── WATER ── */
+function renderWater() {
+  const el = document.getElementById('wGlasses');
+  const ct = document.getElementById('wCount');
+  el.innerHTML = '';
+  for (let i = 0; i < 10; i++) {
+    const g = document.createElement('div');
+    g.className = 'glass' + (i < water ? ' on' : '');
+    g.textContent = '💧';
+    g.onclick = () => { water = (i < water) ? i : i+1; save(); renderWater(); };
+    el.appendChild(g);
+  }
+  ct.textContent = `${water} / 10`;
+}
+function resetWater() { water=0; save(); renderWater(); }
+
+/* ── CHECKLIST ── */
+function renderChecklist() {
+  document.getElementById('checklistEl').innerHTML = CHECKS.map(c => `
+    <div class="check-item ${checked[c.id]?'done':''}" onclick="toggleCheck('${c.id}')">
+      <div class="check-box">${checked[c.id]?'✓':''}</div>
+      <div style="flex:1">
+        <div class="check-label">${c.lbl}</div>
+        ${c.sub ? `<div class="check-sub">${c.sub}</div>` : ''}
+      </div>
+      <div class="check-time">${c.time}</div>
+    </div>`).join('');
+}
+function toggleCheck(id) { checked[id]=!checked[id]; save(); renderChecklist(); }
+
+/* ── MEALS ── */
+function renderMeals() {
+  document.getElementById('mealsEl').innerHTML = MEALS.map(m => {
+    const idx = opts[m.id]||0;
+    const o   = m.options[idx];
+    return `
+    <div class="meal-card" id="mc_${m.id}">
+      <div class="meal-head" onclick="toggleMeal('${m.id}')">
+        <div class="meal-ico">${m.emoji}</div>
+        <div class="meal-info">
+          <div class="meal-name">${m.name}</div>
+          <div class="meal-time">${m.time}</div>
+        </div>
+        <div class="chevron">⌄</div>
+      </div>
+      <div class="meal-body">
+        <div class="meal-note">${m.note}</div>
+        <div class="opt-pills">
+          ${m.options.map((op,i)=>`
+            <button class="pill ${i===idx?'active':''}" onclick="selectOpt('${m.id}',${i})">${op.a}</button>
+          `).join('')}
+        </div>
+        <div class="opt-detail" id="od_${m.id}">
+          <div class="opt-name">${o.n}</div>
+          <div class="opt-sub">${o.s}</div>
+          <ul class="opt-ings">${o.i.map(x=>`<li>${x}</li>`).join('')}</ul>
+        </div>
+        ${m.footer ? `<div class="meal-footer">${m.footer}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleMeal(id) { document.getElementById('mc_'+id).classList.toggle('open'); }
+
+function selectOpt(mealId, idx) {
+  opts[mealId] = idx; save();
+  const m = MEALS.find(x=>x.id===mealId);
+  const o = m.options[idx];
+  const od = document.getElementById('od_'+mealId);
+  od.querySelector('.opt-name').textContent = o.n;
+  od.querySelector('.opt-sub').textContent  = o.s;
+  od.querySelector('.opt-ings').innerHTML   = o.i.map(x=>`<li>${x}</li>`).join('');
+  document.querySelectorAll(`#mc_${mealId} .pill`).forEach((b,i)=>{
+    b.className = 'pill'+(i===idx?' active':'');
+  });
+}
+
+/* ── COLLAPSIBLES ── */
+function toggleColl(id) { document.getElementById(id).classList.toggle('open'); }
+
+/* ── DAILY RESET ── */
+const today = new Date().toDateString();
+if (ls('date') !== today) {
+  checked={}; water=0; save(); lss('date', today);
+}
+
+/* ── INIT ── */
+renderWater();
+renderChecklist();
+renderMeals();
+</script>
+</body>
+</html>
