@@ -6,16 +6,16 @@
 <title>Plan Nutricional · Angie Paola Díaz · JSMO</title>
 <style>
 :root {
-  --primary: #9333EA;
-  --primary-dark: #6D28D9;
-  --primary-light: #A855F7;
-  --cream: #FAF5FF;
-  --light: #F3E8FF;
-  --border: #E9D5FF;
-  --text: #3B0764;
-  --text-soft: #7C3AED;
+  --primary: #0E7D7D;
+  --primary-dark: #0A5F5F;
+  --primary-light: #1AA8A8;
+  --cream: #EAF4F4;
+  --light: #D0EEEE;
+  --border: #B2DFDF;
+  --text: #0C3333;
+  --text-soft: #0E7D7D;
   --card: #FFFFFF;
-  --shadow: rgba(147,51,234,0.10);
+  --shadow: rgba(14,125,125,0.10);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,7 +30,7 @@ body {
 
 /* ── HEADER ── */
 .header {
-  background: linear-gradient(135deg, #4C1D95 0%, #7C3AED 55%, #A855F7 100%);
+  background: linear-gradient(135deg, #063F3F 0%, #0E7D7D 55%, #1AA8A8 100%);
   color: white;
   padding: 30px 20px 26px;
   text-align: center;
@@ -92,7 +92,7 @@ body {
 
 /* ── TRAINING BANNER ── */
 .training-banner {
-  background: linear-gradient(90deg, #3B0764, #5B21B6);
+  background: linear-gradient(90deg, #053333, #0A6666);
   color: white;
   padding: 11px 20px;
   text-align: center;
@@ -526,7 +526,7 @@ body {
 </div>
 
 <div class="training-banner">
-  ⏰ <strong>Entrena 5:00 am</strong> &nbsp;·&nbsp; Desayuno post-entreno ~7:00 am
+  ⚡ <strong>Pre-entreno 4:15 am</strong> &nbsp;·&nbsp; Entrena 5:00 am &nbsp;·&nbsp; Desayuno post-entreno ~7:00 am
 </div>
 
 <!-- ── HIDRATACIÓN ── -->
@@ -684,6 +684,46 @@ const LS = 'jsmo_ap_';
 
 /* ── MEAL DATA ── */
 const MEALS = [
+  {
+    id: 't0',
+    name: 'Pre-entreno',
+    emoji: '⚡',
+    time: '~4:15 am · introducción progresiva',
+    note: 'Empieza con la opción más sencilla. Si tu cuerpo responde bien en 1-2 semanas, puedes probar la siguiente. El objetivo es que sientas más energía y fuerza en el entrenamiento.',
+    options: [
+      {
+        n: '½ banano',
+        s: 'opción inicial · empieza aquí',
+        a: 'Banano',
+        i: [
+          '½ banano maduro bien amarillo',
+          '1 vaso grande de agua (250 ml)',
+          '⏱️ Come 20-25 min antes de empezar a entrenar'
+        ]
+      },
+      {
+        n: '2 dátiles',
+        s: 'energía rápida · fácil de digerir',
+        a: 'Dátiles',
+        i: [
+          '2 dátiles medjool sin semilla',
+          '1 taza de agua o café americano sin azúcar (opcional)',
+          '⏱️ Come 20 min antes de entrenar'
+        ]
+      },
+      {
+        n: '½ tostada con miel',
+        s: 'carbohidrato simple · para cuando ya toleres bien',
+        a: 'Tostada',
+        i: [
+          '½ tajada de pan integral o de masa madre',
+          '1 cdita de miel de abejas',
+          '1 vaso de agua',
+          '⏱️ Come 25-30 min antes de entrenar'
+        ]
+      }
+    ]
+  },
   {
     id: 't1',
     name: 'Desayuno',
@@ -937,7 +977,7 @@ const MEALS = [
 ];
 
 const CHECKS = [
-  { id:'ck0', lbl:'Pre-entreno opcional',     sub:'algo pequeño si lo necesitas (ej. ½ banano)', time:'4:30 am' },
+  { id:'ck0', lbl:'Pre-entreno',              sub:'½ banano · dátiles o tostada con miel',         time:'4:15 am' },
   { id:'ck1', lbl:'Entrenamiento funcional',  sub:'',                                              time:'5:00 am' },
   { id:'ck2', lbl:'Desayuno post-entreno',    sub:'tu comida más importante del día',              time:'~7:00 am' },
   { id:'ck3', lbl:'Snack AM',                 sub:'',                                              time:'~10:00 am' },
