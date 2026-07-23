@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#053333">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Plan Lina Marcela Velasco · JSMO</title>
+<style>
+:root{
+  color-scheme:light;
+  --primary:#0E7D7D;--dark:#063F3F;--mid:#0A6060;
+  --cream:#EAF4F4;--light:#D0EEEE;--border:#B2DFDF;
+  --white:#fff;--text:#0D2828;--med:#3D6060;--subtle:#78A8A8;
+  --cho:#1A5276;--pro:#922B21;--grs:#9A7D0A;
+  --cho-bg:#EBF5FB;--pro-bg:#FDEDEC;--grs-bg:#FEF9E7;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;
+  background:var(--cream);color:var(--text);max-width:480px;margin:0 auto}
+.hdr{background:linear-gradient(135deg,#063F3F 0%,#0E7D7D 55%,#1AA8A8 100%);
+  padding:16px 18px 0;position:sticky;top:0;z-index:50}
+.hdr-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.logo{font-size:11px;font-weight:800;color:rgba(255,255,255,.9);letter-spacing:4px}
+.hdr-date{font-size:10px;color:rgba(255,255,255,.45)}
+.pname{font-size:19px;font-weight:800;color:#fff;margin-bottom:2px}
+.pstats{font-size:10.5px;color:rgba(255,255,255,.55);margin-bottom:8px}
+.objetivo{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);
+  border-radius:20px;padding:3px 10px;font-size:10px;color:rgba(255,255,255,.9);margin-bottom:10px}
+.banner{background:rgba(0,0,0,.25);border-radius:8px;padding:7px 12px;
+  font-size:10.5px;color:rgba(255,255,255,.85);margin-bottom:10px;
+  border-left:3px solid rgba(255,255,255,.4);line-height:1.5}
+.day-tabs{display:flex;gap:6px}
+.dtab{flex:1;background:transparent;border:1.5px solid rgba(255,255,255,.2);
+  border-radius:10px 10px 0 0;color:rgba(255,255,255,.5);font-size:10px;font-weight:700;
+  padding:8px 4px 6px;cursor:pointer;transition:all .18s;text-align:center}
+.dtab .icon{font-size:18px;display:block;margin-bottom:3px}
+.dtab .kcals{font-size:9px;opacity:.7;font-weight:400}
+.dtab.active{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.6);
+  border-bottom-color:transparent;color:#fff}
+.summary{background:#053333;padding:10px 18px 0;display:flex;align-items:center;gap:10px}
+.s-kcal{font-size:24px;font-weight:800;color:rgba(255,255,255,.9);line-height:1}
+.s-kcal small{font-size:11px;font-weight:400;color:rgba(255,255,255,.45)}
+.s-macros{display:flex;gap:5px;flex-wrap:wrap;flex:1;justify-content:flex-end}
+.mpill{padding:3px 8px;border-radius:20px;font-size:9.5px;font-weight:700}
+.mpill.cho{background:var(--cho-bg);color:var(--cho)}
+.mpill.pro{background:var(--pro-bg);color:var(--pro)}
+.mpill.grs{background:var(--grs-bg);color:var(--grs)}
+.pro-wrap{background:#053333;padding:8px 18px 10px;border-bottom:3px solid rgba(255,255,255,.1)}
+.pro-labels{display:flex;justify-content:space-between;font-size:9.5px;margin-bottom:4px}
+.pro-lbl{color:rgba(255,255,255,.45)}.pro-val{font-weight:700;color:#E74C3C}
+.pro-bar{height:5px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden}
+.pro-fill{height:100%;background:linear-gradient(90deg,var(--primary),#1AA8A8);border-radius:3px;transition:width .4s}
+.day-note{margin:12px 14px 0;background:#fff;border-radius:10px;padding:10px 12px;
+  border-left:3px solid var(--primary);font-size:12px;color:var(--med);line-height:1.55}
+.jsmo-note{margin:10px 14px 0;background:linear-gradient(135deg,rgba(14,125,125,.06),rgba(14,125,125,.02));
+  border:1px solid var(--border);border-radius:12px;padding:11px 13px}
+.note-head{display:flex;align-items:center;gap:9px;margin-bottom:7px}
+.note-av{width:28px;height:28px;border-radius:50%;background:var(--primary);
+  display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;
+  color:#fff;letter-spacing:.5px;flex-shrink:0}
+.note-who{flex:1}
+.note-name{font-size:10.5px;font-weight:800;color:var(--primary);display:block}
+.note-week{font-size:9px;color:var(--subtle)}
+.note-msg{font-size:12px;color:var(--text);line-height:1.6}
+.water-sec{margin:10px 14px 0;background:#fff;border-radius:12px;padding:12px 14px}
+.water-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.water-ttl{font-size:10.5px;font-weight:800;color:var(--primary);letter-spacing:2px}
+.water-cnt{font-size:10.5px;font-weight:700;color:var(--med)}
+.drops{display:flex;gap:3px;justify-content:space-between}
+.drop{font-size:24px;cursor:pointer;flex:1;text-align:center;padding:3px 0;
+  border-radius:6px;transition:transform .12s;user-select:none}
+.drop:active{transform:scale(.82)}
+.drop.empty{opacity:.15;filter:grayscale(1)}
+.water-msg{font-size:10.5px;color:var(--primary);font-weight:600;margin-top:6px;text-align:center;min-height:14px}
+.plate-sec{margin:10px 14px 0;background:#fff;border-radius:12px;padding:13px 14px}
+.plate-ttl{font-size:10px;font-weight:800;color:var(--primary);letter-spacing:2px;margin-bottom:10px}
+.plate-body{display:flex;align-items:center;gap:16px}
+.plate-ring{width:90px;height:90px;border-radius:50%;flex-shrink:0;position:relative;transition:background .4s}
+.plate-ring::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:54px;height:54px;border-radius:50%;background:#fff}
+.plate-legend{flex:1}
+.pleg{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.pleg-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.pleg-lbl{font-size:11px;color:var(--med);flex:1}
+.pleg-val{font-size:12px;font-weight:800;color:var(--text)}
+.pleg-pct{font-size:10px;color:var(--subtle);margin-left:3px}
+.metas-sec{margin:10px 14px 0}
+.sec-ttl{font-size:10px;font-weight:800;color:var(--primary);letter-spacing:3px;margin-bottom:8px;padding:0 2px}
+.metas-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.meta-card{background:#fff;border-radius:10px;padding:10px 12px}
+.meta-lbl{font-size:9.5px;color:var(--subtle);margin-bottom:2px}
+.meta-val{font-size:18px;font-weight:800;color:var(--text);line-height:1.1}
+.meta-goal{font-size:10px;color:var(--primary);font-weight:600;margin-top:2px}
+.meta-note{background:#fff;border-radius:10px;padding:10px 12px;margin-top:8px;
+  font-size:11px;color:var(--med);line-height:1.55;border-left:3px solid var(--primary)}
+.content{padding:10px 14px 60px}
+.mcard{background:#fff;border-radius:12px;margin-top:10px;overflow:hidden;
+  box-shadow:0 2px 10px rgba(0,0,0,.07);transition:all .2s}
+.mc-head{display:flex;align-items:center;padding:12px 14px;cursor:pointer;gap:10px}
+.mc-lbl{font-size:9px;font-weight:800;letter-spacing:2px;padding:4px 7px;
+  border-radius:6px;background:var(--primary);color:#fff;flex-shrink:0;min-width:54px;text-align:center}
+.mc-info{flex:1}
+.mc-title{font-size:13.5px;font-weight:700;color:var(--text)}
+.mc-time{font-size:10px;color:var(--subtle);margin-top:1px}
+.mc-check{width:24px;height:24px;border-radius:50%;border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;
+  transition:all .2s;margin-left:2px}
+.mc-check.done{background:var(--primary);border-color:var(--primary)}
+.mc-check svg{opacity:0;transition:opacity .15s}
+.mc-check.done svg{opacity:1}
+.mc-chevron{font-size:12px;color:var(--subtle);transition:transform .2s;flex-shrink:0}
+.mcard.open .mc-chevron{transform:rotate(180deg)}
+.mc-macro{display:flex;gap:4px;flex-wrap:wrap;padding:0 14px 10px}
+.mc-body{padding:0 14px 14px;display:none}
+.mcard.open .mc-body{display:block}
+.opt-tabs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.otab{font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;
+  border:1.5px solid var(--border);color:var(--subtle);cursor:pointer;transition:all .15s}
+.otab.active{background:var(--primary);border-color:var(--primary);color:#fff}
+.opt-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}
+.opt-sub{font-size:10.5px;color:var(--primary);margin-bottom:8px;font-style:italic}
+.opt-items{list-style:none}
+.opt-items li{font-size:12px;color:var(--med);padding:4px 0;border-bottom:1px solid var(--light);
+  padding-left:12px;position:relative;line-height:1.4}
+.opt-items li::before{content:'·';position:absolute;left:2px;color:var(--primary);font-weight:700}
+.opt-items li:last-child{border-bottom:none}
+.mc-tip{margin-top:10px;background:var(--cream);border-radius:8px;padding:8px 10px;
+  font-size:11px;color:var(--med);line-height:1.5;border-left:3px solid var(--primary)}
+.supl-sec{margin:10px 14px 0;background:#fff;border-radius:12px;padding:13px 14px}
+.supl-ttl{font-size:10px;font-weight:800;color:var(--primary);letter-spacing:2px;margin-bottom:10px}
+.supl-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--light)}
+.supl-item:last-child{border-bottom:none}
+.supl-icon{font-size:18px;flex-shrink:0;margin-top:2px}
+.supl-info{flex:1}
+.supl-name{font-size:12.5px;font-weight:700;color:var(--text)}
+.supl-dose{font-size:11px;color:var(--primary);margin:1px 0}
+.supl-brand{font-size:10.5px;color:var(--subtle)}
+.check-sec{margin:10px 14px 0;background:#fff;border-radius:12px;padding:13px 14px}
+.check-ttl{font-size:10px;font-weight:800;color:var(--primary);letter-spacing:2px;margin-bottom:10px}
+.check-item{display:flex;align-items:center;gap:10px;padding:7px 0;cursor:pointer;
+  border-bottom:1px solid var(--light)}
+.check-item:last-child{border-bottom:none}
+.chk-box{width:20px;height:20px;border-radius:5px;border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.chk-box.done{background:var(--primary);border-color:var(--primary)}
+.check-item.done .chk-lbl{text-decoration:line-through;color:var(--subtle)}
+.chk-lbl{font-size:12px;color:var(--text);flex:1}
+.chk-time{font-size:10px;color:var(--subtle)}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-top">
+    <span class="logo">JSMO</span>
+    <span class="hdr-date" id="hdrDate"></span>
+  </div>
+  <div class="pname">Lina Marcela Velasco J.</div>
+  <div class="pstats">32 años · 74,1 kg · 160 cm · Hapkido — Selección Cali</div>
+  <div class="objetivo">Recomposicion Corporal · Categoria &lt;70 kg · Hapkido 2027</div>
+  <div class="banner">🥋 Hapkido 5:00 PM · L, Mi, S, D &nbsp;·&nbsp; Pre-entrenamiento 3:30 PM obligatorio</div>
+  <div class="day-tabs">
+    <button class="dtab" id="tabE" onclick="setDay('entreno')">
+      <span class="icon">💪</span>
+      <span>Entrenamiento</span>
+      <span class="kcals">~2.300 kcal</span>
+    </button>
+    <button class="dtab" id="tabD" onclick="setDay('descanso')">
+      <span class="icon">😴</span>
+      <span>Descanso</span>
+      <span class="kcals">~1.900 kcal</span>
+    </button>
+  </div>
+</div>
+
+<div class="summary">
+  <div class="s-kcal" id="sKcal">— <small>kcal</small></div>
+  <div class="s-macros" id="sMacros"></div>
+</div>
+<div class="pro-wrap">
+  <div class="pro-labels">
+    <span class="pro-lbl">🥩 Proteina acumulada hoy</span>
+    <span class="pro-val" id="proVal">0 / — g</span>
+  </div>
+  <div class="pro-bar"><div class="pro-fill" id="proFill" style="width:0%"></div></div>
+</div>
+
+<div class="day-note" id="dayNote"></div>
+
+<div class="jsmo-note">
+  <div class="note-head">
+    <div class="note-av">JS</div>
+    <div class="note-who">
+      <span class="note-name">Juan Sebastian Munoz O.</span>
+      <span class="note-week" id="noteWeek"></span>
+    </div>
+  </div>
+  <div class="note-msg">Lina, llevas 10 anos en la seleccion de Cali y el ISAK lo confirma: 27.63 kg de tejido muscular y mesomorfia 6.71 construidos para el combate. Ese es tu capital atletico, y este plan lo protege. El trabajo real esta en el pliegue subescapular (34mm) y la cintura (83.4cm) — la grasa central acumulada desde 2019. La clave no es comer menos, es periodizar: glucogeno lleno los dias de hapkido para que llegues fuerte, y moderado los dias de descanso para que el cuerpo use grasa como combustible. El pre-entrenamiento a las 3:30pm es el cambio mas importante de este plan — no llegues al gym con el tanque vacio. Eso explica el agotamiento y la recuperacion lenta que sientes despues de cada sesion.</div>
+</div>
+
+<div class="water-sec">
+  <div class="water-head">
+    <span class="water-ttl">HIDRATACION</span>
+    <span class="water-cnt" id="waterCnt">0 / 8 vasos</span>
+  </div>
+  <div class="drops" id="drops"></div>
+  <div class="water-msg" id="waterMsg"></div>
+</div>
+
+<div class="plate-sec">
+  <div class="plate-ttl">TU PLATO HOY</div>
+  <div class="plate-body">
+    <div class="plate-ring" id="plateRing"></div>
+    <div class="plate-legend" id="plateLegend"></div>
+  </div>
+</div>
+
+<div class="metas-sec">
+  <div class="sec-ttl">M E T A S</div>
+  <div class="metas-grid">
+    <div class="meta-card">
+      <div class="meta-lbl">Tejido muscular</div>
+      <div class="meta-val">27,63 kg</div>
+      <div class="meta-goal">— mantener ≥29,0 kg</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-lbl">Masa grasa (Yuhasz)</div>
+      <div class="meta-val">16,19 kg</div>
+      <div class="meta-goal">— objetivo &lt;12,0 kg</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-lbl">IMO (musculo/oseo)</div>
+      <div class="meta-val">3,04</div>
+      <div class="meta-goal">— mantener ≥3,0 Muy Alto</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-lbl">Suma 6 pliegues</div>
+      <div class="meta-val">118,0 mm</div>
+      <div class="meta-goal">— objetivo &lt;90 mm</div>
+    </div>
+  </div>
+  <div class="meta-note">⚠️ Subescapular 34mm (Z=3,74) y cintura 83,4cm (ICT=0,52) indican acumulacion adiposa central con riesgo metabolico. Son la prioridad de composicion corporal. La periodizacion de CHO de este plan actua directamente sobre esta zona.</div>
+</div>
+
+<div class="content" id="mealsContainer"></div>
+
+<div class="supl-sec" style="margin:10px 14px 0">
+  <div class="supl-ttl">S U P L E M E N T A C I O N</div>
+  <div class="supl-item">
+    <div class="supl-icon">💪</div>
+    <div class="supl-info">
+      <div class="supl-name">Creatina Monohidratada</div>
+      <div class="supl-dose">5g diarios · con el desayuno o post-entrenamiento</div>
+      <div class="supl-brand">Optimum Nutrition, CreaPure, MyProtein — cualquier marca certificada</div>
+    </div>
+  </div>
+  <div class="supl-item">
+    <div class="supl-icon">🐟</div>
+    <div class="supl-info">
+      <div class="supl-name">Omega-3 (EPA + DHA)</div>
+      <div class="supl-dose">2-4g diarios · con el almuerzo (reduce inflamacion y dolor muscular)</div>
+      <div class="supl-brand">Nordic Naturals, Omegafort, Vitafish — con comida para absorcion</div>
+    </div>
+  </div>
+  <div class="supl-item">
+    <div class="supl-icon">🌙</div>
+    <div class="supl-info">
+      <div class="supl-name">Magnesio Glicinato</div>
+      <div class="supl-dose">300mg · 30 min antes de dormir</div>
+      <div class="supl-brand">Mejor absorcion que oxido de magnesio · mejora recuperacion muscular y calidad del sueno</div>
+    </div>
+  </div>
+  <div class="supl-item">
+    <div class="supl-icon">🥤</div>
+    <div class="supl-info">
+      <div class="supl-name">Proteina en polvo — CAMBIO</div>
+      <div class="supl-dose">1 scoop en pre-entrenamiento o post-entreno segun necesidad</div>
+      <div class="supl-brand">Gold Standard Whey Isolate o ISO 100 Hydrolized (mas digestible) · Gold Standard 100% Whey</div>
+    </div>
+  </div>
+  <div class="supl-item">
+    <div class="supl-icon">⚡</div>
+    <div class="supl-info">
+      <div class="supl-name">Beta-Alanina (opcional)</div>
+      <div class="supl-dose">3,2g · 20-30 min antes del entrenamiento</div>
+      <div class="supl-brand">Tampona el lactato en combate de alta intensidad — mejora resistencia en hapkido. Puede causar hormigueo leve (normal).</div>
+    </div>
+  </div>
+</div>
+
+<div class="check-sec" style="margin:10px 14px 0">
+  <div class="check-ttl">C H E C K L I S T</div>
+  <div id="checkList"></div>
+</div>
+
+<div style="height:30px"></div>
+
+<script>
+const TODAY_TYPE=(()=>{const d=new Date().getDay();return [0,1,3,6].includes(d)?'entreno':'descanso';})();
+
+const WATER_MSGS=[
+  'Primer vaso! Arranca hidratada Lina',
+  'Buen comienzo! Sigue asi',
+  'Tercer vaso — vas bien!',
+  'A la mitad! El cuerpo lo necesita',
+  'Excelente ritmo de hidratacion',
+  'Dos mas y llegas a la meta',
+  'Casi! Un vaso mas',
+  'Meta cumplida! 2L minimo logrados'
+];
+
+const DAYS={
+  entreno:{kcal:'2.300',macros:{CHO:'270g',PRO:'130g',GRS:'80g'},proG:130,
+    note:'Dia de hapkido (L, Mi, S, D): 4 tomas para rendir en el combate. Pre-entrenamiento 3:30pm OBLIGATORIO — no llegues al gym con el tanque vacio. Hidrata minimo 2.5L. La cena post-entreno tiene mas CHO para reponer glucogeno muscular esta noche.'},
+  descanso:{kcal:'1.900',macros:{CHO:'185g',PRO:'125g',GRS:'72g'},proG:125,
+    note:'Dia de recuperacion (Ma, J, V): CHO reducidos, el cuerpo usa grasa como combustible hoy — eso es parte del plan. Almuerzo con 5 cdas de arroz. Cena mas temprana (7-8pm). Creatina y magnesio igual de obligatorios que los dias de entrenamiento.'}
+};
+
+const MEALS=[
+  {id:'t1',variant:false,
+   lbl:'DESAYUNO',title:'Desayuno',
+   time:'9:00-9:30 am · primer tiempo · no saltarlo',
+   macros:{CHO:'55g',PRO:'30g',GRS:'20g',kcal:'~520'},proG:30,
+   opts:[
+    {n:'Clasico de huevos con kiwi',s:'rendidor y completo',
+     i:['2 claras + 1 huevo entero revueltos con 1/2 cdita aceite de coco o ghee',
+        '2 kiwis picados o 1 taza fruta variada (kiwi + papaya)',
+        'Te verde o cafe americano sin azucar']},
+    {n:'Bowl de avena proteica',s:'sin coccion caliente',
+     i:['4 cdas avena en hojuelas + 1 scoop proteina vainilla mezclados en agua caliente o leche vegetal',
+        '1 kiwi picado encima + 1 cdita semillas de chia',
+        'Agua o te']},
+    {n:'Tostadas de salmon ahumado',s:'variedad y omega-3 extra',
+     i:['2 tostadas pan masa madre tostadas',
+        '80g salmon ahumado + 1/4 aguacate en rodajas + limon',
+        '2 kiwis al lado']},
+    {n:'Pancakes proteicos de avena',s:'para los fines de semana con tiempo',
+     i:['3 cdas avena + 1 huevo entero + 2 claras batidos + 1 cdita canela',
+        'Cocinar en sarten antiadherente con spray de coco',
+        '3 cdas yogurt griego + kiwi y fresas al lado']}
+   ]},
+  {id:'t2',variant:false,
+   lbl:'ALMUERZO',title:'Almuerzo',
+   time:'12:30-1:30 pm · comida principal del dia',
+   macros:{CHO:'80g',PRO:'45g',GRS:'22g',kcal:'~700'},proG:45,
+   tip:'Arroz integral: 7 cdas dias entrenamiento / 5 cdas dias descanso. Atun: maximo 3 veces por semana (mercurio). Sin pimenton en ninguna preparacion.',
+   opts:[
+    {n:'Pollo asado clasico',s:'siempre confiable',
+     i:['200g pechuga asada con ajo, curcuma y especias al gusto',
+        '7/5 cdas arroz integral con chorrito de aceite de oliva',
+        'Ensalada: lechuga + tomate + pepino + zanahoria + limon y sal',
+        '1/4 aguacate']},
+    {n:'Salmon en salsa de coco',s:'premium y antiinflamatorio',
+     i:['180g filete de salmon en salsa coco + limon al horno o airfryer',
+        '4 papas amarillas pequenas cocidas o airfryer',
+        'Ensalada abundante + 1/4 aguacate']},
+    {n:'Carne sudada',s:'1 vez por semana maximo',
+     i:['180g carne magra (res o cerdo lomo) sudada en tomate + cebolla + ajo + curcuma',
+        '3 papas amarillas medianas',
+        'Verduras salteadas (zanahoria, zapallo, apio) + ensalada verde']},
+    {n:'Tilapia a la plancha',s:'liviana y facil',
+     i:['200g filete tilapia con limon + especias + aceite de oliva',
+        '7/5 cdas arroz integral',
+        'Ensalada grande abundante + 1/4 aguacate']}
+   ]},
+  {id:'t3',variant:true,
+   e:{lbl:'PRE',title:'Pre-Entrenamiento',
+      time:'3:30-4:00 pm · 1h antes del hapkido · obligatorio',
+      macros:{CHO:'50g',PRO:'20g',GRS:'8g',kcal:'~350'},proG:20,
+      opts:[
+       {n:'Batido de potencia',s:'combustible rapido y absorcion directa',
+        i:['1 scoop proteina en polvo (vainilla o chocolate) en agua fria',
+           '1 banano maduro',
+           '1 cdita miel de abejas · hielo al gusto']},
+       {n:'Tostadas con huevo y aguacate',s:'mas solido · para quien tolera bien antes de entrenar',
+        i:['3 tostadas maiz inflado Natri',
+           '2 claras + 1 huevo entero revueltos rapido',
+           '1/4 aguacate + tomates cherry']},
+       {n:'Yogurt energetico con banano',s:'suave · probiotico extra',
+        i:['5 cdas yogurt griego natural sin azucar',
+           '1 banano mediano en rodajas',
+           '1 cdita miel de abejas + 6 almendras']},
+       {n:'Arepa con pollo frio',s:'practico · preparar desde el almuerzo',
+        i:['1 arepa de maiz pequena (o arepa de quinoa)',
+           '80g pollo desmechado frio o tibio',
+           'Tomates cherry al lado']}
+      ]},
+   d:{lbl:'COLAC.',title:'Colacion Tarde',
+      time:'4:30-5:00 pm · snack liviano · dia sin entrenamiento',
+      macros:{CHO:'30g',PRO:'15g',GRS:'10g',kcal:'~270'},proG:15,
+      opts:[
+       {n:'Yogurt con kiwi y almendras',s:'probiotico + antioxidantes',
+        i:['5 cdas yogurt griego natural sin azucar',
+           '2 kiwis picados',
+           '6 almendras']},
+       {n:'Atun express con tostadas',s:'rapido y proteico',
+        i:['1 lata atun en agua (no aceite)',
+           '3 tostadas maiz inflado Natri',
+           'Tomates cherry + limon al lado']},
+       {n:'Huevos cocidos con fruta',s:'sin preparacion compleja',
+        i:['2 claras + 1 huevo cocidos duros',
+           '1 kiwi + 1 mandarina o naranja',
+           'Agua con limon']},
+       {n:'Manzana con proteina',s:'lo mas simple del dia',
+        i:['1 manzana verde mediana',
+           '6 almendras',
+           '3 cdas yogurt griego natural']}
+      ]}
+  },
+  {id:'t4',variant:true,
+   e:{lbl:'CENA',title:'Cena Post-Entrenamiento',
+      time:'9:00-10:00 pm · recuperacion nocturna · reponer glucogeno',
+      macros:{CHO:'85g',PRO:'35g',GRS:'30g',kcal:'~740'},proG:35,
+      opts:[
+       {n:'Arroz con pollo desmechado',s:'el clasico de recuperacion',
+        i:['7 cdas arroz integral (puede ser precocido)',
+           '150g pollo desmechado con ajo y curcuma',
+           'Ensalada rapida con limon y sal',
+           '1/4 aguacate + chorrito aceite de oliva']},
+       {n:'Papas airfryer con atun',s:'sin coccion real · listo en 15 min',
+        i:['3 papas amarillas medianas airfryer (20 min · 200C)',
+           '2 latas atun en agua con cebolla + limon + cilantro',
+           '1/2 aguacate · ensalada verde si hay energia']},
+       {n:'Sopa de pollo reconfortante',s:'para cuando llegas muy agotada',
+        i:['Sopa de pollo con papa + zanahoria + zapallo + cilantro (sin pimenton)',
+           '100-120g pollo dentro de la sopa',
+           '1 arepa pequena o 1 rebanada pan masa madre al lado']},
+       {n:'Bowl de pasta nocturno',s:'glucogeno maximo para recuperar',
+        i:['7 cdas pasta penne o espaguetis cocidos',
+           '120g carne molida magra en salsa de tomate natural (ajo + curcuma)',
+           'Ensalada verde rapida']}
+      ]},
+   d:{lbl:'CENA',title:'Cena',
+      time:'7:00-8:00 pm · mas temprana · mas liviana',
+      macros:{CHO:'35g',PRO:'35g',GRS:'22g',kcal:'~480'},proG:35,
+      opts:[
+       {n:'Atun con aguacate y ensalada',s:'liviano y proteico',
+        i:['2 latas atun en agua con limon y cilantro',
+           '2 papas amarillas pequenas airfryer',
+           '1/2 aguacate · ensalada abundante']},
+       {n:'Huevos nocturnos con arepa',s:'simple y rapido',
+        i:['2 claras + 1 huevo entero revueltos con tomate + cebolla (sin pimenton)',
+           '1 arepa de maiz pequena',
+           'Ensalada verde + 1/4 aguacate']},
+       {n:'Pollo liviano con ensalada',s:'alto en proteina · bajo en CHO',
+        i:['130g pollo asado (puede ser sobrante del almuerzo)',
+           'Ensalada grande: lechuga + tomate + pepino + zanahoria + aguacate',
+           'Vinagreta de limon + aceite de oliva + sal']},
+       {n:'Sopa liviana de verduras',s:'ideal para dias frios',
+        i:['Sopa abundante: zanahoria + zapallo + apio + cebolla (sin pimenton)',
+           '80g pollo desmechado o 1 lata atun incorporado',
+           '1 tostada pan masa madre al lado']}
+      ]}
+  }
+];
+
+const CHECKS=[
+  {id:'ch1',lbl:'Desayuno ~9:00 am',note:'proteina + fruta · no saltarlo'},
+  {id:'ch2',lbl:'Almuerzo 12:30 pm',note:'7 cdas arroz (entreno) · 5 cdas (descanso)'},
+  {id:'ch3',lbl:'Pre-entrenamiento 3:30 pm',note:'obligatorio dias de hapkido L/Mi/S/D'},
+  {id:'ch4',lbl:'Entrenamiento funcional hapkido',note:'5:00-6:30 pm'},
+  {id:'ch5',lbl:'Creatina monohidratada 5g',note:'con desayuno o post-entrenamiento'},
+  {id:'ch6',lbl:'Omega-3 2g',note:'con el almuerzo'},
+  {id:'ch7',lbl:'Cena',note:'9pm post-entreno (L/Mi/S/D) · 7-8pm descanso (Ma/J/V)'},
+  {id:'ch8',lbl:'Agua minimo 2.5L',note:'mas en dias de entrenamiento'},
+  {id:'ch9',lbl:'Magnesio glicinato 300mg',note:'30 min antes de dormir'}
+];
+
+let day=TODAY_TYPE;
+let expanded=new Set(['t1']);
+let selOpts={};
+let checkedMeals=new Set();
+let waterCount=0;
+let checkedItems=new Set();
+
+function loadState(){
+  const todayStr=new Date().toDateString();
+  if(localStorage.getItem('jsmo_lm_date')!==todayStr){
+    localStorage.setItem('jsmo_lm_date',todayStr);
+    checkedMeals=new Set();waterCount=0;checkedItems=new Set();day=TODAY_TYPE;
+  } else {
+    const cm=localStorage.getItem('jsmo_lm_checked');
+    if(cm) checkedMeals=new Set(JSON.parse(cm));
+    waterCount=parseInt(localStorage.getItem('jsmo_lm_water')||'0');
+    const sd=localStorage.getItem('jsmo_lm_day');
+    if(sd) day=sd;
+    const ci=localStorage.getItem('jsmo_lm_items');
+    if(ci) checkedItems=new Set(JSON.parse(ci));
+  }
+  const so=localStorage.getItem('jsmo_lm_selOpts');
+  if(so) selOpts=JSON.parse(so);
+}
+
+function saveState(){
+  localStorage.setItem('jsmo_lm_checked',JSON.stringify([...checkedMeals]));
+  localStorage.setItem('jsmo_lm_water',waterCount);
+  localStorage.setItem('jsmo_lm_day',day);
+  localStorage.setItem('jsmo_lm_selOpts',JSON.stringify(selOpts));
+  localStorage.setItem('jsmo_lm_items',JSON.stringify([...checkedItems]));
+}
+
+function getMdata(m){
+  if(!m.variant) return m;
+  return day==='entreno'?m.e:m.d;
+}
+
+function getAccPro(){
+  let t=0;
+  MEALS.forEach(m=>{
+    const md=getMdata(m);
+    if(checkedMeals.has(m.id)) t+=md.proG;
+  });
+  return t;
+}
+
+function setDay(d){
+  day=d;
+  saveState();
+  render();
+}
+
+function render(){
+  const D=DAYS[day];
+  document.getElementById('tabE').className='dtab'+(day==='entreno'?' active':'');
+  document.getElementById('tabD').className='dtab'+(day==='descanso'?' active':'');
+  document.getElementById('sKcal').innerHTML=D.kcal+' <small>kcal</small>';
+  const m=D.macros;
+  document.getElementById('sMacros').innerHTML=
+    '<span class="mpill cho">CHO '+m.CHO+'</span>'+
+    '<span class="mpill pro">PRO '+m.PRO+'</span>'+
+    '<span class="mpill grs">GRS '+m.GRS+'</span>';
+  const acc=getAccPro();
+  const proTgt=D.proG;
+  const pct=Math.min(100,Math.round(acc/proTgt*100));
+  document.getElementById('proVal').textContent=acc+' / '+proTgt+' g';
+  document.getElementById('proFill').style.width=pct+'%';
+  document.getElementById('dayNote').textContent=D.note;
+  updatePlate();
+  renderMeals();
+  renderWater();
+  renderChecklist();
+}
+
+function updatePlate(){
+  const m=DAYS[day].macros;
+  const cho=parseInt(m.CHO);const pro=parseInt(m.PRO);const grs=parseInt(m.GRS);
+  const tot=cho*4+pro*4+grs*9;
+  const cp=Math.round(cho*4/tot*100);
+  const pp=Math.round(pro*4/tot*100);
+  const gp=100-cp-pp;
+  document.getElementById('plateRing').style.background=
+    'conic-gradient(#1A5276 0% '+cp+'%, #922B21 '+cp+'% '+(cp+pp)+'%, #9A7D0A '+(cp+pp)+'% 100%)';
+  document.getElementById('plateLegend').innerHTML=
+    '<div class="pleg"><div class="pleg-dot" style="background:#1A5276"></div>'+
+    '<span class="pleg-lbl">Carbohidratos</span><span class="pleg-val">'+cho+'g<span class="pleg-pct">'+cp+'%</span></span></div>'+
+    '<div class="pleg"><div class="pleg-dot" style="background:#922B21"></div>'+
+    '<span class="pleg-lbl">Proteina</span><span class="pleg-val">'+pro+'g<span class="pleg-pct">'+pp+'%</span></span></div>'+
+    '<div class="pleg"><div class="pleg-dot" style="background:#9A7D0A"></div>'+
+    '<span class="pleg-lbl">Grasas</span><span class="pleg-val">'+grs+'g<span class="pleg-pct">'+gp+'%</span></span></div>';
+}
+
+function renderMeals(){
+  const cont=document.getElementById('mealsContainer');
+  cont.innerHTML=MEALS.map(m=>{
+    const md=getMdata(m);
+    const isOpen=expanded.has(m.id);
+    const isDone=checkedMeals.has(m.id);
+    const selIdx=selOpts[m.id]||0;
+    const opts=md.opts;
+    const opt=opts[selIdx]||opts[0];
+    const macros=md.macros;
+    return '<div class="mcard'+(isOpen?' open':'')+'" id="mc-'+m.id+'" data-id="'+m.id+'">'+
+      '<div class="mc-head" onclick="toggleCard(\''+m.id+'\')">'+
+        '<div class="mc-lbl">'+md.lbl+'</div>'+
+        '<div class="mc-info">'+
+          '<div class="mc-title">'+md.title+'</div>'+
+          '<div class="mc-time">'+md.time+'</div>'+
+        '</div>'+
+        '<div class="mc-check'+(isDone?' done':'')+'" onclick="event.stopPropagation();toggleMeal(\''+m.id+'\')">'+
+          '<svg width="12" height="10" viewBox="0 0 12 10" fill="none">'+
+          '<path d="M1 5L4.5 8.5L11 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+        '</div>'+
+        '<div class="mc-chevron">▼</div>'+
+      '</div>'+
+      '<div class="mc-macro">'+
+        '<span class="mpill cho">CHO '+macros.CHO+'</span>'+
+        '<span class="mpill pro">PRO '+macros.PRO+'</span>'+
+        '<span class="mpill grs">GRS '+macros.GRS+'</span>'+
+        '<span class="mpill" style="background:var(--kcal-bg,#F2F4F4);color:#566573">kcal '+macros.kcal+'</span>'+
+      '</div>'+
+      '<div class="mc-body">'+
+        '<div class="opt-tabs">'+
+          opts.map((o,i)=>'<button class="otab'+(i===selIdx?' active':'')+'" onclick="selOpt(\''+m.id+'\','+i+')">Op '+(i+1)+'</button>').join('')+
+        '</div>'+
+        '<div class="opt-name">'+opt.n+'</div>'+
+        '<div class="opt-sub">'+opt.s+'</div>'+
+        '<ul class="opt-items">'+opt.i.map(x=>'<li>'+x+'</li>').join('')+'</ul>'+
+        (m.tip?'<div class="mc-tip">💡 '+m.tip+'</div>':'')+
+        (md.tip?'<div class="mc-tip">💡 '+md.tip+'</div>':'')+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+function toggleCard(id){
+  if(expanded.has(id)) expanded.delete(id); else expanded.add(id);
+  render();
+}
+
+function toggleMeal(id){
+  if(checkedMeals.has(id)) checkedMeals.delete(id); else checkedMeals.add(id);
+  saveState();render();
+}
+
+function selOpt(id,idx){
+  selOpts[id]=idx;
+  saveState();render();
+}
+
+function renderWater(){
+  const drops=document.getElementById('drops');
+  drops.innerHTML=Array.from({length:8},(_,i)=>
+    '<div class="drop'+(i>=waterCount?' empty':'')+'" onclick="tapDrop('+i+')">💧</div>'
+  ).join('');
+  document.getElementById('waterCnt').textContent=waterCount+' / 8 vasos';
+  document.getElementById('waterMsg').textContent=waterCount>0?WATER_MSGS[Math.min(waterCount-1,7)]:'';
+}
+
+function tapDrop(i){
+  waterCount=(i<waterCount)?i:(i+1);
+  saveState();renderWater();
+}
+
+function renderChecklist(){
+  document.getElementById('checkList').innerHTML=CHECKS.map(c=>{
+    const done=checkedItems.has(c.id);
+    return '<div class="check-item'+(done?' done':'')+'" onclick="toggleCheck(\''+c.id+'\')">'+
+      '<div class="chk-box'+(done?' done':'')+'">'+(done?'<svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>':'')+'</div>'+
+      '<div>'+
+        '<div class="chk-lbl">'+c.lbl+'</div>'+
+        '<div class="chk-time">'+c.note+'</div>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+function toggleCheck(id){
+  if(checkedItems.has(id)) checkedItems.delete(id); else checkedItems.add(id);
+  saveState();renderChecklist();
+}
+
+// Init
+const now=new Date();
+const dias=['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
+const meses=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+document.getElementById('hdrDate').textContent=dias[now.getDay()]+', '+now.getDate()+' '+meses[now.getMonth()];
+document.getElementById('noteWeek').textContent='Semana del '+now.getDate()+' de '+['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][now.getMonth()]+' '+now.getFullYear();
+
+loadState();
+render();
+</script>
+</body>
+</html>
