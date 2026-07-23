@@ -349,23 +349,24 @@ const MEALS=[
    macros:{CHO:'80g',PRO:'45g',GRS:'22g',kcal:'~700'},proG:45,
    tip:'Arroz integral: 7 cdas dias entrenamiento / 5 cdas dias descanso. Atun: maximo 3 veces por semana (mercurio). Sin pimenton en ninguna preparacion.',
    opts:[
-    {n:'Pollo asado clasico',s:'siempre confiable',
+    {n:'Pollo asado clasico',s:'siempre confiable · carbohidrato: arroz integral',
      i:['200g pechuga asada con ajo, curcuma y especias al gusto',
-        '7/5 cdas arroz integral con chorrito de aceite de oliva',
+        '7 cdas arroz integral dias entrenamiento / 5 cdas dias descanso',
         'Ensalada: lechuga + tomate + pepino + zanahoria + limon y sal',
-        '1/4 aguacate']},
-    {n:'Salmon en salsa de coco',s:'premium y antiinflamatorio',
-     i:['180g filete de salmon en salsa coco + limon al horno o airfryer',
-        '4 papas amarillas pequenas cocidas o airfryer',
+        '1/4 aguacate + chorrito aceite de oliva']},
+    {n:'Salmon al limon con papas amarillas',s:'antiinflamatorio · carbohidrato: papa amarilla airfryer',
+     i:['180g filete de salmon en limon + ajo + especias al horno o airfryer',
+        '4-5 papas amarillas pequenas airfryer (200C · 20 min)',
         'Ensalada abundante + 1/4 aguacate']},
-    {n:'Carne sudada',s:'1 vez por semana maximo',
-     i:['180g carne magra (res o cerdo lomo) sudada en tomate + cebolla + ajo + curcuma',
-        '3 papas amarillas medianas',
-        'Verduras salteadas (zanahoria, zapallo, apio) + ensalada verde']},
-    {n:'Tilapia a la plancha',s:'liviana y facil',
-     i:['200g filete tilapia con limon + especias + aceite de oliva',
-        '7/5 cdas arroz integral',
-        'Ensalada grande abundante + 1/4 aguacate']}
+    {n:'Tilapia con maduro asado',s:'carbohidrato: platano maduro · dulce y nutritivo',
+     i:['200g filete tilapia a la plancha con limon + curcuma + sal',
+        '1 maduro grande asado al horno o airfryer (o 2 tajadas grandes)',
+        'Ensalada verde: lechuga + tomate + pepino + zanahoria',
+        '1/4 aguacate']},
+    {n:'Carne molida con pure o papa parda',s:'carbohidrato: papa parda / pure · contundente y practico',
+     i:['180g carne molida magra salteada con tomate + cebolla + ajo + curcuma (SIN pimenton)',
+        '4-5 papas parda airfryer O pure de 2 papas parda cocidas con pizca de sal y aceite de oliva',
+        'Ensalada verde abundante + 1/4 aguacate']}
    ]},
   {id:'t3',variant:true,
    e:{lbl:'PRE',title:'Pre-Entrenamiento',
@@ -384,9 +385,9 @@ const MEALS=[
         i:['5 cdas yogurt griego natural sin azucar',
            '1 banano mediano en rodajas',
            '1 cdita miel de abejas + 6 almendras']},
-       {n:'Arepa con pollo frio',s:'practico · preparar desde el almuerzo',
-        i:['1 arepa de maiz pequena (o arepa de quinoa)',
-           '80g pollo desmechado frio o tibio',
+       {n:'Arepa con pollo desmechado tibio',s:'practico · preparar desde el almuerzo',
+        i:['1 arepa de maiz pequena O arepa de arroz (Alimentos Yen)',
+           '80g pollo desmechado tibio + sal y curcuma al gusto',
            'Tomates cherry al lado']}
       ]},
    d:{lbl:'COLAC.',title:'Colacion Tarde',
@@ -425,10 +426,10 @@ const MEALS=[
         i:['3 papas amarillas medianas airfryer (20 min · 200C)',
            '2 latas atun en agua con cebolla + limon + cilantro',
            '1/2 aguacate · ensalada verde si hay energia']},
-       {n:'Sopa de pollo reconfortante',s:'para cuando llegas muy agotada',
-        i:['Sopa de pollo con papa + zanahoria + zapallo + cilantro (sin pimenton)',
-           '100-120g pollo dentro de la sopa',
-           '1 arepa pequena o 1 rebanada pan masa madre al lado']},
+       {n:'Omelet de champiñones con papas parda',s:'alta proteina · sin sopa · listo en 15 min',
+        i:['2 claras + 1 huevo entero en omelet con champiñones + espinaca + ajo + sal',
+           '5 papas parda pequenas airfryer (200C · 20 min)',
+           '1/4 aguacate + ensalada verde rapida']},
        {n:'Bowl de pasta nocturno',s:'glucogeno maximo para recuperar',
         i:['7 cdas pasta penne o espaguetis cocidos',
            '120g carne molida magra en salsa de tomate natural (ajo + curcuma)',
@@ -599,7 +600,6 @@ function renderMeals(){
         '<div class="opt-name">'+opt.n+'</div>'+
         '<div class="opt-sub">'+opt.s+'</div>'+
         '<ul class="opt-items">'+opt.i.map(x=>'<li>'+x+'</li>').join('')+'</ul>'+
-        (m.tip?'<div class="mc-tip">💡 '+m.tip+'</div>':'')+
         (md.tip?'<div class="mc-tip">💡 '+md.tip+'</div>':'')+
       '</div>'+
     '</div>';
