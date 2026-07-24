@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#053333">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Plan Yen Escobar · JSMO</title>
+<style>
+:root{
+  color-scheme:light;
+  --primary:#0E7D7D;--dark:#063F3F;--mid:#0A6060;
+  --cream:#EAF4F4;--light:#D0EEEE;--border:#B2DFDF;
+  --white:#fff;--text:#0D2828;--med:#3D6060;--subtle:#78A8A8;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;
+  background:var(--cream);color:var(--text);max-width:480px;margin:0 auto}
+.hdr{background:linear-gradient(135deg,#063F3F 0%,#0E7D7D 55%,#1AA8A8 100%);
+  padding:16px 18px 0;position:sticky;top:0;z-index:50}
+.hdr-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.logo{font-size:11px;font-weight:800;color:rgba(255,255,255,.9);letter-spacing:4px}
+.hdr-date{font-size:10px;color:rgba(255,255,255,.45)}
+.pname{font-size:19px;font-weight:800;color:#fff;margin-bottom:2px}
+.pstats{font-size:10.5px;color:rgba(255,255,255,.55);margin-bottom:8px}
+.objetivo{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);
+  border-radius:20px;padding:3px 10px;font-size:10px;color:rgba(255,255,255,.9);margin-bottom:10px}
+.banner{background:rgba(0,0,0,.25);border-radius:8px;padding:7px 12px;
+  font-size:10.5px;color:rgba(255,255,255,.85);margin-bottom:10px;
+  border-left:3px solid rgba(255,255,255,.4);line-height:1.5}
+.day-tabs{display:flex;gap:6px}
+.dtab{flex:1;background:transparent;border:1.5px solid rgba(255,255,255,.2);
+  border-radius:10px 10px 0 0;color:rgba(255,255,255,.5);font-size:10px;font-weight:700;
+  padding:8px 4px 6px;cursor:pointer;transition:all .18s;text-align:center}
+.dtab .icon{font-size:18px;display:block;margin-bottom:3px}
+.dtab.active{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.6);
+  border-bottom-color:transparent;color:#fff}
+.rest-note{margin:12px 14px 0;background:#fff;border-radius:10px;padding:10px 12px;
+  border-left:3px solid var(--primary);font-size:12px;color:var(--med);line-height:1.55;display:none}
+.jsmo-note{margin:10px 14px 0;background:linear-gradient(135deg,rgba(14,125,125,.06),rgba(14,125,125,.02));
+  border:1px solid var(--border);border-radius:12px;padding:11px 13px}
+.note-head{display:flex;align-items:center;gap:9px;margin-bottom:7px}
+.note-av{width:28px;height:28px;border-radius:50%;background:var(--primary);
+  display:flex;align-items:center;justify-content:center;font-size:7.5px;font-weight:800;
+  color:#fff;letter-spacing:.5px;flex-shrink:0}
+.note-who{flex:1}
+.note-name{font-size:10.5px;font-weight:800;color:var(--primary);display:block}
+.note-week{font-size:9px;color:var(--subtle)}
+.note-msg{font-size:12px;color:var(--text);line-height:1.6}
+.water-sec{margin:10px 14px 0;background:#fff;border-radius:12px;padding:12px 14px}
+.water-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.water-ttl{font-size:10.5px;font-weight:800;color:var(--primary);letter-spacing:2px}
+.water-cnt{font-size:10.5px;font-weight:700;color:var(--med)}
+.drops{display:flex;gap:3px;justify-content:space-between}
+.drop{font-size:24px;cursor:pointer;flex:1;text-align:center;padding:3px 0;
+  border-radius:6px;transition:transform .12s;user-select:none}
+.drop:active{transform:scale(.82)}
+.drop.empty{opacity:.15;filter:grayscale(1)}
+.water-msg{font-size:10.5px;color:var(--primary);font-weight:600;margin-top:6px;text-align:center;min-height:14px}
+.beb-sec{margin:10px 14px 0;background:#fff;border-radius:12px;padding:13px 14px}
+.beb-ttl{font-size:10px;font-weight:800;color:var(--primary);letter-spacing:2px;margin-bottom:10px}
+.beb-group{margin-bottom:10px}
+.beb-label{font-size:10px;font-weight:700;color:var(--subtle);letter-spacing:1px;margin-bottom:4px}
+.beb-item{font-size:12px;color:var(--med);padding:3px 0;line-height:1.4;
+  padding-left:12px;position:relative}
+.beb-item::before{content:'·';position:absolute;left:2px;color:var(--primary);font-weight:700}
+.content{padding:10px 14px 60px}
+.mcard{background:#fff;border-radius:12px;margin-top:10px;overflow:hidden;
+  box-shadow:0 2px 10px rgba(0,0,0,.07);transition:all .2s}
+.mc-head{display:flex;align-items:center;padding:12px 14px;cursor:pointer;gap:10px}
+.mc-lbl{font-size:9px;font-weight:800;letter-spacing:2px;padding:4px 7px;
+  border-radius:6px;background:var(--primary);color:#fff;flex-shrink:0;min-width:54px;text-align:center}
+.mc-info{flex:1}
+.mc-title{font-size:13.5px;font-weight:700;color:var(--text)}
+.mc-time{font-size:10px;color:var(--subtle);margin-top:1px}
+.mc-check{width:24px;height:24px;border-radius:50%;border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;
+  transition:all .2s;margin-left:2px}
+.mc-check.done{background:var(--primary);border-color:var(--primary)}
+.mc-check svg{opacity:0;transition:opacity .15s}
+.mc-check.done svg{opacity:1}
+.mc-chevron{font-size:12px;color:var(--subtle);transition:transform .2s;flex-shrink:0}
+.mcard.open .mc-chevron{transform:rotate(180deg)}
+.mc-tags{display:flex;gap:4px;flex-wrap:wrap;padding:0 14px 10px}
+.tag{padding:3px 8px;border-radius:20px;font-size:9.5px;font-weight:700;
+  background:var(--cream);color:var(--primary);border:1px solid var(--border)}
+.mc-body{padding:0 14px 14px;display:none}
+.mcard.open .mc-body{display:block}
+.opt-tabs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.otab{font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;
+  border:1.5px solid var(--border);color:var(--subtle);cursor:pointer;transition:all .15s}
+.otab.active{background:var(--primary);border-color:var(--primary);color:#fff}
+.opt-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}
+.opt-sub{font-size:10.5px;color:var(--primary);margin-bottom:8px;font-style:italic}
+.opt-items{list-style:none}
+.opt-items li{font-size:12px;color:var(--med);padding:4px 0;border-bottom:1px solid var(--light);
+  padding-left:12px;position:relative;line-height:1.4}
+.opt-items li::before{content:'·';position:absolute;left:2px;color:var(--primary);font-weight:700}
+.opt-items li:last-child{border-bottom:none}
+.mc-tip{margin-top:10px;background:var(--cream);border-radius:8px;padding:8px 10px;
+  font-size:11px;color:var(--med);line-height:1.5;border-left:3px solid var(--primary)}
+.supl-sec{margin:10px 14px 0;background:#fff;border-radius:12px;padding:13px 14px}
+.supl-ttl{font-size:10px;font-weight:800;color:var(--primary);letter-spacing:2px;margin-bottom:10px}
+.supl-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--light)}
+.supl-item:last-child{border-bottom:none}
+.supl-icon{font-size:18px;flex-shrink:0;margin-top:2px}
+.supl-info{flex:1}
+.supl-name{font-size:12.5px;font-weight:700;color:var(--text)}
+.supl-dose{font-size:11px;color:var(--primary);margin:1px 0}
+.supl-brand{font-size:10.5px;color:var(--subtle);line-height:1.4}
+.check-sec{margin:10px 14px 0;background:#fff;border-radius:12px;padding:13px 14px}
+.check-ttl{font-size:10px;font-weight:800;color:var(--primary);letter-spacing:2px;margin-bottom:10px}
+.check-item{display:flex;align-items:center;gap:10px;padding:7px 0;cursor:pointer;
+  border-bottom:1px solid var(--light)}
+.check-item:last-child{border-bottom:none}
+.chk-box{width:20px;height:20px;border-radius:5px;border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.chk-box.done{background:var(--primary);border-color:var(--primary)}
+.check-item.done .chk-lbl{text-decoration:line-through;color:var(--subtle)}
+.chk-lbl{font-size:12px;color:var(--text);flex:1}
+.chk-time{font-size:10px;color:var(--subtle)}
+.cierre{margin:10px 14px 0;background:linear-gradient(135deg,rgba(14,125,125,.06),rgba(14,125,125,.02));
+  border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-align:center}
+.cierre-txt{font-size:12px;color:var(--med);line-height:1.7;font-style:italic}
+.cierre-firma{font-size:11px;font-weight:700;color:var(--primary);margin-top:8px}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-top">
+    <span class="logo">JSMO</span>
+    <span class="hdr-date" id="hdrDate"></span>
+  </div>
+  <div class="pname">Yen Escobar</div>
+  <div class="pstats">Cycling · Running · Padel · Fuerza · Media Maratón</div>
+  <div class="objetivo">Composicion Corporal · Meta Media Maratón</div>
+  <div class="banner">🚴 Cycling · 🏃 Running · 🎾 Padel · 💪 Fuerza &nbsp;·&nbsp; Alimentos Yen</div>
+  <div class="day-tabs">
+    <button class="dtab" id="tabE" onclick="setDay('entreno')">
+      <span class="icon">🏃</span>
+      <span>Entrenamiento</span>
+    </button>
+    <button class="dtab" id="tabD" onclick="setDay('descanso')">
+      <span class="icon">😴</span>
+      <span>Descanso</span>
+    </button>
+  </div>
+</div>
+
+<div class="rest-note" id="restNote">
+  💡 <strong>Dia de descanso:</strong> puedes quitar los carbohidratos de 2 de tus 3 comidas principales. Prioriza proteina y vegetales en esas tomas.
+</div>
+
+<div class="jsmo-note" style="margin-top:12px">
+  <div class="note-head">
+    <div class="note-av">JS<br>+AA</div>
+    <div class="note-who">
+      <span class="note-name">Juan Sebastian M. · Angelica Astudillo</span>
+      <span class="note-week" id="noteWeek"></span>
+    </div>
+  </div>
+  <div class="note-msg">Yen, admiramos tu constancia, tu disciplina y tu manera de ver el mundo. Este plan no es solo sobre comida — es sobre ti. Tu energia, tu fuerza, tu forma de inspirar tambien necesitan sosten. Aqui estamos para hacerlo contigo, paso a paso, con estrategias practicas, realistas y sostenibles, ajustadas a tus habitos y tus metas.</div>
+</div>
+
+<div class="water-sec">
+  <div class="water-head">
+    <span class="water-ttl">HIDRATACION</span>
+    <span class="water-cnt" id="waterCnt">0 / 8 vasos</span>
+  </div>
+  <div class="drops" id="drops"></div>
+  <div class="water-msg" id="waterMsg"></div>
+</div>
+
+<div class="beb-sec">
+  <div class="beb-ttl">B E B I D A S</div>
+  <div class="beb-group">
+    <div class="beb-label">MANANA</div>
+    <div class="beb-item">1 taza de cafe sin azucar con chorrito de bebida vegetal</div>
+    <div class="beb-item">1 vaso de yogurt bebible Alimentos Yen (cuando sientas mucha hambre, puede ser previo al entrenamiento)</div>
+    <div class="beb-item">1 taza de aromatica preferida</div>
+  </div>
+  <div class="beb-group">
+    <div class="beb-label">ALMUERZO Y TARDE</div>
+    <div class="beb-item">Agua natural o con rodajas de limon</div>
+    <div class="beb-item">Agua de pina o de Flor de Jamaica</div>
+    <div class="beb-item">Te Hatsu sin calorias</div>
+    <div class="beb-item">Soda michelada sin azucar con limon (con moderacion)</div>
+  </div>
+</div>
+
+<div class="content" id="mealsContainer"></div>
+
+<div class="supl-sec" style="margin:10px 14px 0">
+  <div class="supl-ttl">S U P L E M E N T A C I O N</div>
+  <div class="supl-item">
+    <div class="supl-icon">🌙</div>
+    <div class="supl-info">
+      <div class="supl-name">Bisglicinato de Magnesio</div>
+      <div class="supl-dose">2 capsulas · 2 horas antes de acostarse</div>
+      <div class="supl-brand">Mejora calidad del sueno, recuperacion muscular y manejo del estres</div>
+    </div>
+  </div>
+  <div class="supl-item">
+    <div class="supl-icon">🍒</div>
+    <div class="supl-info">
+      <div class="supl-name">Tart Cherry</div>
+      <div class="supl-dose">1 capsula · dias de doble jornada o entrenos fuertes</div>
+      <div class="supl-brand">Antiinflamatorio natural · reduce dolor muscular post-entreno</div>
+    </div>
+  </div>
+  <div class="supl-item">
+    <div class="supl-icon">💧</div>
+    <div class="supl-info">
+      <div class="supl-name">Sales de Hidratacion GU</div>
+      <div class="supl-dose">1 capsula en 500ml de agua · 2 veces por semana</div>
+      <div class="supl-brand">Para optimizar la hidratacion en los entrenos · critico en media maraton</div>
+    </div>
+  </div>
+  <div class="supl-item">
+    <div class="supl-icon">🌿</div>
+    <div class="supl-info">
+      <div class="supl-name">Ashwagandha</div>
+      <div class="supl-dose">1 capsula en la manana</div>
+      <div class="supl-brand">Adaptogeno · manejo del cortisol · energia sostenida en el dia</div>
+    </div>
+  </div>
+  <div class="supl-item">
+    <div class="supl-icon">🧴</div>
+    <div class="supl-info">
+      <div class="supl-name">Nutrigel Advance</div>
+      <div class="supl-dose">1 sachet en agua · todos los dias</div>
+      <div class="supl-brand">Colageno + articulaciones · importante para el volumen de entrenamiento actual</div>
+    </div>
+  </div>
+</div>
+
+<div class="check-sec" style="margin:10px 14px 0">
+  <div class="check-ttl">C H E C K L I S T</div>
+  <div id="checkList"></div>
+</div>
+
+<div class="cierre" style="margin:10px 14px 0">
+  <div class="cierre-txt">"Este plan no es un reto. Es un regreso a ti. A la mujer que crea, que inspira, que sostiene a otros y que hoy decide sostenerse a si misma. No se trata de hacerlo perfecto, se trata de elegirte de nuevo, con amor, sin culpa, con intencion."</div>
+  <div class="cierre-firma">— Juan Sebastian Muñoz · Angelica Astudillo</div>
+</div>
+
+<div style="height:30px"></div>
+
+<script>
+const TODAY_DAY=new Date().getDay();
+// Asumimos entrenamiento la mayoria de dias
+const TODAY_TYPE=[0,1,2,3,4,5,6].includes(TODAY_DAY)?'entreno':'descanso';
+
+const WATER_MSGS=[
+  'Primer vaso! Empieza el dia hidratada Yen',
+  'Buen inicio! Sigue asi',
+  'Tercer vaso — vas bien!',
+  'A la mitad! El cuerpo te lo agradece',
+  'Excelente ritmo de hidratacion',
+  'Dos mas y llegamos a la meta',
+  'Casi! Un vaso mas',
+  'Meta cumplida! Recuerda el termo siempre contigo'
+];
+
+const MEALS=[
+  {id:'t1',
+   lbl:'PRE',title:'Pre-Entrenamiento',
+   time:'20-30 min antes del entreno · liviano y energizante',
+   tags:['Energia rapida','CHO moderado'],
+   opts:[
+    {n:'Batido capuchino proteico',s:'medio scoop de proteina tipo cafe',
+     i:['1/2 scoop de proteina en 1 taza de cafe frio o agua fria',
+        'Queda tipo capuchino proteico',
+        'Hielo al gusto']},
+    {n:'Avena trasnochada express',s:'preparar la noche anterior',
+     i:['3 cdas de avena en hojuelas',
+        'Cubrir con leche vegetal de preferencia',
+        '1 cda de yogurt griego Alimentos Yen',
+        '1/2 banano picado']},
+    {n:'Yogurt con arandanos y galleta',s:'suave y rapido',
+     i:['2 cdas de yogurt griego Alimentos Yen',
+        '1 punado de arandanos frescos o congelados',
+        '1 galleta de maiz triturado']},
+    {n:'Mango con sal',s:'hidratante y energizante natural',
+     i:['2 cdas de mango picado en cubos',
+        'Sal al gusto',
+        'Ideal para dias de cycling o running matutino']}
+   ]},
+  {id:'t2',
+   lbl:'DESAYUNO',title:'Desayuno · Post-Entreno Matutino',
+   time:'Post-entrenamiento manana · recarga y sintesis muscular',
+   tags:['Alta proteina','Recuperacion'],
+   tip:'Todos los dias consumir 1 porcion de fruta de 80-100g con el desayuno.',
+   opts:[
+    {n:'Huevos con arepa de arroz y fruta',s:'clasico y completo',
+     i:['2 claras + 1 huevo entero revueltos',
+        '1 arepa de arroz integral Alimentos Yen',
+        '1 tajada de queso cuajada',
+        '1 porcion de fruta de tu eleccion (80-100g)']},
+    {n:'Bowl proteico de yogurt y arandanos',s:'sin coccion · rapido post-entreno',
+     i:['4 cdas de yogurt griego Alimentos Yen',
+        '1 scoop de proteina en polvo (mezclar bien)',
+        '10 arandanos congelados o frescos']},
+    {n:'Huevos en cacerola con arepa y ricotta',s:'caliente y sabroso',
+     i:['2 claras + 1 huevo entero en cacerola con aceite de oliva',
+        '4 tomates cherry + 1 punado pequeno de espinaca',
+        '1 arepa de arroz integral Alimentos Yen',
+        '1 cda de queso ricotta Alimentos Yen encima']},
+    {n:'Batido proteico de fresas',s:'dias de pierna o fondo largo',
+     i:['1 scoop de proteina en polvo',
+        '1 vaso de leche vegetal de preferencia + hielo',
+        '5 fresas y licuar',
+        'Dia de pierna: puedes anadir 4 cdas de avena en hojuelas']}
+   ]},
+  {id:'t3',
+   lbl:'ALMUERZO',title:'Almuerzo',
+   time:'12:30-2:00 pm · comida principal del dia',
+   tags:['Proteina + CHO','Completo'],
+   tip:'2 veces a la semana puedes cambiar el almuerzo por 1 taza mediana sopera de crema de verduras.',
+   opts:[
+    {n:'Carne de res con arroz integral',s:'clasico proteico',
+     i:['140g de carne magra de res asada o a la plancha',
+        '4 cdas de arroz integral',
+        'Ensalada: zanahoria rallada + tomate + cebolla morada + limon y sal']},
+    {n:'Salmon con papas amarillas',s:'antiinflamatorio · omega-3',
+     i:['150g filete de salmon al horno o airfryer',
+        '3 papas amarillas cocidas',
+        'Vegetales al vapor abundantes (brocoli, zanahoria, zapallo)']},
+    {n:'Pollo a la plancha con quinoa y picadillo',s:'alto rendimiento · tropical',
+     i:['150g filete de pollo a la plancha',
+        '1 taza de quinoa cocida',
+        'Picadillo: tomate + cebolla + mango en cubos + cilantro + limon y sal']},
+    {n:'Carne molida guisada con arroz o papas',s:'practico y renditorio',
+     i:['140g de carne molida guisada con tomate + cebolla + pimenton',
+        '3 cdas de arroz integral O 3 papas amarillas airfryer',
+        'Ensalada: zanahoria rallada + tomate cherry + lechuga + limon y sal']}
+   ]},
+  {id:'t4',
+   lbl:'SNACK',title:'Snack PM',
+   time:'3:00-5:00 pm · snack inteligente · no saltarlo',
+   tags:['Liviano','Proteina moderada'],
+   opts:[
+    {n:'Galletas Salmas con manzana verde',s:'clasico y practico · para llevar',
+     i:['1 paquete de galletas Salmas',
+        '1 manzana verde mediana']},
+    {n:'Palito de queso con pina',s:'dulce y proteico',
+     i:['1 palito de queso bajo en grasa Finesse',
+        '1 rodaja de pina natural']},
+    {n:'Yogurt con mango',s:'probiotico + fruta tropical',
+     i:['5 cdas de yogurt griego Alimentos Yen',
+        '3 cdas de mango en cubos']},
+    {n:'Batido de proteina express',s:'dias de entreno intenso o doble jornada',
+     i:['1 scoop de proteina en polvo',
+        '1 vaso de agua con hielo',
+        'Licuar — dias muy intensos: anadir 1 banano']}
+   ]},
+  {id:'t5',
+   lbl:'CENA',title:'Cena',
+   time:'7:00-9:00 pm · liviana · reparadora',
+   tags:['Proteina alta','CHO moderado'],
+   opts:[
+    {n:'Pollo desmechado con arepa de arroz',s:'practico · colombiano',
+     i:['140g de pollo desmechado',
+        '1 arepa de arroz integral Alimentos Yen',
+        '1 cda de guacamole casero (aguacate + limon + sal)']},
+    {n:'Arepa de maduro con huevos gratinados',s:'dulce y sabroso',
+     i:['1 arepa de maduro entera o en triangulitos',
+        '2 huevos enteros + 1 clara revueltos',
+        '1 loncha de queso mozzarella para gratinar O 1 cdita queso parmesano (quedan tipo samba)']},
+    {n:'Bowl de pollo o carne con maduro',s:'calido y nutritivo',
+     i:['140g de pollo desmechado o carne molida magra',
+        '1/2 maduro en freidora de aire',
+        '1 cda de queso ricotta Alimentos Yen']},
+    {n:'Omelette de claras con queso',s:'liviana · alta proteina · bajo en CHO',
+     i:['3 claras de huevo en omelette',
+        '1 tajada de queso Finesse bajo en grasa dentro',
+        '5 tomates cherry salteados con aceite de oliva']}
+   ]}
+];
+
+const CHECKS=[
+  {id:'ch1',lbl:'Pre-entrenamiento',note:'20-30 min antes del entreno'},
+  {id:'ch2',lbl:'Desayuno post-entreno',note:'proteina + fruta · no saltarlo'},
+  {id:'ch3',lbl:'Almuerzo completo',note:'proteina + CHO + vegetales'},
+  {id:'ch4',lbl:'Snack PM',note:'no pasar mas de 3h sin comer'},
+  {id:'ch5',lbl:'Cena liviana',note:'7-9 pm · reparadora'},
+  {id:'ch6',lbl:'Hidratacion durante el dia',note:'termo con agua siempre contigo'},
+  {id:'ch7',lbl:'Ashwagandha en la manana',note:'1 capsula con el desayuno'},
+  {id:'ch8',lbl:'Nutrigel Advance',note:'1 sachet en agua · todos los dias'},
+  {id:'ch9',lbl:'Magnesio 2 capsulas',note:'2 horas antes de acostarte'},
+  {id:'ch10',lbl:'Descanso nocturno',note:'procura dormir mas de 7h'}
+];
+
+let day=TODAY_TYPE;
+let expanded=new Set(['t1']);
+let selOpts={};
+let checkedMeals=new Set();
+let waterCount=0;
+let checkedItems=new Set();
+
+function loadState(){
+  const todayStr=new Date().toDateString();
+  if(localStorage.getItem('jsmo_ye_date')!==todayStr){
+    localStorage.setItem('jsmo_ye_date',todayStr);
+    checkedMeals=new Set();waterCount=0;checkedItems=new Set();day=TODAY_TYPE;
+  } else {
+    const cm=localStorage.getItem('jsmo_ye_checked');
+    if(cm) checkedMeals=new Set(JSON.parse(cm));
+    waterCount=parseInt(localStorage.getItem('jsmo_ye_water')||'0');
+    const sd=localStorage.getItem('jsmo_ye_day');
+    if(sd) day=sd;
+    const ci=localStorage.getItem('jsmo_ye_items');
+    if(ci) checkedItems=new Set(JSON.parse(ci));
+  }
+  const so=localStorage.getItem('jsmo_ye_selOpts');
+  if(so) selOpts=JSON.parse(so);
+}
+
+function saveState(){
+  localStorage.setItem('jsmo_ye_checked',JSON.stringify([...checkedMeals]));
+  localStorage.setItem('jsmo_ye_water',waterCount);
+  localStorage.setItem('jsmo_ye_day',day);
+  localStorage.setItem('jsmo_ye_selOpts',JSON.stringify(selOpts));
+  localStorage.setItem('jsmo_ye_items',JSON.stringify([...checkedItems]));
+}
+
+function setDay(d){
+  day=d;
+  saveState();
+  render();
+}
+
+function render(){
+  document.getElementById('tabE').className='dtab'+(day==='entreno'?' active':'');
+  document.getElementById('tabD').className='dtab'+(day==='descanso'?' active':'');
+  document.getElementById('restNote').style.display=day==='descanso'?'block':'none';
+  renderMeals();
+  renderWater();
+  renderChecklist();
+}
+
+function renderMeals(){
+  const cont=document.getElementById('mealsContainer');
+  cont.innerHTML=MEALS.map(m=>{
+    const isOpen=expanded.has(m.id);
+    const isDone=checkedMeals.has(m.id);
+    const selIdx=selOpts[m.id]||0;
+    const opts=m.opts;
+    const opt=opts[selIdx]||opts[0];
+    return '<div class="mcard'+(isOpen?' open':'')+'" id="mc-'+m.id+'" data-id="'+m.id+'">'+
+      '<div class="mc-head" onclick="toggleCard(\''+m.id+'\')">'+
+        '<div class="mc-lbl">'+m.lbl+'</div>'+
+        '<div class="mc-info">'+
+          '<div class="mc-title">'+m.title+'</div>'+
+          '<div class="mc-time">'+m.time+'</div>'+
+        '</div>'+
+        '<div class="mc-check'+(isDone?' done':'')+'" onclick="event.stopPropagation();toggleMeal(\''+m.id+'\')">'+
+          '<svg width="12" height="10" viewBox="0 0 12 10" fill="none">'+
+          '<path d="M1 5L4.5 8.5L11 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+        '</div>'+
+        '<div class="mc-chevron">▼</div>'+
+      '</div>'+
+      '<div class="mc-tags">'+m.tags.map(t=>'<span class="tag">'+t+'</span>').join('')+'</div>'+
+      '<div class="mc-body">'+
+        '<div class="opt-tabs">'+
+          opts.map((o,i)=>'<button class="otab'+(i===selIdx?' active':'')+'" onclick="selOpt(\''+m.id+'\','+i+')">Op '+(i+1)+'</button>').join('')+
+        '</div>'+
+        '<div class="opt-name">'+opt.n+'</div>'+
+        '<div class="opt-sub">'+opt.s+'</div>'+
+        '<ul class="opt-items">'+opt.i.map(x=>'<li>'+x+'</li>').join('')+'</ul>'+
+        (m.tip?'<div class="mc-tip">💡 '+m.tip+'</div>':'')+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+function toggleCard(id){
+  if(expanded.has(id)) expanded.delete(id); else expanded.add(id);
+  render();
+}
+
+function toggleMeal(id){
+  if(checkedMeals.has(id)) checkedMeals.delete(id); else checkedMeals.add(id);
+  saveState();render();
+}
+
+function selOpt(id,idx){
+  selOpts[id]=idx;
+  saveState();render();
+}
+
+function renderWater(){
+  const drops=document.getElementById('drops');
+  drops.innerHTML=Array.from({length:8},(_,i)=>
+    '<div class="drop'+(i>=waterCount?' empty':'')+'" onclick="tapDrop('+i+')">💧</div>'
+  ).join('');
+  document.getElementById('waterCnt').textContent=waterCount+' / 8 vasos';
+  document.getElementById('waterMsg').textContent=waterCount>0?WATER_MSGS[Math.min(waterCount-1,7)]:'';
+}
+
+function tapDrop(i){
+  waterCount=(i<waterCount)?i:(i+1);
+  saveState();renderWater();
+}
+
+function renderChecklist(){
+  document.getElementById('checkList').innerHTML=CHECKS.map(c=>{
+    const done=checkedItems.has(c.id);
+    return '<div class="check-item'+(done?' done':'')+'" onclick="toggleCheck(\''+c.id+'\')">'+
+      '<div class="chk-box'+(done?' done':'')+'">'+(done?'<svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>':'')+'</div>'+
+      '<div>'+
+        '<div class="chk-lbl">'+c.lbl+'</div>'+
+        '<div class="chk-time">'+c.note+'</div>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+function toggleCheck(id){
+  if(checkedItems.has(id)) checkedItems.delete(id); else checkedItems.add(id);
+  saveState();renderChecklist();
+}
+
+// Init
+const now=new Date();
+const dias=['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
+const meses=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+document.getElementById('hdrDate').textContent=dias[now.getDay()]+', '+now.getDate()+' '+meses[now.getMonth()];
+document.getElementById('noteWeek').textContent='Semana del '+now.getDate()+' de '+['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][now.getMonth()]+' '+now.getFullYear();
+
+loadState();
+render();
+</script>
+</body>
+</html>
