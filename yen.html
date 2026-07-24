@@ -41,7 +41,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Ar
   border:1px solid var(--border);border-radius:12px;padding:11px 13px}
 .note-head{display:flex;align-items:center;gap:9px;margin-bottom:7px}
 .note-av{width:28px;height:28px;border-radius:50%;background:var(--primary);
-  display:flex;align-items:center;justify-content:center;font-size:7.5px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;
   color:#fff;letter-spacing:.5px;flex-shrink:0}
 .note-who{flex:1}
 .note-name{font-size:10.5px;font-weight:800;color:var(--primary);display:block}
@@ -70,6 +70,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Ar
 .mc-head{display:flex;align-items:center;padding:12px 14px;cursor:pointer;gap:10px}
 .mc-lbl{font-size:9px;font-weight:800;letter-spacing:2px;padding:4px 7px;
   border-radius:6px;background:var(--primary);color:#fff;flex-shrink:0;min-width:54px;text-align:center}
+.mc-lbl.rest{background:var(--mid)}
 .mc-info{flex:1}
 .mc-title{font-size:13.5px;font-weight:700;color:var(--text)}
 .mc-time{font-size:10px;color:var(--subtle);margin-top:1px}
@@ -108,6 +109,8 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Ar
 .supl-name{font-size:12.5px;font-weight:700;color:var(--text)}
 .supl-dose{font-size:11px;color:var(--primary);margin:1px 0}
 .supl-brand{font-size:10.5px;color:var(--subtle);line-height:1.4}
+.supl-note{margin-top:10px;background:var(--cream);border-radius:8px;padding:9px 11px;
+  font-size:11px;color:var(--med);line-height:1.55;border-left:3px solid var(--border)}
 .check-sec{margin:10px 14px 0;background:#fff;border-radius:12px;padding:13px 14px}
 .check-ttl{font-size:10px;font-weight:800;color:var(--primary);letter-spacing:2px;margin-bottom:10px}
 .check-item{display:flex;align-items:center;gap:10px;padding:7px 0;cursor:pointer;
@@ -133,9 +136,9 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Ar
     <span class="hdr-date" id="hdrDate"></span>
   </div>
   <div class="pname">Yen Escobar</div>
-  <div class="pstats">Cycling · Running · Padel · Fuerza · Media Maratón</div>
-  <div class="objetivo">Composicion Corporal · Meta Media Maratón</div>
-  <div class="banner">🚴 Cycling · 🏃 Running · 🎾 Padel · 💪 Fuerza &nbsp;·&nbsp; Alimentos Yen</div>
+  <div class="pstats">Cycling · Running · Fuerza · Meta Media Maratón</div>
+  <div class="objetivo">Composición Corporal · Meta Media Maratón</div>
+  <div class="banner">🚴 Cycling &nbsp;·&nbsp; 🏃 Running &nbsp;·&nbsp; 💪 Fuerza &nbsp;·&nbsp; Alimentos Yen</div>
   <div class="day-tabs">
     <button class="dtab" id="tabE" onclick="setDay('entreno')">
       <span class="icon">🏃</span>
@@ -149,23 +152,23 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Ar
 </div>
 
 <div class="rest-note" id="restNote">
-  💡 <strong>Dia de descanso:</strong> puedes quitar los carbohidratos de 2 de tus 3 comidas principales. Prioriza proteina y vegetales en esas tomas.
+  😴 <strong>Día de descanso:</strong> el desayuno y la cena van sin carbohidratos. El almuerzo conserva una porción reducida de CHO. Más proteína y vegetales en cada toma.
 </div>
 
 <div class="jsmo-note" style="margin-top:12px">
   <div class="note-head">
     <div class="note-av">JS</div>
     <div class="note-who">
-      <span class="note-name">Juan Sebastian Muñoz O.</span>
+      <span class="note-name">Juan Sebastián Muñoz O.</span>
       <span class="note-week" id="noteWeek"></span>
     </div>
   </div>
-  <div class="note-msg">Yen, admiro tu constancia, tu disciplina y tu manera de ver el mundo. Este plan no es solo sobre comida — es sobre ti. Tu energia, tu fuerza, tu forma de inspirar tambien necesitan sosten. Estoy aqui para hacerlo contigo, paso a paso, con estrategias practicas, realistas y sostenibles, ajustadas a tus habitos y tus metas.</div>
+  <div class="note-msg">Yen, admiro tu constancia, tu disciplina y tu manera de ver el mundo. Este plan no es solo sobre comida — es sobre ti. Tu energía, tu fuerza, tu forma de inspirar también necesitan sostén. Estoy aquí para hacerlo contigo, paso a paso, con estrategias prácticas, realistas y sostenibles, ajustadas a tus hábitos y tus metas.</div>
 </div>
 
 <div class="water-sec">
   <div class="water-head">
-    <span class="water-ttl">HIDRATACION</span>
+    <span class="water-ttl">HIDRATACIÓN</span>
     <span class="water-cnt" id="waterCnt">0 / 8 vasos</span>
   </div>
   <div class="drops" id="drops"></div>
@@ -175,63 +178,81 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Ar
 <div class="beb-sec">
   <div class="beb-ttl">B E B I D A S</div>
   <div class="beb-group">
-    <div class="beb-label">MANANA</div>
-    <div class="beb-item">1 taza de cafe sin azucar con chorrito de bebida vegetal</div>
-    <div class="beb-item">1 vaso de yogurt bebible Alimentos Yen (cuando sientas mucha hambre, puede ser previo al entrenamiento)</div>
-    <div class="beb-item">1 taza de aromatica preferida</div>
+    <div class="beb-label">MAÑANA</div>
+    <div class="beb-item">1 taza de café sin azúcar con chorrito de bebida vegetal</div>
+    <div class="beb-item">1 vaso de kéfir Alimentos Yen (opcionalmente antes o con el desayuno)</div>
+    <div class="beb-item">1 taza de aromática de tu preferencia</div>
   </div>
   <div class="beb-group">
     <div class="beb-label">ALMUERZO Y TARDE</div>
-    <div class="beb-item">Agua natural o con rodajas de limon</div>
-    <div class="beb-item">Agua de pina o de Flor de Jamaica</div>
-    <div class="beb-item">Te Hatsu sin calorias</div>
-    <div class="beb-item">Soda michelada sin azucar con limon (con moderacion)</div>
+    <div class="beb-item">Agua natural o con rodajas de limón</div>
+    <div class="beb-item">Agua de piña o de flor de Jamaica</div>
+    <div class="beb-item">Té Hatsu sin calorías</div>
+    <div class="beb-item">Soda michelada sin azúcar con limón (con moderación)</div>
   </div>
 </div>
 
 <div class="content" id="mealsContainer"></div>
 
 <div class="supl-sec" style="margin:10px 14px 0">
-  <div class="supl-ttl">S U P L E M E N T A C I O N</div>
+  <div class="supl-ttl">S U P L E M E N T A C I Ó N</div>
+
+  <div class="supl-item">
+    <div class="supl-icon">💪</div>
+    <div class="supl-info">
+      <div class="supl-name">Proteína ISO 100 (Dymatize)</div>
+      <div class="supl-dose">1 scoop · post-entrenamiento o en el desayuno</div>
+      <div class="supl-brand">Proteína aislada hidrolizada · absorción ultrarrápida · ideal para recuperación muscular y síntesis proteica post-esfuerzo</div>
+    </div>
+  </div>
+
+  <div class="supl-item">
+    <div class="supl-icon">🩸</div>
+    <div class="supl-info">
+      <div class="supl-name">Hierro (Bisglicinato de Hierro)</div>
+      <div class="supl-dose">1 cápsula con vitamina C · alejado del café, té y lácteos</div>
+      <div class="supl-brand">Especialmente importante en mujeres deportistas de fondo · la hemólisis plantar del running, el sudor y las pérdidas menstruales elevan el requerimiento de hierro significativamente</div>
+    </div>
+  </div>
+
   <div class="supl-item">
     <div class="supl-icon">🌙</div>
     <div class="supl-info">
       <div class="supl-name">Bisglicinato de Magnesio</div>
-      <div class="supl-dose">2 capsulas · 2 horas antes de acostarse</div>
-      <div class="supl-brand">Mejora calidad del sueno, recuperacion muscular y manejo del estres</div>
+      <div class="supl-dose">2 cápsulas · 2 horas antes de acostarse</div>
+      <div class="supl-brand">Mejora la calidad del sueño, la recuperación muscular y el manejo del estrés</div>
     </div>
   </div>
-  <div class="supl-item">
-    <div class="supl-icon">🍒</div>
-    <div class="supl-info">
-      <div class="supl-name">Tart Cherry</div>
-      <div class="supl-dose">1 capsula · dias de doble jornada o entrenos fuertes</div>
-      <div class="supl-brand">Antiinflamatorio natural · reduce dolor muscular post-entreno</div>
-    </div>
-  </div>
+
   <div class="supl-item">
     <div class="supl-icon">💧</div>
     <div class="supl-info">
-      <div class="supl-name">Sales de Hidratacion GU</div>
-      <div class="supl-dose">1 capsula en 500ml de agua · 2 veces por semana</div>
-      <div class="supl-brand">Para optimizar la hidratacion en los entrenos · critico en media maraton</div>
+      <div class="supl-name">Sales de Hidratación GU</div>
+      <div class="supl-dose">1 cápsula en 500 ml de agua · 2 veces por semana</div>
+      <div class="supl-brand">Para optimizar la hidratación en los entrenamientos · crítico en la preparación para media maratón</div>
     </div>
   </div>
+
   <div class="supl-item">
     <div class="supl-icon">🌿</div>
     <div class="supl-info">
       <div class="supl-name">Ashwagandha</div>
-      <div class="supl-dose">1 capsula en la manana</div>
-      <div class="supl-brand">Adaptogeno · manejo del cortisol · energia sostenida en el dia</div>
+      <div class="supl-dose">1 cápsula en la mañana</div>
+      <div class="supl-brand">Adaptógeno · manejo del cortisol · energía sostenida durante el día</div>
     </div>
   </div>
+
   <div class="supl-item">
     <div class="supl-icon">🧴</div>
     <div class="supl-info">
       <div class="supl-name">Nutrigel Advance</div>
-      <div class="supl-dose">1 sachet en agua · todos los dias</div>
-      <div class="supl-brand">Colageno + articulaciones · importante para el volumen de entrenamiento actual</div>
+      <div class="supl-dose">1 sachet en agua · todos los días</div>
+      <div class="supl-brand">Colágeno + articulaciones · importante dado el volumen de entrenamiento actual</div>
     </div>
+  </div>
+
+  <div class="supl-note">
+    💊 <strong>Calcio:</strong> tu plan ya incluye yogur griego, queso cuajada, ricotta y mozzarella de forma regular, lo que cubre bien el requerimiento dietario de calcio. No es necesario como suplemento adicional mientras mantengas el consumo constante de estos alimentos. Si en alguna semana el consumo lácteo baja, considera 500 mg de calcio quelado con la cena.
   </div>
 </div>
 
@@ -241,293 +262,417 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Ar
 </div>
 
 <div class="cierre" style="margin:10px 14px 0">
-  <div class="cierre-txt">"Este plan no es un reto. Es un regreso a ti. A la mujer que crea, que inspira, que sostiene a otros y que hoy decide sostenerse a si misma. No se trata de hacerlo perfecto, se trata de elegirte de nuevo, con amor, sin culpa, con intencion."</div>
-  <div class="cierre-firma">— Juan Sebastian Muñoz O.</div>
+  <div class="cierre-txt">"Este plan no es un reto. Es un regreso a ti. A la mujer que crea, que inspira, que sostiene a otros y que hoy decide sostenerse a sí misma. No se trata de hacerlo perfecto, se trata de elegirte de nuevo, con amor, sin culpa, con intención."</div>
+  <div class="cierre-firma">— Juan Sebastián Muñoz O.</div>
 </div>
 
 <div style="height:30px"></div>
 
 <script>
-const TODAY_DAY=new Date().getDay();
-// Asumimos entrenamiento la mayoria de dias
-const TODAY_TYPE=[0,1,2,3,4,5,6].includes(TODAY_DAY)?'entreno':'descanso';
+const TODAY_DAY = new Date().getDay();
+const TODAY_TYPE = [1,2,3,4,5,6,0].includes(TODAY_DAY) ? 'entreno' : 'descanso';
 
-const WATER_MSGS=[
-  'Primer vaso! Empieza el dia hidratada Yen',
-  'Buen inicio! Sigue asi',
-  'Tercer vaso — vas bien!',
-  'A la mitad! El cuerpo te lo agradece',
-  'Excelente ritmo de hidratacion',
-  'Dos mas y llegamos a la meta',
-  'Casi! Un vaso mas',
-  'Meta cumplida! Recuerda el termo siempre contigo'
+const WATER_MSGS = [
+  'Primer vaso. Empieza el día hidratada, Yen.',
+  'Buen inicio. Sigue así.',
+  'Tercer vaso — ¡vas bien!',
+  'A la mitad. El cuerpo te lo agradece.',
+  'Excelente ritmo de hidratación.',
+  'Solo dos más para llegar a la meta.',
+  '¡Casi! Un vaso más.',
+  '¡Meta cumplida! Recuerda el termo siempre contigo.'
 ];
 
-const MEALS=[
-  {id:'t1',
-   lbl:'PRE',title:'Pre-Entrenamiento',
-   time:'20-30 min antes del entreno · liviano y energizante',
-   tags:['Energia rapida','CHO moderado'],
-   opts:[
-    {n:'Batido capuchino proteico',s:'medio scoop de proteina tipo cafe',
-     i:['1/2 scoop de proteina en 1 taza de cafe frio o agua fria',
-        'Queda tipo capuchino proteico',
-        'Hielo al gusto']},
-    {n:'Avena trasnochada express',s:'preparar la noche anterior',
-     i:['3 cdas de avena en hojuelas',
-        'Cubrir con leche vegetal de preferencia',
-        '1 cda de yogurt griego Alimentos Yen',
-        '1/2 banano picado']},
-    {n:'Yogurt con arandanos y galleta',s:'suave y rapido',
-     i:['2 cdas de yogurt griego Alimentos Yen',
-        '1 punado de arandanos frescos o congelados',
-        '1 galleta de maiz triturado']},
-    {n:'Mango con sal',s:'hidratante y energizante natural',
-     i:['2 cdas de mango picado en cubos',
-        'Sal al gusto',
-        'Ideal para dias de cycling o running matutino']}
-   ]},
-  {id:'t2',
-   lbl:'DESAYUNO',title:'Desayuno · Post-Entreno Matutino',
-   time:'Post-entrenamiento manana · recarga y sintesis muscular',
-   tags:['Alta proteina','Recuperacion'],
-   tip:'Todos los dias consumir 1 porcion de fruta de 80-100g con el desayuno.',
-   opts:[
-    {n:'Huevos con arepa de arroz y fruta',s:'clasico y completo',
-     i:['2 claras + 1 huevo entero revueltos',
-        '1 arepa de arroz integral Alimentos Yen',
-        '1 tajada de queso cuajada',
-        '1 porcion de fruta de tu eleccion (80-100g)']},
-    {n:'Bowl proteico de yogurt y arandanos',s:'sin coccion · rapido post-entreno',
-     i:['4 cdas de yogurt griego Alimentos Yen',
-        '1 scoop de proteina en polvo (mezclar bien)',
-        '10 arandanos congelados o frescos']},
-    {n:'Huevos en cacerola con arepa y ricotta',s:'caliente y sabroso',
-     i:['2 claras + 1 huevo entero en cacerola con aceite de oliva',
-        '4 tomates cherry + 1 punado pequeno de espinaca',
-        '1 arepa de arroz integral Alimentos Yen',
-        '1 cda de queso ricotta Alimentos Yen encima']},
-    {n:'Batido proteico de fresas',s:'dias de pierna o fondo largo',
-     i:['1 scoop de proteina en polvo',
-        '1 vaso de leche vegetal de preferencia + hielo',
-        '5 fresas y licuar',
-        'Dia de pierna: puedes anadir 4 cdas de avena en hojuelas']}
-   ]},
-  {id:'t3',
-   lbl:'ALMUERZO',title:'Almuerzo',
-   time:'12:30-2:00 pm · comida principal del dia',
-   tags:['Proteina + CHO','Completo'],
-   tip:'2 veces a la semana puedes cambiar el almuerzo por 1 taza mediana sopera de crema de verduras.',
-   opts:[
-    {n:'Carne de res con arroz integral',s:'clasico proteico',
-     i:['140g de carne magra de res asada o a la plancha',
-        '4 cdas de arroz integral',
-        'Ensalada: zanahoria rallada + tomate + cebolla morada + limon y sal']},
-    {n:'Salmon con papas amarillas',s:'antiinflamatorio · omega-3',
-     i:['150g filete de salmon al horno o airfryer',
-        '3 papas amarillas cocidas',
-        'Vegetales al vapor abundantes (brocoli, zanahoria, zapallo)']},
-    {n:'Pollo a la plancha con quinoa y picadillo',s:'alto rendimiento · tropical',
-     i:['150g filete de pollo a la plancha',
-        '1 taza de quinoa cocida',
-        'Picadillo: tomate + cebolla + mango en cubos + cilantro + limon y sal']},
-    {n:'Carne molida guisada con arroz o papas',s:'practico y renditorio',
-     i:['140g de carne molida guisada con tomate + cebolla + pimenton',
-        '3 cdas de arroz integral O 3 papas amarillas airfryer',
-        'Ensalada: zanahoria rallada + tomate cherry + lechuga + limon y sal']}
-   ]},
-  {id:'t4',
-   lbl:'SNACK',title:'Snack PM',
-   time:'3:00-5:00 pm · snack inteligente · no saltarlo',
-   tags:['Liviano','Proteina moderada'],
-   opts:[
-    {n:'Galletas Salmas con manzana verde',s:'clasico y practico · para llevar',
-     i:['1 paquete de galletas Salmas',
-        '1 manzana verde mediana']},
-    {n:'Palito de queso con pina',s:'dulce y proteico',
-     i:['1 palito de queso bajo en grasa Finesse',
-        '1 rodaja de pina natural']},
-    {n:'Yogurt con mango',s:'probiotico + fruta tropical',
-     i:['5 cdas de yogurt griego Alimentos Yen',
-        '3 cdas de mango en cubos']},
-    {n:'Batido de proteina express',s:'dias de entreno intenso o doble jornada',
-     i:['1 scoop de proteina en polvo',
-        '1 vaso de agua con hielo',
-        'Licuar — dias muy intensos: anadir 1 banano']}
-   ]},
-  {id:'t5',
-   lbl:'CENA',title:'Cena',
-   time:'7:00-9:00 pm · liviana · reparadora',
-   tags:['Proteina alta','CHO moderado'],
-   opts:[
-    {n:'Pollo desmechado con arepa de arroz',s:'practico · colombiano',
-     i:['140g de pollo desmechado',
-        '1 arepa de arroz integral Alimentos Yen',
-        '1 cda de guacamole casero (aguacate + limon + sal)']},
-    {n:'Arepa de maduro con huevos gratinados',s:'dulce y sabroso',
-     i:['1 arepa de maduro entera o en triangulitos',
-        '2 huevos enteros + 1 clara revueltos',
-        '1 loncha de queso mozzarella para gratinar O 1 cdita queso parmesano (quedan tipo samba)']},
-    {n:'Bowl de pollo o carne con maduro',s:'calido y nutritivo',
-     i:['140g de pollo desmechado o carne molida magra',
-        '1/2 maduro en freidora de aire',
-        '1 cda de queso ricotta Alimentos Yen']},
-    {n:'Omelette de claras con queso',s:'liviana · alta proteina · bajo en CHO',
-     i:['3 claras de huevo en omelette',
-        '1 tajada de queso Finesse bajo en grasa dentro',
-        '5 tomates cherry salteados con aceite de oliva']}
-   ]}
-];
-
-const CHECKS=[
-  {id:'ch1',lbl:'Pre-entrenamiento',note:'20-30 min antes del entreno'},
-  {id:'ch2',lbl:'Desayuno post-entreno',note:'proteina + fruta · no saltarlo'},
-  {id:'ch3',lbl:'Almuerzo completo',note:'proteina + CHO + vegetales'},
-  {id:'ch4',lbl:'Snack PM',note:'no pasar mas de 3h sin comer'},
-  {id:'ch5',lbl:'Cena liviana',note:'7-9 pm · reparadora'},
-  {id:'ch6',lbl:'Hidratacion durante el dia',note:'termo con agua siempre contigo'},
-  {id:'ch7',lbl:'Ashwagandha en la manana',note:'1 capsula con el desayuno'},
-  {id:'ch8',lbl:'Nutrigel Advance',note:'1 sachet en agua · todos los dias'},
-  {id:'ch9',lbl:'Magnesio 2 capsulas',note:'2 horas antes de acostarte'},
-  {id:'ch10',lbl:'Descanso nocturno',note:'procura dormir mas de 7h'}
-];
-
-let day=TODAY_TYPE;
-let expanded=new Set(['t1']);
-let selOpts={};
-let checkedMeals=new Set();
-let waterCount=0;
-let checkedItems=new Set();
-
-function loadState(){
-  const todayStr=new Date().toDateString();
-  if(localStorage.getItem('jsmo_ye_date')!==todayStr){
-    localStorage.setItem('jsmo_ye_date',todayStr);
-    checkedMeals=new Set();waterCount=0;checkedItems=new Set();day=TODAY_TYPE;
-  } else {
-    const cm=localStorage.getItem('jsmo_ye_checked');
-    if(cm) checkedMeals=new Set(JSON.parse(cm));
-    waterCount=parseInt(localStorage.getItem('jsmo_ye_water')||'0');
-    const sd=localStorage.getItem('jsmo_ye_day');
-    if(sd) day=sd;
-    const ci=localStorage.getItem('jsmo_ye_items');
-    if(ci) checkedItems=new Set(JSON.parse(ci));
+// Estructura: variant:true → tiene e (entreno) y d (descanso). d:null = no se muestra en descanso.
+const MEALS = [
+  {
+    id:'t1', variant:true,
+    e:{
+      lbl:'PRE',
+      title:'Pre-Entrenamiento',
+      time:'20–30 min antes del entrenamiento · liviano y energizante',
+      tags:['Energía rápida','CHO moderado'],
+      opts:[
+        {n:'Batido capuchino proteico',s:'medio scoop tipo café frío',
+         i:['½ scoop de ISO 100 en 1 taza de café frío o agua fría',
+            'Queda tipo capuchino proteico',
+            'Hielo al gusto']},
+        {n:'Avena trasnochada express',s:'preparar la noche anterior',
+         i:['3 cdas de avena en hojuelas',
+            'Cubrir con leche vegetal de tu preferencia',
+            '1 cda de yogur griego Alimentos Yen',
+            '½ banano picado']},
+        {n:'Yogur con arándanos y galleta',s:'suave y rápido',
+         i:['2 cdas de yogur griego Alimentos Yen',
+            '1 puñado de arándanos frescos o congelados',
+            '1 galleta de maíz triturado']},
+        {n:'Mango con sal',s:'hidratante y energizante natural',
+         i:['2 cdas de mango picado en cubos',
+            'Sal al gusto',
+            'Ideal para días de cycling o running matutino']}
+      ]
+    },
+    d: null
+  },
+  {
+    id:'t2', variant:true,
+    e:{
+      lbl:'DESAYUNO',
+      title:'Desayuno · Post-Entrenamiento',
+      time:'Después del entrenamiento matutino · recarga y síntesis muscular',
+      tags:['Alta proteína','Recuperación'],
+      tip:'Recuerda: 1 porción de fruta de 80–100 g con el desayuno todos los días.',
+      opts:[
+        {n:'Huevos con arepa de arroz y fruta',s:'clásico y completo',
+         i:['2 claras + 1 huevo entero revueltos',
+            '1 arepa de arroz integral Alimentos Yen',
+            '1 tajada de queso cuajada',
+            '1 porción de fruta de tu elección (80–100 g)']},
+        {n:'Bowl proteico de yogur y arándanos',s:'sin cocción · rápido post-entrenamiento',
+         i:['4 cdas de yogur griego Alimentos Yen',
+            '1 scoop de ISO 100 (mezclar bien)',
+            '10 arándanos congelados o frescos']},
+        {n:'Huevos en cazuela con arepa y ricotta',s:'caliente y sabroso',
+         i:['2 claras + 1 huevo entero en cazuela con aceite de oliva',
+            '4 tomates cherry + 1 puñado pequeño de espinaca',
+            '1 arepa de arroz integral Alimentos Yen',
+            '1 cda de queso ricotta Alimentos Yen encima']},
+        {n:'Batido proteico de fresas',s:'días de pierna o fondo largo',
+         i:['1 scoop de ISO 100',
+            '1 vaso de leche vegetal de tu preferencia + hielo',
+            '5 fresas y licuar',
+            'Día de pierna: puedes añadir 4 cdas de avena en hojuelas']}
+      ]
+    },
+    d:{
+      lbl:'DESAYUNO',
+      title:'Desayuno',
+      time:'Día de descanso · sin carbohidratos · alta proteína',
+      tags:['Alta proteína','Sin CHO'],
+      opts:[
+        {n:'Huevos revueltos con aguacate y cuajada',s:'sin arepa · clásico y saciante',
+         i:['2 claras + 1 huevo entero revueltos con aceite de oliva',
+            '¼ aguacate en rodajas con limón y sal',
+            '1 tajada de queso cuajada',
+            'Café sin azúcar o aromática']},
+        {n:'Bowl de yogur con ISO 100 y arándanos',s:'sin avena · rápido y proteico',
+         i:['4 cdas de yogur griego Alimentos Yen',
+            '1 scoop de ISO 100 (mezclar bien)',
+            '10 arándanos frescos o congelados']},
+        {n:'Huevos en cazuela con espinaca y ricotta',s:'sin arepa · caliente y nutritivo',
+         i:['2 claras + 1 huevo entero en cazuela con aceite de oliva',
+            '5 tomates cherry + espinaca salteada + ajo',
+            '1 cda de queso ricotta Alimentos Yen',
+            'Café sin azúcar o kéfir']},
+        {n:'Batido ISO 100 con fresas',s:'sin avena · rápido',
+         i:['1 scoop de ISO 100',
+            '1 vaso de leche vegetal de tu preferencia + hielo',
+            '5 fresas y licuar']}
+      ]
+    }
+  },
+  {
+    id:'t3', variant:true,
+    e:{
+      lbl:'ALMUERZO',
+      title:'Almuerzo',
+      time:'12:30–2:00 pm · comida principal del día',
+      tags:['Proteína + CHO','Completo'],
+      tip:'2 veces a la semana puedes cambiar el almuerzo por 1 taza de crema de verduras.',
+      opts:[
+        {n:'Carne de res con arroz integral',s:'clásico y proteico',
+         i:['140 g de carne magra de res asada o a la plancha',
+            '4 cdas de arroz integral',
+            'Ensalada: zanahoria rallada + tomate + cebolla morada + limón y sal']},
+        {n:'Salmón con papas amarillas',s:'antiinflamatorio · omega-3',
+         i:['150 g de filete de salmón al horno o airfryer',
+            '3 papas amarillas cocidas',
+            'Vegetales al vapor abundantes (brócoli, zanahoria, zapallo)']},
+        {n:'Pollo a la plancha con quinoa y picadillo',s:'alto rendimiento · tropical',
+         i:['150 g de filete de pollo a la plancha',
+            '1 taza de quinoa cocida',
+            'Picadillo: tomate + cebolla + mango en cubos + cilantro + limón y sal']},
+        {n:'Carne molida guisada con arroz o papas',s:'práctico y rendidor',
+         i:['140 g de carne molida guisada con tomate + cebolla + pimentón',
+            '3 cdas de arroz integral O 3 papas amarillas airfryer',
+            'Ensalada: zanahoria rallada + tomate cherry + lechuga + limón y sal']}
+      ]
+    },
+    d:{
+      lbl:'ALMUERZO',
+      title:'Almuerzo',
+      time:'12:30–2:00 pm · CHO reducido · día de descanso',
+      tags:['Proteína alta','CHO reducido'],
+      tip:'Día de descanso: mantén el almuerzo como la única comida con carbohidratos, pero en cantidad reducida.',
+      opts:[
+        {n:'Carne de res con arroz integral reducido',s:'menos CHO · más ensalada',
+         i:['140 g de carne magra de res asada o a la plancha',
+            '2 cdas de arroz integral (porción reducida)',
+            'Ensalada abundante: zanahoria + tomate + cebolla morada + ¼ aguacate + limón y sal']},
+        {n:'Salmón con vegetales y aguacate',s:'sin papas · antiinflamatorio',
+         i:['150 g de filete de salmón al horno o airfryer',
+            'Vegetales al vapor abundantes (brócoli, zanahoria, espárragos, zapallo)',
+            '¼ aguacate con limón y sal']},
+        {n:'Pollo con quinoa reducida y picadillo',s:'liviano y completo',
+         i:['150 g de filete de pollo a la plancha',
+            '½ taza de quinoa cocida (porción reducida)',
+            'Picadillo: tomate + cebolla + mango en cubos + cilantro + limón y sal']},
+        {n:'Carne molida con ensalada completa',s:'sin arroz ni papas · proteína y vegetales',
+         i:['140 g de carne molida guisada con tomate + cebolla + pimentón',
+            'Ensalada abundante: zanahoria rallada + tomate cherry + lechuga + pepino + ¼ aguacate',
+            'Limón y sal al gusto']}
+      ]
+    }
+  },
+  {
+    id:'t4',
+    lbl:'SNACK',
+    title:'Snack PM',
+    time:'3:00–5:00 pm · snack inteligente · no saltarlo',
+    tags:['Liviano','Proteína moderada'],
+    opts:[
+      {n:'Galletas Salmas con manzana verde',s:'clásico y práctico · para llevar',
+       i:['1 paquete de galletas Salmas',
+          '1 manzana verde mediana']},
+      {n:'Palito de queso con piña',s:'dulce y proteico',
+       i:['1 palito de queso bajo en grasa Finesse',
+          '1 rodaja de piña natural']},
+      {n:'Yogur con mango',s:'probiótico + fruta tropical',
+       i:['5 cdas de yogur griego Alimentos Yen',
+          '3 cdas de mango en cubos']},
+      {n:'Batido ISO 100 express',s:'días de entrenamiento intenso o doble jornada',
+       i:['1 scoop de ISO 100',
+          '1 vaso de agua con hielo',
+          'Días muy intensos: añadir 1 banano']}
+    ]
+  },
+  {
+    id:'t5', variant:true,
+    e:{
+      lbl:'CENA',
+      title:'Cena',
+      time:'7:00–9:00 pm · liviana · reparadora',
+      tags:['Proteína alta','CHO moderado'],
+      opts:[
+        {n:'Pollo desmechado con arepa de arroz',s:'práctico · colombiano',
+         i:['140 g de pollo desmechado',
+            '1 arepa de arroz integral Alimentos Yen',
+            '1 cda de guacamole casero (aguacate + limón + sal)']},
+        {n:'Arepa de maduro con huevos gratinados',s:'dulce y sabroso',
+         i:['1 arepa de maduro entera o en triangulitos',
+            '2 huevos enteros + 1 clara revueltos',
+            '1 loncha de queso mozzarella para gratinar O 1 cdita de queso parmesano']},
+        {n:'Bowl de pollo o carne con maduro',s:'cálido y nutritivo',
+         i:['140 g de pollo desmechado o carne molida magra',
+            '½ maduro en freidora de aire',
+            '1 cda de queso ricotta Alimentos Yen']},
+        {n:'Omelette de claras con queso',s:'liviana · alta proteína',
+         i:['3 claras de huevo en omelette',
+            '1 tajada de queso Finesse bajo en grasa',
+            '5 tomates cherry salteados con aceite de oliva']}
+      ]
+    },
+    d:{
+      lbl:'CENA',
+      title:'Cena',
+      time:'7:00–9:00 pm · sin carbohidratos · día de descanso',
+      tags:['Proteína alta','Sin CHO'],
+      opts:[
+        {n:'Pollo desmechado con ensalada y guacamole',s:'sin arepa · liviano y saciante',
+         i:['140 g de pollo desmechado tibio',
+            'Ensalada verde abundante: lechuga + tomate + pepino + zanahoria',
+            '1 cda de guacamole casero (aguacate + limón + sal)']},
+        {n:'Omelette de huevos con queso y espinaca',s:'sin arepa de maduro · caliente y proteico',
+         i:['2 huevos enteros + 1 clara en omelette',
+            '1 loncha de queso mozzarella o ricotta dentro',
+            'Espinaca salteada + tomates cherry + ajo + aceite de oliva']},
+        {n:'Bowl de pollo o carne con ricotta',s:'sin maduro · más vegetales',
+         i:['140 g de pollo desmechado o carne molida magra',
+            'Ensalada verde completa: lechuga + pepino + tomate + zanahoria rallada',
+            '1 cda de queso ricotta Alimentos Yen + limón y sal']},
+        {n:'Omelette de claras con queso y tomates',s:'liviana · alta proteína · sin CHO',
+         i:['3 claras de huevo en omelette',
+            '1 tajada de queso Finesse bajo en grasa',
+            '5 tomates cherry salteados con aceite de oliva']}
+      ]
+    }
   }
-  const so=localStorage.getItem('jsmo_ye_selOpts');
-  if(so) selOpts=JSON.parse(so);
+];
+
+const CHECKS = [
+  {id:'ch1', lbl:'Pre-entrenamiento (días de entreno)', note:'20–30 min antes · no saltarlo'},
+  {id:'ch2', lbl:'Desayuno', note:'alta proteína · fruta en días de entrenamiento'},
+  {id:'ch3', lbl:'Almuerzo completo', note:'proteína + vegetales · CHO según el día'},
+  {id:'ch4', lbl:'Snack PM', note:'no pasar más de 3 h sin comer'},
+  {id:'ch5', lbl:'Cena', note:'7–9 pm · liviana y reparadora'},
+  {id:'ch6', lbl:'Hidratación diaria', note:'8 vasos · termo con agua siempre contigo'},
+  {id:'ch7', lbl:'ISO 100 post-entrenamiento', note:'1 scoop · días de entreno'},
+  {id:'ch8', lbl:'Hierro con vitamina C', note:'alejado del café, té y lácteos'},
+  {id:'ch9', lbl:'Ashwagandha en la mañana', note:'1 cápsula con el desayuno'},
+  {id:'ch10', lbl:'Nutrigel Advance', note:'1 sachet en agua · todos los días'},
+  {id:'ch11', lbl:'Magnesio 2 cápsulas', note:'2 horas antes de acostarte'},
+  {id:'ch12', lbl:'Descanso nocturno', note:'procura dormir más de 7 h'}
+];
+
+let day = 'entreno';
+let expanded = new Set(['t1']);
+let selOpts = {};
+let checkedMeals = new Set();
+let waterCount = 0;
+let checkedItems = new Set();
+
+function loadState() {
+  const todayStr = new Date().toDateString();
+  if (localStorage.getItem('jsmo_ye_date') !== todayStr) {
+    localStorage.setItem('jsmo_ye_date', todayStr);
+    checkedMeals = new Set();
+    waterCount = 0;
+    checkedItems = new Set();
+    day = TODAY_TYPE;
+  } else {
+    const cm = localStorage.getItem('jsmo_ye_checked');
+    if (cm) checkedMeals = new Set(JSON.parse(cm));
+    waterCount = parseInt(localStorage.getItem('jsmo_ye_water') || '0');
+    const sd = localStorage.getItem('jsmo_ye_day');
+    if (sd) day = sd;
+    const ci = localStorage.getItem('jsmo_ye_items');
+    if (ci) checkedItems = new Set(JSON.parse(ci));
+  }
+  const so = localStorage.getItem('jsmo_ye_selOpts');
+  if (so) selOpts = JSON.parse(so);
 }
 
-function saveState(){
-  localStorage.setItem('jsmo_ye_checked',JSON.stringify([...checkedMeals]));
-  localStorage.setItem('jsmo_ye_water',waterCount);
-  localStorage.setItem('jsmo_ye_day',day);
-  localStorage.setItem('jsmo_ye_selOpts',JSON.stringify(selOpts));
-  localStorage.setItem('jsmo_ye_items',JSON.stringify([...checkedItems]));
+function saveState() {
+  localStorage.setItem('jsmo_ye_checked', JSON.stringify([...checkedMeals]));
+  localStorage.setItem('jsmo_ye_water', waterCount);
+  localStorage.setItem('jsmo_ye_day', day);
+  localStorage.setItem('jsmo_ye_selOpts', JSON.stringify(selOpts));
+  localStorage.setItem('jsmo_ye_items', JSON.stringify([...checkedItems]));
 }
 
-function setDay(d){
-  day=d;
+function setDay(d) {
+  day = d;
   saveState();
   render();
 }
 
-function render(){
-  document.getElementById('tabE').className='dtab'+(day==='entreno'?' active':'');
-  document.getElementById('tabD').className='dtab'+(day==='descanso'?' active':'');
-  document.getElementById('restNote').style.display=day==='descanso'?'block':'none';
+function getMdata(m) {
+  if (!m.variant) return m;
+  return day === 'entreno' ? m.e : m.d;
+}
+
+function getActiveMeals() {
+  return MEALS.filter(m => {
+    if (!m.variant) return true;
+    const data = day === 'entreno' ? m.e : m.d;
+    return data !== null;
+  });
+}
+
+function render() {
+  document.getElementById('tabE').className = 'dtab' + (day === 'entreno' ? ' active' : '');
+  document.getElementById('tabD').className = 'dtab' + (day === 'descanso' ? ' active' : '');
+  document.getElementById('restNote').style.display = day === 'descanso' ? 'block' : 'none';
   renderMeals();
   renderWater();
   renderChecklist();
 }
 
-function renderMeals(){
-  const cont=document.getElementById('mealsContainer');
-  cont.innerHTML=MEALS.map(m=>{
-    const isOpen=expanded.has(m.id);
-    const isDone=checkedMeals.has(m.id);
-    const selIdx=selOpts[m.id]||0;
-    const opts=m.opts;
-    const opt=opts[selIdx]||opts[0];
-    return '<div class="mcard'+(isOpen?' open':'')+'" id="mc-'+m.id+'" data-id="'+m.id+'">'+
-      '<div class="mc-head" onclick="toggleCard(\''+m.id+'\')">'+
-        '<div class="mc-lbl">'+m.lbl+'</div>'+
-        '<div class="mc-info">'+
-          '<div class="mc-title">'+m.title+'</div>'+
-          '<div class="mc-time">'+m.time+'</div>'+
-        '</div>'+
-        '<div class="mc-check'+(isDone?' done':'')+'" onclick="event.stopPropagation();toggleMeal(\''+m.id+'\')">'+
-          '<svg width="12" height="10" viewBox="0 0 12 10" fill="none">'+
-          '<path d="M1 5L4.5 8.5L11 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
-        '</div>'+
-        '<div class="mc-chevron">▼</div>'+
-      '</div>'+
-      '<div class="mc-tags">'+m.tags.map(t=>'<span class="tag">'+t+'</span>').join('')+'</div>'+
-      '<div class="mc-body">'+
-        '<div class="opt-tabs">'+
-          opts.map((o,i)=>'<button class="otab'+(i===selIdx?' active':'')+'" onclick="selOpt(\''+m.id+'\','+i+')">Op '+(i+1)+'</button>').join('')+
-        '</div>'+
-        '<div class="opt-name">'+opt.n+'</div>'+
-        '<div class="opt-sub">'+opt.s+'</div>'+
-        '<ul class="opt-items">'+opt.i.map(x=>'<li>'+x+'</li>').join('')+'</ul>'+
-        (m.tip?'<div class="mc-tip">💡 '+m.tip+'</div>':'')+
-      '</div>'+
+function renderMeals() {
+  const cont = document.getElementById('mealsContainer');
+  const activeMeals = getActiveMeals();
+  cont.innerHTML = activeMeals.map(m => {
+    const md = getMdata(m);
+    const isOpen = expanded.has(m.id);
+    const isDone = checkedMeals.has(m.id);
+    const selIdx = selOpts[m.id] || 0;
+    const opts = md.opts;
+    const opt = opts[Math.min(selIdx, opts.length - 1)];
+    return '<div class="mcard' + (isOpen ? ' open' : '') + '" id="mc-' + m.id + '" data-id="' + m.id + '">' +
+      '<div class="mc-head" onclick="toggleCard(\'' + m.id + '\')">' +
+        '<div class="mc-lbl' + (day === 'descanso' && m.variant ? ' rest' : '') + '">' + md.lbl + '</div>' +
+        '<div class="mc-info">' +
+          '<div class="mc-title">' + md.title + '</div>' +
+          '<div class="mc-time">' + md.time + '</div>' +
+        '</div>' +
+        '<div class="mc-check' + (isDone ? ' done' : '') + '" onclick="event.stopPropagation();toggleMeal(\'' + m.id + '\')">' +
+          '<svg width="12" height="10" viewBox="0 0 12 10" fill="none">' +
+          '<path d="M1 5L4.5 8.5L11 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+        '</div>' +
+        '<div class="mc-chevron">▼</div>' +
+      '</div>' +
+      '<div class="mc-tags">' + md.tags.map(t => '<span class="tag">' + t + '</span>').join('') + '</div>' +
+      '<div class="mc-body">' +
+        '<div class="opt-tabs">' +
+          opts.map((o, i) => '<button class="otab' + (Math.min(selIdx, opts.length - 1) === i ? ' active' : '') + '" onclick="selOpt(\'' + m.id + '\',' + i + ')">Op ' + (i + 1) + '</button>').join('') +
+        '</div>' +
+        '<div class="opt-name">' + opt.n + '</div>' +
+        '<div class="opt-sub">' + opt.s + '</div>' +
+        '<ul class="opt-items">' + opt.i.map(x => '<li>' + x + '</li>').join('') + '</ul>' +
+        (md.tip ? '<div class="mc-tip">💡 ' + md.tip + '</div>' : '') +
+      '</div>' +
     '</div>';
   }).join('');
 }
 
-function toggleCard(id){
-  if(expanded.has(id)) expanded.delete(id); else expanded.add(id);
+function toggleCard(id) {
+  if (expanded.has(id)) expanded.delete(id); else expanded.add(id);
   render();
 }
 
-function toggleMeal(id){
-  if(checkedMeals.has(id)) checkedMeals.delete(id); else checkedMeals.add(id);
-  saveState();render();
+function toggleMeal(id) {
+  if (checkedMeals.has(id)) checkedMeals.delete(id); else checkedMeals.add(id);
+  saveState();
+  render();
 }
 
-function selOpt(id,idx){
-  selOpts[id]=idx;
-  saveState();render();
+function selOpt(id, idx) {
+  selOpts[id] = idx;
+  saveState();
+  render();
 }
 
-function renderWater(){
-  const drops=document.getElementById('drops');
-  drops.innerHTML=Array.from({length:8},(_,i)=>
-    '<div class="drop'+(i>=waterCount?' empty':'')+'" onclick="tapDrop('+i+')">💧</div>'
+function renderWater() {
+  const drops = document.getElementById('drops');
+  drops.innerHTML = Array.from({length: 8}, (_, i) =>
+    '<div class="drop' + (i >= waterCount ? ' empty' : '') + '" onclick="tapDrop(' + i + ')">💧</div>'
   ).join('');
-  document.getElementById('waterCnt').textContent=waterCount+' / 8 vasos';
-  document.getElementById('waterMsg').textContent=waterCount>0?WATER_MSGS[Math.min(waterCount-1,7)]:'';
+  document.getElementById('waterCnt').textContent = waterCount + ' / 8 vasos';
+  document.getElementById('waterMsg').textContent = waterCount > 0 ? WATER_MSGS[Math.min(waterCount - 1, 7)] : '';
 }
 
-function tapDrop(i){
-  waterCount=(i<waterCount)?i:(i+1);
-  saveState();renderWater();
+function tapDrop(i) {
+  waterCount = (i < waterCount) ? i : (i + 1);
+  saveState();
+  renderWater();
 }
 
-function renderChecklist(){
-  document.getElementById('checkList').innerHTML=CHECKS.map(c=>{
-    const done=checkedItems.has(c.id);
-    return '<div class="check-item'+(done?' done':'')+'" onclick="toggleCheck(\''+c.id+'\')">'+
-      '<div class="chk-box'+(done?' done':'')+'">'+(done?'<svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>':'')+'</div>'+
-      '<div>'+
-        '<div class="chk-lbl">'+c.lbl+'</div>'+
-        '<div class="chk-time">'+c.note+'</div>'+
-      '</div>'+
+function renderChecklist() {
+  document.getElementById('checkList').innerHTML = CHECKS.map(c => {
+    const done = checkedItems.has(c.id);
+    return '<div class="check-item' + (done ? ' done' : '') + '" onclick="toggleCheck(\'' + c.id + '\')">' +
+      '<div class="chk-box' + (done ? ' done' : '') + '">' + (done ? '<svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '') + '</div>' +
+      '<div>' +
+        '<div class="chk-lbl">' + c.lbl + '</div>' +
+        '<div class="chk-time">' + c.note + '</div>' +
+      '</div>' +
     '</div>';
   }).join('');
 }
 
-function toggleCheck(id){
-  if(checkedItems.has(id)) checkedItems.delete(id); else checkedItems.add(id);
-  saveState();renderChecklist();
+function toggleCheck(id) {
+  if (checkedItems.has(id)) checkedItems.delete(id); else checkedItems.add(id);
+  saveState();
+  renderChecklist();
 }
 
-// Init
-const now=new Date();
-const dias=['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
-const meses=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-document.getElementById('hdrDate').textContent=dias[now.getDay()]+', '+now.getDate()+' '+meses[now.getMonth()];
-document.getElementById('noteWeek').textContent='Semana del '+now.getDate()+' de '+['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][now.getMonth()]+' '+now.getFullYear();
+// Inicialización
+const now = new Date();
+const dias = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const mesesLargo = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+document.getElementById('hdrDate').textContent = dias[now.getDay()] + ', ' + now.getDate() + ' ' + meses[now.getMonth()];
+document.getElementById('noteWeek').textContent = 'Semana del ' + now.getDate() + ' de ' + mesesLargo[now.getMonth()] + ' de ' + now.getFullYear();
 
 loadState();
 render();
