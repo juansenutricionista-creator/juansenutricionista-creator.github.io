@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Plan Nutricional · Manuela Velasco</title>
+  <style>
+    :root {
+      --primary: #0E7D7D;
+      --dark: #063F3F;
+      --light-bg: #F0FAFA;
+      --card-bg: #ffffff;
+      --text: #1a2e2e;
+      --muted: #5a7272;
+      --entreno: #0E7D7D;
+      --entreno-light: #CCEFEF;
+      --entreno-border: #0E7D7D;
+      --descanso: #7C3AED;
+      --descanso-light: #F5F3FF;
+      --descanso-border: #C4B5FD;
+      --border: #C8E0E0;
+      --shadow: 0 2px 14px rgba(14,125,125,0.09);
+      --warm: #D97706;
+      --warm-light: #FEF3C7;
+      --green: #059669;
+      --green-light: #D1FAE5;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--light-bg);color:var(--text);line-height:1.5;min-height:100vh}
+
+    /* ─── HEADER ─── */
+    .header{background:linear-gradient(135deg,var(--dark) 0%,var(--primary) 100%);color:white;padding:2rem 1.25rem 1.6rem;text-align:center}
+    .header-badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:.25rem .9rem;font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;margin-bottom:.7rem}
+    .header h1{font-size:1.9rem;font-weight:800;letter-spacing:-.02em}
+    .header-sub{opacity:.85;font-size:.88rem;margin-top:.3rem}
+    .goal-box{margin-top:1.1rem;display:inline-flex;align-items:center;gap:.75rem;background:rgba(255,255,255,.13);border-radius:14px;padding:.75rem 1.2rem;border:1px solid rgba(255,255,255,.2)}
+    .goal-icon{font-size:1.6rem}
+    .goal-text{text-align:left;font-size:.83rem}
+    .goal-text strong{display:block;font-size:.95rem;font-weight:700}
+
+    /* ─── STICKY BAR ─── */
+    .sticky-bar{position:sticky;top:0;z-index:40;background:var(--light-bg);padding:.75rem 1rem .5rem;border-bottom:1px solid var(--border)}
+    .day-selector{display:flex;gap:.6rem;justify-content:center;max-width:340px;margin:0 auto}
+    .day-btn{flex:1;padding:.6rem .5rem;border:2px solid var(--border);border-radius:10px;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .18s;background:white;color:var(--muted);text-align:center}
+    .day-btn small{display:block;font-size:.67rem;font-weight:400;opacity:.75;margin-top:1px}
+    .day-btn.e-btn{border-color:var(--entreno)}
+    .day-btn.e-btn.active{background:var(--entreno);color:white}
+    .day-btn.d-btn{border-color:var(--descanso)}
+    .day-btn.d-btn.active{background:var(--descanso);color:white}
+
+    /* ─── DAY INFO ─── */
+    .day-info-wrap{padding:.9rem 1rem 0}
+    .day-info{border-radius:14px;padding:1rem 1.1rem;border:1.5px solid}
+    .day-info.entreno{background:var(--entreno-light);border-color:var(--entreno-border)}
+    .day-info.descanso{background:var(--descanso-light);border-color:var(--descanso-border)}
+    .day-info-top{display:flex;align-items:center;gap:.6rem;margin-bottom:.45rem}
+    .day-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+    .day-dot.entreno{background:var(--entreno)}
+    .day-dot.descanso{background:var(--descanso)}
+    .day-info-title{font-size:.98rem;font-weight:800}
+    .day-info.entreno .day-info-title{color:var(--entreno)}
+    .day-info.descanso .day-info-title{color:var(--descanso)}
+    .day-info-desc{font-size:.79rem;color:var(--muted);margin-bottom:.7rem;line-height:1.45}
+    .macro-row{display:flex;flex-wrap:wrap;gap:.4rem}
+    .macro-chip{background:white;border-radius:9px;padding:.3rem .55rem;font-size:.74rem;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+    .macro-chip strong{display:block;font-size:.9rem;font-weight:800;line-height:1.1}
+    .macro-chip span{color:var(--muted);font-size:.67rem}
+    .ref-tag{font-size:.64rem;font-style:italic;color:var(--muted);margin-top:.5rem;display:block}
+
+    /* ─── SECTION ─── */
+    .section{padding:1.1rem 1rem 0}
+    .section-title{font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.7rem}
+
+    /* ─── MEAL CARD ─── */
+    .meal-card{background:var(--card-bg);border-radius:16px;margin-bottom:.7rem;box-shadow:var(--shadow);overflow:hidden;border:1.5px solid var(--border)}
+    .meal-header{display:flex;align-items:center;gap:.7rem;padding:.85rem 1rem;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+    .meal-lbl{font-size:.6rem;font-weight:900;letter-spacing:.1em;padding:.22rem .55rem;border-radius:6px;color:white;background:var(--primary);flex-shrink:0}
+    .meal-lbl.entreno{background:var(--entreno)}
+    .meal-lbl.descanso{background:var(--descanso)}
+    .meal-title-wrap{flex:1;min-width:0}
+    .meal-title{font-size:.95rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .meal-time{font-size:.74rem;color:var(--muted);margin-top:.05rem}
+    .meal-tags{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.25rem}
+    .tag{background:var(--light-bg);border:1px solid var(--border);color:var(--primary);font-size:.67rem;font-weight:700;padding:.12rem .45rem;border-radius:999px}
+    .meal-chevron{color:var(--muted);font-size:.9rem;transition:transform .2s;flex-shrink:0}
+    .meal-chevron.open{transform:rotate(180deg)}
+
+    /* ─── MEAL BODY ─── */
+    .meal-body{display:none;padding:0 1rem 1rem}
+    .meal-body.open{display:block}
+    .meal-tip{background:var(--light-bg);border-left:3px solid var(--primary);border-radius:0 8px 8px 0;padding:.5rem .7rem;font-size:.77rem;color:var(--muted);margin-bottom:.75rem;line-height:1.45}
+
+    .opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:.45rem}
+    @media(max-width:380px){.opt-grid{grid-template-columns:1fr}}
+    .opt-card{border:1.5px solid var(--border);border-radius:12px;padding:.65rem .75rem;cursor:pointer;transition:all .15s;background:white}
+    .opt-card:hover{border-color:var(--primary);background:var(--light-bg)}
+    .opt-card.selected{border-color:var(--primary);background:#E6F5F5}
+    .opt-name{font-size:.86rem;font-weight:700;color:var(--dark)}
+    .opt-desc{font-size:.74rem;color:var(--muted);margin-top:.18rem;line-height:1.4}
+    .opt-macro{font-size:.7rem;color:var(--primary);font-weight:700;margin-top:.3rem}
+
+    /* ─── VEGETABLE STRATEGY ─── */
+    .veg-card{background:var(--card-bg);border-radius:16px;padding:1.1rem;margin-bottom:.75rem;box-shadow:var(--shadow);border:1.5px solid var(--green-light)}
+    .veg-card h3{font-size:.98rem;font-weight:800;color:var(--green);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
+    .phase-block{margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+    .phase-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+    .phase-header{display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem}
+    .phase-num{background:var(--green);color:white;font-size:.7rem;font-weight:900;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .phase-title{font-size:.9rem;font-weight:700;color:var(--dark)}
+    .phase-weeks{font-size:.72rem;color:var(--green);font-weight:700;margin-left:auto}
+    .smoothie-item{display:flex;gap:.6rem;align-items:flex-start;padding:.45rem 0}
+    .smoothie-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;margin-top:.35rem}
+    .smoothie-name{font-size:.84rem;font-weight:700}
+    .smoothie-desc{font-size:.74rem;color:var(--muted);margin-top:.05rem;line-height:1.35}
+    .phase-note{background:var(--green-light);border-radius:8px;padding:.45rem .65rem;font-size:.74rem;color:var(--green);font-weight:600;margin-top:.4rem}
+
+    /* ─── SUPPLEMENTS ─── */
+    .special-card{background:var(--card-bg);border-radius:16px;padding:1.1rem;margin-bottom:.75rem;box-shadow:var(--shadow);border:1.5px solid var(--border)}
+    .special-card h3{font-size:.98rem;font-weight:800;color:var(--dark);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
+    .supp-item{display:flex;gap:.75rem;align-items:flex-start;padding:.7rem 0;border-bottom:1px solid var(--border)}
+    .supp-item:last-child{border-bottom:none}
+    .supp-icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+    .supp-icon.proteina{background:#DBEAFE}
+    .supp-icon.colageno{background:#FCE7F3}
+    .supp-icon.magnesio{background:#F3E8FF}
+    .supp-icon.omega{background:var(--entreno-light)}
+    .supp-icon.vitamina{background:var(--warm-light)}
+    .supp-icon.nota{background:#FEF9C3}
+    .supp-body{flex:1;min-width:0}
+    .supp-name{font-size:.9rem;font-weight:700}
+    .supp-badge{display:inline-block;font-size:.62rem;font-weight:800;padding:.08rem .38rem;border-radius:4px;margin-left:.35rem;vertical-align:middle}
+    .supp-badge.modelo{background:#FCE7F3;color:#BE185D}
+    .supp-badge.nota{background:#FEF9C3;color:#92400E}
+    .supp-dose{font-size:.78rem;color:var(--primary);font-weight:700;margin-top:.1rem}
+    .supp-note{font-size:.74rem;color:var(--muted);margin-top:.1rem;line-height:1.4}
+
+    /* ─── NOTES ─── */
+    .nota-card{border-radius:12px;padding:.9rem 1rem;margin-bottom:.55rem;border:1.5px solid}
+    .nota-card.amber{background:var(--warm-light);border-color:#FCD34D}
+    .nota-card.purple{background:var(--descanso-light);border-color:var(--descanso-border)}
+    .nota-card.green{background:var(--green-light);border-color:#34D399}
+    .nota-card.teal{background:var(--entreno-light);border-color:var(--primary)}
+    .nota-card h4{font-size:.83rem;font-weight:800;margin-bottom:.35rem}
+    .nota-card.amber h4{color:var(--warm)}
+    .nota-card.purple h4{color:var(--descanso)}
+    .nota-card.green h4{color:var(--green)}
+    .nota-card.teal h4{color:var(--primary)}
+    .nota-card p,.nota-card li{font-size:.78rem;color:var(--muted);line-height:1.5}
+    .nota-card ul{padding-left:1rem;margin-top:.2rem}
+
+    /* ─── FOOTER ─── */
+    .footer{text-align:center;padding:2rem 1rem 1.5rem;color:var(--muted);font-size:.76rem;line-height:1.6}
+    .footer strong{color:var(--primary)}
+  </style>
+</head>
+<body>
+
+<!-- ══════════════ HEADER ══════════════ -->
+<div class="header">
+  <div class="header-badge">Plan Nutricional Personalizado</div>
+  <h1>Manuela Velasco</h1>
+  <div class="header-sub">Recomposición Corporal · Normalización de Hábitos · Fase Progresiva</div>
+  <div class="goal-box">
+    <div class="goal-icon">✨</div>
+    <div class="goal-text">
+      <strong>Nutrir para transformar</strong>
+      Reducción de grasa corporal · Masa muscular activa<br>
+      <span style="font-size:.75rem;opacity:.8">Proceso progresivo y sostenible — sin restricción, con intención</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SELECTOR ══════════════ -->
+<div class="sticky-bar">
+  <div class="day-selector">
+    <button class="day-btn e-btn" onclick="setDay('entreno')">
+      🏋️‍♀️ Entreno
+      <small>Lun · Mar · Jue · Sáb</small>
+    </button>
+    <button class="day-btn d-btn" onclick="setDay('descanso')">
+      🌿 Descanso
+      <small>Mié · Vie · Dom</small>
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════ DAY INFO ══════════════ -->
+<div class="day-info-wrap">
+  <div class="day-info entreno" id="info-entreno">
+    <div class="day-info-top">
+      <div class="day-dot entreno"></div>
+      <div class="day-info-title">🏋️‍♀️ Día de Entrenamiento</div>
+    </div>
+    <div class="day-info-desc">Gym, ciclismo o running. Mayor aporte de carbohidratos para sostener el esfuerzo y recuperación muscular. La proteína alta protege y construye masa magra.</div>
+    <div class="macro-row">
+      <div class="macro-chip"><strong>~1.900 kcal</strong><span>Referencia diaria</span></div>
+      <div class="macro-chip"><strong>~118 g</strong><span>Proteína · 1,8 g/kg</span></div>
+      <div class="macro-chip"><strong>~229 g</strong><span>CHO · 3,5 g/kg</span></div>
+      <div class="macro-chip"><strong>~59 g</strong><span>Grasas saludables</span></div>
+    </div>
+    <span class="ref-tag">Parámetros calculados para composición corporal y objetivo de recomposición</span>
+  </div>
+  <div class="day-info descanso" id="info-descanso">
+    <div class="day-info-top">
+      <div class="day-dot descanso"></div>
+      <div class="day-info-title">🌿 Día de Descanso</div>
+    </div>
+    <div class="day-info-desc">Recuperación activa o reposo. CHO reducidos, proteína sostenida para síntesis muscular en reposo. Las grasas saludables son la fuente de energía principal este día.</div>
+    <div class="macro-row">
+      <div class="macro-chip"><strong>~1.500 kcal</strong><span>Referencia diaria</span></div>
+      <div class="macro-chip"><strong>~131 g</strong><span>Proteína · 2,0 g/kg</span></div>
+      <div class="macro-chip"><strong>~98 g</strong><span>CHO · 1,5 g/kg</span></div>
+      <div class="macro-chip"><strong>~65 g</strong><span>Grasas saludables</span></div>
+    </div>
+    <span class="ref-tag">Parámetros calculados para composición corporal y objetivo de recomposición</span>
+  </div>
+</div>
+
+<!-- ══════════════ MEALS ══════════════ -->
+<div class="section">
+  <div class="section-title">Plan de Alimentación</div>
+  <div id="meals-container"></div>
+</div>
+
+<!-- ══════════════ VEGETABLE STRATEGY ══════════════ -->
+<div class="section">
+  <div class="section-title">🥦 Estrategia de Vegetales — Fase Progresiva</div>
+  <div class="veg-card">
+    <h3><span>🌱</span> Integración Progresiva de Vegetales</h3>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:.9rem;line-height:1.45">
+      El objetivo no es forzar vegetales de golpe, sino construir tolerancia y gusto de manera gradual. Cada fase añade textura y variedad, respetando las preferencias actuales y construyendo sobre lo logrado.
+    </p>
+
+    <!-- FASE 1 -->
+    <div class="phase-block">
+      <div class="phase-header">
+        <div class="phase-num">1</div>
+        <div class="phase-title">Jugos y Smoothies Verdes</div>
+        <div class="phase-weeks">Semanas 1–2</div>
+      </div>
+      <p style="font-size:.77rem;color:var(--muted);margin-bottom:.5rem">Los vegetales quedan enmascarados por las frutas dulces. El sabor es frutal, no de vegetal. Empezar con cantidades muy pequeñas.</p>
+
+      <div class="smoothie-item">
+        <div class="smoothie-dot"></div>
+        <div>
+          <div class="smoothie-name">Verde Suave 🍌</div>
+          <div class="smoothie-desc">1 puñadito de espinaca · 1 banano maduro · ½ manzana verde · jugo de ½ limón · 200 ml agua<br>
+          <em>Sabor: 100% frutal. Sin rastro de espinaca.</em></div>
+        </div>
+      </div>
+      <div class="smoothie-item">
+        <div class="smoothie-dot"></div>
+        <div>
+          <div class="smoothie-name">Cítrico Antioxidante 🍊</div>
+          <div class="smoothie-desc">1 zanahoria mediana · 2 naranjas · rodajita de jengibre · 1 limón · 200 ml agua<br>
+          <em>Rico en vitamina C y betacarotenos. Antiinflamatorio.</em></div>
+        </div>
+      </div>
+      <div class="smoothie-item">
+        <div class="smoothie-dot"></div>
+        <div>
+          <div class="smoothie-name">Tropical Refrescante 🍍</div>
+          <div class="smoothie-desc">½ pepino · 1 rodaja piña · hojitas de menta · 200 ml agua fría<br>
+          <em>Muy suave, ideal para empezar el día o después del gym.</em></div>
+        </div>
+      </div>
+      <div class="phase-note">💡 Semana 1: 1 puñadito de espinaca. Semana 2: aumentar a 2 puñados. El intestino se adapta poco a poco.</div>
+    </div>
+
+    <!-- FASE 2 -->
+    <div class="phase-block">
+      <div class="phase-header">
+        <div class="phase-num">2</div>
+        <div class="phase-title">Cremas y Sopas de Verduras</div>
+        <div class="phase-weeks">Semanas 3–4</div>
+      </div>
+      <p style="font-size:.77rem;color:var(--muted);margin-bottom:.5rem">Textura homogénea, reconfortante. El licuado elimina la textura del vegetal. Acompañan perfectamente el almuerzo.</p>
+
+      <div class="smoothie-item">
+        <div class="smoothie-dot"></div>
+        <div>
+          <div class="smoothie-name">Crema de Calabaza y Zanahoria 🎃</div>
+          <div class="smoothie-desc">Calabaza + zanahoria cocidas · caldo de pollo casero · 1 cdita aceite de oliva · nuez moscada · sal<br>
+          <em>Dulce natural, muy sabrosa. Puede ir como sopa de entrada.</em></div>
+        </div>
+      </div>
+      <div class="smoothie-item">
+        <div class="smoothie-dot"></div>
+        <div>
+          <div class="smoothie-name">Crema de Brócoli y Queso 🥦</div>
+          <div class="smoothie-desc">Brócoli cocido al vapor · 1 cda queso campesino · ajo · caldo · pizca de nuez moscada<br>
+          <em>El queso camufla el sabor del brócoli. Reconfortante y proteica.</em></div>
+        </div>
+      </div>
+      <div class="smoothie-item">
+        <div class="smoothie-dot"></div>
+        <div>
+          <div class="smoothie-name">Sopa de Espinaca con Pollo 🍵</div>
+          <div class="smoothie-desc">Pollo desmenuzado + espinacas + papa criolla pequeña + caldo + ajo y cebolla<br>
+          <em>Completa en proteína, carbohidrato y vegetales.</em></div>
+        </div>
+      </div>
+      <div class="phase-note">💡 Preparar el fin de semana en grande y guardar en la nevera para la semana. Añadir a almuerzos como sopa de entrada.</div>
+    </div>
+
+    <!-- FASE 3 -->
+    <div class="phase-block">
+      <div class="phase-header">
+        <div class="phase-num">3</div>
+        <div class="phase-title">Vegetales en los Platos Principales</div>
+        <div class="phase-weeks">Semana 5 en adelante</div>
+      </div>
+      <p style="font-size:.77rem;color:var(--muted);margin-bottom:.5rem">El vegetal ya es visible en el plato pero bien preparado y con salsas que lo hacen apetecible.</p>
+
+      <div class="smoothie-item">
+        <div class="smoothie-dot"></div>
+        <div>
+          <div class="smoothie-name">Stir-fry de Vegetales</div>
+          <div class="smoothie-desc">Zanahoria + pimentón + cebolla + brócoli salteados en aceite de oliva con ajo y salsa soja baja en sodio. Va con la proteína del almuerzo.</div>
+        </div>
+      </div>
+      <div class="smoothie-item">
+        <div class="smoothie-dot"></div>
+        <div>
+          <div class="smoothie-name">Ensaladas Elaboradas</div>
+          <div class="smoothie-desc">Ir más allá de la lechuga: espinacas + tomate cherry + pepino + zanahoria rallada + aguacate + aderezo de limón y aceite. Con proteína encima.</div>
+        </div>
+      </div>
+      <div class="smoothie-item">
+        <div class="smoothie-dot"></div>
+        <div>
+          <div class="smoothie-name">Vegetales Asados al Horno</div>
+          <div class="smoothie-desc">Zucchini + berenjena + pimentón + cebolla asados con aceite de oliva, ajo y orégano. Sabor intenso y muy diferente a vegetales hervidos.</div>
+        </div>
+      </div>
+      <div class="phase-note">💡 Clave: no vegetales hervidos sin sal. Saltear, asar o agregar salsas sabrosas (tahini, pesto, vinagreta de limón) cambia completamente la experiencia.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SUPPLEMENTS ══════════════ -->
+<div class="section">
+  <div class="section-title">💊 Suplementación</div>
+  <div class="special-card">
+
+    <div class="supp-item">
+      <div class="supp-icon proteina">🥛</div>
+      <div class="supp-body">
+        <div class="supp-name">ISO 100 Dymatize</div>
+        <div class="supp-dose">1 scoop · Post-entrenamiento o en el desayuno</div>
+        <div class="supp-note">Fundamental dado que la Saxenda puede reducir el apetito y dificultar alcanzar el target de proteína. El ISO 100 asegura la cobertura proteica para preservar y construir masa muscular sin necesidad de comer un plato grande. Mezclar con agua o leche descremada.</div>
+      </div>
+    </div>
+
+    <div class="supp-item">
+      <div class="supp-icon colageno">✨</div>
+      <div class="supp-body">
+        <div class="supp-name">Colágeno Hidrolizado + Vitamina C <span class="supp-badge modelo">Modelo</span></div>
+        <div class="supp-dose">10 g colágeno + 500 mg Vitamina C · En ayunas, mañana</div>
+        <div class="supp-note">Esencial para la salud de piel, cabello, uñas y articulaciones. La vitamina C es cofactor obligatorio para la síntesis de colágeno — no funciona sin ella. Tomar en ayunas, 30 min antes del desayuno, con agua. Resultados visibles en piel a las 8–12 semanas.</div>
+      </div>
+    </div>
+
+    <div class="supp-item">
+      <div class="supp-icon magnesio">🌙</div>
+      <div class="supp-body">
+        <div class="supp-name">Magnesio Bisglicinato</div>
+        <div class="supp-dose">2 cápsulas (300–400 mg) · 2 horas antes de dormir</div>
+        <div class="supp-note">Apoya la calidad del sueño, la recuperación muscular nocturna y regula el cortisol. La forma bisglicinato es quelada — mayor absorción y sin efecto laxante. Complementa (no reemplaza) la medicación para el sueño — consultar con médico la compatibilidad.</div>
+      </div>
+    </div>
+
+    <div class="supp-item">
+      <div class="supp-icon omega">🐟</div>
+      <div class="supp-body">
+        <div class="supp-name">Omega-3 (EPA+DHA)</div>
+        <div class="supp-dose">2 g EPA+DHA · Con el almuerzo</div>
+        <div class="supp-note">Antiinflamatorio, favorece la oxidación de grasa corporal y apoya la función tiroidea. Buscar marcas con certificación IFOS. Tomar con la comida más grande para mejorar absorción y evitar el retrogusto a pescado.</div>
+      </div>
+    </div>
+
+    <div class="supp-item">
+      <div class="supp-icon vitamina">☀️</div>
+      <div class="supp-body">
+        <div class="supp-name">Vitamina D3</div>
+        <div class="supp-dose">2.000–4.000 UI · Con almuerzo o cena</div>
+        <div class="supp-note">En hipotiroidismo, los niveles bajos de vitamina D son comunes y agravan la fatiga y el metabolismo lento. Tomar con una comida que contenga grasa para su absorción. Ideal revisar niveles con examen de sangre.</div>
+      </div>
+    </div>
+
+    <div class="supp-item">
+      <div class="supp-icon nota">⚕️</div>
+      <div class="supp-body">
+        <div class="supp-name">Nota: Levotiroxina <span class="supp-badge nota">Timing Crítico</span></div>
+        <div class="supp-dose">Tomar 30–60 min antes del desayuno, con agua</div>
+        <div class="supp-note">Evitar tomar levotiroxina junto con: café, leche, calcio, hierro, soya o colágeno. Estos alimentos y suplementos reducen la absorción del medicamento hasta un 40%. Por eso el colágeno se toma primero, en ayunas, y el desayuno 30 min después.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════ NOTAS ══════════════ -->
+<div class="section" style="padding-bottom:1rem">
+  <div class="section-title">📝 Notas del Plan</div>
+
+  <div class="nota-card purple">
+    <h4>💊 Compatible con Saxenda (Liraglutida)</h4>
+    <p>La Saxenda reduce el vaciado gástrico y suprime el apetito de manera significativa. Es normal que no sientas hambre para comer todo el plan. <strong>Regla de prioridad:</strong> si solo puedes comer una parte de la comida, elige primero la proteína (pollo, huevos, salmón) antes que el carbohidrato. La proteína protege el músculo. Si hay náuseas, comidas pequeñas y frecuentes son mejor toleradas que platos grandes.</p>
+  </div>
+
+  <div class="nota-card amber">
+    <h4>🦋 Hipotiroidismo y Alimentación</h4>
+    <ul>
+      <li>Selenio favorece la conversión de T4 a T3: huevos, atún, nueces del Brasil (2 al día)</li>
+      <li>Zinc apoya la función tiroidea: semillas de calabaza, legumbres, quinoa</li>
+      <li>Evitar consumo excesivo de soya (inhibe absorción de hormona tiroidea)</li>
+      <li>Vegetales crucíferos crudos en exceso (brócoli, coliflor, repollo) pueden interferir con el yodo — cocidos son perfectamente seguros</li>
+      <li>El yodo es esencial: asegurarse de usar sal yodada en las comidas</li>
+    </ul>
+  </div>
+
+  <div class="nota-card teal">
+    <h4>🍽️ Filosofía del Plan</h4>
+    <p>Este plan está diseñado para <strong>nutrir, no para restringir</strong>. La recomposición corporal sostenible ocurre cuando el cuerpo confía en que recibirá alimento suficiente. Las comidas regulares (cada 3–4 horas) reducen el cortisol, normalizan el metabolismo y eliminan progresivamente los episodios de hambre intensa. El objetivo es construir una relación positiva y predecible con la comida.</p>
+  </div>
+
+  <div class="nota-card green">
+    <h4>💪 Nutrición para tu Trabajo</h4>
+    <p>La proteína adecuada + colágeno + hidratación constante son la base de la salud de piel y cabello desde adentro. Ningún producto tópico suple lo que da la nutrición interna. El aguacate, el salmón y los huevos son aliados de la luminosidad de la piel. Los antioxidantes de las frutas (vitamina C, betacarotenos) también contribuyen a la salud visible.</p>
+  </div>
+</div>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<div class="footer">
+  Elaborado por <strong>Juan Sebastián Muñoz Ortiz</strong><br>
+  Nutricionista Deportivo · Nutricionista del Deportivo Cali<br>
+  Cel: 317 549 9759
+</div>
+
+<!-- ══════════════ SCRIPT ══════════════ -->
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const MEALS = [
+  {
+    id: 'pre', variant: true,
+    e: {
+      lbl: 'PRE', title: 'Pre-Entrenamiento', time: '20–30 min antes del entrenamiento',
+      tags: ['Energía rápida', 'CHO simple', 'Liviano'],
+      tip: 'Pequeño combustible antes de entrenar. No debe sentirse pesado en el estómago. Si la Saxenda ya redujo tu apetito por la mañana, elige la opción más pequeña.',
+      opts: [
+        { name: 'Batido energético', desc: '1 banano · 1 cda mantequilla maní · 150 ml leche · café opcional', macro: '~35g CHO · ~8g PRO' },
+        { name: 'Arepa pequeña + café', desc: '1 arepa pequeña de maíz (no rellena) · 1 taza café negro o con leche descremada', macro: '~28g CHO · ~3g PRO' },
+        { name: 'Fruta + almendras', desc: '1 manzana mediana o 1 banano · 12 almendras · agua', macro: '~25g CHO · ~4g PRO' },
+        { name: '3 dátiles + café', desc: '3 dátiles Medjool · café negro sin azúcar · 250 ml agua', macro: '~33g CHO · ~1g PRO' }
+      ]
+    },
+    d: null
+  },
+
+  {
+    id: 'des', variant: true,
+    e: {
+      lbl: 'DESAYUNO', title: 'Desayuno · Post-Entrenamiento', time: 'Después del entrenamiento · máximo 60 min',
+      tags: ['Alta proteína', 'Recuperación', 'CHO moderado'],
+      tip: 'Ventana de recuperación activa. Proteína + carbohidrato para reparar músculo y reponer energía. Incluye siempre el jugo verde de la Fase 1 como parte de este desayuno.',
+      opts: [
+        { name: 'Huevos + arepa + aguacate', desc: '3 huevos revueltos · 1 arepa pequeña · ½ aguacate · tomate · + jugo verde Fase 1', macro: '~40g CHO · ~23g PRO · ~18g GRS' },
+        { name: 'Bowl de yogur + granola', desc: '200g yogur griego · 30g granola sin azúcar · fresas · banano · 1 huevo duro', macro: '~55g CHO · ~24g PRO · ~10g GRS' },
+        { name: 'Avena trasnochada + proteína', desc: '50g avena (en frío la noche anterior) · leche · chía · berries · ½ scoop ISO 100', macro: '~60g CHO · ~30g PRO · ~8g GRS' },
+        { name: 'Omelette + arepa pequeña', desc: '2 huevos + 2 claras · 30g queso campesino · 1 arepa pequeña · 1 fruta de temporada', macro: '~38g CHO · ~28g PRO · ~12g GRS' }
+      ]
+    },
+    d: {
+      lbl: 'DESAYUNO', title: 'Desayuno · Día de Descanso', time: 'Mañana · Sin prisa',
+      tags: ['Alta proteína', 'Sin CHO almidón', 'Saciante'],
+      tip: 'Día de descanso: menos carbohidrato, más proteína y grasa saludable. No necesitas la arepa hoy — el aguacate y los huevos son suficientes. El jugo verde sigue siendo bienvenido.',
+      opts: [
+        { name: 'Huevos + aguacate (sin arepa)', desc: '2 huevos revueltos · ½ aguacate · tomate · queso campesino · café con leche', macro: '~8g CHO · ~20g PRO · ~22g GRS' },
+        { name: 'Yogur griego + nueces + berries', desc: '200g yogur griego · puñado nueces (20g) · fresas o arándanos · sin granola', macro: '~20g CHO · ~18g PRO · ~16g GRS' },
+        { name: 'Batido proteico oscuro', desc: '250 ml leche descremada · 1 scoop ISO 100 chocolate · 1 cda cacao sin azúcar · hielo', macro: '~20g CHO · ~32g PRO · ~4g GRS' },
+        { name: 'Omelette de espinacas', desc: '2 huevos + 2 claras · espinacas salteadas · 30g queso campesino · tomate · café', macro: '~6g CHO · ~26g PRO · ~14g GRS' }
+      ]
+    }
+  },
+
+  {
+    id: 'alm', variant: true,
+    e: {
+      lbl: 'ALMUERZO', title: 'Almuerzo · Día de Entrenamiento', time: 'Mediodía · Comida más completa',
+      tags: ['Proteína + CHO', 'Completo', 'Recuperación'],
+      tip: 'El almuerzo es la comida principal del día. No saltárselo. Incluye la crema de vegetales (Fase 2) como entrada cuando empieces esa fase — suma vegetales sin esfuerzo extra.',
+      opts: [
+        { name: 'Pechuga + arroz + ensalada', desc: '150g pechuga a la plancha · ½ taza arroz integral · ensalada grande · ½ aguacate', macro: '~45g CHO · ~42g PRO · ~14g GRS' },
+        { name: 'Salmón + papa criolla + crema', desc: '150g salmón · 2 papas criollas medianas · crema de espinaca o calabaza', macro: '~40g CHO · ~36g PRO · ~18g GRS' },
+        { name: 'Pollo + quinoa + vegetales', desc: '140g pollo desmechado · ½ taza quinoa · zanahoria + pimentón salteados', macro: '~42g CHO · ~38g PRO · ~10g GRS' },
+        { name: 'Res magra + arroz + aguacate', desc: '130g lomo de res · ½ taza arroz blanco · ensalada · 2 cdas aguacate', macro: '~40g CHO · ~34g PRO · ~16g GRS' }
+      ]
+    },
+    d: {
+      lbl: 'ALMUERZO', title: 'Almuerzo · Día de Descanso', time: 'Mediodía',
+      tags: ['Alta proteína', 'CHO mínimo', 'Vegetales abundantes'],
+      tip: 'Hoy el plato cambia: menos almidón, más verduras y proteína. El aguacate y el aceite de oliva son la grasa del día. Aprovecha para explorar las ensaladas o cremas de la estrategia de vegetales.',
+      opts: [
+        { name: 'Pechuga + ensalada grande', desc: '150g pechuga · mix hojas verdes · pepino · tomate · zanahoria · aceite oliva + limón', macro: '~12g CHO · ~42g PRO · ~14g GRS' },
+        { name: 'Salmón + vegetales al vapor', desc: '150g salmón · brócoli + zanahoria + zucchini al vapor · 1 cda aceite oliva', macro: '~14g CHO · ~36g PRO · ~18g GRS' },
+        { name: 'Pollo + quinoa pequeña + ensalada', desc: '140g pollo · ¼ taza quinoa cocida · ensalada abundante · aguacate (¼)', macro: '~22g CHO · ~40g PRO · ~14g GRS' },
+        { name: 'Huevos + ensalada completa', desc: '3 huevos duros o revueltos · ensalada grande · ½ aguacate · 1 cda aceite de oliva', macro: '~8g CHO · ~20g PRO · ~22g GRS' }
+      ]
+    }
+  },
+
+  {
+    id: 'snk',
+    lbl: 'SNACK', title: 'Media Tarde', time: '15:00–16:30 h',
+    tags: ['Proteína moderada', 'Saciante', 'Sin saltarse'],
+    tip: 'El snack es clave para llegar a la cena sin hambre excesiva y mantener el metabolismo activo. Aunque la Saxenda reduzca el hambre, procurar hacer siempre este tiempo pequeño.',
+    opts: [
+      { name: 'Kéfir + fruta pequeña', desc: '150 ml kéfir · 1 manzana o 1 mandarina', macro: '~22g CHO · ~5g PRO · ~2g GRS' },
+      { name: 'Queso campesino + fruta', desc: '40g queso campesino · 1 fruta mediana de temporada (mango, fresas, papaya)', macro: '~18g CHO · ~8g PRO · ~6g GRS' },
+      { name: 'Zanahoria + hummus ✅ Vegetales', desc: '1 zanahoria grande en palitos · 2 cdas hummus', macro: '~15g CHO · ~4g PRO · ~5g GRS' },
+      { name: 'Yogur griego + mango', desc: '100g yogur griego · ½ mango troceado', macro: '~20g CHO · ~10g PRO · ~3g GRS' }
+    ]
+  },
+
+  {
+    id: 'cen', variant: true,
+    e: {
+      lbl: 'CENA', title: 'Cena · Día de Entrenamiento', time: '19:00–20:30 h · No muy tarde',
+      tags: ['Proteína alta', 'CHO moderado', 'Liviana'],
+      tip: 'Cena completa pero no excesiva. El carbohidrato nocturno en días de entrenamiento favorece la recuperación y el sueño. Cenar 2–3 horas antes de dormir para mejorar la calidad del sueño.',
+      opts: [
+        { name: 'Pollo + arepa pequeña + ensalada', desc: '120g pollo · 1 arepa pequeña · ensalada de hojas + tomate + aceite oliva', macro: '~30g CHO · ~32g PRO · ~10g GRS' },
+        { name: 'Salmón + papa criolla + ensalada', desc: '130g salmón · 1–2 papas criollas medianas · ensalada verde simple', macro: '~28g CHO · ~34g PRO · ~16g GRS' },
+        { name: 'Omelette + arepa de choclo + tomate', desc: '2 huevos + 2 claras · queso campesino · 1 arepa de choclo pequeña · tomate', macro: '~32g CHO · ~24g PRO · ~10g GRS' },
+        { name: 'Res magra + media arepa + aguacate', desc: '120g lomo · ½ arepa pequeña · ¼ aguacate · lechuga', macro: '~22g CHO · ~30g PRO · ~14g GRS' }
+      ]
+    },
+    d: {
+      lbl: 'CENA', title: 'Cena · Día de Descanso', time: '19:00–20:30 h',
+      tags: ['Proteína alta', 'Sin CHO almidón', 'Ligera'],
+      tip: 'Cena de descanso: el énfasis es proteína + grasa saludable, sin arepa ni papa. El cuerpo usará grasa como fuente de energía nocturna. Liviana para no interferir con el sueño.',
+      opts: [
+        { name: 'Pollo + ensalada abundante', desc: '120g pollo a la plancha · ensalada grande (hojas + pepino + tomate) · 2 cdas aceite oliva', macro: '~8g CHO · ~32g PRO · ~12g GRS' },
+        { name: 'Salmón + vegetales al vapor', desc: '130g salmón · brócoli + zanahoria + espárragos al vapor · 1 cda aceite oliva', macro: '~10g CHO · ~34g PRO · ~16g GRS' },
+        { name: 'Omelette grande + espinacas', desc: '3 huevos · espinacas salteadas con ajo · 30g queso campesino · tomate cherry', macro: '~6g CHO · ~26g PRO · ~16g GRS' },
+        { name: 'Pollo + aguacate + hojas verdes', desc: '120g pollo desmechado · ½ aguacate · mix de lechuga + espinaca + tomate · limón', macro: '~8g CHO · ~30g PRO · ~18g GRS' }
+      ]
+    }
+  }
+];
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+// 0=Dom, 1=Lun, 2=Mar, 3=Mié, 4=Jue, 5=Vie, 6=Sáb
+const DAY_MAP = {0:'descanso',1:'entreno',2:'entreno',3:'descanso',4:'entreno',5:'descanso',6:'entreno'};
+const LS_KEY_DAY  = 'jsmo_mv_day';
+const LS_KEY_OPTS = 'jsmo_mv_opts';
+
+let day = localStorage.getItem(LS_KEY_DAY) || DAY_MAP[new Date().getDay()];
+let savedOpts = JSON.parse(localStorage.getItem(LS_KEY_OPTS) || '{}');
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function getMdata(m) {
+  if (!m.variant) return m;
+  return day === 'entreno' ? m.e : m.d;
+}
+
+function getActiveMeals() {
+  return MEALS.filter(m => {
+    if (!m.variant) return true;
+    const data = day === 'entreno' ? m.e : m.d;
+    return data !== null;
+  });
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function render() {
+  // Buttons
+  document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.${day === 'entreno' ? 'e' : 'd'}-btn`).classList.add('active');
+
+  // Info cards
+  document.getElementById('info-entreno').style.display = day === 'entreno' ? '' : 'none';
+  document.getElementById('info-descanso').style.display = day === 'descanso' ? '' : 'none';
+
+  // Meals
+  const container = document.getElementById('meals-container');
+  container.innerHTML = '';
+
+  getActiveMeals().forEach(m => {
+    const data = getMdata(m);
+    const savedOpt = savedOpts[m.id] ?? 0;
+
+    const optsHtml = data.opts.map((o, i) => `
+      <div class="opt-card${i === savedOpt ? ' selected' : ''}"
+           onclick="selectOpt('${m.id}', ${i}, this)"
+           tabindex="0"
+           onkeydown="if(event.key==='Enter'||event.key===' ')selectOpt('${m.id}',${i},this)">
+        <div class="opt-name">${o.name}</div>
+        <div class="opt-desc">${o.desc}</div>
+        <div class="opt-macro">${o.macro}</div>
+      </div>
+    `).join('');
+
+    const tagsHtml = (data.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
+    const tipHtml  = data.tip ? `<div class="meal-tip">${data.tip}</div>` : '';
+
+    const card = document.createElement('div');
+    card.className = 'meal-card';
+    card.innerHTML = `
+      <div class="meal-header" onclick="toggleMeal(this)">
+        <div class="meal-lbl ${day}">${data.lbl}</div>
+        <div class="meal-title-wrap">
+          <div class="meal-title">${data.title}</div>
+          <div class="meal-time">${data.time || ''}</div>
+          <div class="meal-tags">${tagsHtml}</div>
+        </div>
+        <div class="meal-chevron">▾</div>
+      </div>
+      <div class="meal-body">
+        ${tipHtml}
+        <div class="opt-grid">${optsHtml}</div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ── TOGGLE ────────────────────────────────────────────────────────────────────
+function toggleMeal(header) {
+  const body = header.nextElementSibling;
+  const chevron = header.querySelector('.meal-chevron');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+}
+
+// ── SELECT OPT ────────────────────────────────────────────────────────────────
+function selectOpt(mealId, idx, el) {
+  el.closest('.opt-grid').querySelectorAll('.opt-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  savedOpts[mealId] = idx;
+  localStorage.setItem(LS_KEY_OPTS, JSON.stringify(savedOpts));
+}
+
+// ── SET DAY ───────────────────────────────────────────────────────────────────
+function setDay(d) {
+  day = d;
+  localStorage.setItem(LS_KEY_DAY, d);
+  render();
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
