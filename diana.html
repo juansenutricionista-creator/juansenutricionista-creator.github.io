@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Plan Nutricional · Diana Rincón · Maratón Sydney 2026</title>
+  <style>
+    :root {
+      --primary: #0E7D7D;
+      --dark: #063F3F;
+      --light-bg: #F0FAFA;
+      --card-bg: #ffffff;
+      --text: #1a2e2e;
+      --muted: #5a7272;
+      --alta: #D97706;
+      --alta-light: #FEF3C7;
+      --alta-border: #FCD34D;
+      --media: #0E7D7D;
+      --media-light: #CCEFEF;
+      --media-border: #0E7D7D;
+      --baja: #059669;
+      --baja-light: #D1FAE5;
+      --baja-border: #34D399;
+      --border: #C8E0E0;
+      --shadow: 0 2px 14px rgba(14,125,125,0.09);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--light-bg);color:var(--text);line-height:1.5;min-height:100vh}
+
+    /* ─── HEADER ─── */
+    .header{background:linear-gradient(135deg,var(--dark) 0%,var(--primary) 100%);color:white;padding:2rem 1.25rem 1.5rem;text-align:center}
+    .header-badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:.25rem .9rem;font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;margin-bottom:.7rem}
+    .header h1{font-size:1.85rem;font-weight:800;letter-spacing:-.02em}
+    .header-sub{opacity:.85;font-size:.9rem;margin-top:.3rem}
+    .marathon-box{margin-top:1.1rem;display:inline-flex;align-items:center;gap:.9rem;background:rgba(255,255,255,.13);border-radius:14px;padding:.75rem 1.2rem;border:1px solid rgba(255,255,255,.2)}
+    .countdown-blk{text-align:center}
+    .countdown-num{font-size:2rem;font-weight:900;color:#FCD34D;display:block;line-height:1}
+    .countdown-lbl{font-size:.65rem;opacity:.8;letter-spacing:.07em;text-transform:uppercase}
+    .marathon-info{text-align:left;font-size:.82rem}
+    .marathon-info strong{display:block;font-size:.95rem;font-weight:700}
+
+    /* ─── DAY SELECTOR ─── */
+    .sticky-bar{position:sticky;top:0;z-index:40;background:var(--light-bg);padding:.75rem 1rem .5rem;border-bottom:1px solid var(--border)}
+    .day-selector{display:flex;gap:.5rem;justify-content:center;max-width:420px;margin:0 auto}
+    .day-btn{flex:1;padding:.55rem .4rem;border:2px solid var(--border);border-radius:10px;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .18s;background:white;color:var(--muted);text-align:center}
+    .day-btn small{display:block;font-size:.65rem;font-weight:400;opacity:.7;margin-top:1px}
+    .day-btn.alta-btn{border-color:var(--alta)}
+    .day-btn.alta-btn.active{background:var(--alta);color:white;border-color:var(--alta)}
+    .day-btn.media-btn{border-color:var(--media)}
+    .day-btn.media-btn.active{background:var(--media);color:white;border-color:var(--media)}
+    .day-btn.baja-btn{border-color:var(--baja)}
+    .day-btn.baja-btn.active{background:var(--baja);color:white;border-color:var(--baja)}
+
+    /* ─── DAY INFO CARD ─── */
+    .day-info-wrap{padding:.9rem 1rem 0}
+    .day-info{border-radius:14px;padding:1rem 1.1rem;border:1.5px solid}
+    .day-info.alta{background:var(--alta-light);border-color:var(--alta-border)}
+    .day-info.media{background:var(--media-light);border-color:var(--media-border)}
+    .day-info.baja{background:var(--baja-light);border-color:var(--baja-border)}
+    .day-info-top{display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem}
+    .day-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+    .day-dot.alta{background:var(--alta)}
+    .day-dot.media{background:var(--media)}
+    .day-dot.baja{background:var(--baja)}
+    .day-info-title{font-size:1rem;font-weight:800}
+    .day-info.alta .day-info-title{color:var(--alta)}
+    .day-info.media .day-info-title{color:var(--primary)}
+    .day-info.baja .day-info-title{color:var(--baja)}
+    .day-info-desc{font-size:.8rem;color:var(--muted);margin-bottom:.75rem;line-height:1.4}
+    .macro-row{display:flex;flex-wrap:wrap;gap:.45rem}
+    .macro-chip{background:white;border-radius:9px;padding:.35rem .6rem;font-size:.76rem;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+    .macro-chip strong{display:block;font-size:.92rem;font-weight:800;line-height:1.1}
+    .macro-chip span{color:var(--muted);font-size:.68rem}
+
+    /* ─── SECTION ─── */
+    .section{padding:1.1rem 1rem 0}
+    .section-title{font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.7rem;padding-left:.1rem}
+
+    /* ─── MEAL CARD ─── */
+    .meal-card{background:var(--card-bg);border-radius:16px;margin-bottom:.7rem;box-shadow:var(--shadow);overflow:hidden;border:1.5px solid var(--border)}
+    .meal-header{display:flex;align-items:center;gap:.7rem;padding:.85rem 1rem;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+    .meal-lbl{font-size:.6rem;font-weight:900;letter-spacing:.1em;padding:.22rem .55rem;border-radius:6px;color:white;background:var(--primary);flex-shrink:0}
+    .meal-lbl.alta{background:var(--alta)}
+    .meal-lbl.media{background:var(--media)}
+    .meal-lbl.baja{background:var(--baja)}
+    .meal-title-wrap{flex:1;min-width:0}
+    .meal-title{font-size:.95rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .meal-time{font-size:.74rem;color:var(--muted);margin-top:.05rem}
+    .meal-tags{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.25rem}
+    .tag{background:var(--light-bg);border:1px solid var(--border);color:var(--primary);font-size:.67rem;font-weight:700;padding:.12rem .45rem;border-radius:999px}
+    .meal-chevron{color:var(--muted);font-size:.9rem;transition:transform .2s;flex-shrink:0}
+    .meal-chevron.open{transform:rotate(180deg)}
+
+    /* ─── MEAL BODY ─── */
+    .meal-body{display:none;padding:0 1rem 1rem}
+    .meal-body.open{display:block}
+    .meal-tip{background:var(--light-bg);border-left:3px solid var(--primary);border-radius:0 8px 8px 0;padding:.5rem .7rem;font-size:.77rem;color:var(--muted);margin-bottom:.75rem;line-height:1.45}
+
+    .opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:.45rem}
+    @media(max-width:380px){.opt-grid{grid-template-columns:1fr}}
+    .opt-card{border:1.5px solid var(--border);border-radius:12px;padding:.65rem .75rem;cursor:pointer;transition:all .15s;background:white}
+    .opt-card:hover,.opt-card:focus{border-color:var(--primary);background:var(--light-bg);outline:none}
+    .opt-card.selected{border-color:var(--primary);background:#E6F5F5}
+    .opt-name{font-size:.86rem;font-weight:700;color:var(--dark)}
+    .opt-desc{font-size:.74rem;color:var(--muted);margin-top:.18rem;line-height:1.4}
+    .opt-macro{font-size:.7rem;color:var(--primary);font-weight:700;margin-top:.3rem}
+
+    /* ─── SPECIAL CARDS ─── */
+    .special-card{background:var(--card-bg);border-radius:16px;padding:1.1rem 1.1rem;margin-bottom:.75rem;box-shadow:var(--shadow);border:1.5px solid var(--border)}
+    .special-card h3{font-size:.98rem;font-weight:800;color:var(--dark);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
+
+    /* ─── TIMELINE (FONDOS) ─── */
+    .timeline{position:relative;padding-left:1.4rem}
+    .timeline::before{content:'';position:absolute;left:.35rem;top:.3rem;bottom:.3rem;width:2px;background:linear-gradient(to bottom,var(--alta),var(--primary),var(--baja));border-radius:2px}
+    .t-item{position:relative;margin-bottom:.8rem}
+    .t-item:last-child{margin-bottom:0}
+    .t-dot{position:absolute;left:-1.05rem;top:.25rem;width:10px;height:10px;border-radius:50%;background:var(--primary);border:2.5px solid white;box-shadow:0 0 0 1.5px var(--primary)}
+    .t-dot.alt{background:var(--alta);box-shadow:0 0 0 1.5px var(--alta)}
+    .t-time{font-size:.7rem;font-weight:800;color:var(--alta);text-transform:uppercase;letter-spacing:.04em}
+    .t-action{font-size:.84rem;font-weight:700;margin-top:.05rem}
+    .t-detail{font-size:.75rem;color:var(--muted);line-height:1.4;margin-top:.1rem}
+
+    /* ─── CHO LOADING ─── */
+    .loading-row{display:flex;align-items:center;gap:.7rem;padding:.6rem 0;border-bottom:1px solid var(--border)}
+    .loading-row:last-child{border-bottom:none}
+    .loading-date{font-size:.78rem;font-weight:800;color:var(--dark);min-width:72px}
+    .loading-label{flex:1;font-size:.8rem;color:var(--muted)}
+    .loading-pill{font-size:.76rem;font-weight:800;padding:.2rem .55rem;border-radius:999px;flex-shrink:0}
+    .loading-pill.carga{background:var(--alta-light);color:var(--alta)}
+    .loading-pill.mantener{background:var(--media-light);color:var(--primary)}
+    .loading-pill.pre{background:#EDE9FE;color:#7C3AED}
+    .loading-pill.race{background:#FEE2E2;color:#DC2626}
+
+    /* ─── RACE DAY ─── */
+    .raceday-card{background:linear-gradient(135deg,var(--dark) 0%,#0E7D7D 100%);color:white;border-radius:18px;padding:1.25rem;margin-bottom:.75rem}
+    .raceday-card h3{font-size:1.05rem;font-weight:800;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+    .raceday-item{display:flex;gap:.75rem;margin-bottom:.7rem;align-items:flex-start}
+    .raceday-time{font-size:.7rem;font-weight:800;color:#FCD34D;min-width:52px;padding-top:.12rem;flex-shrink:0}
+    .raceday-text{font-size:.82rem;opacity:.93;line-height:1.45}
+    .raceday-text strong{color:#FCD34D;font-weight:700}
+    .raceday-divider{border:none;border-top:1px solid rgba(255,255,255,.15);margin:.7rem 0}
+    .gel-counter{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.6rem}
+    .gel-badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:.25rem .55rem;font-size:.72rem;font-weight:700}
+    .gel-badge.caf{background:rgba(252,211,77,.2);border-color:rgba(252,211,77,.4);color:#FCD34D}
+
+    /* ─── SUPPLEMENTS ─── */
+    .supp-item{display:flex;gap:.75rem;align-items:flex-start;padding:.7rem 0;border-bottom:1px solid var(--border)}
+    .supp-item:last-child{border-bottom:none}
+    .supp-icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+    .supp-icon.critical{background:#FEE2E2}
+    .supp-icon.important{background:#FEF3C7}
+    .supp-icon.regular{background:var(--light-bg)}
+    .supp-icon.race{background:#EDE9FE}
+    .supp-body{flex:1;min-width:0}
+    .supp-name{font-size:.9rem;font-weight:700}
+    .supp-badge{display:inline-block;font-size:.62rem;font-weight:800;padding:.08rem .38rem;border-radius:4px;margin-left:.35rem;vertical-align:middle}
+    .supp-badge.critical{background:#FEE2E2;color:#DC2626}
+    .supp-badge.race{background:#EDE9FE;color:#7C3AED}
+    .supp-dose{font-size:.78rem;color:var(--primary);font-weight:700;margin-top:.1rem}
+    .supp-note{font-size:.74rem;color:var(--muted);margin-top:.1rem;line-height:1.4}
+
+    /* ─── IRON SOURCES ─── */
+    .iron-grid{display:grid;grid-template-columns:1fr 1fr;gap:.45rem}
+    .iron-item{background:var(--light-bg);border-radius:10px;padding:.55rem .7rem;border:1px solid var(--border)}
+    .iron-food{font-size:.82rem;font-weight:700}
+    .iron-mg{font-size:.76rem;color:var(--alta);font-weight:700}
+    .iron-tip{font-size:.7rem;color:var(--muted)}
+
+    /* ─── NOTE CARDS ─── */
+    .nota-card{background:#FFFBEB;border:1.5px solid #FCD34D;border-radius:12px;padding:.9rem 1rem;margin-bottom:.55rem}
+    .nota-card.green{background:var(--baja-light);border-color:var(--baja-border)}
+    .nota-card.purple{background:#F5F3FF;border-color:#C4B5FD}
+    .nota-card h4{font-size:.83rem;font-weight:800;margin-bottom:.35rem}
+    .nota-card.nota-card:not(.green):not(.purple) h4{color:var(--alta)}
+    .nota-card.green h4{color:var(--baja)}
+    .nota-card.purple h4{color:#7C3AED}
+    .nota-card p,.nota-card li{font-size:.78rem;color:var(--muted);line-height:1.5}
+    .nota-card ul{padding-left:1rem;margin-top:.2rem}
+
+    /* ─── FOOTER ─── */
+    .footer{text-align:center;padding:2rem 1rem 1.5rem;color:var(--muted);font-size:.76rem;line-height:1.6}
+    .footer strong{color:var(--primary)}
+
+    /* ─── UTILS ─── */
+    .hidden{display:none!important}
+    .ref-tag{font-size:.65rem;font-style:italic;color:var(--muted);margin-top:.3rem;display:block}
+  </style>
+</head>
+<body>
+
+<!-- ══════════════ HEADER ══════════════ -->
+<div class="header">
+  <div class="header-badge">Plan Nutricional Deportivo</div>
+  <h1>Diana Rincón</h1>
+  <div class="header-sub">Maratón de Sydney · Periodización Nutricional · Vegetariana</div>
+  <div class="marathon-box">
+    <div class="countdown-blk">
+      <span class="countdown-num" id="daysLeft">—</span>
+      <span class="countdown-lbl">días</span>
+    </div>
+    <div class="marathon-info">
+      <strong>🏃‍♀️ Maratón de Sydney</strong>
+      Domingo 30 de agosto, 2026<br>
+      <span style="font-size:.75rem;opacity:.8">Objetivo: cruzar la meta fuerte y bien nutrida</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ DAY SELECTOR ══════════════ -->
+<div class="sticky-bar">
+  <div class="day-selector">
+    <button class="day-btn alta-btn" onclick="setDay('alta')">
+      ⚡ Alta
+      <small>Dom · Mié</small>
+    </button>
+    <button class="day-btn media-btn" onclick="setDay('media')">
+      🏃‍♀️ Media
+      <small>Mar · Jue · Sáb</small>
+    </button>
+    <button class="day-btn baja-btn" onclick="setDay('baja')">
+      💪 Baja
+      <small>Lun · Vie</small>
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════ DAY INFO ══════════════ -->
+<div class="day-info-wrap">
+  <!-- ALTA -->
+  <div class="day-info alta" id="info-alta">
+    <div class="day-info-top">
+      <div class="day-dot alta"></div>
+      <div class="day-info-title">⚡ Día de Carga Alta</div>
+    </div>
+    <div class="day-info-desc">Fondo largo (Dom) e intervalos/tempo (Mié). Máxima reposición de glucógeno. Ingesta elevada de CHO para sostener el volumen e intensidad.</div>
+    <div class="macro-row">
+      <div class="macro-chip"><strong>~3.100 kcal</strong><span>Energía total</span></div>
+      <div class="macro-chip"><strong>~504 g</strong><span>CHO · 8 g/kg</span></div>
+      <div class="macro-chip"><strong>~107 g</strong><span>Proteína</span></div>
+      <div class="macro-chip"><strong>~75 g</strong><span>Grasas</span></div>
+    </div>
+    <span class="ref-tag">Burke et al. 2019 · CHO periodization for endurance</span>
+  </div>
+  <!-- MEDIA -->
+  <div class="day-info media" id="info-media">
+    <div class="day-info-top">
+      <div class="day-dot media"></div>
+      <div class="day-info-title">🏃‍♀️ Día de Carga Media</div>
+    </div>
+    <div class="day-info-desc">Carrera moderada (Mar/Jue/Sáb). Reposición adecuada sin exceder. Combina CHO suficientes con alta proteína para mantenimiento y recuperación.</div>
+    <div class="macro-row">
+      <div class="macro-chip"><strong>~2.450 kcal</strong><span>Energía total</span></div>
+      <div class="macro-chip"><strong>~347 g</strong><span>CHO · 5,5 g/kg</span></div>
+      <div class="macro-chip"><strong>~107 g</strong><span>Proteína</span></div>
+      <div class="macro-chip"><strong>~70 g</strong><span>Grasas</span></div>
+    </div>
+    <span class="ref-tag">Burke et al. 2019 · CHO periodization for endurance</span>
+  </div>
+  <!-- BAJA -->
+  <div class="day-info baja" id="info-baja">
+    <div class="day-info-top">
+      <div class="day-dot baja"></div>
+      <div class="day-info-title">💪 Día de Carga Baja</div>
+    </div>
+    <div class="day-info-desc">Fuerza/gimnasio (Lun/Vie). CHO reducidos — adaptaciones a la resistencia a la insulina, oxidación de grasas y recuperación activa. Proteína elevada para síntesis muscular.</div>
+    <div class="macro-row">
+      <div class="macro-chip"><strong>~2.050 kcal</strong><span>Energía total</span></div>
+      <div class="macro-chip"><strong>~220 g</strong><span>CHO · 3,5 g/kg</span></div>
+      <div class="macro-chip"><strong>~113 g</strong><span>Proteína</span></div>
+      <div class="macro-chip"><strong>~82 g</strong><span>Grasas</span></div>
+    </div>
+    <span class="ref-tag">Burke et al. 2019 · CHO periodization for endurance</span>
+  </div>
+</div>
+
+<!-- ══════════════ MEALS ══════════════ -->
+<div class="section">
+  <div class="section-title">Plan de Alimentación</div>
+  <div id="meals-container"></div>
+</div>
+
+<!-- ══════════════ ESTRATEGIA DE FONDOS ══════════════ -->
+<div class="section">
+  <div class="section-title">⚡ Estrategia de Fondos y Maratón</div>
+
+  <div class="special-card">
+    <h3><span class="icon">🧃</span> Nutrición en Carrera (>90 min)</h3>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:.9rem;line-height:1.45">
+      Para la maratón necesitas <strong>60–90 g de CHO por hora</strong> con carbohidratos de transporte múltiple (glucosa + fructosa 2:1). Dado que tuviste molestias GI con SIS, se recomienda cambiar a <strong>Maurten Hydrogel</strong> — la tecnología hidrogel reduce la carga osmótica y el paso por el estómago, minimizando el riesgo gastrointestinal.
+    </p>
+    <span class="ref-tag" style="margin-bottom:.7rem;display:block">Jeukendrup 2014 · de Oliveira et al. 2014 · Viribay et al. 2020</span>
+
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-dot alt"></div>
+        <div class="t-time">Pre-carrera · −90 min</div>
+        <div class="t-action">Desayuno completo de carga</div>
+        <div class="t-detail">~2,5 g/kg CHO · Avena + tostadas + plátano + zumo. Café si toleras bien.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-dot alt"></div>
+        <div class="t-time">−30 min al disparo</div>
+        <div class="t-action">Gel cafeína · Maurten CAF 100</div>
+        <div class="t-detail">25 g CHO + 100 mg cafeína. Activa el sistema nervioso central para el esfuerzo.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-time">🏁 Disparo</div>
+        <div class="t-action">Inicio — primeros 40 min sin gel</div>
+        <div class="t-detail">Aprovecha el glucógeno cargado. Hidratación: 200 ml cada 15 min si hay calor.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-time">Km 7–8 · ~40 min</div>
+        <div class="t-action">Gel #1 — Maurten 100 (regular)</div>
+        <div class="t-detail">25 g CHO + 200 ml agua en el próximo puesto.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-time">Km 14–15 · ~80 min</div>
+        <div class="t-action">Gel #2 + bebida deportiva</div>
+        <div class="t-detail">25 g CHO + 200 ml Gatorade Endurance (electrolitos + CHO adicional).</div>
+      </div>
+      <div class="t-item">
+        <div class="t-dot alt"></div>
+        <div class="t-time">Km 21 · Media maratón ~1h50</div>
+        <div class="t-action">Gel #3 — Maurten CAF 100 (cafeína)</div>
+        <div class="t-detail">Segundo golpe de cafeína en el punto crítico de fatiga mental. 25 g CHO + 100 mg cafeína.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-time">Km 28 · ~2h30</div>
+        <div class="t-action">Gel #4 + electrolitos</div>
+        <div class="t-detail">25 g CHO. Aquí el glucógeno empieza a escasear. Fundamental no saltarse este gel.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-dot alt"></div>
+        <div class="t-time">Km 32–33 · ~3h</div>
+        <div class="t-action">Gel #5 — prevención del muro</div>
+        <div class="t-detail">El "muro" ocurre entre km 30–35. Este gel lo previene. 25 g CHO + agua.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-time">Km 37–38 · ~3h20</div>
+        <div class="t-action">Gel #6 — último empuje</div>
+        <div class="t-detail">5 km para la meta. Este gel sostiene el final. Ya no importa el estómago — cruza la línea.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-dot alt"></div>
+        <div class="t-time">🏅 Meta · 42,195 km</div>
+        <div class="t-action">Recuperación inmediata</div>
+        <div class="t-detail">En los primeros 30 min: banana + bebida deportiva o batido proteico. Ventana anabólica activa.</div>
+      </div>
+    </div>
+
+    <div class="nota-card green" style="margin-top:.9rem">
+      <h4>🧪 Entrenamiento del Intestino</h4>
+      <p>Las molestias con SIS se deben probablemente a que el intestino no está entrenado para absorber 60–90 g CHO/h. <strong>Practica el protocolo de geles en tus fondos de entrenamiento</strong> — empieza con 30 g/h y aumenta 10 g/h cada semana. El intestino se adapta en 10–14 días (Costa et al. 2017).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ CHO LOADING ══════════════ -->
+<div class="section">
+  <div class="section-title">📅 Protocolo CHO Loading · Semana Previa</div>
+  <div class="special-card">
+    <h3><span class="icon">🍝</span> Carga de Carbohidratos (Bussau et al. 2002)</h3>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:.85rem;line-height:1.45">
+      3 días consecutivos de 10 g/kg de CHO son igualmente efectivos que la clásica carga de 7 días. Reduce volumen de entrenamiento al 20–30% durante estos días. Peso corporal puede aumentar 1–2 kg (glucógeno retiene agua — es normal y deseable).
+    </p>
+
+    <div class="loading-row">
+      <div class="loading-date">Dom 23 Ago</div>
+      <div class="loading-label">Último fondo corto (16–18 km). CHO moderado-alto.</div>
+      <div class="loading-pill mantener">~7 g/kg</div>
+    </div>
+    <div class="loading-row">
+      <div class="loading-date">Lun 24 Ago</div>
+      <div class="loading-label">Fuerza suave 20 min. <strong>INICIO CARGA</strong> — día 1/3</div>
+      <div class="loading-pill carga">10 g/kg ≈ 630 g CHO</div>
+    </div>
+    <div class="loading-row">
+      <div class="loading-date">Mar 25 Ago</div>
+      <div class="loading-label">Carrera suave 25 min o descanso. Día 2/3 de carga.</div>
+      <div class="loading-pill carga">10 g/kg ≈ 630 g CHO</div>
+    </div>
+    <div class="loading-row">
+      <div class="loading-date">Mié 26 Ago</div>
+      <div class="loading-label">Trote suave 20 min o descanso. Día 3/3 de carga.</div>
+      <div class="loading-pill carga">10 g/kg ≈ 630 g CHO</div>
+    </div>
+    <div class="loading-row">
+      <div class="loading-date">Jue 27 Ago</div>
+      <div class="loading-label">Descanso completo. Hidratación maximizada.</div>
+      <div class="loading-pill mantener">~7 g/kg</div>
+    </div>
+    <div class="loading-row">
+      <div class="loading-date">Vie 28 Ago</div>
+      <div class="loading-label">Trote 15 min + estiramientos. Pasta night en la cena.</div>
+      <div class="loading-pill pre">Pasta night</div>
+    </div>
+    <div class="loading-row">
+      <div class="loading-date">Sáb 29 Ago</div>
+      <div class="loading-label">Descanso total. Cena temprana, rica en CHO simples. Dormir 8 h.</div>
+      <div class="loading-pill pre">Pre-race</div>
+    </div>
+    <div class="loading-row">
+      <div class="loading-date">Dom 30 Ago</div>
+      <div class="loading-label">🏃‍♀️ <strong>MARATÓN DE SYDNEY</strong></div>
+      <div class="loading-pill race">Desayuno 3h antes</div>
+    </div>
+
+    <div class="nota-card" style="margin-top:.9rem">
+      <h4>🍝 Qué comer durante los 3 días de carga</h4>
+      <p>Avena, arroz blanco, pasta, pan blanco, papas, plátano, zumos, miel, dátiles. Reducir fibra y grasas para maximizar el espacio gástrico para CHO. No es el momento de quinoa, legumbres o brócoli.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ RACE DAY ══════════════ -->
+<div class="section">
+  <div class="section-title">🏅 Día de Carrera · 30 Agosto 2026</div>
+  <div class="raceday-card">
+    <h3>🌅 Maratón de Sydney — Plan Hora por Hora</h3>
+
+    <div class="raceday-item">
+      <div class="raceday-time">4:00 am</div>
+      <div class="raceday-text">Despertar. <strong>500 ml de agua</strong> inmediatamente. Sin estrés — todo está preparado.</div>
+    </div>
+    <div class="raceday-item">
+      <div class="raceday-time">4:30 am</div>
+      <div class="raceday-text"><strong>Desayuno pre-carrera (~2,5 g/kg CHO):</strong><br>
+        100 g avena cocida + miel + plátano · 2 tostadas blancas + mermelada · 200 ml zumo naranja<br>
+        <strong>Total: ~165 g CHO.</strong> Sin fibra extra, sin aguacate, sin lácteos pesados.
+      </div>
+    </div>
+    <div class="raceday-item">
+      <div class="raceday-time">5:30 am</div>
+      <div class="raceday-text">250 ml bebida deportiva (Gatorade o Powerade). Ropa, número, geles organizados.</div>
+    </div>
+    <div class="raceday-item">
+      <div class="raceday-time">7:00 am</div>
+      <div class="raceday-text">Largador. <strong>Gel CAF 100 (Maurten)</strong> — 30 min antes del disparo. Sorbos de agua.</div>
+    </div>
+    <div class="raceday-item">
+      <div class="raceday-time">7:30 am</div>
+      <div class="raceday-text">🏁 <strong>DISPARO.</strong> Pace conservador los primeros 5 km. No salir demasiado rápido.</div>
+    </div>
+    <hr class="raceday-divider">
+    <div class="raceday-item">
+      <div class="raceday-time">~8:10 am</div>
+      <div class="raceday-text"><strong>Gel #1</strong> Maurten 100 (Km 7–8) + agua en próximo puesto.</div>
+    </div>
+    <div class="raceday-item">
+      <div class="raceday-time">~8:50 am</div>
+      <div class="raceday-text"><strong>Gel #2</strong> Maurten 100 (Km 14–15) + bebida deportiva.</div>
+    </div>
+    <div class="raceday-item">
+      <div class="raceday-time">~9:25 am</div>
+      <div class="raceday-text"><strong>Gel #3 ☕ CAF 100</strong> (Km 21 · Media maratón). Segundo boost de cafeína.</div>
+    </div>
+    <div class="raceday-item">
+      <div class="raceday-time">~10:00 am</div>
+      <div class="raceday-text"><strong>Gel #4</strong> Maurten 100 (Km 28) + bebida deportiva. Mantén el ritmo.</div>
+    </div>
+    <div class="raceday-item">
+      <div class="raceday-time">~10:30 am</div>
+      <div class="raceday-text"><strong>Gel #5</strong> Maurten 100 (Km 32) — <strong>prevención del muro.</strong> No negociar este gel.</div>
+    </div>
+    <div class="raceday-item">
+      <div class="raceday-time">~10:50 am</div>
+      <div class="raceday-text"><strong>Gel #6</strong> Maurten 100 (Km 37). ¡5 km para la meta — darlo todo!</div>
+    </div>
+    <hr class="raceday-divider">
+    <div class="raceday-item">
+      <div class="raceday-time">~11:30 am</div>
+      <div class="raceday-text">🏅 <strong>¡META!</strong> Inmediatamente: plátano + bebida deportiva. En los próximos 30 min: batido proteico o yoghurt + fruta.</div>
+    </div>
+
+    <div style="margin-top:.9rem">
+      <div style="font-size:.72rem;color:rgba(255,255,255,.6);margin-bottom:.4rem">GELES A LLEVAR</div>
+      <div class="gel-counter">
+        <div class="gel-badge caf">CAF 100 × 2</div>
+        <div class="gel-badge">Maurten 100 × 4</div>
+        <div class="gel-badge">+1 reserva</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SUPPLEMENTS ══════════════ -->
+<div class="section">
+  <div class="section-title">💊 Suplementación</div>
+  <div class="special-card">
+
+    <div class="supp-item">
+      <div class="supp-icon critical">🩸</div>
+      <div class="supp-body">
+        <div class="supp-name">Hierro Bisglicinato <span class="supp-badge critical">CRÍTICO</span></div>
+        <div class="supp-dose">25–30 mg/día · Forma quelada</div>
+        <div class="supp-note">Deficiencia documentada en tu anamnesis. Tomar en ayunas o con vitamina C (kiwi, zumo naranja). Alejado mínimo 2h del café, té y lácteos. El hierro no-hemo de fuentes vegetales tiene biodisponibilidad 30–40% menor que el hemo → La vitamina C la triplica.<br><em>Ref: Larsson &amp; Johansson 2002 · Hallberg &amp; Hulthén 2000</em></div>
+      </div>
+    </div>
+
+    <div class="supp-item">
+      <div class="supp-icon important">🔬</div>
+      <div class="supp-body">
+        <div class="supp-name">Vitamina B12</div>
+        <div class="supp-dose">1.000 mcg sublingual · 1–2 veces/semana</div>
+        <div class="supp-note">Incluso siendo lacto-ovovegetariana, los estudios muestran riesgo de déficit subclínico en atletas vegetarianos activos. Forma sublingual = absorción directa sin dependencia del factor intrínseco.<br><em>Ref: Pawlak et al. 2013</em></div>
+      </div>
+    </div>
+
+    <div class="supp-item">
+      <div class="supp-icon regular">☀️</div>
+      <div class="supp-body">
+        <div class="supp-name">Vitamina D3</div>
+        <div class="supp-dose">Ya la estás tomando — continúa con tu dosis actual</div>
+        <div class="supp-note">Importante para función muscular, inmunidad y absorción de calcio. En Sydney (latitud −34°), la síntesis cutánea es adecuada en verano pero variable en invierno. Mantén el suplemento.</div>
+      </div>
+    </div>
+
+    <div class="supp-item">
+      <div class="supp-icon regular">🌊</div>
+      <div class="supp-body">
+        <div class="supp-name">Omega-3 de Algas</div>
+        <div class="supp-dose">500–1.000 mg DHA+EPA · Con las comidas</div>
+        <div class="supp-note">Fuente vegetariana de DHA/EPA (sin pescado). Antiinflamatorio, apoya la recuperación muscular y la función cognitiva en carrera larga. Las nueces dan ALA pero la conversión a EPA/DHA es pobre (&lt;5%).<br><em>Ref: Baumgartner et al. 2021</em></div>
+      </div>
+    </div>
+
+    <div class="supp-item">
+      <div class="supp-icon regular">⚡</div>
+      <div class="supp-body">
+        <div class="supp-name">Electrolitos (Hydralyte / Nuun)</div>
+        <div class="supp-dose">1 tableta en 500 ml · Durante fondos >75 min</div>
+        <div class="supp-note">Disponibles en Woolworths/Coles (Hydralyte) o tiendas running. Previene la hiponatremia en carreras de más de 3 horas — especialmente importante en clima cálido de Sydney en agosto.</div>
+      </div>
+    </div>
+
+    <div class="supp-item">
+      <div class="supp-icon race">☕</div>
+      <div class="supp-body">
+        <div class="supp-name">Cafeína <span class="supp-badge race">Estrategia Carrera</span></div>
+        <div class="supp-dose">3–6 mg/kg · ~190–380 mg total · 60 min antes del esfuerzo</div>
+        <div class="supp-note">En la maratón ya está incluida en los geles Maurten CAF 100 (2 × 100 mg = 200 mg). No tomar café adicional el día de carrera para no exceder la dosis o generar malestar GI. Si lo usas en fondos de entrenamiento, practica la misma dosis para acostumbrarte.<br><em>Ref: Spriet 2014 · Meeusen et al. 2013</em></div>
+      </div>
+    </div>
+
+    <div class="supp-item">
+      <div class="supp-icon regular">🦵</div>
+      <div class="supp-body">
+        <div class="supp-name">Nutrigel Advance</div>
+        <div class="supp-dose">1 sachet diario · Con agua</div>
+        <div class="supp-note">Para el dolor de tobillo reportado. Colágeno hidrolizado + vitamina C para soporte de tejido conectivo. Tomar en ayunas o 30–60 min antes del entrenamiento para maximizar síntesis de colágeno periarticular.<br><em>Ref: Shaw et al. 2017</em></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════ HIERRO VEGETARIANA ══════════════ -->
+<div class="section">
+  <div class="section-title">🩸 Fuentes de Hierro para Deportista Vegetariana</div>
+  <div class="special-card">
+    <h3><span class="icon">⚠️</span> 1,8× RDA — Estrategia No-Hemo</h3>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:.85rem;line-height:1.45">
+      Las atletas vegetarianas necesitan <strong>1,8 veces</strong> el requerimiento de hierro vs. omnívoras (≥32 mg/día) debido a la menor biodisponibilidad del hierro no-hemo. Combinar siempre con vitamina C. Evitar té, café y calcio en la misma comida.
+    </p>
+    <div class="iron-grid">
+      <div class="iron-item">
+        <div class="iron-food">Semillas de zapallo</div>
+        <div class="iron-mg">~8 mg / 100 g</div>
+        <div class="iron-tip">+ vitamina C = alta absorción</div>
+      </div>
+      <div class="iron-item">
+        <div class="iron-food">Lentejas cocidas</div>
+        <div class="iron-mg">~3,3 mg / 100 g</div>
+        <div class="iron-tip">+ zumo naranja al servir</div>
+      </div>
+      <div class="iron-item">
+        <div class="iron-food">Espinacas cocidas</div>
+        <div class="iron-mg">~3,6 mg / 100 g</div>
+        <div class="iron-tip">Cocinadas > crudas en absorción</div>
+      </div>
+      <div class="iron-item">
+        <div class="iron-food">Tofu firme</div>
+        <div class="iron-mg">~2,7 mg / 100 g</div>
+        <div class="iron-tip">Con capsicum o kiwi</div>
+      </div>
+      <div class="iron-item">
+        <div class="iron-food">Quinoa cocida</div>
+        <div class="iron-mg">~1,5 mg / 100 g</div>
+        <div class="iron-tip">Proteína completa + hierro</div>
+      </div>
+      <div class="iron-item">
+        <div class="iron-food">Huevo (yema)</div>
+        <div class="iron-mg">~1,9 mg / 2 huevos</div>
+        <div class="iron-tip">Mejor biodisponibilidad</div>
+      </div>
+      <div class="iron-item">
+        <div class="iron-food">Garbanzos cocidos</div>
+        <div class="iron-mg">~2,9 mg / 100 g</div>
+        <div class="iron-tip">Hummus con limón ✓</div>
+      </div>
+      <div class="iron-item">
+        <div class="iron-food">Edamame</div>
+        <div class="iron-mg">~2,3 mg / 100 g</div>
+        <div class="iron-tip">Fácil de encontrar en Coles</div>
+      </div>
+    </div>
+    <span class="ref-tag" style="margin-top:.6rem;display:block">Larsson &amp; Johansson 2002 · Institute of Medicine DRI 2001</span>
+  </div>
+</div>
+
+<!-- ══════════════ NOTAS ══════════════ -->
+<div class="section" style="padding-bottom:1rem">
+  <div class="section-title">📝 Notas Clínicas</div>
+
+  <div class="nota-card">
+    <h4>⚡ Fueling vs. Restricción — Cambio de Paradigma</h4>
+    <p>Este plan está diseñado para <strong>alimentar el rendimiento</strong>, no para restricción estética. Diana lo entendió perfectamente: "para la carrera no puedo seguir restringiendo CHOs." El CHO es el combustible del músculo corredor. Restringirlo en semanas de maratón aumenta el riesgo de lesión, sobreentrenamiento y bajo rendimiento.</p>
+  </div>
+
+  <div class="nota-card green">
+    <h4>🥚 Proteína Completa para Vegetariana</h4>
+    <p>Diana tiene acceso a huevos y lácteos (lacto-ovovegetariana), lo que simplifica la cobertura proteica. Incluir diariamente: al menos 2–3 huevos, 1–2 porciones de yoghurt griego o cottage, y legumbres (lentejas, garbanzos, edamame). Tofu y tempeh son proteínas completas de alta calidad — ideales pre/post entrenamiento.</p>
+  </div>
+
+  <div class="nota-card purple">
+    <h4>🦵 Protocolo Tobillo (Nutrigel)</h4>
+    <p>El colágeno hidrolizado requiere vitamina C simultánea para estimular la síntesis en el tendón. Tomar el Nutrigel 30–60 min antes de entrenar y si es posible con algo de vitamina C (kiwi, naranja, fresas). La carga mecánica post-ingesta optimiza el depósito en el tejido afectado.</p>
+  </div>
+
+  <div class="nota-card">
+    <h4>💧 Hidratación Diaria</h4>
+    <p>Mínimo 35–40 ml/kg/día (~2,2–2,5 L base) + reposición de sudoración en entrenamiento. En Sydney agosto (fin del invierno austral), las temperaturas en carrera pueden sorprender con calor. Monitorear el color de la orina: amarillo claro = bien hidratada.</p>
+  </div>
+</div>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<div class="footer">
+  Elaborado por <strong>Juan Sebastián Muñoz Ortiz</strong><br>
+  Nutricionista Deportivo · Nutricionista del Deportivo Cali<br>
+  Cel: 317 549 9759<br><br>
+  <span style="font-size:.7rem">Plan basado en literatura científica vigente · Burke et al. 2019 · Bussau et al. 2002 · Jeukendrup 2014 · Larsson &amp; Johansson 2002</span>
+</div>
+
+<!-- ══════════════ JAVASCRIPT ══════════════ -->
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const MEALS = [
+  {
+    id: 't0', variant: true,
+    alta: {
+      lbl:'PRE', title:'Pre-Entrenamiento — Alta', time:'60–90 min antes del entrenamiento',
+      tags:['CHO alto','Combustible rápido','Cafeína OK'],
+      tip:'Días de fondo o intervalos: necesitas combustible abundante. Evita grasas y fibra excesiva. El café pre-entreno es válido si lo toleras bien.',
+      opts:[
+        { name:'Porridge + plátano + miel', desc:'100g avena cocida · 1 plátano · 1 cda miel · café negro', macro:'~70g CHO · ~8g PRO' },
+        { name:'Tostadas + mermelada + fruta', desc:'2 tostadas sourdough · 2 cdas mermelada · 1 plátano · café', macro:'~75g CHO · ~6g PRO' },
+        { name:'Dátiles + mantequilla maní', desc:'4 dátiles Medjool · 1 cda mantequilla maní · café negro', macro:'~60g CHO · ~5g PRO' },
+        { name:'Smoothie energético', desc:'1 plátano · 40g avena · 200ml leche · 1 cda miel · café opcional', macro:'~70g CHO · ~10g PRO' }
+      ]
+    },
+    media: {
+      lbl:'PRE', title:'Pre-Entrenamiento — Media', time:'30–45 min antes del entrenamiento',
+      tags:['CHO moderado','Liviano','Rápido'],
+      tip:'Carrera moderada: no necesitas una carga grande, pero sí encender el motor. Algo simple y de fácil digestión.',
+      opts:[
+        { name:'Plátano + almendras', desc:'1 plátano maduro · puñado de almendras (15g) · café opcional', macro:'~27g CHO · ~4g PRO' },
+        { name:'Rice cake + miel', desc:'2 tortas de arroz · 1 cda miel · café negro', macro:'~35g CHO · ~2g PRO' },
+        { name:'Mini smoothie de plátano', desc:'1 plátano · 150ml leche descremada · batir rápido', macro:'~32g CHO · ~8g PRO' },
+        { name:'2 dátiles + café', desc:'2 dátiles Medjool · 1 taza café negro · 200ml agua', macro:'~36g CHO · ~1g PRO' }
+      ]
+    },
+    baja: null
+  },
+
+  {
+    id: 't1', variant: true,
+    alta: {
+      lbl:'DESAYUNO', title:'Desayuno · Post-Entrenamiento Alta', time:'Después del entrenamiento · Dentro de 30–60 min',
+      tags:['Alta proteína','Recuperación','CHO reposición'],
+      tip:'Ventana anabólica activa post-fondo o intervalos. Prioriza proteína + CHO para reparar músculo y reponer glucógeno. Incluye fruta siempre.',
+      opts:[
+        { name:'Smoothie bowl griego', desc:'200g yoghurt griego · 1 plátano · berries · 40g granola · miel · nueces', macro:'~90g CHO · ~22g PRO · ~12g GRS' },
+        { name:'Huevos + tostadas + OJ', desc:'3 huevos revueltos · 2 tostadas wholegrain · aguacate · 200ml zumo naranja', macro:'~55g CHO · ~24g PRO · ~18g GRS' },
+        { name:'Overnight oats + huevos duros', desc:'60g avena (cruda la noche anterior) · leche · chia · berries · miel · 2 huevos duros', macro:'~75g CHO · ~28g PRO · ~10g GRS' },
+        { name:'Tofu scramble + tostadas', desc:'200g tofu firme · cúrcuma · nutritional yeast · 2 tostadas · espinacas salteadas · leche', macro:'~50g CHO · ~24g PRO · ~10g GRS' }
+      ]
+    },
+    media: {
+      lbl:'DESAYUNO', title:'Desayuno · Carga Media', time:'Mañana · Post-carrera moderada',
+      tags:['Proteína + CHO','Equilibrado'],
+      tip:'Carrera moderada completada — desayuno balanceado con buena proteína y CHO suficientes para el día de actividad.',
+      opts:[
+        { name:'Huevos + tostada + plátano', desc:'2 huevos (cualquier estilo) · 1 tostada wholegrain · 1 plátano · café', macro:'~55g CHO · ~16g PRO · ~10g GRS' },
+        { name:'Yoghurt + avena + fruta', desc:'180g yoghurt griego · 30g avena · berries mixtos · miel · 1 huevo duro', macro:'~50g CHO · ~22g PRO · ~8g GRS' },
+        { name:'Batido proteico', desc:'250ml leche · 1 scoop proteína whey o pea · 1 plátano · 30g avena · batir', macro:'~60g CHO · ~28g PRO · ~8g GRS' },
+        { name:'Tostadas + huevos + tomate', desc:'2 huevos fritos · 2 tostadas wholegrain · tomate · palta (½) · café', macro:'~40g CHO · ~16g PRO · ~16g GRS' }
+      ]
+    },
+    baja: {
+      lbl:'DESAYUNO', title:'Desayuno · Día de Fuerza', time:'Mañana · Antes o después de fuerza',
+      tags:['Alta proteína','CHO reducido','Saciante'],
+      tip:'Día de fuerza o descanso activo: CHO reducidos, énfasis en proteína y grasas saludables. El músculo agradece la proteína abundante estos días.',
+      opts:[
+        { name:'3 huevos + aguacate (sin tostada)', desc:'3 huevos revueltos · ½ aguacate · espinacas salteadas · sal de mar · café', macro:'~6g CHO · ~21g PRO · ~22g GRS' },
+        { name:'Yoghurt + nueces + berries', desc:'200g yoghurt griego full-fat · puñado nueces · berries · sin avena', macro:'~18g CHO · ~18g PRO · ~18g GRS' },
+        { name:'Tofu scramble + verduras', desc:'180g tofu firme · capsicum · cebolla · espinacas · semillas zapallo · aceite oliva', macro:'~8g CHO · ~20g PRO · ~14g GRS' },
+        { name:'Omelette + feta + espinacas', desc:'2 huevos + 2 claras · queso feta · espinacas · champiñones · aceite oliva', macro:'~4g CHO · ~24g PRO · ~16g GRS' }
+      ]
+    }
+  },
+
+  {
+    id: 't2', variant: true,
+    alta: {
+      lbl:'ALMUERZO', title:'Almuerzo · Carga Alta', time:'Mediodía · Comida principal',
+      tags:['CHO máximo','Proteína completa','Recuperación total'],
+      tip:'La comida más importante del día de carga alta. Plato abundante, bien balanceado. No escatimes en las porciones de CHO — hoy las necesitas.',
+      opts:[
+        { name:'Curry de lentejas + arroz', desc:'1 taza lentejas en curry de coco · 1,5 tazas arroz basmati · naan + yoghurt', macro:'~110g CHO · ~22g PRO · ~14g GRS' },
+        { name:'Pasta integral + garbanzos', desc:'90g pasta integral (seco) · salsa garbanzos-tomate · 2 cdas parmesano · ensalada', macro:'~100g CHO · ~26g PRO · ~12g GRS' },
+        { name:'Buddha bowl cargado', desc:'1 taza quinoa · 80g edamame · camote asado · 2 cdas tahini · hojas verdes', macro:'~90g CHO · ~24g PRO · ~16g GRS' },
+        { name:'Poke bowl vegetariano', desc:'1,5 tazas arroz sushi · tofu marinado · edamame · palta · nori · sésamo', macro:'~95g CHO · ~22g PRO · ~16g GRS' }
+      ]
+    },
+    media: {
+      lbl:'ALMUERZO', title:'Almuerzo · Carga Media', time:'Mediodía',
+      tags:['Proteína alta','CHO moderado','Completo'],
+      tip:'Almuerzo equilibrado — suficientes CHO para el resto del día de actividad, con proteína sólida para recuperación.',
+      opts:[
+        { name:'Sopa de lentejas + arroz', desc:'300ml sopa de lentejas · 1 taza arroz integral · ensalada verde con limón', macro:'~70g CHO · ~20g PRO · ~8g GRS' },
+        { name:'Wrap integral de tofu', desc:'1 tortilla integral · hummus · tofu ahumado · lechuga · tomate · palta', macro:'~65g CHO · ~20g PRO · ~18g GRS' },
+        { name:'Bowl de arroz + garbanzos', desc:'1 taza arroz integral · garbanzos asados · verduras asadas · 1 huevo duro · tahini', macro:'~75g CHO · ~22g PRO · ~14g GRS' },
+        { name:'Pasta + cottage + espinacas', desc:'70g pasta (seco) · salsa de tomate casera · 100g queso cottage · espinacas baby', macro:'~70g CHO · ~24g PRO · ~10g GRS' }
+      ]
+    },
+    baja: {
+      lbl:'ALMUERZO', title:'Almuerzo · Día de Fuerza', time:'Mediodía',
+      tags:['Alta proteína','CHO mínimo','Grasas saludables'],
+      tip:'Día de fuerza: prioriza la proteína y deja que las grasas saludables sean la fuente de energía. No es el día para el arroz abundante.',
+      opts:[
+        { name:'Ensalada de huevos y garbanzos', desc:'Mix greens · 2 huevos duros · 80g garbanzos · queso feta · tomate cherry · aceite oliva + limón', macro:'~25g CHO · ~22g PRO · ~22g GRS' },
+        { name:'Stir-fry tofu + verduras', desc:'180g tofu firme · brócoli · capsicum · zucchini · salsa soja · sésamo · ½ taza arroz', macro:'~28g CHO · ~22g PRO · ~12g GRS' },
+        { name:'Tempeh + ensalada grande', desc:'120g tempeh salteado · sopa de verduras · ensalada: hojas + pepino + semillas', macro:'~20g CHO · ~24g PRO · ~14g GRS' },
+        { name:'Buddha bowl sin grano', desc:'180g tofu marinado · aguacate · 100g edamame · espinacas · tahini + limón', macro:'~14g CHO · ~24g PRO · ~24g GRS' }
+      ]
+    }
+  },
+
+  {
+    id: 't3',
+    lbl:'SNACK', title:'Snack de la Tarde', time:'15:00–16:00 h',
+    tags:['Proteína moderada','Recuperación'],
+    tip:'Snack inteligente para sostener la energía hasta la cena y favorecer la síntesis proteica continua. Evitar ultraprocesados.',
+    opts:[
+      { name:'Yoghurt griego + berries', desc:'150g yoghurt griego · puñado de berries · opcional: 1 cda semillas chia', macro:'~18g CHO · ~12g PRO · ~5g GRS' },
+      { name:'Manzana + mantequilla almendra', desc:'1 manzana grande · 2 cdas mantequilla de almendras (Coles o Woolworths)', macro:'~28g CHO · ~5g PRO · ~14g GRS' },
+      { name:'Huevo duro + rice cake + hummus', desc:'1 huevo duro · 2 tortas de arroz · 2 cdas hummus', macro:'~18g CHO · ~9g PRO · ~10g GRS' },
+      { name:'Batido express proteico', desc:'200ml leche · ½ plátano · 1 scoop proteína · agitar en shaker', macro:'~30g CHO · ~26g PRO · ~5g GRS' }
+    ]
+  },
+
+  {
+    id: 't4', variant: true,
+    alta: {
+      lbl:'CENA', title:'Cena · Carga Alta', time:'19:00–20:00 h',
+      tags:['Recuperación nocturna','CHO moderado','Alta proteína'],
+      tip:'Cierra el día de carga con proteína de calidad y suficientes CHO para la síntesis nocturna de glucógeno. No cenas copiosas muy tarde.',
+      opts:[
+        { name:'Pasta + bolognesa de lentejas', desc:'80g pasta integral · salsa lentejas-tomate-zanahoria · 2 cdas parmesano · ensalada', macro:'~80g CHO · ~22g PRO · ~10g GRS' },
+        { name:'Curry de garbanzos + camote', desc:'Curry rojo de garbanzos · camote asado · ¾ taza arroz jazmín · yoghurt', macro:'~85g CHO · ~18g PRO · ~12g GRS' },
+        { name:'Tofu stir-fry + fideos de arroz', desc:'180g tofu · fideos de arroz · brócoli · zanahoria · salsa soja-sésamo · cebollín', macro:'~75g CHO · ~20g PRO · ~12g GRS' },
+        { name:'Bowl quinoa + edamame + huevo', desc:'1 taza quinoa · 80g edamame · verduras asadas · 1 huevo duro · tahini-limón', macro:'~60g CHO · ~26g PRO · ~16g GRS' }
+      ]
+    },
+    media: {
+      lbl:'CENA', title:'Cena · Carga Media', time:'19:00–20:00 h',
+      tags:['Equilibrado','Proteína alta','CHO moderado'],
+      tip:'Cena equilibrada y nutritiva. No hace falta reducir mucho — mañana también entrenas.',
+      opts:[
+        { name:'Tofu + camote + judías verdes', desc:'180g tofu horneado · camote asado (200g) · judías verdes al vapor · aceite oliva', macro:'~42g CHO · ~20g PRO · ~12g GRS' },
+        { name:'Frittata de verduras + tostada', desc:'3 huevos · pimiento · cebolla · espinacas · queso feta · 1 tostada integral', macro:'~28g CHO · ~24g PRO · ~16g GRS' },
+        { name:'Curry rojo vegetal + ½ taza arroz', desc:'Curry de verduras mix · leche de coco light · ½ taza arroz · semillas', macro:'~50g CHO · ~14g PRO · ~14g GRS' },
+        { name:'Sopa de tomate + tostada grillada', desc:'300ml sopa tomate casera · 1 tostada integral · queso cheddar fundido · ensalada', macro:'~42g CHO · ~16g PRO · ~14g GRS' }
+      ]
+    },
+    baja: {
+      lbl:'CENA', title:'Cena · Día de Fuerza', time:'19:00–20:00 h',
+      tags:['Alta proteína','CHO mínimo','Recuperación muscular'],
+      tip:'Cena de día de fuerza: proteína abundante para síntesis muscular nocturna. La grasa buena es bienvenida. Sin arroz ni pasta abundante.',
+      opts:[
+        { name:'Tofu stir-fry solo verduras', desc:'200g tofu firme · brócoli · espinacas · champiñones · salsa soja · sésamo (sin arroz)', macro:'~10g CHO · ~22g PRO · ~12g GRS' },
+        { name:'Omelette + ensalada abundante', desc:'3 huevos · espinacas · queso feta · champiñones · ensalada grande con oliva', macro:'~5g CHO · ~26g PRO · ~20g GRS' },
+        { name:'Sopa de lentejas rojas (baja CHO)', desc:'250ml sopa lentejas rojas-cúrcuma-limón · 1 taza espinacas cocidas · semillas lino', macro:'~28g CHO · ~20g PRO · ~8g GRS' },
+        { name:'Tempeh + verduras asadas + tahini', desc:'130g tempeh · mix verduras asadas (zucchini, capsicum, berenjena) · salsa tahini-limón', macro:'~14g CHO · ~24g PRO · ~18g GRS' }
+      ]
+    }
+  }
+];
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+const DAY_MAP = {0:'alta',1:'baja',2:'media',3:'alta',4:'media',5:'baja',6:'media'};
+const LS_KEY_DAY = 'jsmo_dr_day';
+const LS_KEY_OPTS = 'jsmo_dr_opts';
+
+let day = localStorage.getItem(LS_KEY_DAY) || DAY_MAP[new Date().getDay()];
+let savedOpts = JSON.parse(localStorage.getItem(LS_KEY_OPTS) || '{}');
+
+// ── COUNTDOWN ────────────────────────────────────────────────────────────────
+(function() {
+  const marathon = new Date('2026-08-30T00:00:00');
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const diff = Math.round((marathon - today) / (1000*60*60*24));
+  document.getElementById('daysLeft').textContent = diff > 0 ? diff : '¡HOY!';
+})();
+
+// ── GET MEAL DATA ─────────────────────────────────────────────────────────────
+function getMdata(m) {
+  if (!m.variant) return m;
+  return m[day];
+}
+
+function getActiveMeals() {
+  return MEALS.filter(m => {
+    if (!m.variant) return true;
+    return m[day] !== null;
+  });
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function render() {
+  // Update buttons
+  document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.${day}-btn`).classList.add('active');
+
+  // Update info cards
+  ['alta','media','baja'].forEach(t => {
+    document.getElementById(`info-${t}`).style.display = t === day ? '' : 'none';
+  });
+
+  // Render meals
+  const container = document.getElementById('meals-container');
+  container.innerHTML = '';
+  getActiveMeals().forEach(m => {
+    const data = getMdata(m);
+    const savedOpt = savedOpts[m.id] ?? 0;
+    const card = document.createElement('div');
+    card.className = 'meal-card';
+
+    const optsHtml = data.opts.map((o, i) => `
+      <div class="opt-card${i === savedOpt ? ' selected' : ''}"
+           tabindex="0"
+           onclick="selectOpt('${m.id}', ${i}, this)"
+           onkeydown="if(event.key==='Enter'||event.key===' ')selectOpt('${m.id}',${i},this)">
+        <div class="opt-name">${o.name}</div>
+        <div class="opt-desc">${o.desc}</div>
+        <div class="opt-macro">${o.macro}</div>
+      </div>
+    `).join('');
+
+    const tagsHtml = data.tags.map(t => `<span class="tag">${t}</span>`).join('');
+    const tipHtml = data.tip ? `<div class="meal-tip">${data.tip}</div>` : '';
+    const lblClass = `meal-lbl ${day}`;
+
+    card.innerHTML = `
+      <div class="meal-header" onclick="toggleMeal(this)">
+        <div class="${lblClass}">${data.lbl}</div>
+        <div class="meal-title-wrap">
+          <div class="meal-title">${data.title}</div>
+          <div class="meal-time">${data.time || ''}</div>
+          <div class="meal-tags">${tagsHtml}</div>
+        </div>
+        <div class="meal-chevron">▾</div>
+      </div>
+      <div class="meal-body">
+        ${tipHtml}
+        <div class="opt-grid">${optsHtml}</div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ── TOGGLE MEAL ───────────────────────────────────────────────────────────────
+function toggleMeal(header) {
+  const body = header.nextElementSibling;
+  const chevron = header.querySelector('.meal-chevron');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+}
+
+// ── SELECT OPTION ─────────────────────────────────────────────────────────────
+function selectOpt(mealId, idx, el) {
+  el.closest('.opt-grid').querySelectorAll('.opt-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  savedOpts[mealId] = idx;
+  localStorage.setItem(LS_KEY_OPTS, JSON.stringify(savedOpts));
+}
+
+// ── SET DAY ───────────────────────────────────────────────────────────────────
+function setDay(d) {
+  day = d;
+  localStorage.setItem(LS_KEY_DAY, d);
+  render();
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
