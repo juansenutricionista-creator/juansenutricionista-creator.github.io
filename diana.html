@@ -629,7 +629,7 @@
 
   <div class="nota-card green">
     <h4>🥚 Proteína Completa · Tus Marcas</h4>
-    <p>Proteínas confirmadas en tu despensa: <strong>Earth Grown Firm Tofu</strong> (ALDI, 14,8g PRO/100g) · <strong>Nutrisoy Tempeh</strong> (13g PRO/100g) · <strong>Coles Perform Yoghurt</strong> (15,9g PRO/170g) · <strong>Chobani Natural</strong> (14,9g PRO/160g) · <strong>ON Gold Standard Whey</strong> (24g PRO/scoop) · <strong>V2 Food Burger</strong> (20g PRO/patty, soja, B12+hierro incluido) · <strong>Coles TVP</strong> (26,4g PRO/50g seco). Incluir diariamente mínimo 3 fuentes de proteína y los Weet-Bix en el desayuno por su aporte de hierro.</p>
+    <p>Proteínas confirmadas en tu despensa: <strong>Earth Grown Firm Tofu</strong> (ALDI, 14,8g PRO/100g) · <strong>Nutrisoy Tempeh</strong> (13g PRO/100g) · <strong>Made with Plants Roast Chicken-style</strong> (22,5g PRO/100g) · <strong>Coles Wellness Road TVP</strong> (52,8g PRO/100g seco — la más concentrada) · <strong>V2 Food Burger</strong> (20g PRO/patty) · <strong>Coles Perform Yoghurt</strong> (15,9g PRO/170g) · <strong>Chobani Natural</strong> (14,9g PRO/160g) · <strong>ON Gold Standard Whey</strong> (24g PRO/scoop) · <strong>San Remo Red Lentil Pasta</strong> (23g PRO/100g seco — pasta + proteína en uno). Incluir diariamente mínimo 3 fuentes de proteína y los Weet-Bix en el desayuno por su aporte de hierro.</p>
   </div>
 
   <div class="nota-card purple">
@@ -646,8 +646,8 @@
 <!-- ══════════════ FOOTER ══════════════ -->
 <div class="footer">
   Elaborado por <strong>Juan Sebastián Muñoz Ortiz</strong><br>
-  Nutricionista Deportivo · Nutricionista del Deportivo Cali<br>
-  Cel: 317 549 9759<br><br>
+  Nutricionista Deportivo<br>
+  📱 317 549 9759 · @juanse_nutricionista<br><br>
   <span style="font-size:.7rem">Plan basado en literatura científica vigente · Burke et al. 2019 · Bussau et al. 2002 · Jeukendrup 2014 · Larsson &amp; Johansson 2002</span>
 </div>
 
@@ -727,7 +727,7 @@ const MEALS = [
       tip:'La comida más importante del día de carga alta. Plato abundante, bien balanceado. No escatimes en las porciones de CHO — hoy las necesitas.',
       opts:[
         { name:'Curry de lentejas + arroz', desc:'1 taza lentejas en curry de coco · 1,5 tazas arroz basmati · naan + yoghurt', macro:'~110g CHO · ~22g PRO · ~14g GRS' },
-        { name:'Pasta integral + garbanzos', desc:'90g Coles Organic Wholemeal Spirals (seco) · salsa garbanzos-tomate · 2 cdas parmesano · ensalada', macro:'~100g CHO · ~26g PRO · ~12g GRS' },
+        { name:'San Remo Lentil Pasta + garbanzos', desc:'90g San Remo Pulse Pasta Red Lentils (seco, 23g PRO/100g) · salsa garbanzos-tomate · nutritional yeast · ensalada', macro:'~90g CHO · ~35g PRO · ~8g GRS' },
         { name:'Buddha bowl cargado', desc:'1 taza quinoa · 80g edamame · camote asado · 2 cdas tahini · hojas verdes', macro:'~90g CHO · ~24g PRO · ~16g GRS' },
         { name:'Poke bowl vegetariano', desc:'1,5 tazas arroz sushi · tofu marinado · edamame · palta · nori · sésamo', macro:'~95g CHO · ~22g PRO · ~16g GRS' }
       ]
@@ -739,7 +739,7 @@ const MEALS = [
       opts:[
         { name:'Sopa de lentejas + arroz', desc:'300ml sopa de lentejas · 1 taza arroz integral · ensalada verde con limón', macro:'~70g CHO · ~20g PRO · ~8g GRS' },
         { name:'Wrap de tofu o tempeh', desc:'2 Mission Mini Wraps Wholegrain · hummus · 120g Earth Grown Tofu o Nutrisoy Tempeh · lechuga · tomate · palta', macro:'~65g CHO · ~22g PRO · ~18g GRS' },
-        { name:'Bowl de arroz + garbanzos', desc:'1 taza arroz integral · garbanzos asados · verduras asadas · 1 huevo duro · tahini', macro:'~75g CHO · ~22g PRO · ~14g GRS' },
+        { name:'V2 Food Burger + papa asada', desc:'1 patty V2 Food Plant Protein Burger (113g · 20g PRO · soja) · papa mediana al horno · ensalada mix · ketchup sin azúcar', macro:'~62g CHO · ~24g PRO · ~10g GRS' },
         { name:'Pasta + cottage + espinacas', desc:'70g pasta (seco) · salsa de tomate casera · 100g queso cottage · espinacas baby', macro:'~70g CHO · ~24g PRO · ~10g GRS' }
       ]
     },
@@ -751,7 +751,7 @@ const MEALS = [
         { name:'Ensalada de huevos y garbanzos', desc:'Mix greens · 2 huevos duros · 80g garbanzos · queso feta · tomate cherry · aceite oliva + limón', macro:'~25g CHO · ~22g PRO · ~22g GRS' },
         { name:'Stir-fry tofu + verduras', desc:'180g tofu firme · brócoli · capsicum · zucchini · salsa soja · sésamo · ½ taza arroz', macro:'~28g CHO · ~22g PRO · ~12g GRS' },
         { name:'Tempeh + ensalada grande', desc:'120g tempeh salteado · sopa de verduras · ensalada: hojas + pepino + semillas', macro:'~20g CHO · ~24g PRO · ~14g GRS' },
-        { name:'Buddha bowl sin grano', desc:'180g tofu marinado · aguacate · 100g edamame · espinacas · tahini + limón', macro:'~14g CHO · ~24g PRO · ~24g GRS' }
+        { name:'Made with Plants Chicken + ensalada', desc:'140g Made with Plants Meat-Free Roast Chicken (31.5g PRO · 22.5g/100g) · mix greens · pepino · tomate cherry · ½ aguacate · tahini-limón', macro:'~10g CHO · ~33g PRO · ~22g GRS' }
       ]
     }
   },
@@ -776,7 +776,7 @@ const MEALS = [
       tags:['Recuperación nocturna','CHO moderado','Alta proteína'],
       tip:'Cierra el día de carga con proteína de calidad y suficientes CHO para la síntesis nocturna de glucógeno. No cenas copiosas muy tarde.',
       opts:[
-        { name:'Pasta + bolognesa de lentejas', desc:'80g Coles Organic Wholemeal Spirals · salsa McKenzie\'s Red Lentils-tomate-zanahoria · 2 cdas parmesano · ensalada', macro:'~80g CHO · ~22g PRO · ~10g GRS' },
+        { name:'San Remo Lentil Pasta + bolognesa TVP', desc:'80g San Remo Pulse Pasta Red Lentils (seco) · ½ taza Coles Wellness Road TVP hidratado (26g PRO/50g seco) · salsa tomate-zanahoria-ajo · parmesano · ensalada', macro:'~82g CHO · ~38g PRO · ~10g GRS' },
         { name:'Curry de garbanzos + camote', desc:'Curry rojo de garbanzos · camote asado · ¾ taza arroz jazmín · yoghurt', macro:'~85g CHO · ~18g PRO · ~12g GRS' },
         { name:'Tofu stir-fry + fideos de arroz', desc:'180g tofu · fideos de arroz · brócoli · zanahoria · salsa soja-sésamo · cebollín', macro:'~75g CHO · ~20g PRO · ~12g GRS' },
         { name:'Bowl quinoa + edamame + huevo', desc:'1 taza quinoa · 80g edamame · verduras asadas · 1 huevo duro · tahini-limón', macro:'~60g CHO · ~26g PRO · ~16g GRS' }
@@ -789,7 +789,7 @@ const MEALS = [
       opts:[
         { name:'Tofu + camote + judías verdes', desc:'180g tofu horneado · camote asado (200g) · judías verdes al vapor · aceite oliva', macro:'~42g CHO · ~20g PRO · ~12g GRS' },
         { name:'Frittata de verduras + tostada', desc:'3 huevos · pimiento · cebolla · espinacas · queso feta · 1 tostada integral', macro:'~28g CHO · ~24g PRO · ~16g GRS' },
-        { name:'Curry rojo vegetal + ½ taza arroz', desc:'Curry de verduras mix · leche de coco light · ½ taza arroz · semillas', macro:'~50g CHO · ~14g PRO · ~14g GRS' },
+        { name:'Made with Plants Chicken + camote', desc:'140g Made with Plants Meat-Free Roast Chicken · camote asado (200g) · brócoli al vapor · aceite oliva · semillas de zapallo', macro:'~48g CHO · ~34g PRO · ~16g GRS' },
         { name:'Sopa de tomate + tostada grillada', desc:'300ml sopa tomate casera · 1 tostada integral · queso cheddar fundido · ensalada', macro:'~42g CHO · ~16g PRO · ~14g GRS' }
       ]
     },
