@@ -348,7 +348,7 @@
       <div class="supp-body">
         <div class="supp-name">ISO 100 Dymatize</div>
         <div class="supp-dose">1 scoop · Post-entrenamiento o en el desayuno</div>
-        <div class="supp-note">Fundamental dado que la Saxenda puede reducir el apetito y dificultar alcanzar el target de proteína. El ISO 100 asegura la cobertura proteica para preservar y construir masa muscular sin necesidad de comer un plato grande. Mezclar con agua o leche descremada.</div>
+        <div class="supp-note">Fundamental para alcanzar el target de proteína y proteger la masa muscular en proceso de recomposición. Asegura la cobertura proteica sin necesidad de comer un plato grande. Mezclar con agua o leche descremada.</div>
       </div>
     </div>
 
@@ -388,14 +388,7 @@
       </div>
     </div>
 
-    <div class="supp-item">
-      <div class="supp-icon nota">⚕️</div>
-      <div class="supp-body">
-        <div class="supp-name">Nota: Levotiroxina <span class="supp-badge nota">Timing Crítico</span></div>
-        <div class="supp-dose">Tomar 30–60 min antes del desayuno, con agua</div>
-        <div class="supp-note">Evitar tomar levotiroxina junto con: café, leche, calcio, hierro, soya o colágeno. Estos alimentos y suplementos reducen la absorción del medicamento hasta un 40%. Por eso el colágeno se toma primero, en ayunas, y el desayuno 30 min después.</div>
-      </div>
-    </div>
+
 
   </div>
 </div>
@@ -403,11 +396,6 @@
 <!-- ══════════════ NOTAS ══════════════ -->
 <div class="section" style="padding-bottom:1rem">
   <div class="section-title">📝 Notas del Plan</div>
-
-  <div class="nota-card purple">
-    <h4>💊 Compatible con Saxenda (Liraglutida)</h4>
-    <p>La Saxenda reduce el vaciado gástrico y suprime el apetito de manera significativa. Es normal que no sientas hambre para comer todo el plan. <strong>Regla de prioridad:</strong> si solo puedes comer una parte de la comida, elige primero la proteína (pollo, huevos, salmón) antes que el carbohidrato. La proteína protege el músculo. Si hay náuseas, comidas pequeñas y frecuentes son mejor toleradas que platos grandes.</p>
-  </div>
 
   <div class="nota-card amber">
     <h4>🦋 Hipotiroidismo y Alimentación</h4>
@@ -434,7 +422,7 @@
 <!-- ══════════════ FOOTER ══════════════ -->
 <div class="footer">
   Elaborado por <strong>Juan Sebastián Muñoz Ortiz</strong><br>
-  Nutricionista Deportivo · Nutricionista del Deportivo Cali<br>
+  Nutricionista Deportivo · @juanse_nutricionista<br>
   Cel: 317 549 9759
 </div>
 
@@ -447,12 +435,12 @@ const MEALS = [
     e: {
       lbl: 'PRE', title: 'Pre-Entrenamiento', time: '20–30 min antes del entrenamiento',
       tags: ['Energía rápida', 'CHO simple', 'Liviano'],
-      tip: 'Pequeño combustible antes de entrenar. No debe sentirse pesado en el estómago. Si la Saxenda ya redujo tu apetito por la mañana, elige la opción más pequeña.',
+      tip: 'Pequeño combustible antes de entrenar. No debe sentirse pesado en el estómago. Elige la opción que mejor toleres según cómo te sientas esa mañana.',
       opts: [
         { name: 'Batido energético', desc: '1 banano · 1 cda mantequilla maní · 150 ml leche · café opcional', macro: '~35g CHO · ~8g PRO' },
-        { name: 'Arepa pequeña + café', desc: '1 arepa pequeña de maíz (no rellena) · 1 taza café negro o con leche descremada', macro: '~28g CHO · ~3g PRO' },
-        { name: 'Fruta + almendras', desc: '1 manzana mediana o 1 banano · 12 almendras · agua', macro: '~25g CHO · ~4g PRO' },
-        { name: '3 dátiles + café', desc: '3 dátiles Medjool · café negro sin azúcar · 250 ml agua', macro: '~33g CHO · ~1g PRO' }
+        { name: 'Tostadas + yogur griego', desc: '2 tostadas de arroz o maíz inflado · 1–2 cditas yogur griego · café', macro: '~22g CHO · ~4g PRO' },
+        { name: 'Bowl yogur griego liviano', desc: '2–3 cdas yogur griego · 4–5 fresas o 6 arándanos · 6 almendras', macro: '~15g CHO · ~5g PRO · ~3g GRS' },
+        { name: 'Café proteico tipo capuchino', desc: 'Café + ½ scoop proteína mezclado · si tolera: 1 paquete Salmas Sanissimas', macro: '~10g CHO · ~12g PRO' }
       ]
     },
     d: null
@@ -465,10 +453,10 @@ const MEALS = [
       tags: ['Alta proteína', 'Recuperación', 'CHO moderado'],
       tip: 'Ventana de recuperación activa. Proteína + carbohidrato para reparar músculo y reponer energía. Incluye siempre el jugo verde de la Fase 1 como parte de este desayuno.',
       opts: [
-        { name: 'Huevos + arepa + aguacate', desc: '3 huevos revueltos · 1 arepa pequeña · ½ aguacate · tomate · + jugo verde Fase 1', macro: '~40g CHO · ~23g PRO · ~18g GRS' },
-        { name: 'Bowl de yogur + granola', desc: '200g yogur griego · 30g granola sin azúcar · fresas · banano · 1 huevo duro', macro: '~55g CHO · ~24g PRO · ~10g GRS' },
-        { name: 'Avena trasnochada + proteína', desc: '50g avena (en frío la noche anterior) · leche · chía · berries · ½ scoop ISO 100', macro: '~60g CHO · ~30g PRO · ~8g GRS' },
-        { name: 'Omelette + arepa pequeña', desc: '2 huevos + 2 claras · 30g queso campesino · 1 arepa pequeña · 1 fruta de temporada', macro: '~38g CHO · ~28g PRO · ~12g GRS' }
+        { name: 'Huevos + arepa + aguacate', desc: '3 huevos revueltos · 1 arepa pequeña tipo tela de maíz · ½ aguacate · tomate · + jugo verde Fase 1', macro: '~40g CHO · ~23g PRO · ~18g GRS' },
+        { name: 'Omelette gourmet + arepa o pan', desc: '2 huevos + 2 claras · champiñones salteados · espinaca · tajada queso mozzarella — acompañado con arepa pequeña tipo tela de maíz O arepa de arroz Yen Escobar O tajada pan de masa madre', macro: '~35g CHO · ~28g PRO · ~12g GRS' },
+        { name: 'Avena caliente o fría + proteína', desc: '½ taza avena cocida con agua y canela O trasnochada en leche · arándanos · ½ scoop proteína', macro: '~55g CHO · ~28g PRO · ~6g GRS' },
+        { name: 'Montadito gourmet', desc: 'Tajada pan de masa madre · 2 huevos revueltos suaves · salsa napolitana · café', macro: '~35g CHO · ~22g PRO · ~10g GRS' }
       ]
     },
     d: {
@@ -476,10 +464,10 @@ const MEALS = [
       tags: ['Alta proteína', 'Sin CHO almidón', 'Saciante'],
       tip: 'Día de descanso: menos carbohidrato, más proteína y grasa saludable. No necesitas la arepa hoy — el aguacate y los huevos son suficientes. El jugo verde sigue siendo bienvenido.',
       opts: [
-        { name: 'Huevos + aguacate (sin arepa)', desc: '2 huevos revueltos · ½ aguacate · tomate · queso campesino · café con leche', macro: '~8g CHO · ~20g PRO · ~22g GRS' },
-        { name: 'Yogur griego + nueces + berries', desc: '200g yogur griego · puñado nueces (20g) · fresas o arándanos · sin granola', macro: '~20g CHO · ~18g PRO · ~16g GRS' },
+        { name: 'Huevos + aguacate (sin arepa)', desc: '2 huevos revueltos · ½ aguacate · tomate · 1 tajada queso campesino · café con leche', macro: '~8g CHO · ~20g PRO · ~22g GRS' },
+        { name: 'Yogur griego + nueces + arándanos', desc: '1 taza yogur griego · puñado nueces · fresas o arándanos · sin granola', macro: '~20g CHO · ~18g PRO · ~16g GRS' },
         { name: 'Batido proteico oscuro', desc: '250 ml leche descremada · 1 scoop ISO 100 chocolate · 1 cda cacao sin azúcar · hielo', macro: '~20g CHO · ~32g PRO · ~4g GRS' },
-        { name: 'Omelette de espinacas', desc: '2 huevos + 2 claras · espinacas salteadas · 30g queso campesino · tomate · café', macro: '~6g CHO · ~26g PRO · ~14g GRS' }
+        { name: 'Omelette de espinacas', desc: '2 huevos + 2 claras · espinacas salteadas · 1 tajada queso campesino · tomate · café', macro: '~6g CHO · ~26g PRO · ~14g GRS' }
       ]
     }
   },
@@ -491,10 +479,10 @@ const MEALS = [
       tags: ['Proteína + CHO', 'Completo', 'Recuperación'],
       tip: 'El almuerzo es la comida principal del día. No saltárselo. Incluye la crema de vegetales (Fase 2) como entrada cuando empieces esa fase — suma vegetales sin esfuerzo extra.',
       opts: [
-        { name: 'Pechuga + arroz + ensalada', desc: '150g pechuga a la plancha · ½ taza arroz integral · ensalada grande · ½ aguacate', macro: '~45g CHO · ~42g PRO · ~14g GRS' },
-        { name: 'Salmón + papa criolla + crema', desc: '150g salmón · 2 papas criollas medianas · crema de espinaca o calabaza', macro: '~40g CHO · ~36g PRO · ~18g GRS' },
-        { name: 'Pollo + quinoa + vegetales', desc: '140g pollo desmechado · ½ taza quinoa · zanahoria + pimentón salteados', macro: '~42g CHO · ~38g PRO · ~10g GRS' },
-        { name: 'Res magra + arroz + aguacate', desc: '130g lomo de res · ½ taza arroz blanco · ensalada · 2 cdas aguacate', macro: '~40g CHO · ~34g PRO · ~16g GRS' }
+        { name: 'Pechuga + arroz + ensalada', desc: '150g pechuga a la plancha · ½ taza arroz integral · ensalada: tomate + cebolla morada en julianas + ¼ aguacate + cilantro + limón + sal', macro: '~45g CHO · ~42g PRO · ~14g GRS' },
+        { name: 'Salmón al ajillo', desc: '150g salmón al ajillo · 2 papas criollas medianas en freidora de aire · ensalada: mix hojas verdes + fresas + almendras laminadas', macro: '~38g CHO · ~36g PRO · ~18g GRS' },
+        { name: 'Bowl de Pollo y Quinoa', desc: '140g pollo en cubos salteados · ½ taza quinoa o ½ taza arroz · pico de gallo: cebolla + tomate + mango en cubos + limón + sal + cilantro · 1 cda guacamole', macro: '~42g CHO · ~38g PRO · ~10g GRS' },
+        { name: 'Res magra + maduro + mozzarella', desc: '130g lomo de res a la plancha · ½ maduro asado · tajada queso mozzarella encima · ensalada verde', macro: '~32g CHO · ~34g PRO · ~14g GRS' }
       ]
     },
     d: {
@@ -502,9 +490,9 @@ const MEALS = [
       tags: ['Alta proteína', 'CHO mínimo', 'Vegetales abundantes'],
       tip: 'Hoy el plato cambia: menos almidón, más verduras y proteína. El aguacate y el aceite de oliva son la grasa del día. Aprovecha para explorar las ensaladas o cremas de la estrategia de vegetales.',
       opts: [
-        { name: 'Pechuga + ensalada grande', desc: '150g pechuga · mix hojas verdes · pepino · tomate · zanahoria · aceite oliva + limón', macro: '~12g CHO · ~42g PRO · ~14g GRS' },
+        { name: 'Pechuga + ensalada especial', desc: '150g pechuga · ensalada: mix hojas verdes + espinacas + fresas + almendras laminadas · aceite oliva + limón', macro: '~12g CHO · ~42g PRO · ~14g GRS' },
         { name: 'Salmón + vegetales al vapor', desc: '150g salmón · brócoli + zanahoria + zucchini al vapor · 1 cda aceite oliva', macro: '~14g CHO · ~36g PRO · ~18g GRS' },
-        { name: 'Pollo + quinoa pequeña + ensalada', desc: '140g pollo · ¼ taza quinoa cocida · ensalada abundante · aguacate (¼)', macro: '~22g CHO · ~40g PRO · ~14g GRS' },
+        { name: 'Pollo + quinoa pequeña + ensalada', desc: '140g pollo · ¼ taza quinoa cocida · ensalada: tomate + cebolla morada + cilantro + limón · ¼ aguacate', macro: '~22g CHO · ~40g PRO · ~14g GRS' },
         { name: 'Huevos + ensalada completa', desc: '3 huevos duros o revueltos · ensalada grande · ½ aguacate · 1 cda aceite de oliva', macro: '~8g CHO · ~20g PRO · ~22g GRS' }
       ]
     }
@@ -514,12 +502,12 @@ const MEALS = [
     id: 'snk',
     lbl: 'SNACK', title: 'Media Tarde', time: '15:00–16:30 h',
     tags: ['Proteína moderada', 'Saciante', 'Sin saltarse'],
-    tip: 'El snack es clave para llegar a la cena sin hambre excesiva y mantener el metabolismo activo. Aunque la Saxenda reduzca el hambre, procurar hacer siempre este tiempo pequeño.',
+    tip: 'El snack es clave para llegar a la cena sin hambre excesiva y mantener el metabolismo activo. Aunque no sientas mucha hambre, procura hacer siempre este tiempo pequeño.',
     opts: [
       { name: 'Kéfir + fruta pequeña', desc: '150 ml kéfir · 1 manzana o 1 mandarina', macro: '~22g CHO · ~5g PRO · ~2g GRS' },
-      { name: 'Queso campesino + fruta', desc: '40g queso campesino · 1 fruta mediana de temporada (mango, fresas, papaya)', macro: '~18g CHO · ~8g PRO · ~6g GRS' },
-      { name: 'Zanahoria + hummus ✅ Vegetales', desc: '1 zanahoria grande en palitos · 2 cdas hummus', macro: '~15g CHO · ~4g PRO · ~5g GRS' },
-      { name: 'Yogur griego + mango', desc: '100g yogur griego · ½ mango troceado', macro: '~20g CHO · ~10g PRO · ~3g GRS' }
+      { name: 'Palito de queso Fines + fruta', desc: '1 palito queso Fines · 1 fruta a elección', macro: '~16g CHO · ~8g PRO · ~5g GRS' },
+      { name: 'Zanahoria + dip ✅ Vegetales', desc: '5 bastones zanahoria + hummus O dip de yogur griego (3 cdas + ajo en polvo + chorrito limón + sal y pimienta)', macro: '~15g CHO · ~5g PRO · ~4g GRS' },
+      { name: 'Yogur griego + mango', desc: '1 taza yogur griego · ½ mango troceado', macro: '~20g CHO · ~10g PRO · ~3g GRS' }
     ]
   },
 
@@ -530,9 +518,9 @@ const MEALS = [
       tags: ['Proteína alta', 'CHO moderado', 'Liviana'],
       tip: 'Cena completa pero no excesiva. El carbohidrato nocturno en días de entrenamiento favorece la recuperación y el sueño. Cenar 2–3 horas antes de dormir para mejorar la calidad del sueño.',
       opts: [
-        { name: 'Pollo + arepa pequeña + ensalada', desc: '120g pollo · 1 arepa pequeña · ensalada de hojas + tomate + aceite oliva', macro: '~30g CHO · ~32g PRO · ~10g GRS' },
-        { name: 'Salmón + papa criolla + ensalada', desc: '130g salmón · 1–2 papas criollas medianas · ensalada verde simple', macro: '~28g CHO · ~34g PRO · ~16g GRS' },
-        { name: 'Omelette + arepa de choclo + tomate', desc: '2 huevos + 2 claras · queso campesino · 1 arepa de choclo pequeña · tomate', macro: '~32g CHO · ~24g PRO · ~10g GRS' },
+        { name: 'Montadito de pollo guisado', desc: '120g pollo desmechado guisado · arepa pequeña de arroz integral Yen Escobar O arepa crunchy Sari · ensalada verde', macro: '~30g CHO · ~32g PRO · ~8g GRS' },
+        { name: 'Wrap de atún', desc: 'Tortilla integral · lata de atún + tomate + cebolla picada · 1 cdita guacamole · tajada queso mozzarella Fines', macro: '~28g CHO · ~32g PRO · ~10g GRS' },
+        { name: 'Huevos + maduro + mozzarella', desc: '3 huevos (2 claras + 1 entero) · ½ maduro asado en cubos en freidora de aire · tajada queso mozzarella para gratinar', macro: '~25g CHO · ~22g PRO · ~12g GRS' },
         { name: 'Res magra + media arepa + aguacate', desc: '120g lomo · ½ arepa pequeña · ¼ aguacate · lechuga', macro: '~22g CHO · ~30g PRO · ~14g GRS' }
       ]
     },
@@ -543,7 +531,7 @@ const MEALS = [
       opts: [
         { name: 'Pollo + ensalada abundante', desc: '120g pollo a la plancha · ensalada grande (hojas + pepino + tomate) · 2 cdas aceite oliva', macro: '~8g CHO · ~32g PRO · ~12g GRS' },
         { name: 'Salmón + vegetales al vapor', desc: '130g salmón · brócoli + zanahoria + espárragos al vapor · 1 cda aceite oliva', macro: '~10g CHO · ~34g PRO · ~16g GRS' },
-        { name: 'Omelette grande + espinacas', desc: '3 huevos · espinacas salteadas con ajo · 30g queso campesino · tomate cherry', macro: '~6g CHO · ~26g PRO · ~16g GRS' },
+        { name: 'Omelette + espinacas', desc: '3 huevos · espinacas salteadas con ajo · 1 tajada queso campesino · tomate cherry', macro: '~6g CHO · ~26g PRO · ~16g GRS' },
         { name: 'Pollo + aguacate + hojas verdes', desc: '120g pollo desmechado · ½ aguacate · mix de lechuga + espinaca + tomate · limón', macro: '~8g CHO · ~30g PRO · ~18g GRS' }
       ]
     }
