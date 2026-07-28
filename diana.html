@@ -641,7 +641,7 @@
 
   <div class="nota-card">
     <h4>⚡ Comer para rendir, no para restringir</h4>
-    <p>Diana ya lo tiene claro: <em>"para la carrera no puedo seguir restringiendo CHOs."</em> Exacto. Años de gym con déficit calórico no aplican aquí. El carbohidrato es el combustible directo del músculo cuando corres — sin él, el rendimiento cae, el riesgo de lesión sube y la recuperación se alarga. En semanas de maratón, comer suficiente <em>es</em> parte del entrenamiento.</p>
+    <p>Diana, ya lo tienes claro: no puedes restringir CHOs para correr una maratón. Años de gym con déficit calórico no aplican aquí. El carbohidrato es el combustible directo del músculo cuando corres — sin él, el rendimiento cae, el riesgo de lesión sube y la recuperación se alarga. En semanas de maratón, comer suficiente <em>es</em> parte del entrenamiento.</p>
   </div>
 
   <div class="nota-card green">
@@ -708,7 +708,7 @@ const MEALS = [
       opts:[
         { name:'Huevos revueltos + tostadas + banano', desc:'3 huevos revueltos en aceite de oliva · 2 tostadas de pan de masa madre · 1 banano · ½ aguacate · café', macro:'~55g CHO · ~24g PRO · ~18g GRS' },
         { name:'Weet-Bix + yoghurt + banano', desc:'4 Weet-Bix · 170g Coles Perform yoghurt · 1 banano · 1 cdita miel. Los Weet-Bix aportan hierro — no se saltan.', macro:'~85g CHO · ~26g PRO · ~5g GRS' },
-        { name:'Avena trasnochada + banano + huevo', desc:'½ taza avena remojada desde la noche anterior · leche de almendras · berries · 1 cdita miel · 1 huevo duro aparte', macro:'~72g CHO · ~20g PRO · ~8g GRS' },
+        { name:'Avena trasnochada + banano + huevo', desc:'¾ taza avena remojada desde la noche anterior · leche de almendras · berries · 1 cdita miel · 1 banano · 1 huevo duro aparte' },
         { name:'Batido proteína + avena + banano', desc:'1 scoop ON Gold Standard Whey Banana Cream (24g PRO) · 250ml leche de almendras · 1 banano · ½ taza avena · batir en shaker', macro:'~70g CHO · ~30g PRO · ~6g GRS' }
       ]
     },
@@ -743,10 +743,10 @@ const MEALS = [
       tags:['CHO máximo','Proteína completa','Recuperación total'],
       tip:'La comida más importante del día de carga. Plato abundante — hoy no es el momento de las porciones pequeñas de carbohidratos.',
       opts:[
-        { name:'Curry de lentejas + arroz', desc:'1 taza lentejas cocidas en curry de leche de coco · 1½ tazas arroz cocido · yoghurt griego · ensalada verde', macro:'~110g CHO · ~22g PRO · ~14g GRS' },
-        { name:'San Remo Lentil Pasta + garbanzos', desc:'3 tazas San Remo Pulse Pasta Red Lentils cocida (23g PRO/100g seco) · salsa de garbanzos con tomate natural · nutritional yeast · ensalada', macro:'~90g CHO · ~35g PRO · ~8g GRS' },
-        { name:'Bowl de quinoa + edamame + sweet potato', desc:'1 taza quinoa cocida · ½ taza edamame cocido · 1 taza sweet potato asada · 2 cdas tahini · hojas verdes', macro:'~90g CHO · ~24g PRO · ~16g GRS' },
-        { name:'Arroz + tofu + aguacate', desc:'1½ tazas arroz cocido · 160g tofu Earth Grown ALDI salteado · ½ aguacate · hojas verdes · sésamo · salsa soja', macro:'~90g CHO · ~22g PRO · ~16g GRS' }
+        { name:'Curry de lentejas + arroz', desc:'1 taza lentejas cocidas en curry de leche de coco · 2 tazas arroz cocido · yoghurt griego · ensalada verde · vaso de jugo de naranja natural.' },
+        { name:'San Remo Lentil Pasta + garbanzos', desc:'3½ tazas San Remo Pulse Pasta Red Lentils cocida · salsa de garbanzos con tomate natural · nutritional yeast · ensalada · 1 tostada de pan integral.' },
+        { name:'Bowl de quinoa + edamame + sweet potato', desc:'1½ tazas quinoa cocida · ½ taza edamame cocido · 1½ tazas sweet potato asada · 2 cdas tahini · hojas verdes · vaso de jugo de mango natural.' },
+        { name:'Arroz + tofu + aguacate', desc:'2 tazas arroz cocido · 160g tofu Earth Grown ALDI salteado · ½ aguacate · hojas verdes · sésamo · salsa soja · 1 banano de postre.' }
       ]
     },
     media: {
@@ -776,14 +776,14 @@ const MEALS = [
   {
     id: 't2b', variant: true,
     alta: {
-      lbl:'SNACK', title:'Recarga de Mediodía · Solo Día de Carga Alta', time:'1:30–2:00 pm',
+      lbl:'POSTRE', title:'Postre · Solo Día de Carga Alta', time:'Después del almuerzo',
       tags:['Carga Alta','CHO Rápidos'],
-      tip:'En días de fondo largo o doble sesión el almuerzo no alcanza a llenar el tanque. Esta recarga de mediodía cierra el gap de glucógeno antes de la tarde.',
+      tip:'En días de fondo largo el almuerzo solo no cierra el tanque. Este postre es parte del plan — no es trampa, es estrategia.',
       opts:[
-        { name:'Banano + jugo de naranja + maní', desc:'2 bananos medianos · 200ml jugo de naranja natural · 1 cda mantequilla de maní Mayver\'s', macro:'~65g CHO · ~5g PRO · ~8g GRS' },
-        { name:'Arroz con panela y banano', desc:'½ taza arroz cocido · 1 cdita panela rallada · 1 banano · café negro opcional. Clásico recuperador de glucógeno.', macro:'~70g CHO · ~3g PRO · ~1g GRS' },
-        { name:'Smoothie de mango + avena + miel', desc:'1 taza mango en cubos · ½ taza avena en hojuelas · 200ml leche de almendras · 1 cda miel · batir', macro:'~72g CHO · ~6g PRO · ~4g GRS' },
-        { name:'Pan de masa madre con mermelada + banano', desc:'2 tostadas de pan de masa madre · 2 cdas mermelada de fresa · 1 banano · vaso de agua', macro:'~68g CHO · ~6g PRO · ~2g GRS' }
+        { name:'Jugo de mango con panela + banano', desc:'200ml jugo de mango natural · 1 cdita panela · 1 banano maduro. Fácil, rico y altamente glucogénico.' },
+        { name:'Arroz con leche y canela', desc:'½ taza arroz cocido · 200ml leche de almendras · 1 cda azúcar o panela · canela al gusto. Calentar todo junto y listo.' },
+        { name:'Jugo de naranja con panela + galletas de arroz', desc:'250ml jugo de naranja natural · 1 cdita panela · 3 galletas de arroz con 1 cda mermelada.' },
+        { name:'Yoghurt con granola, miel y jugo', desc:'150g yoghurt griego Chobani Natural · 2 cdas granola · 1 cda miel · vaso de jugo de naranja o mango natural.' }
       ]
     },
     media: null,
@@ -834,7 +834,7 @@ const MEALS = [
       tags:['Recuperación nocturna','CHO moderado-alto','Alta proteína'],
       tip:'Cierra el día de carga con proteína de calidad y CHO suficientes. La síntesis de glucógeno sigue trabajando durante la noche.',
       opts:[
-        { name:'San Remo Lentil Pasta + bolognesa TVP', desc:'2½ tazas San Remo Pulse Pasta Red Lentils cocida · ½ taza Coles Wellness Road TVP hidratado · salsa de tomate con zanahoria y ajo · queso parmesano · ensalada', macro:'~82g CHO · ~38g PRO · ~10g GRS' },
+        { name:'San Remo Lentil Pasta + bolognesa TVP', desc:'3 tazas San Remo Pulse Pasta Red Lentils cocida · ½ taza Coles Wellness Road TVP hidratado · salsa de tomate con zanahoria y ajo · queso parmesano · ensalada · 1 tostada de pan integral.' },
         { name:'Huevos revueltos + arroz + garbanzos', desc:'3 huevos revueltos · 1½ tazas arroz cocido · ½ taza garbanzos cocidos · ensalada verde · aceite de oliva', macro:'~75g CHO · ~28g PRO · ~14g GRS' },
         { name:'Tofu salteado + fideos de arroz', desc:'180g tofu firme salteado · 1½ tazas fideos de arroz cocidos · brócoli · zanahoria · salsa soja con sésamo · cebollín', macro:'~72g CHO · ~20g PRO · ~12g GRS' },
         { name:'Papa cocida + huevo en torta + espinacas', desc:'2 papas medianas cocidas · 3 huevos en torta (omelette) · espinacas salteadas · queso mozzarella · aceite de oliva', macro:'~60g CHO · ~26g PRO · ~14g GRS' }
