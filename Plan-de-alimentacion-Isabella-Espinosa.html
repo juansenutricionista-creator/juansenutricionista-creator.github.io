@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plan Nutricional · Isabella Espinosa Gonzalez · JSMO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#001F3D;
+  --navy-soft:#0A3763;
+  --cream:#EFE7DB;
+  --green:#2A7A4A;
+  --green-light:#E4F0E8;
+  --gold:#C9A84C;
+  --gold-light:#FBF3E1;
+  --card:#ffffff;
+  --muted:#5B6B78;
+  --border:#E2D9C9;
+  --shadow:0 4px 18px rgba(0,31,61,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Poppins',sans-serif;background:var(--cream);color:var(--navy);line-height:1.5;min-height:100vh;font-size:15px}
+.header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-soft) 100%);color:#fff;padding:2rem 1.25rem 1.6rem;text-align:center}
+.header-badge{display:inline-block;background:rgba(201,168,76,.18);border:1px solid var(--gold);color:var(--gold);border-radius:999px;padding:.25rem .9rem;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:.8rem}
+.header h1{font-size:1.8rem;font-weight:800;letter-spacing:-.01em}
+.header-sub{opacity:.85;font-size:.88rem;margin-top:.35rem;font-weight:500}
+.header-note{margin-top:1rem;font-size:.75rem;opacity:.65}
+.section-intro{padding:1.1rem 1rem 0}
+.intro-card{background:var(--card);border-radius:16px;padding:1.2rem 1.25rem;box-shadow:var(--shadow);border:1.5px solid var(--border)}
+.intro-greeting{font-size:1.05rem;font-weight:800;color:var(--navy);margin-bottom:.6rem}
+.intro-text{font-size:.85rem;color:var(--muted);line-height:1.65;margin-bottom:.6rem}
+.intro-text:last-child{margin-bottom:0}
+.intro-signoff{margin-top:.8rem;font-size:.8rem;color:var(--navy-soft);font-weight:600;font-style:italic}
+.objetivo-list{list-style:none;margin-top:.2rem}
+.objetivo-item{display:flex;gap:.6rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.83rem;color:var(--navy-soft);line-height:1.5}
+.objetivo-item:last-child{border-bottom:none}
+.objetivo-check{color:var(--green);font-weight:800;flex-shrink:0}
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.6rem;margin-top:.9rem}
+.comp-card{background:var(--cream);border-radius:12px;padding:.75rem .85rem;border:1px solid var(--border)}
+.comp-label{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy-soft);margin-bottom:.5rem}
+.comp-row{display:flex;align-items:center;justify-content:space-between;gap:.35rem}
+.comp-val{text-align:center;flex:1}
+.comp-val strong{display:block;font-size:1.1rem;font-weight:800;color:var(--navy)}
+.comp-val.ideal strong{color:var(--green)}
+.comp-val span{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.comp-arrow{color:var(--gold);font-size:1rem;font-weight:800;flex-shrink:0}
+.comp-source{font-size:.65rem;font-style:italic;color:var(--muted);margin-top:.7rem;display:block}
+.hydration-card{display:flex;flex-direction:column;gap:.7rem;align-items:center}
+.hydration-count{font-size:.85rem;color:var(--navy-soft);font-weight:700}
+.hydration-count strong{color:var(--green);font-size:1.15rem}
+.hydration-drops{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center}
+.drop{font-size:1.6rem;cursor:pointer;opacity:.22;transition:opacity .15s,transform .1s;user-select:none;-webkit-tap-highlight-color:transparent}
+.drop.filled{opacity:1}
+.drop:active{transform:scale(1.2)}
+.meal-check{width:26px;height:26px;min-width:26px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:transparent;cursor:pointer;flex-shrink:0;transition:all .15s;background:#fff}
+.meal-check.checked{background:var(--green);border-color:var(--green);color:#fff}
+.meal-card.done{opacity:.55}
+.meal-card.done .meal-title{text-decoration:line-through}
+.sticky-bar{position:sticky;top:0;z-index:40;background:var(--cream);padding:.75rem 1rem .5rem;border-bottom:1px solid var(--border)}
+.day-selector{display:flex;gap:.5rem;justify-content:center;max-width:520px;margin:0 auto;flex-wrap:wrap}
+.day-btn{flex:1;min-width:80px;padding:.55rem .4rem;border:2px solid var(--border);border-radius:10px;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .18s;background:#fff;color:var(--muted);text-align:center;font-family:inherit}
+.day-btn small{display:block;font-size:.63rem;font-weight:500;opacity:.75;margin-top:1px}
+.day-btn.active{color:#fff;border-color:transparent}
+.day-info-wrap{padding:.9rem 1rem 0}
+.day-info{border-radius:14px;padding:1rem 1.1rem;border:1.5px solid}
+.day-info-top{display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem}
+.day-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.day-info-title{font-size:1rem;font-weight:800}
+.day-info-desc{font-size:.8rem;color:var(--muted);margin-bottom:.75rem;line-height:1.45}
+.macro-row{display:flex;flex-wrap:wrap;gap:.45rem}
+.macro-chip{background:#fff;border-radius:9px;padding:.35rem .6rem;font-size:.76rem;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.macro-chip strong{display:block;font-size:.94rem;font-weight:800;line-height:1.1}
+.macro-chip span{color:var(--muted);font-size:.68rem}
+.ref-tag{font-size:.65rem;font-style:italic;color:var(--muted);margin-top:.5rem;display:block}
+.section{padding:1.1rem 1rem 0}
+.section-title{font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--navy-soft);margin-bottom:.7rem;padding-left:.1rem}
+.meal-card{background:var(--card);border-radius:16px;margin-bottom:.7rem;box-shadow:var(--shadow);overflow:hidden;border:1.5px solid var(--border)}
+.meal-header{display:flex;align-items:center;gap:.7rem;padding:.85rem 1rem;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+.meal-lbl{font-size:.6rem;font-weight:900;letter-spacing:.08em;padding:.22rem .55rem;border-radius:6px;color:#fff;flex-shrink:0;text-transform:uppercase}
+.meal-title-wrap{flex:1;min-width:0}
+.meal-title{font-size:.95rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meal-time{font-size:.74rem;color:var(--muted);margin-top:.05rem}
+.meal-tags{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.3rem}
+.tag{background:var(--cream);border:1px solid var(--border);color:var(--navy-soft);font-size:.65rem;font-weight:700;padding:.12rem .45rem;border-radius:999px}
+.meal-chevron{color:var(--muted);font-size:.9rem;transition:transform .2s;flex-shrink:0}
+.meal-chevron.open{transform:rotate(180deg)}
+.meal-body{display:none;padding:0 1rem 1rem}
+.meal-body.open{display:block}
+.meal-tip{background:var(--cream);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:.55rem .7rem;font-size:.77rem;color:var(--navy-soft);margin-bottom:.75rem;line-height:1.45}
+.opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:.45rem}
+@media(max-width:420px){.opt-grid{grid-template-columns:1fr}}
+.opt-card{border:1.5px solid var(--border);border-radius:12px;padding:.65rem .75rem;cursor:pointer;transition:all .15s;background:#fff}
+.opt-card:hover,.opt-card:focus{border-color:var(--green);background:var(--green-light);outline:none}
+.opt-card.selected{border-color:var(--green);background:var(--green-light)}
+.opt-num{font-size:.62rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.06em}
+.opt-name{font-size:.86rem;font-weight:700;color:var(--navy);margin-top:.1rem}
+.opt-desc{font-size:.74rem;color:var(--muted);margin-top:.18rem;line-height:1.4}
+.opt-macro{font-size:.7rem;color:var(--green);font-weight:700;margin-top:.35rem}
+.totals-bar{display:flex;gap:.5rem;flex-wrap:wrap;background:var(--navy);border-radius:14px;padding:.9rem 1rem;margin:.9rem 1rem 0;color:#fff}
+.totals-item{flex:1;min-width:70px;text-align:center}
+.totals-item strong{display:block;font-size:1.05rem;font-weight:800;color:var(--gold)}
+.totals-item span{font-size:.65rem;opacity:.75;text-transform:uppercase;letter-spacing:.05em}
+.special-card{background:var(--card);border-radius:16px;padding:1.1rem 1.1rem;margin-bottom:.75rem;box-shadow:var(--shadow);border:1.5px solid var(--border)}
+.special-card h3{font-size:.98rem;font-weight:800;color:var(--navy);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
+.supp-item{display:flex;gap:.75rem;align-items:flex-start;padding:.7rem 0;border-bottom:1px solid var(--border)}
+.supp-item:last-child{border-bottom:none}
+.supp-icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;background:var(--cream)}
+.supp-icon.critical{background:var(--gold-light)}
+.supp-body{flex:1;min-width:0}
+.supp-name{font-size:.9rem;font-weight:700}
+.supp-badge{display:inline-block;font-size:.6rem;font-weight:800;padding:.08rem .38rem;border-radius:4px;margin-left:.35rem;vertical-align:middle;background:var(--gold-light);color:#8a6d1f}
+.supp-dose{font-size:.78rem;color:var(--green);font-weight:700;margin-top:.15rem}
+.supp-note{font-size:.74rem;color:var(--muted);margin-top:.15rem;line-height:1.45}
+.nota-card{background:var(--gold-light);border:1.5px solid var(--gold);border-radius:12px;padding:.9rem 1rem;margin-bottom:.55rem}
+.nota-card.green{background:var(--green-light);border-color:var(--green)}
+.nota-card h4{font-size:.83rem;font-weight:800;margin-bottom:.35rem;color:var(--navy)}
+.nota-card p{font-size:.78rem;color:var(--muted);line-height:1.55}
+.footer{text-align:center;padding:2rem 1rem 1.5rem;color:var(--muted);font-size:.76rem;line-height:1.7}
+.footer strong{color:var(--navy)}
+.footer .brand{color:var(--gold);font-weight:800;letter-spacing:.04em}
+.allergy-alert{background:var(--navy);border-left:5px solid var(--gold);margin:0;padding:.85rem 1.1rem;display:flex;gap:.7rem;align-items:flex-start;color:#fff}
+.allergy-icon{font-size:1.2rem;flex-shrink:0}
+.allergy-body strong{display:block;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:.25rem}
+.allergy-list{font-size:.82rem;line-height:1.5;opacity:.95}
+.appointment-box{margin-top:1.1rem;display:inline-flex;align-items:center;gap:.9rem;background:rgba(255,255,255,.1);border-radius:14px;padding:.7rem 1.1rem;border:1px solid rgba(255,255,255,.2)}
+.appt-countdown{text-align:center}
+.appt-countdown strong{font-size:1.7rem;font-weight:900;color:var(--gold);display:block;line-height:1}
+.appt-countdown span{font-size:.62rem;opacity:.75;text-transform:uppercase;letter-spacing:.06em}
+.appt-info{text-align:left;font-size:.78rem;opacity:.9}
+.appt-info strong{display:block;font-size:.85rem;font-weight:700}
+.action-toolbar{display:flex;justify-content:center;gap:.6rem;padding:.9rem 1rem 0;flex-wrap:wrap}
+.action-btn{border:1.5px solid var(--navy);color:var(--navy);background:#fff;border-radius:10px;padding:.5rem 1rem;font-size:.78rem;font-weight:700;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;transition:all .15s}
+.action-btn:hover{background:var(--navy);color:#fff}
+.shopping-cat{margin-bottom:.9rem}
+.shopping-cat:last-child{margin-bottom:0}
+.shopping-cat-title{font-size:.72rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem}
+.shopping-list{list-style:none}
+.shopping-item{display:flex;align-items:center;gap:.6rem;padding:.4rem 0;border-bottom:1px solid var(--border);font-size:.83rem;color:var(--navy-soft);cursor:pointer;user-select:none}
+.shopping-item:last-child{border-bottom:none}
+.shopping-check{width:20px;height:20px;min-width:20px;border-radius:6px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.68rem;color:transparent;transition:all .15s}
+.shopping-check.checked{background:var(--green);border-color:var(--green);color:#fff}
+.shopping-item.checked span.label{text-decoration:line-through;opacity:.55}
+.whatsapp-card{background:linear-gradient(135deg,var(--green) 0%,#1E5C38 100%);border-radius:16px;padding:1.3rem 1.2rem;text-align:center;color:#fff;box-shadow:var(--shadow)}
+.whatsapp-card p{font-size:.85rem;opacity:.95;margin-bottom:.9rem;line-height:1.5}
+.whatsapp-btn{display:inline-flex;align-items:center;gap:.5rem;background:#fff;color:var(--green);font-weight:800;font-size:.85rem;padding:.65rem 1.3rem;border-radius:999px;text-decoration:none}
+@media print{
+  .sticky-bar{position:static}
+  .action-toolbar, .meal-check, .drop, .shopping-check{display:none!important}
+  .meal-body{display:block!important}
+  .meal-chevron{display:none}
+  .meal-card{break-inside:avoid}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">Plan Nutricional Deportivo</div>
+  <h1 id="patientName">Isabella Espinosa Gonzalez</h1>
+  <div class="header-sub" id="patientSub">Recomposición Corporal · Manejo de Estreñimiento Crónico</div>
+  <div class="header-note" id="patientNote"></div>
+  <div id="appointmentBox"></div>
+</div>
+
+<div id="allergyAlert" style="display:none"></div>
+
+<div class="action-toolbar">
+  <button class="action-btn" onclick="window.print()">🖨️ Exportar / Imprimir PDF</button>
+</div>
+
+<div class="section-intro" id="introSectionWrap" style="display:none">
+  <div class="intro-card" id="introCard"></div>
+</div>
+
+<div class="section" id="objectivesSectionWrap" style="display:none">
+  <div class="section-title">🎯 Objetivos y Composición Corporal</div>
+  <div class="special-card" id="objectivesCard"></div>
+</div>
+
+<div class="section" id="hydrationSectionWrap" style="display:none">
+  <div class="section-title">💧 Hidratación de Hoy</div>
+  <div class="special-card hydration-card">
+    <div class="hydration-count"><strong id="hydrationCount">0</strong> / <span id="hydrationGoalLbl"></span> vasos</div>
+    <div class="hydration-drops" id="hydrationDrops"></div>
+  </div>
+</div>
+
+<div class="sticky-bar">
+  <div class="day-selector" id="daySelector"></div>
+</div>
+
+<div class="day-info-wrap" id="dayInfoWrap"></div>
+
+<div class="section">
+  <div class="section-title">Plan de Alimentación · 4 Opciones por Tiempo de Comida</div>
+  <div id="meals-container"></div>
+</div>
+
+<div class="section" id="suppSection" style="display:none">
+  <div class="section-title">💊 Suplementación</div>
+  <div class="special-card" id="suppContainer"></div>
+</div>
+
+<div class="section" id="notesSection" style="display:none">
+  <div class="section-title">📝 Notas Clínicas</div>
+  <div id="notesContainer"></div>
+</div>
+
+<div class="section" id="shoppingSection" style="display:none">
+  <div class="section-title">🛒 Lista de Mercado Semanal</div>
+  <div class="special-card" id="shoppingContainer"></div>
+</div>
+
+<div class="section" id="whatsappSection" style="display:none;padding-bottom:1rem">
+  <div class="whatsapp-card">
+    <p>¿Dudas sobre tu plan? Escríbeme directo.</p>
+    <a class="whatsapp-btn" id="whatsappBtn" href="#" target="_blank" rel="noopener">💬 Escribir por WhatsApp</a>
+  </div>
+</div>
+
+<div class="footer">
+  Elaborado por <strong>Juan Sebastián Muñoz Ortiz</strong><br>
+  <span class="brand">JSMO Nutricionista Deportivo</span><br>
+  📱 317 549 9759 · @juanse_nutricionista
+</div>
+
+<script>
+/* 1) DATOS DEL PACIENTE */
+document.getElementById('patientName').textContent = "Isabella Espinosa Gonzalez";
+document.getElementById('patientSub').textContent = "Recomposición Corporal · Manejo de Estreñimiento Crónico";
+document.getElementById('patientNote').textContent = "";
+document.title = 'Plan Nutricional · Isabella Espinosa Gonzalez · JSMO';
+
+/* 2) ALERGIAS Y RESTRICCIONES */
+const ALLERGIES = ["No consume espinaca", "No consume leche — yogurt griego, cuajada y mozzarella sí los tolera bien", "Sin frutos secos ni almendras durante este proceso (decisión clínica)", "Sin alergias alimentarias"];
+
+/* 3) INTRODUCCIÓN / SALUDO */
+const PATIENT_INTRO = {"greeting": "¡Hola, Isabella!", "paragraphs": ["Soy Juan Sebastián Muñoz O., tu nutricionista deportivo. Empiezo por el dato de tu evaluación que más me llamó la atención, porque creo que no sabes lo que tienes: tu mesomorfia está en 6,98 y tu tejido muscular por encima del promedio poblacional, con el brazo y la pierna bastante arriba. Y llevas tres años prácticamente sin entrenar. Eso significa que tu cuerpo construye músculo con una facilidad que la mayoría de las personas no tiene. Cuando arranques, vas a responder rápido.", "Lo segundo: tu IMC te marca sobrepeso, pero tus tres índices de riesgo —cintura, cintura-cadera y cintura-talla— están todos en rango bajo. Tu cintura está en 64,8 cm, que es perfectamente normal. Tu grasa está en la cadera y el muslo, que es justo la distribución que menos riesgo metabólico tiene. Así que acá no estamos rescatando tu salud: estamos trabajando composición corporal, que es lo que tú pediste, y eso se hace con calma.", "Y lo tercero, que para mí es lo más importante de todo: vamos a resolver el estreñimiento. Llevas toda la vida con él y hay semanas enteras sin ir al baño. Eso no es un detalle estético, y además es probablemente lo que más rápido vas a notar."], "signoff": "Tu cuerpo responde rápido. Lo que nos falta no es intensidad: es sostenerlo."};
+
+/* 4) OBJETIVOS Y COMPOSICIÓN CORPORAL (ISAK pendiente) */
+const OBJECTIVES = ["Resolver el estreñimiento crónico, subiendo la fibra y el agua al mismo tiempo — nunca una sin la otra.", "Bajar la sumatoria de 6 pliegues desde 122,0 mm y el índice adiposo-muscular desde 0,91.", "Aprovechar tu mesomorfia alta: entrenar y construir músculo, que es donde tienes la ventaja.", "Resolver la cena, que hoy es tu punto débil y es donde más se te van las cosas.", "Poner una media tarde real, que hoy no tienes y es justo cuando te da hambre.", "Sostenerlo. Ya sabes lo que es bajar rápido y volver a subir."];
+const BODY_COMP = [{"label": "Sumatoria de 6 pliegues (ISAK)", "current": "122,0 mm", "ideal": "En descenso progresivo — es tu métrica principal"}, {"label": "Índice adiposo-muscular", "current": "0,91 (Alto)", "ideal": "En descenso — que el músculo le gane terreno a la grasa"}, {"label": "Perímetro de cadera", "current": "108,0 cm", "ideal": "En descenso progresivo"}, {"label": "Perímetro de cintura", "current": "64,8 cm", "ideal": "Mantener — ya está en rango normal"}, {"label": "Índice cintura-talla", "current": "0,42", "ideal": "<0,50 (ya en rango de bajo riesgo)"}, {"label": "Peso corporal", "current": "59,4 kg", "ideal": "Sin meta de peso — la métrica son los pliegues"}];
+
+/* 5) META DE HIDRATACIÓN */
+const HYDRATION_GOAL = 10;
+
+/* 6) PRÓXIMA CITA */
+const NEXT_APPOINTMENT = {"date": "2026-09-15", "label": "Control de seguimiento"};
+
+/* 7) TIPOS DE DÍA */
+const DAY_TYPES = [{"key": "alta", "label": "🍽️ Plan Diario", "days": "Todos los días", "icon": "💪", "color": "navy", "title": "💪 Tu Día a Día", "desc": "Seis tiempos, con la fibra repartida a lo largo del día y el agua subiendo en paralelo. Déficit moderado y sostenible.", "kcal": "~1.700 kcal", "cho": "~198 g", "choPerKg": "3,3 g/kg", "pro": "~119 g (2,0 g/kg)", "fat": "~48 g (0,8 g/kg)", "ref": "Déficit moderado · Alta en fibra"}];
+
+/* 8) TIEMPOS DE COMIDA */
+const MEALS = [{"id": "preentreno", "alta": {"lbl": "Pre-Entreno", "title": "Pre-Entreno", "time": "5:00 - 5:30 am, antes del funcional", "tags": ["Liviano"], "tip": "Es muy temprano, así que ninguna de estas busca llenarte. Solo que no llegues a la clase con el tanque en cero.", "opts": [{"name": "Yogurt griego con banano", "desc": "2 cdas de yogurt griego (Dejamú, San Martín o Alimentos YEN) · ½ banano"}, {"name": "Galletas Salmas con queso cottage", "desc": "1 paquete de galletas Salmas Sanísimas · 2 cdas de queso cottage encima"}, {"name": "Bowl de avena con fresas", "desc": "3 cdas de avena en hojuelas · un chorrito de agua · un chorrito de leche de almendras · 3 fresas picadas"}, {"name": "Kéfir con arándanos", "desc": "1 vaso de 200 ml de kéfir · 6 arándanos"}]}, "baja": null, "competencia": null}, {"id": "desayuno", "alta": {"lbl": "Desayuno", "title": "Desayuno", "time": "7:00 am", "tags": ["Alto en fibra"], "tip": "Acá arranca la fibra del día. La piña en la mañana no es decoración: es de las frutas que mejor te van a servir para el tránsito intestinal.", "opts": [{"name": "Bowl de yogurt griego con granola y arándanos", "desc": "1 taza de yogurt griego (Dejamú, San Martín o Alimentos YEN) · 2 cdas de granola de La Despensa · 1 taza de arándanos · 1 cda de queso cuajada triturado · 1 cda de semillas de chía"}, {"name": "Arepa con huevo en ghee y queso cuajada", "desc": "Media arepa de maíz tipo tela · 2 huevos fritos en 1 cdta de ghee · 1 tajada de queso cuajada · 1 tajada de piña"}, {"name": "Pan de masa madre con huevo y guacamole", "desc": "1 tajada de pan de masa madre, o de francés de campo de la panadería El Molino · 2 huevos cocidos cortados en rodajas · 1 cda de guacamole casero · 1 tajada de papaya"}, {"name": "Tortilla integral con huevos revueltos y mozzarella", "desc": "1 tortilla integral Bimbo · 2 huevos revueltos · 1 tajada de queso mozzarella · ½ taza de tomates cherry · ½ taza de mango picado"}]}, "baja": null, "competencia": null}, {"id": "am", "alta": {"lbl": "A.M.", "title": "Media Mañana", "time": "10:30 am", "tags": ["Portátil"], "tip": "Las cuatro se llevan a la oficina sin preparación. Es más o menos la hora en la que ya vienes comiendo algo, así que solo estamos ordenándola.", "opts": [{"name": "Tostadas de arroz con mermelada, yogurt y fresas", "desc": "2 tostadas de arroz inflado · 1 cdta de mermelada de confit sin azúcar · 2 cdas de yogurt griego (Dejamú, San Martín o Alimentos YEN) · 5 fresas picadas"}, {"name": "Yogurt griego con mango y chía", "desc": "1 taza de yogurt griego (Dejamú, San Martín o Alimentos YEN) · 3 cdas de mango picado · 1 cda de semillas de chía"}, {"name": "Palito de queso con manzana verde", "desc": "1 palito de queso bajo en grasa (Alpina o Vital Latti) · 1 manzana verde"}, {"name": "Queso cottage con piña", "desc": "3 cucharadas soperas colmadas de queso cottage · 1 taza de piña picada"}]}, "baja": null, "competencia": null}, {"id": "almuerzo", "alta": {"lbl": "Almuerzo", "title": "Almuerzo", "time": "1:00 pm, en la oficina", "tags": ["Se lleva"], "tip": "La ensalada acá no lleva medida a propósito: es la mitad del plato, libre y abundante. Es la parte del almuerzo con la que no tienes que medirte.", "opts": [{"name": "Pollo lomito saltado con arroz", "desc": "150 g de pollo salteado en lomito con pimentón, cebolla y tomate · ½ taza de arroz · ensalada libre y abundante de lechuga romana, tomate cherry y zanahoria rallada — la mitad del plato"}, {"name": "Pasta corta con atún en salsa de yogurt griego", "desc": "6 cucharadas de pasta corta tipo tornillo o penne · 1 lata de atún en agua · salsa de yogurt griego (Alimentos YEN) con ajo en polvo, sal, pimienta y un chorrito de limón · ensalada libre y abundante de lechuga, pepino y cebolla morada — la mitad del plato"}, {"name": "Salmón al airfryer con salsa agridulce y quinoa", "desc": "150 g de salmón al airfryer con salsa agridulce · 5 cdas de quinoa cocida · ensalada libre y abundante de lechuga romana, tomate y aguacate — la mitad del plato"}, {"name": "Carne de res con papa amarilla", "desc": "150 g de carne de res a la plancha · 3 papas amarillas pequeñas · ensalada libre y abundante de lechuga, tomate cherry y zanahoria rallada — la mitad del plato"}]}, "baja": null, "competencia": null}, {"id": "pm", "alta": {"lbl": "P.M.", "title": "Media Tarde", "time": "4:00 pm", "tags": ["Tu hora crítica"], "tip": "Este tiempo hoy no existe y es justo cuando me dijiste que te dan ganas de comer. Cuatro opciones para que esa hora deje de ser un problema.", "opts": [{"name": "Yogurt Finesse con rosquillas caleñas", "desc": "1 vaso de 200 ml de yogurt Finesse · 1 paquete de rosquillas caleñas o 1 paquete de galletas Salmas Sanísimas"}, {"name": "Arándanos con rollitos de pavo y mozzarella", "desc": "1 taza de arándanos · 2 rollitos de jamón de pavo con queso mozzarella Finesse"}, {"name": "Tortilla integral con pollo desmechado", "desc": "1 tortilla integral talla M (Bimbo) · 100 g de pollo desmechado · tomate picado"}, {"name": "Pera con palito de queso", "desc": "1 pera · 1 palito de queso bajo en grasa (Alpina o Vital Latti)"}]}, "baja": null, "competencia": null}, {"id": "cena", "alta": {"lbl": "Cena", "title": "Cena", "time": "7:00 - 7:30 pm", "tags": ["Meal prep"], "tip": "Tú misma me diste la solución: las cremas con pollo desmechado, que te fascinan y que sabes hacer. Déjalas listas el fin de semana y la cena deja de ser una pelea.", "opts": [{"name": "Crema de zapallo con pollo desmechado", "desc": "1 taza de crema de zapallo sin crema de leche · 150 g de pollo desmechado · 2 galletas de arroz"}, {"name": "Arepa con huevos revueltos y mozzarella", "desc": "Media arepa de maíz tipo tela · 3 huevos revueltos · 1 tajada de queso mozzarella · ½ taza de tomates cherry salteados"}, {"name": "Burrito de ensalada de atún", "desc": "1 tortilla integral Bimbo · 1 lata de atún en agua con tomate, cebolla, cilantro, limón y sal · lechuga romana para armar el burrito"}, {"name": "Crema de tomate con pollo desmechado y aguacate", "desc": "1 taza de crema de tomate sin crema de leche · 150 g de pollo desmechado · 1 tajada de aguacate dentro de la crema · ensalada de lechuga romana, pepino y tomate cherry"}]}, "baja": null, "competencia": null}];
+
+/* 9) SUPLEMENTACIÓN */
+const SUPPLEMENTS = [{"icon": "🌙", "critical": true, "name": "Citrato de magnesio", "badge": "Iniciar", "dose": "300 a 400 mg en la noche, antes de acostarte", "note": "Es el suplemento más importante de tu plan y va dirigido al estreñimiento. El citrato de magnesio atrae agua hacia el intestino y ablanda la materia, que es exactamente lo que te falta. Empieza con la dosis baja y súbela si en una semana no ves cambio. Si te suelta demasiado, bájala — esa es la señal de que te pasaste."}, {"icon": "🥛", "critical": false, "name": "Kéfir", "badge": "Iniciar", "dose": "1 vaso de 200 ml en la mañana", "note": "Va en el pre-entreno pero puedes tomarlo a cualquier hora de la mañana. El kéfir tiene más variedad de microorganismos que un yogurt común y hay estudios razonables de que mejora el tránsito intestinal en estreñimiento funcional. No es magia y no reemplaza al agua ni a la fibra: es un apoyo más. Dale al menos cuatro semanas antes de juzgarlo."}];
+
+/* 10) NOTAS CLÍNICAS */
+const NOTES = [{"type": "green", "title": "💊 Por qué este primer mes no lleva proteína ni creatina", "text": "Es una decisión tomada a propósito, no un olvido. Este mes vamos a construir la base con la comida: que comas cinco o seis veces, que la proteína llegue de los alimentos, que el agua suba y que el intestino se ordene. Si eso queda montado, la mayor parte del resultado ya está. Los suplementos suman, pero suman sobre una base que hay que tener primero, y no al revés. En el control de septiembre miramos cómo respondiste y decidimos qué vale la pena agregar. El citrato de magnesio es distinto y por eso sí está desde hoy: no es un suplemento de rendimiento, es el tratamiento del estreñimiento."}, {"type": "", "title": "🚽 El estreñimiento: por qué la fibra sola no te funcionó", "text": "Me contaste que probaste fibra, chía y Metamucil y que 'medio te funcionó'. Eso tiene una explicación concreta: el psyllium y la fibra en general absorben agua. Si subes la fibra sin subir el líquido en la misma proporción, la materia se pone más compacta y el estreñimiento empeora en vez de mejorar. Por eso en tu plan las dos cosas suben juntas y nunca una sin la otra. Tu meta son 10 vasos al día, que son casi tres termos Stanley — tú ya te habías puesto dos, vamos por uno más. La chía, la piña, la granola, las verduras y la ensalada abundante del almuerzo están puestas a propósito. Y el magnesio en la noche cierra el esquema."}, {"type": "green", "title": "💪 Tu mesomorfia es tu mejor carta", "text": "Tu somatotipo dio mesomorfia 6,98, que es muy alto, con el tejido muscular por encima del promedio poblacional y el brazo corregido en Z+2,71. Lo notable es que eso lo tienes después de tres años sin entrenar de forma constante. Traducido: tu cuerpo construye músculo con una facilidad que la mayoría no tiene. Cuando arranques el funcional vas a ver cambios en la forma más rápido de lo que esperas, incluso antes de que la báscula se mueva. No te dejes engañar por el peso en las primeras semanas."}, {"type": "", "title": "📊 Tu IMC te marca sobrepeso y tus índices de riesgo dicen otra cosa", "text": "El IMC solo relaciona peso y estatura. En tu caso, los tres índices que sí miden riesgo están en rango bajo: tu cintura está en 64,8 cm, tu índice cintura-cadera en 0,60 y tu cintura-talla en 0,42. Tus pliegues del tronco están por debajo del promedio. Tu grasa está en la cadera y el muslo, que es la distribución que menos riesgo metabólico tiene. Dicho todo eso, sí hay margen de trabajo: tu sumatoria de pliegues está en 122 mm y tu índice adiposo-muscular en 0,91, que el informe clasifica como alto. Esa es la métrica que vamos a seguir, no el peso."}, {"type": "green", "title": "🏋️ El gym no te gusta y no importa", "text": "Me lo dijiste claro, y también me dijiste que el funcional te encantó y que las clases te parecieron súper cheveres. Entonces vas a funcional. El mejor entrenamiento no es el más eficiente sobre el papel: es el que vas a seguir haciendo dentro de seis meses. Lleva tres años en el ciclo de un mes entrenando y seis meses parada, y romper ese ciclo vale más que cualquier rutina perfecta. El pre-entreno de las 5 está armado justamente para que arrancar a esa hora sea viable."}, {"type": "", "title": "🍔 Tu comida libre de la semana", "text": "Hoy es todo el fin de semana, con el domingo siempre en la calle y a veces también el sábado. Vamos a dejar UNA comida libre planeada a la semana, la que tú escojas: la hamburguesa, el Turk House o la pizza. Planeada quiere decir que la decides antes, no que aparece. Y no hay nada que compensar ni antes ni después: no te saltas comidas ese día ni al siguiente. Una comida a la semana no rompe absolutamente nada; lo que rompe los procesos es que se vuelva todo el fin de semana."}, {"type": "green", "title": "🍲 La cena era tu punto débil y tú misma tenías la respuesta", "text": "Me dijiste que la cena es lo que más pelea te da, y que hoy resuelves con salchichas, congelados y empanadas. Pero en la misma conversación me dijiste que las cremas te fascinan, que las sabes hacer, que te va bien con la cocina y que preparas los fines de semana. Ahí está la solución completa. Deja las cremas hechas el domingo y el pollo desmechado listo, y la cena de lunes a viernes se resuelve en cinco minutos. Es el cambio de mayor impacto de todo tu plan."}, {"type": "", "title": "🥗 La ensalada del almuerzo no tiene medida", "text": "Es a propósito. La ensalada es la mitad del plato, libre y abundante, y es la única parte del almuerzo con la que no tienes que medirte. Sé que te da pereza prepararla — me lo dijiste. Dos trucos: compra la lechuga ya lavada en bolsa, y déjala picada en un recipiente el domingo junto con el tomate y la zanahoria. La pereza casi siempre es un problema de logística, no de ganas."}, {"type": "green", "title": "🕐 Sobre lo que ya viviste con las dietas", "text": "Estuviste mes y medio comiendo solo pollo, vegetales verdes, arroz y claras, bajaste a 50 kilos y dijiste que te sacó un cuerpo brutal. Y también es cierto que después lo dejaste todo y llevas tres años sin sostener nada. Las dos cosas son parte de la misma historia. Este plan tiene un déficit de apenas 420 calorías y come de todo a propósito: no está diseñado para el resultado más rápido, está diseñado para que en seis meses sigas ahí. Todavía no hay fecha de boda, y eso juega a nuestro favor."}, {"type": "", "title": "🍬 Los antojos antes del período", "text": "Ya haces lo correcto y me lo dijiste tú misma: mercas pensando en eso y no tienes dulce en la casa. Eso es manejo de ambiente y es más efectivo que la fuerza de voluntad. Lo único que agregaría: en esos días no bajes las porciones del plan. El antojo se dispara mucho más cuando además estás comiendo poco."}];
+
+/* 11) WHATSAPP */
+const WHATSAPP_NUMBER = "";
+
+/* 12) PALABRAS CLAVE LISTA DE MERCADO */
+const SHOPPING_KEYWORDS = [{"match": "huevo", "label": "Huevos", "category": "Proteínas"}, {"match": "pollo", "label": "Pechuga/pollo", "category": "Proteínas"}, {"match": "carne", "label": "Carne de res magra", "category": "Proteínas"}, {"match": "pescado", "label": "Pescado (filete)", "category": "Proteínas"}, {"match": "salmón", "label": "Salmón", "category": "Proteínas"}, {"match": "tilapia", "label": "Tilapia", "category": "Proteínas"}, {"match": "atún", "label": "Atún en agua", "category": "Proteínas"}, {"match": "jamón de pavo zenú", "label": "Jamón de pavo Zenú", "category": "Proteínas"}, {"match": "proteína", "label": "Proteína en polvo", "category": "Proteínas"}, {"match": "tofu", "label": "Tofu", "category": "Proteínas"}, {"match": "lentejas", "label": "Lentejas", "category": "Proteínas"}, {"match": "garbanzos", "label": "Garbanzos", "category": "Proteínas"}, {"match": "hummus", "label": "Hummus casero (garbanzos)", "category": "Proteínas"}, {"match": "edamame", "label": "Edamame", "category": "Proteínas"}, {"match": "crema de maní", "label": "Crema de maní", "category": "Proteínas"}, {"match": "gelatina sin azúcar", "label": "Gelatina sin azúcar", "category": "Proteínas"}, {"match": "fríjoles", "label": "Fríjoles", "category": "Proteínas"}, {"match": "blanquillos", "label": "Fríjoles blanquillos", "category": "Proteínas"}, {"match": "yogurt griego alpina", "label": "Yogurt griego Alpina", "category": "Lácteos"}, {"match": "yogurt griego san martín", "label": "Yogurt griego San Martín", "category": "Lácteos"}, {"match": "kéfir", "label": "Kéfir", "category": "Lácteos"}, {"match": "queso colanta", "label": "Queso Colanta", "category": "Lácteos"}, {"match": "queso cuajada", "label": "Queso cuajada", "category": "Lácteos"}, {"match": "queso campesino", "label": "Queso campesino", "category": "Lácteos"}, {"match": "queso mozzarella", "label": "Queso mozzarella", "category": "Lácteos"}, {"match": "leche alquería", "label": "Leche Alquería", "category": "Lácteos"}, {"match": "leche deslactosada", "label": "Leche deslactosada", "category": "Lácteos"}, {"match": "arepa alquería", "label": "Arepa Alquería (maíz tipo tela)", "category": "Carbohidratos"}, {"match": "avena quaker", "label": "Avena Quaker", "category": "Carbohidratos"}, {"match": "pan bimbo fit", "label": "Pan Bimbo Fit", "category": "Carbohidratos"}, {"match": "pan de masa madre", "label": "Pan de masa madre (Molino)", "category": "Carbohidratos"}, {"match": "granola tosh", "label": "Granola Tosh", "category": "Carbohidratos"}, {"match": "arroz", "label": "Arroz", "category": "Carbohidratos"}, {"match": "papa", "label": "Papa", "category": "Carbohidratos"}, {"match": "yuca", "label": "Yuca", "category": "Carbohidratos"}, {"match": "pasta", "label": "Pasta", "category": "Carbohidratos"}, {"match": "plátano", "label": "Plátano maduro", "category": "Carbohidratos"}, {"match": "quinoa", "label": "Quinoa", "category": "Carbohidratos"}, {"match": "banano", "label": "Banano", "category": "Frutas y Verduras"}, {"match": "aguacate", "label": "Aguacate", "category": "Frutas y Verduras"}, {"match": "ensalada", "label": "Mix de ensalada / lechuga", "category": "Frutas y Verduras"}, {"match": "tomate", "label": "Tomate", "category": "Frutas y Verduras"}, {"match": "espinaca", "label": "Espinaca", "category": "Frutas y Verduras"}, {"match": "champiñones", "label": "Champiñones", "category": "Frutas y Verduras"}, {"match": "fresa", "label": "Fresas", "category": "Frutas y Verduras"}, {"match": "pepino", "label": "Pepino", "category": "Frutas y Verduras"}, {"match": "zanahoria", "label": "Zanahoria", "category": "Frutas y Verduras"}, {"match": "miel", "label": "Miel", "category": "Otros"}, {"match": "mermelada", "label": "Mermelada sin azúcar", "category": "Otros"}, {"match": "almendras", "label": "Almendras", "category": "Otros"}, {"match": "nueces", "label": "Nueces", "category": "Otros"}, {"match": "creatina", "label": "Creatina", "category": "Suplementos"}, {"match": "yogurt griego yen", "label": "Yogurt griego YEN", "category": "Lácteos"}, {"match": "granola yen", "label": "Granola YEN", "category": "Carbohidratos"}, {"match": "arepa de yuca yen", "label": "Arepa de yuca YEN", "category": "Carbohidratos"}, {"match": "arepa de maduro yen", "label": "Arepa de maduro YEN", "category": "Carbohidratos"}, {"match": "arepa de arroz integral yen", "label": "Arepa de arroz integral YEN", "category": "Carbohidratos"}, {"match": "arepa de pan de bono yen", "label": "Arepa de pan de bono YEN", "category": "Carbohidratos"}, {"match": "arepa de maíz yen", "label": "Arepa de maíz YEN", "category": "Carbohidratos"}, {"match": "arepa de maíz", "label": "Arepa de maíz tipo tela", "category": "Carbohidratos"}, {"match": "pan de masa madre", "label": "Pan de masa madre o francés de campo (El Molino)", "category": "Carbohidratos"}, {"match": "tortilla integral", "label": "Tortilla integral Bimbo (talla M)", "category": "Carbohidratos"}, {"match": "tostadas de arroz", "label": "Tostadas de arroz inflado", "category": "Carbohidratos"}, {"match": "galletas de arroz", "label": "Galletas de arroz", "category": "Carbohidratos"}, {"match": "galletas Salmas", "label": "Galletas Salmas Sanísimas", "category": "Carbohidratos"}, {"match": "rosquillas caleñas", "label": "Rosquillas caleñas", "category": "Carbohidratos"}, {"match": "granola", "label": "Granola de La Despensa", "category": "Carbohidratos"}, {"match": "avena", "label": "Avena en hojuelas", "category": "Carbohidratos"}, {"match": "pasta corta", "label": "Pasta corta (tornillo o penne)", "category": "Carbohidratos"}, {"match": "arroz", "label": "Arroz", "category": "Carbohidratos"}, {"match": "quinoa", "label": "Quinoa", "category": "Carbohidratos"}, {"match": "papas amarillas", "label": "Papa amarilla / criolla (2-3 pequeñas por porción)", "category": "Carbohidratos"}, {"match": "yogurt griego", "label": "Yogurt griego (Dejamú, San Martín o Alimentos YEN)", "category": "Lácteos"}, {"match": "yogurt Finesse", "label": "Yogurt Finesse", "category": "Lácteos"}, {"match": "kéfir", "label": "Kéfir", "category": "Lácteos"}, {"match": "queso cuajada", "label": "Queso cuajada", "category": "Lácteos"}, {"match": "queso cottage", "label": "Queso cottage", "category": "Lácteos"}, {"match": "queso mozzarella", "label": "Queso mozzarella Finesse", "category": "Lácteos"}, {"match": "palito de queso", "label": "Palito de queso bajo en grasa (Alpina o Vital Latti)", "category": "Lácteos"}, {"match": "pollo", "label": "Pollo (lomito y para desmechar)", "category": "Proteínas"}, {"match": "carne de res", "label": "Carne de res", "category": "Proteínas"}, {"match": "salmón", "label": "Salmón", "category": "Proteínas"}, {"match": "atún", "label": "Atún en agua", "category": "Proteínas"}, {"match": "jamón de pavo", "label": "Jamón de pavo", "category": "Proteínas"}, {"match": "huevos", "label": "Huevos", "category": "Proteínas"}, {"match": "chía", "label": "Semillas de chía", "category": "Otros"}, {"match": "ghee", "label": "Ghee", "category": "Otros"}, {"match": "mermelada", "label": "Mermelada de confit sin azúcar", "category": "Otros"}, {"match": "salsa agridulce", "label": "Salsa agridulce", "category": "Otros"}, {"match": "citrato de magnesio", "label": "Citrato de magnesio", "category": "Otros"}, {"match": "guacamole", "label": "Guacamole casero", "category": "Otros"}, {"match": "aguacate", "label": "Aguacate", "category": "Frutas y Verduras"}, {"match": "lechuga romana", "label": "Lechuga romana", "category": "Frutas y Verduras"}, {"match": "tomates cherry", "label": "Tomates cherry", "category": "Frutas y Verduras"}, {"match": "zanahoria", "label": "Zanahoria", "category": "Frutas y Verduras"}, {"match": "pepino", "label": "Pepino", "category": "Frutas y Verduras"}, {"match": "cebolla morada", "label": "Cebolla morada", "category": "Frutas y Verduras"}, {"match": "zapallo", "label": "Zapallo (para crema)", "category": "Frutas y Verduras"}, {"match": "piña", "label": "Piña", "category": "Frutas y Verduras"}, {"match": "arándanos", "label": "Arándanos", "category": "Frutas y Verduras"}, {"match": "fresas", "label": "Fresas", "category": "Frutas y Verduras"}, {"match": "mango", "label": "Mango", "category": "Frutas y Verduras"}, {"match": "banano", "label": "Banano", "category": "Frutas y Verduras"}, {"match": "manzana verde", "label": "Manzana verde", "category": "Frutas y Verduras"}, {"match": "pera", "label": "Pera", "category": "Frutas y Verduras"}];
+
+/* ═══════════════════════════════════════════════════════════════════════
+   MOTOR — NO EDITAR DE AQUÍ EN ADELANTE
+   ═══════════════════════════════════════════════════════════════════════ */
+const COLOR_MAP = { gold:'var(--gold)', green:'var(--green)', navy:'var(--navy)' };
+const COLOR_LIGHT_MAP = { gold:'var(--gold-light)', green:'var(--green-light)', navy:'var(--cream)' };
+
+const LS_PREFIX = 'jsmo_' + (document.getElementById('patientName').textContent || 'plan').replace(/\s+/g,'_');
+let day = localStorage.getItem(LS_PREFIX+'_day') || DAY_TYPES[0].key;
+let savedOpts = JSON.parse(localStorage.getItem(LS_PREFIX+'_opts') || '{}');
+
+function todayKey(){ return new Date().toISOString().slice(0,10); }
+let checkedMeals = JSON.parse(localStorage.getItem(LS_PREFIX+'_checked_'+todayKey()) || '{}');
+let hydrationCount = parseInt(localStorage.getItem(LS_PREFIX+'_hydration_'+todayKey()) || '0', 10);
+
+function buildDaySelector(){
+  const wrap = document.getElementById('daySelector');
+  wrap.innerHTML = DAY_TYPES.map(dt => `
+    <button class="day-btn" data-key="${dt.key}" style="border-color:${COLOR_MAP[dt.color]}" onclick="setDay('${dt.key}')">
+      ${dt.label}
+      <small>${dt.days||''}</small>
+    </button>
+  `).join('');
+}
+
+function buildDayInfo(){
+  const wrap = document.getElementById('dayInfoWrap');
+  wrap.innerHTML = DAY_TYPES.map(dt => `
+    <div class="day-info" id="info-${dt.key}" style="background:${COLOR_LIGHT_MAP[dt.color]};border-color:${COLOR_MAP[dt.color]}">
+      <div class="day-info-top">
+        <div class="day-dot" style="background:${COLOR_MAP[dt.color]}"></div>
+        <div class="day-info-title" style="color:${COLOR_MAP[dt.color]}">${dt.title}</div>
+      </div>
+      <div class="day-info-desc">${dt.desc}</div>
+      <div class="macro-row">
+        <div class="macro-chip"><strong>${dt.kcal}</strong><span>Energía total</span></div>
+        <div class="macro-chip"><strong>${dt.cho}</strong><span>CHO${dt.choPerKg?' · '+dt.choPerKg:''}</span></div>
+        <div class="macro-chip"><strong>${dt.pro}</strong><span>Proteína</span></div>
+        <div class="macro-chip"><strong>${dt.fat}</strong><span>Grasas</span></div>
+      </div>
+      ${dt.ref?`<span class="ref-tag">${dt.ref}</span>`:''}
+    </div>
+  `).join('');
+}
+
+function getMdata(m){ return m[day]; }
+function getActiveMeals(){ return MEALS.filter(m => m[day] !== null && m[day] !== undefined); }
+
+function renderMeals(){
+  ['alta','media','baja','competencia'].forEach(k=>{
+    const el = document.getElementById(`info-${k}`);
+    if(el) el.style.display = (k===day) ? '' : 'none';
+  });
+  document.querySelectorAll('.day-btn').forEach(b=>{
+    const dt = DAY_TYPES.find(d=>d.key===b.dataset.key);
+    const isActive = b.dataset.key === day;
+    b.classList.toggle('active', isActive);
+    b.style.background = isActive ? COLOR_MAP[dt.color] : '#fff';
+  });
+
+  const container = document.getElementById('meals-container');
+  container.innerHTML = '';
+  getActiveMeals().forEach(m=>{
+    const data = getMdata(m);
+    const dt = DAY_TYPES.find(d=>d.key===day);
+    const savedOpt = savedOpts[m.id] ?? null;
+    const isChecked = !!checkedMeals[m.id];
+    const card = document.createElement('div');
+    card.className = 'meal-card' + (isChecked ? ' done' : '');
+    const optsHtml = data.opts.map((o,i)=>`
+      <div class="opt-card${i===savedOpt?' selected':''}" tabindex="0"
+           onclick="selectOpt('${m.id}',${i},this)"
+           onkeydown="if(event.key==='Enter'||event.key===' ')selectOpt('${m.id}',${i},this)">
+        <div class="opt-num">Opción ${i+1}</div>
+        <div class="opt-name">${o.name}</div>
+        <div class="opt-desc">${o.desc}</div>
+        ${o.macro?`<div class="opt-macro">${o.macro}</div>`:''}
+      </div>
+    `).join('');
+    const tagsHtml = (data.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('');
+    card.innerHTML = `
+      <div class="meal-header" onclick="toggleMeal(this)">
+        <div class="meal-check${isChecked?' checked':''}" title="Marcar como consumida" onclick="event.stopPropagation();toggleMealCheck('${m.id}',this)">✓</div>
+        <div class="meal-lbl" style="background:${COLOR_MAP[dt.color]}">${data.lbl}</div>
+        <div class="meal-title-wrap">
+          <div class="meal-title">${data.title}</div>
+          <div class="meal-time">${data.time||''}</div>
+          <div class="meal-tags">${tagsHtml}</div>
+        </div>
+        <div class="meal-chevron">▾</div>
+      </div>
+      <div class="meal-body">
+        ${data.tip?`<div class="meal-tip">${data.tip}</div>`:''}
+        <div class="opt-grid">${optsHtml}</div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function toggleMeal(header){
+  const body = header.nextElementSibling;
+  const chevron = header.querySelector('.meal-chevron');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+}
+
+function toggleMealCheck(mealId, el){
+  const nowChecked = !el.classList.contains('checked');
+  el.classList.toggle('checked', nowChecked);
+  el.closest('.meal-card').classList.toggle('done', nowChecked);
+  checkedMeals[mealId] = nowChecked;
+  localStorage.setItem(LS_PREFIX+'_checked_'+todayKey(), JSON.stringify(checkedMeals));
+}
+
+function selectOpt(mealId, idx, el){
+  el.closest('.opt-grid').querySelectorAll('.opt-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  savedOpts[mealId] = idx;
+  localStorage.setItem(LS_PREFIX+'_opts', JSON.stringify(savedOpts));
+}
+
+function setDay(d){
+  day = d;
+  localStorage.setItem(LS_PREFIX+'_day', d);
+  renderMeals();
+}
+
+function buildIntro(){
+  if(!PATIENT_INTRO || !PATIENT_INTRO.paragraphs || !PATIENT_INTRO.paragraphs.length) return;
+  document.getElementById('introSectionWrap').style.display = '';
+  const parasHtml = PATIENT_INTRO.paragraphs.map(p=>`<div class="intro-text">${p}</div>`).join('');
+  document.getElementById('introCard').innerHTML = `
+    <div class="intro-greeting">${PATIENT_INTRO.greeting||''}</div>
+    ${parasHtml}
+    ${PATIENT_INTRO.signoff?`<div class="intro-signoff">${PATIENT_INTRO.signoff}</div>`:''}
+  `;
+}
+
+function buildObjectives(){
+  const hasObjectives = OBJECTIVES && OBJECTIVES.length;
+  const hasComp = BODY_COMP && BODY_COMP.length;
+  if(!hasObjectives && !hasComp) return;
+  document.getElementById('objectivesSectionWrap').style.display = '';
+  let html = '';
+  if(hasObjectives){
+    html += `<ul class="objetivo-list">${OBJECTIVES.map(o=>`<li class="objetivo-item"><span class="objetivo-check">✓</span><span>${o}</span></li>`).join('')}</ul>`;
+  }
+  if(hasComp){
+    html += `<div class="comp-grid">${BODY_COMP.map(c=>`
+      <div class="comp-card">
+        <div class="comp-label">${c.label}</div>
+        <div class="comp-row">
+          <div class="comp-val"><strong>${c.current}</strong><span>Actual</span></div>
+          <div class="comp-arrow">→</div>
+          <div class="comp-val ideal"><strong>${c.ideal}</strong><span>Meta</span></div>
+        </div>
+      </div>
+    `).join('')}</div>`;
+    html += `<span class="comp-source">Datos de composición corporal según protocolo ISAK.</span>`;
+  }
+  document.getElementById('objectivesCard').innerHTML = html;
+}
+
+function buildHydration(){
+  if(!HYDRATION_GOAL || HYDRATION_GOAL <= 0) return;
+  document.getElementById('hydrationSectionWrap').style.display = '';
+  document.getElementById('hydrationGoalLbl').textContent = HYDRATION_GOAL;
+  renderHydration();
+}
+
+function renderHydration(){
+  document.getElementById('hydrationCount').textContent = hydrationCount;
+  const drops = [];
+  for(let i=0;i<HYDRATION_GOAL;i++){
+    drops.push(`<span class="drop${i<hydrationCount?' filled':''}" onclick="setHydration(${i+1})">💧</span>`);
+  }
+  document.getElementById('hydrationDrops').innerHTML = drops.join('');
+}
+
+function setHydration(n){
+  hydrationCount = (hydrationCount === n) ? n-1 : n;
+  localStorage.setItem(LS_PREFIX+'_hydration_'+todayKey(), String(hydrationCount));
+  renderHydration();
+}
+
+function buildSupplements(){
+  if(!SUPPLEMENTS.length) return;
+  document.getElementById('suppSection').style.display = '';
+  document.getElementById('suppContainer').innerHTML = SUPPLEMENTS.map(s=>`
+    <div class="supp-item">
+      <div class="supp-icon${s.critical?' critical':''}">${s.icon}</div>
+      <div class="supp-body">
+        <div class="supp-name">${s.name}${s.badge?`<span class="supp-badge">${s.badge}</span>`:''}</div>
+        <div class="supp-dose">${s.dose}</div>
+        <div class="supp-note">${s.note}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function buildNotes(){
+  if(!NOTES.length) return;
+  document.getElementById('notesSection').style.display = '';
+  document.getElementById('notesContainer').innerHTML = NOTES.map(n=>`
+    <div class="nota-card${n.type?' '+n.type:''}">
+      <h4>${n.title}</h4>
+      <p>${n.text}</p>
+    </div>
+  `).join('');
+}
+
+function buildAllergyAlert(){
+  if(!ALLERGIES || !ALLERGIES.length) return;
+  document.getElementById('allergyAlert').style.display = '';
+  document.getElementById('allergyAlert').innerHTML = `
+    <div class="allergy-alert">
+      <div class="allergy-icon">⚠️</div>
+      <div class="allergy-body">
+        <strong>Alergias / Restricciones</strong>
+        <div class="allergy-list">${ALLERGIES.join(' · ')}</div>
+      </div>
+    </div>
+  `;
+}
+
+function buildAppointment(){
+  if(!NEXT_APPOINTMENT || !NEXT_APPOINTMENT.date) return;
+  const target = new Date(NEXT_APPOINTMENT.date+'T00:00:00');
+  const today = new Date(); today.setHours(0,0,0,0);
+  const diff = Math.round((target-today)/(1000*60*60*24));
+  const dateFmt = target.toLocaleDateString('es-CO',{ day:'numeric', month:'long', year:'numeric' });
+  document.getElementById('appointmentBox').innerHTML = `
+    <div class="appointment-box">
+      <div class="appt-countdown"><strong>${diff>0?diff:'¡Hoy!'}</strong><span>${diff>0?'días':''}</span></div>
+      <div class="appt-info"><strong>📅 ${NEXT_APPOINTMENT.label}</strong>${dateFmt}</div>
+    </div>
+  `;
+}
+
+function buildWhatsapp(){
+  if(!WHATSAPP_NUMBER) return;
+  document.getElementById('whatsappSection').style.display = '';
+  const name = document.getElementById('patientName').textContent || '';
+  const msg = encodeURIComponent(`Hola Juan Sebastián, tengo una duda sobre mi plan de alimentación (${name}).`);
+  document.getElementById('whatsappBtn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+}
+
+function normalize(str){
+  return (str||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+}
+function weekKey(){
+  const d = new Date();
+  const onejan = new Date(d.getFullYear(),0,1);
+  const week = Math.ceil((((d - onejan)/86400000) + onejan.getDay()+1)/7);
+  return d.getFullYear()+'-w'+week;
+}
+let shoppingChecked = JSON.parse(localStorage.getItem(LS_PREFIX+'_shopping_'+weekKey()) || '{}');
+
+function buildShoppingList(){
+  if(!SHOPPING_KEYWORDS || !SHOPPING_KEYWORDS.length) return;
+  let allText = '';
+  MEALS.forEach(m=>{
+    DAY_TYPES.forEach(dt=>{
+      const variant = m[dt.key];
+      if(!variant) return;
+      variant.opts.forEach(o=>{ allText += ' ' + o.name + ' ' + o.desc; });
+    });
+  });
+  const normText = normalize(allText);
+  const found = {};
+  SHOPPING_KEYWORDS.forEach(k=>{
+    if(normText.includes(normalize(k.match))){
+      if(!found[k.category]) found[k.category] = [];
+      if(!found[k.category].includes(k.label)) found[k.category].push(k.label);
+    }
+  });
+  const categories = Object.keys(found);
+  if(!categories.length) return;
+  document.getElementById('shoppingSection').style.display = '';
+  document.getElementById('shoppingContainer').innerHTML = categories.map(cat=>`
+    <div class="shopping-cat">
+      <div class="shopping-cat-title">${cat}</div>
+      <ul class="shopping-list">
+        ${found[cat].map(label=>{
+          const key = normalize(cat+'_'+label);
+          const isChecked = !!shoppingChecked[key];
+          return `<li class="shopping-item${isChecked?' checked':''}" onclick="toggleShoppingItem('${key}',this)">
+            <div class="shopping-check${isChecked?' checked':''}">✓</div>
+            <span class="label">${label}</span>
+          </li>`;
+        }).join('')}
+      </ul>
+    </div>
+  `).join('');
+}
+
+function toggleShoppingItem(key, el){
+  const nowChecked = !el.classList.contains('checked');
+  el.classList.toggle('checked', nowChecked);
+  el.querySelector('.shopping-check').classList.toggle('checked', nowChecked);
+  shoppingChecked[key] = nowChecked;
+  localStorage.setItem(LS_PREFIX+'_shopping_'+weekKey(), JSON.stringify(shoppingChecked));
+}
+
+buildAllergyAlert();
+buildAppointment();
+buildIntro();
+buildObjectives();
+buildHydration();
+buildDaySelector();
+buildDayInfo();
+renderMeals();
+buildSupplements();
+buildNotes();
+buildShoppingList();
+buildWhatsapp();
+</script>
+</body>
+</html>
