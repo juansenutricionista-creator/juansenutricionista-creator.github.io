@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Estrategia de Carrera · Diana Rincón · Maratón de Sídney 2026</title>
+<style>
+:root{
+  --bg:#0d1117; --bg2:#141b25; --card:#1a2330; --card2:#212c3b;
+  --line:#2c3947; --gold:#e0b654; --gold2:#f5d68a; --teal:#4cc4b0;
+  --txt:#e8edf3; --dim:#95a3b4; --dim2:#6f7f92; --red:#e2725b;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:var(--sans);line-height:1.65;
+  -webkit-font-smoothing:antialiased;padding:0 0 60px}
+.wrap{max-width:940px;margin:0 auto;padding:0 22px}
+
+/* HEADER */
+header{background:linear-gradient(160deg,#16202c 0%,#0d1117 100%);
+  border-bottom:1px solid var(--line);padding:52px 0 42px;margin-bottom:44px}
+.eyebrow{color:var(--gold);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+  font-weight:700;margin-bottom:14px}
+h1{font-size:2.9rem;font-weight:800;letter-spacing:-.02em;line-height:1.1;margin-bottom:10px}
+h1 span{color:var(--gold)}
+.sub{color:var(--dim);font-size:1.05rem;margin-bottom:26px}
+.racebar{display:flex;flex-wrap:wrap;gap:10px}
+.chip{background:var(--card);border:1px solid var(--line);border-radius:999px;
+  padding:8px 16px;font-size:.82rem;color:var(--dim)}
+.chip b{color:var(--txt);font-weight:600}
+.chip.hot{border-color:var(--gold);background:rgba(224,182,84,.09)}
+.chip.hot b{color:var(--gold2)}
+
+/* NUMBERS */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:48px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;
+  border-top:3px solid var(--gold)}
+.tile .n{font-size:1.85rem;font-weight:800;color:var(--gold2);letter-spacing:-.02em;line-height:1.1}
+.tile .l{font-size:.74rem;color:var(--dim2);text-transform:uppercase;letter-spacing:.1em;
+  margin-top:7px;font-weight:600}
+.tile .d{font-size:.8rem;color:var(--dim);margin-top:5px}
+
+/* SECTIONS */
+section{margin-bottom:56px}
+.sechead{display:flex;align-items:baseline;gap:14px;padding-bottom:14px;
+  border-bottom:2px solid var(--line);margin-bottom:26px}
+.secnum{font-size:.72rem;font-weight:800;color:var(--bg);background:var(--gold);
+  border-radius:6px;padding:4px 9px;letter-spacing:.08em;flex-shrink:0}
+h2{font-size:1.55rem;font-weight:700;letter-spacing:-.01em}
+.seclead{color:var(--dim);font-size:.95rem;margin-bottom:24px;max-width:70ch}
+
+h3{font-size:1.05rem;font-weight:700;margin:28px 0 12px;color:var(--gold2)}
+
+/* DAY CARD */
+.day{background:var(--card);border:1px solid var(--line);border-radius:16px;
+  overflow:hidden;margin-bottom:22px}
+.dayhead{background:var(--card2);padding:16px 22px;border-bottom:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.dayhead .dt{font-size:1.1rem;font-weight:700}
+.dayhead .dt small{display:block;color:var(--dim2);font-size:.75rem;font-weight:500;
+  text-transform:uppercase;letter-spacing:.1em;margin-top:2px}
+.daytot{text-align:right}
+.daytot .big{font-size:1.5rem;font-weight:800;color:var(--gold2);line-height:1}
+.daytot .sm{font-size:.72rem;color:var(--dim2);text-transform:uppercase;letter-spacing:.08em}
+.meal{padding:16px 22px;border-bottom:1px solid var(--line)}
+.meal:last-child{border-bottom:none}
+.mealtop{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px}
+.mealname{font-weight:700;font-size:.95rem}
+.mealname em{font-style:normal;color:var(--dim2);font-weight:500;font-size:.82rem;margin-left:8px}
+.mealcho{color:var(--gold);font-weight:700;font-size:.9rem;white-space:nowrap}
+.meal ul{list-style:none}
+.meal li{color:var(--dim);font-size:.9rem;padding:3px 0 3px 18px;position:relative}
+.meal li::before{content:'';position:absolute;left:4px;top:12px;width:5px;height:5px;
+  border-radius:50%;background:var(--dim2)}
+.meal li b{color:var(--txt);font-weight:600}
+
+/* TIMELINE */
+.tl{position:relative;padding-left:34px}
+.tl::before{content:'';position:absolute;left:11px;top:8px;bottom:8px;width:2px;background:var(--line)}
+.ev{position:relative;margin-bottom:18px}
+.ev::before{content:'';position:absolute;left:-28px;top:7px;width:11px;height:11px;
+  border-radius:50%;background:var(--bg);border:2px solid var(--dim2)}
+.ev.key::before{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 4px rgba(224,182,84,.16)}
+.ev.caf::before{background:var(--teal);border-color:var(--teal);box-shadow:0 0 0 4px rgba(76,196,176,.16)}
+.ev.salt::before{background:var(--bg);border-color:var(--teal)}
+.evtime{font-size:.75rem;font-weight:700;color:var(--gold);letter-spacing:.06em;
+  text-transform:uppercase;margin-bottom:2px}
+.evtime span{color:var(--dim2);font-weight:500;margin-left:8px;letter-spacing:0;text-transform:none}
+.evtitle{font-weight:700;font-size:.98rem;margin-bottom:3px}
+.evbody{color:var(--dim);font-size:.89rem}
+.evbody b{color:var(--txt);font-weight:600}
+
+/* NOTE */
+.note{background:rgba(224,182,84,.07);border:1px solid rgba(224,182,84,.28);
+  border-left:3px solid var(--gold);border-radius:0 12px 12px 0;padding:16px 20px;margin:20px 0}
+.note.teal{background:rgba(76,196,176,.07);border-color:rgba(76,196,176,.28);border-left-color:var(--teal)}
+.note.red{background:rgba(226,114,91,.07);border-color:rgba(226,114,91,.28);border-left-color:var(--red)}
+.note .nt{font-weight:700;font-size:.88rem;margin-bottom:5px;color:var(--gold2)}
+.note.teal .nt{color:var(--teal)}
+.note.red .nt{color:var(--red)}
+.note p{color:var(--dim);font-size:.9rem}
+.note p b{color:var(--txt);font-weight:600}
+.note p+p{margin-top:8px}
+
+/* GRID CARDS */
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px}
+.c{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+.c .ct{font-weight:700;font-size:.95rem;margin-bottom:8px;color:var(--gold2)}
+.c p{color:var(--dim);font-size:.89rem}
+.c p b{color:var(--txt);font-weight:600}
+.c ul{list-style:none;margin-top:8px}
+.c li{color:var(--dim);font-size:.88rem;padding:4px 0 4px 18px;position:relative}
+.c li::before{content:'';position:absolute;left:4px;top:13px;width:5px;height:5px;
+  border-radius:50%;background:var(--gold)}
+.c li b{color:var(--txt);font-weight:600}
+
+/* CHECKLIST */
+.check{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 0}
+.ci{display:flex;align-items:center;gap:14px;padding:12px 22px;border-bottom:1px solid var(--line)}
+.ci:last-child{border-bottom:none}
+.box{width:19px;height:19px;border:2px solid var(--dim2);border-radius:5px;flex-shrink:0}
+.ci .q{font-weight:800;color:var(--gold2);min-width:44px;font-size:.95rem}
+.ci .w{font-size:.92rem}
+.ci .w small{display:block;color:var(--dim2);font-size:.78rem}
+
+/* RULES */
+.rules{counter-reset:r}
+.rule{counter-increment:r;position:relative;padding:14px 0 14px 52px;border-bottom:1px solid var(--line)}
+.rule:last-child{border-bottom:none}
+.rule::before{content:counter(r);position:absolute;left:0;top:14px;width:32px;height:32px;
+  border-radius:9px;background:var(--card2);border:1px solid var(--line);color:var(--gold);
+  font-weight:800;font-size:.9rem;display:flex;align-items:center;justify-content:center}
+.rule .rt{font-weight:700;font-size:.96rem;margin-bottom:3px}
+.rule .rb{color:var(--dim);font-size:.89rem}
+.rule .rb b{color:var(--txt);font-weight:600}
+
+footer{border-top:1px solid var(--line);margin-top:60px;padding-top:28px;text-align:center;
+  color:var(--dim2);font-size:.85rem}
+footer .nm{color:var(--gold2);font-weight:700;font-size:1rem;margin-bottom:4px}
+
+@media(max-width:600px){
+  h1{font-size:2.1rem} .tile .n{font-size:1.5rem}
+  .mealtop{flex-direction:column;gap:2px}
+}
+@media print{
+  body{background:#fff;color:#111}
+  :root{--card:#fff;--card2:#f6f6f6;--line:#ccc;--txt:#111;--dim:#444;--dim2:#777;--gold:#a8801f;--gold2:#8a6a17}
+  header{background:#fff} section{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="wrap">
+  <div class="eyebrow">Estrategia de Carrera · Nutrición</div>
+  <h1>Diana <span>Rincón</span></h1>
+  <div class="sub">Maratón de Sídney · Carga de carbohidratos, hidratación y plan de combustible</div>
+  <div class="racebar">
+    <div class="chip">📅 <b>Domingo 30 de agosto, 2026</b></div>
+    <div class="chip hot">🏁 Tu largada: <b>7:20 am</b></div>
+    <div class="chip">📍 <b>North Sydney → Ópera de Sídney</b></div>
+    <div class="chip">⚖️ <b>61 kg</b></div>
+    <div class="chip">🌱 <b>Vegetariana</b></div>
+  </div>
+</div>
+</header>
+
+<div class="wrap">
+
+<div class="tiles">
+  <div class="tile"><div class="n">~610 g</div><div class="l">CHO el sábado</div><div class="d">10 g por kilo de peso</div></div>
+  <div class="tile"><div class="n">126 g</div><div class="l">Desayuno pre-carrera</div><div class="d">Avena, banano y miel · 4:20 am</div></div>
+  <div class="tile"><div class="n">1 gel</div><div class="l">En cada puesto</div><div class="d">Km 5, 10, 15, 20, 25, 30, 35 y 40</div></div>
+  <div class="tile"><div class="n">250 mg</div><div class="l">Sodio cada 10 km</div><div class="d">Km 10, 20, 30 y 40</div></div>
+</div>
+
+<div class="note">
+  <div class="nt">Cómo leer este documento</div>
+  <p>Esto <b>no reemplaza tu plan de alimentación</b> — es el protocolo específico de los últimos tres días y del día de la carrera. Todo lo que está acá ya lo has hecho o lo has probado en entrenamiento. <b>Nada es nuevo</b>, y esa es justamente la idea.</p>
+  <p>La parte de ritmo y estrategia de paso la maneja tu entrenador. Este documento es <b>ciento por ciento nutricional</b>.</p>
+</div>
+
+<!-- ══════════ 1. CARGA ══════════ -->
+<section>
+<div class="sechead"><div class="secnum">01</div><h2>Carga de carbohidratos · viernes y sábado</h2></div>
+<p class="seclead">Dos días de ingesta alta, inmediatamente antes de la carrera. El objetivo es llenar por completo el glucógeno del músculo y del hígado, que es el combustible que vas a quemar el domingo. Esta semana ya bajaste los carbohidratos y el volumen de entrenamiento a propósito: eso es lo que hace que estos dos días rindan más.</p>
+
+<div class="day">
+  <div class="dayhead">
+    <div class="dt">Viernes 28 de agosto<small>Día 1 de carga</small></div>
+    <div class="daytot"><div class="big">490 g</div><div class="sm">CHO · 8 g/kg</div></div>
+  </div>
+
+  <div class="meal">
+    <div class="mealtop"><div class="mealname">Desayuno <em>7:00 am</em></div><div class="mealcho">140 g CHO</div></div>
+    <ul>
+      <li><b>80 g de avena</b> (en crudo), cocida en agua o leche de almendras</li>
+      <li><b>1 banano maduro</b> (120 g), en rodajas</li>
+      <li><b>2 cucharadas de miel</b> (40 g)</li>
+      <li><b>250 ml de jugo de naranja</b> colado, sin pulpa</li>
+    </ul>
+  </div>
+
+  <div class="meal">
+    <div class="mealtop"><div class="mealname">Media mañana <em>10:00 am</em></div><div class="mealcho">85 g CHO</div></div>
+    <ul>
+      <li><b>2 tajadas de pan blanco</b> tostado (Bakers Life)</li>
+      <li><b>2 cucharadas de mermelada</b> (40 g)</li>
+      <li><b>1 banano</b> (120 g)</li>
+    </ul>
+  </div>
+
+  <div class="meal">
+    <div class="mealtop"><div class="mealname">Almuerzo <em>1:00 pm</em></div><div class="mealcho">93 g CHO</div></div>
+    <ul>
+      <li><b>120 g de pasta blanca</b> en crudo (Cucina Matese fusilli)</li>
+      <li><b>100 g de salsa de tomate</b> sin trozos</li>
+      <li><b>120 g de tofu firme</b> (Earth Grown) salteado</li>
+      <li><b>25 g de queso parmesano</b> rallado</li>
+    </ul>
+  </div>
+
+  <div class="meal">
+    <div class="mealtop"><div class="mealname">Media tarde <em>4:30 pm</em></div><div class="mealcho">66 g CHO</div></div>
+    <ul>
+      <li><b>170 g de yogurt griego natural</b> (Coles Perform o Chobani)</li>
+      <li><b>2 cucharadas de miel</b> (40 g)</li>
+      <li><b>4 dátiles</b> (32 g)</li>
+    </ul>
+  </div>
+
+  <div class="meal">
+    <div class="mealtop"><div class="mealname">Cena <em>7:30 pm</em></div><div class="mealcho">99 g CHO</div></div>
+    <ul>
+      <li><b>125 g de arroz blanco</b> en crudo</li>
+      <li><b>2 huevos revueltos</b></li>
+      <li><b>Sin vegetales.</b> Hoy y mañana el plato va sin ensalada y sin verdura.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="day">
+  <div class="dayhead">
+    <div class="dt">Sábado 29 de agosto<small>Día 2 de carga · el más importante</small></div>
+    <div class="daytot"><div class="big">610 g</div><div class="sm">CHO · 10 g/kg</div></div>
+  </div>
+
+  <div class="meal">
+    <div class="mealtop"><div class="mealname">Desayuno <em>7:00 am</em></div><div class="mealcho">145 g CHO</div></div>
+    <ul>
+      <li><b>80 g de avena</b> en crudo, cocida en agua</li>
+      <li><b>1 banano maduro</b> (120 g)</li>
+      <li><b>2 cucharadas de miel</b> (40 g)</li>
+      <li><b>300 ml de jugo de naranja</b> colado</li>
+    </ul>
+  </div>
+
+  <div class="meal">
+    <div class="mealtop"><div class="mealname">Media mañana <em>10:00 am</em></div><div class="mealcho">87 g CHO</div></div>
+    <ul>
+      <li><b>3 tajadas de pan blanco</b> tostado</li>
+      <li><b>3 cucharadas de mermelada</b> (60 g)</li>
+    </ul>
+  </div>
+
+  <div class="meal">
+    <div class="mealtop"><div class="mealname">Almuerzo <em>12:30 pm</em></div><div class="mealcho">123 g CHO</div></div>
+    <ul>
+      <li><b>130 g de arroz blanco</b> en crudo</li>
+      <li><b>120 g de tofu firme</b> salteado</li>
+      <li><b>25 g de parmesano</b></li>
+      <li><b>150 ml de jugo de manzana</b></li>
+    </ul>
+  </div>
+
+  <div class="meal">
+    <div class="mealtop"><div class="mealname">Media tarde <em>3:30 pm</em></div><div class="mealcho">99 g CHO</div></div>
+    <ul>
+      <li><b>170 g de yogurt griego natural</b></li>
+      <li><b>2 cucharadas de miel</b> (40 g)</li>
+      <li><b>5 dátiles</b> (40 g)</li>
+      <li><b>1 banano</b> (120 g)</li>
+    </ul>
+  </div>
+
+  <div class="meal">
+    <div class="mealtop"><div class="mealname">Cena temprana · <b style="color:var(--gold)">pasta</b> <em>6:00 pm</em></div><div class="mealcho">128 g CHO</div></div>
+    <ul>
+      <li><b>150 g de pasta blanca</b> en crudo (Cucina Matese fusilli)</li>
+      <li><b>100 g de salsa de tomate</b> colada, sin trozos</li>
+      <li><b>2 huevos revueltos</b> o <b>100 g de tofu firme</b></li>
+      <li><b>30 g de parmesano</b></li>
+      <li><b>1 tajada de pan blanco</b></li>
+      <li><b>Sin vegetales.</b> Esta es la comida más importante de los dos días.</li>
+    </ul>
+  </div>
+
+  <div class="meal">
+    <div class="mealtop"><div class="mealname">Antes de dormir <em>8:30 pm</em></div><div class="mealcho">47 g CHO</div></div>
+    <ul>
+      <li><b>2 tajadas de pan blanco</b> con <b>1 cucharada de miel</b> (20 g)</li>
+      <li>Un vaso de agua y a la cama. Apunta a dormir ocho horas.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="note">
+  <div class="nt">Viernes y sábado: cero fibra y cero vegetales</div>
+  <p>Esto es lo que más te va a chocar, porque va contra todo lo que comes normalmente. <b>Fuera las legumbres, la quinoa, el arroz integral, el pan integral y los Weet-Bix.</b> Pasta blanca en vez de integral, arroz blanco, jugo colado.</p>
+  <p><b>Y fuera todos los vegetales.</b> Ni ensalada, ni brócoli, ni zanahoria, ni zucchini. Ninguno, en ninguna comida, viernes y sábado. Sé que suena raro viniendo de mí, y es por dos días exactos.</p>
+  <p>El motivo es simple: la fibra ocupa espacio, deja residuo y produce gas — y todo eso lo cargas contigo el domingo. Dos días sin fibra no te afectan en nada; dos días con fibra sí te pueden costar el estómago en el kilómetro 25. El domingo después de la meta vuelves a comer normal.</p>
+</div>
+
+<div class="note teal">
+  <div class="nt">Vas a subir uno o dos kilos. Es exactamente lo que queremos.</div>
+  <p>Cada gramo de glucógeno que guardas arrastra unos tres gramos de agua. Si el sábado en la noche o el domingo en la mañana te sientes más pesada o más hinchada, <b>esa es la señal de que la carga funcionó.</b> Es combustible y es agua, no es grasa, y lo vas a gastar todo en la carrera.</p>
+  <p><b>No te peses el sábado ni el domingo.</b> No te va a decir nada útil y solo te va a poner nerviosa.</p>
+</div>
+
+<div class="note">
+  <div class="nt">Tu proteína estos dos días</div>
+  <p>Como te quitamos garbanzos y lentejas, te quitamos también tu fuente principal de proteína. Por eso estos dos días la sacas de <b>huevo, tofu, yogurt griego y queso</b>, que ya están puestos en cada tiempo de comida. Si un día te queda corta, un scoop de whey en agua lo resuelve.</p>
+</div>
+</section>
+
+<!-- ══════════ 2. HIDRATACIÓN ══════════ -->
+<section>
+<div class="sechead"><div class="secnum">02</div><h2>Hidratación y sodio</h2></div>
+<p class="seclead">Vas a estar más de cuatro horas en carrera. En una distancia así el error clásico no es tomar poca agua — es tomar demasiada y sin sodio.</p>
+
+<div class="g2">
+  <div class="c">
+    <div class="ct">💧 Viernes y sábado</div>
+    <p>Mantén tus <b>3 a 3,7 litros</b> habituales, sin forzar de más. La carga de carbohidratos ya retiene agua por su cuenta.</p>
+    <p style="margin-top:10px">El sábado, con la cena, toma <b>1 pastilla de sodio de 250 mg</b>. Ayuda a que el líquido que tomas se quede donde tiene que quedarse.</p>
+  </div>
+  <div class="c">
+    <div class="ct">💧 Durante la carrera</div>
+    <p><b>400 a 600 ml por hora</b>, repartidos en los puestos de avituallamiento. Son unos <b>150 a 200 ml</b> por puesto — un vaso, no dos.</p>
+    <p style="margin-top:10px">Hay agua en <b>todos</b> los puestos: kilómetros 5, 10, 15, 20, 25, 30, 35 y 40. Te van a quedar aproximadamente cada media hora.</p>
+  </div>
+  <div class="c">
+    <div class="ct">🧂 Las pastillas de sodio</div>
+    <p><b>250 mg en los kilómetros 10, 20, 30 y 40</b>, más una antes de salir.</p>
+    <ul>
+      <li>Si el día amanece más caluroso de lo previsto o sientes que estás sudando mucho, agrega una en el <b>km 15 y en el 25</b></li>
+      <li>Siempre con un poco de agua, nunca en seco</li>
+      <li>Lleva <b>7 en total</b> contando la reserva</li>
+    </ul>
+  </div>
+  <div class="c">
+    <div class="ct">🥤 Sobre el Powerade del recorrido</div>
+    <p>Hay Powerade Mountain Blast en los ocho puestos. <b>No lo tomes como rutina</b> — no lo has probado y trae carbohidrato que se suma al de tus geles.</p>
+    <p style="margin-top:10px">Guárdalo como <b>plan B</b>: si se te cae un gel o sientes que te quedaste sin combustible, un vaso de Powerade lo reemplaza. Para eso sirve.</p>
+  </div>
+</div>
+
+<div class="note red">
+  <div class="nt">Por qué no vamos a "beber sin esperar la sed"</div>
+  <p>En carreras de más de cuatro horas existe un riesgo real de <b>hiponatremia</b>: diluir el sodio de la sangre por tomar más líquido del que se pierde. Los factores de riesgo son ser mujer, tener poco peso corporal, pasar de cuatro horas en carrera y tomar líquido en exceso. Tú cumples los tres primeros, así que el cuarto es el único que podemos controlar.</p>
+  <p>Por eso el rango tiene techo: <b>toma según tu sed dentro de los 400 a 600 ml por hora</b> y no por encima. El color de la orina es tu control — amarillo claro está bien; transparente como agua significa que estás tomando de más.</p>
+  <p><b>Y algo importante: nada de ibuprofeno ni antiinflamatorios antes ni durante la carrera.</b> Aumentan el riesgo renal y el de hiponatremia justo cuando más expuesta estás. Si te duele algo, se maneja después de la meta.</p>
+</div>
+</section>
+
+<!-- ══════════ 3. PRE-CARRERA ══════════ -->
+<section>
+<div class="sechead"><div class="secnum">03</div><h2>Pre-carrera · domingo en la madrugada</h2></div>
+<p class="seclead">Tu largada es a las 7:20 am. Todo lo de abajo está calculado hacia atrás desde esa hora. Deja la ropa, el dorsal, los geles y las pastillas listos desde el sábado en la noche.</p>
+
+<div class="tl">
+  <div class="ev">
+    <div class="evtime">4:00 am <span>3 h 20 min antes</span></div>
+    <div class="evtitle">Despertar</div>
+    <div class="evbody"><b>400 ml de agua</b> apenas te levantes. Sin afán: ya todo está preparado desde anoche.</div>
+  </div>
+
+  <div class="ev key">
+    <div class="evtime">4:20 am <span>3 horas antes</span></div>
+    <div class="evtitle">Desayuno pre-carrera · 126 g de CHO</div>
+    <div class="evbody">
+      <b>60 g de avena</b> cocida en agua · <b>1 banano maduro</b> · <b>2 cucharadas de miel</b> (40 g) · <b>250 ml de jugo de naranja</b> colado.<br>
+      Es exactamente tu desayuno de fondo largo, el que ya sabes que te cae bien, un poco más grande porque tienes tres horas por delante. <b>Sin aguacate, sin mantequilla de maní, sin fruta con cáscara.</b>
+    </div>
+  </div>
+
+  <div class="ev">
+    <div class="evtime">4:30 am <span></span></div>
+    <div class="evtitle">Tu café de siempre — si es tu rutina</div>
+    <div class="evbody">Si tomas café todas las mañanas, <b>tómalo</b>. Negro, una taza. Quitártelo justo hoy te puede dar dolor de cabeza por abstinencia, y eso es peor que tomarlo. Si normalmente no desayunas con café, no lo estrenes hoy.</div>
+  </div>
+
+  <div class="ev salt">
+    <div class="evtime">5:45 am <span>1 h 35 min antes</span></div>
+    <div class="evtitle">Sodio y últimos líquidos</div>
+    <div class="evbody"><b>1 pastilla de sodio de 250 mg</b> con <b>400 ml de agua</b>. Esta es tu última toma grande de líquido: de aquí en adelante solo sorbos, para que te dé tiempo de ir al baño antes de salir.</div>
+  </div>
+
+  <div class="ev">
+    <div class="evtime">6:15 am <span></span></div>
+    <div class="evtitle">Traslado al largador</div>
+    <div class="evbody">Sorbos de agua a demanda. Lleva una capa desechable para el largador.</div>
+  </div>
+
+  <div class="ev caf">
+    <div class="evtime">6:50 am <span>30 min antes</span></div>
+    <div class="evtitle">Gel con cafeína · SIS GO Energy + Caffeine</div>
+    <div class="evbody"><b>22 g de CHO + 75 mg de cafeína.</b> Con unos sorbos de agua. La cafeína alcanza su pico entre los 45 y 60 minutos, o sea justo cuando ya estés corriendo.</div>
+  </div>
+
+  <div class="ev key">
+    <div class="evtime">7:20 am</div>
+    <div class="evtitle">🏁 Disparo</div>
+    <div class="evbody">Los primeros 35 minutos no tocas nada. Vas a ir con el tanque lleno de la carga.</div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ 4. INTRA ══════════ -->
+<section>
+<div class="sechead"><div class="secnum">04</div><h2>Intra-carrera · el plan de combustible</h2></div>
+<p class="seclead">Un gel en cada puesto de avituallamiento. Es la regla completa: <b>ves el puesto, tomas gel y agua.</b> No tienes que mirar el reloj ni hacer cuentas en carrera.</p>
+
+<div class="note">
+  <div class="nt">Los puestos son tu cronómetro</div>
+  <p>Hay avituallamiento en los kilómetros <b>5, 10, 15, 20, 25, 30, 35 y 40</b>, y en todos hay agua. A tu ritmo te van a quedar aproximadamente <b>cada media hora</b>, que es justo el espaciado que necesitas entre geles.</p>
+  <p>Por eso cada gel va anclado a un puesto: <b>nunca vas a tener que tomarte un gel sin agua a la mano</b>, y no dependes de acordarte de nada. Las horas que aparecen abajo son solo una referencia aproximada — <b>el que manda es el cartel del kilómetro.</b></p>
+</div>
+
+<div class="note teal">
+  <div class="nt">Por qué 34 gramos por hora y no más</div>
+  <p>Llevas tres años corriendo con geles SIS y tienes probado que <b>toleras tres geles en una media maratón sin ningún problema</b>. Eso son unos 34 gramos por hora, y ese es exactamente el ritmo al que vamos a ir el domingo.</p>
+  <p>Cuando subiste el consumo en estas últimas semanas apareció el dolor. La explicación más probable es que los SIS GO Isotonic son maltodextrina sola — glucosa pura — y la glucosa se absorbe por un solo transportador que se satura alrededor de los 60 gramos por hora. Todo lo que pase de ahí se queda en el intestino, arrastra agua y molesta. Y encima les estabas sumando el polvo con carbohidrato.</p>
+  <p><b>El domingo no se apila nada.</b> Geles solos, con agua. Sin polvo encima, sin Powerade al mismo tiempo.</p>
+</div>
+
+<div class="tl">
+  <div class="ev key"><div class="evtime">Salida <span>7:20 am · km 0</span></div>
+    <div class="evtitle">🏁 Disparo</div><div class="evbody">Vas con el tanque lleno de la carga. Nada de gel todavía.</div></div>
+
+  <div class="ev"><div class="evtime">Kilómetro 5 <span>~7:52 am</span></div>
+    <div class="evtitle">Gel 1 · SIS GO Isotonic</div>
+    <div class="evbody">22 g de CHO, con agua del puesto.</div></div>
+
+  <div class="ev salt"><div class="evtime">Kilómetro 10 <span>~8:24 am</span></div>
+    <div class="evtitle">Gel 2 · Isotonic + 🧂 pastilla de sodio</div>
+    <div class="evbody">22 g de CHO y <b>250 mg de sodio</b>, los dos con agua.</div></div>
+
+  <div class="ev"><div class="evtime">Kilómetro 15 <span>~8:56 am</span></div>
+    <div class="evtitle">Gel 3 · SIS GO Isotonic</div>
+    <div class="evbody">22 g de CHO.</div></div>
+
+  <div class="ev salt"><div class="evtime">Kilómetro 20 <span>~9:28 am</span></div>
+    <div class="evtitle">Gel 4 · Isotonic + 🧂 pastilla de sodio</div>
+    <div class="evbody">22 g de CHO y <b>250 mg de sodio</b>. Vas cerca de la mitad y todo lo que llevas hasta acá ya lo has hecho en entrenamiento muchas veces.</div></div>
+
+  <div class="ev"><div class="evtime">Kilómetro 25 <span>~10:00 am</span></div>
+    <div class="evtitle">Gel 5 · SIS GO Isotonic</div>
+    <div class="evbody">22 g de CHO. <b>Este es el gel que no se negocia.</b> Te vas a sentir bien y te va a parecer innecesario — es justo por eso que hay que tomarlo.</div></div>
+
+  <div class="ev caf"><div class="evtime">Kilómetro 30 <span>~10:33 am</span></div>
+    <div class="evtitle">☕ Gel 6 · SIS GO Energy + Caffeine + 🧂 pastilla de sodio</div>
+    <div class="evbody"><b>22 g de CHO, 75 mg de cafeína y 250 mg de sodio.</b> Está puesto acá a propósito: la cafeína hace pico entre 30 y 60 minutos después, o sea entre el kilómetro 35 y la meta.</div></div>
+
+  <div class="ev"><div class="evtime">Kilómetro 35 <span>~11:05 am</span></div>
+    <div class="evtitle">Gel 7 · SIS GO Isotonic</div>
+    <div class="evbody">22 g de CHO. Último tramo. Ya no importa cómo esté el estómago — este gel sostiene el final.</div></div>
+
+  <div class="ev salt"><div class="evtime">Kilómetro 40 <span>~11:37 am</span></div>
+    <div class="evtitle">Gel 8 opcional + 🧂 pastilla de sodio</div>
+    <div class="evbody">Toma la pastilla. El gel, solo si sientes que lo necesitas — quedan poco más de dos kilómetros.</div></div>
+
+  <div class="ev key"><div class="evtime">Meta <span>42,195 km</span></div>
+    <div class="evtitle">🏅 Explanada de la Ópera</div><div class="evbody">Pasa directo a la sección de post-carrera.</div></div>
+</div>
+
+<h3>Lo que tienes que llevar encima</h3>
+<div class="check">
+  <div class="ci"><div class="box"></div><div class="q">2</div><div class="w">SIS GO Energy <b>+ Caffeine</b><small>Uno a las 6:50 am y uno en el minuto 210</small></div></div>
+  <div class="ci"><div class="box"></div><div class="q">8</div><div class="w">SIS GO <b>Isotonic</b><small>Siete programados más uno de reserva</small></div></div>
+  <div class="ci"><div class="box"></div><div class="q">7</div><div class="w">Pastillas de <b>sodio de 250 mg</b><small>Una antes, cuatro en carrera, una post-meta y una de reserva</small></div></div>
+  <div class="ci"><div class="box"></div><div class="q">—</div><div class="w">Cinturón o bolsillos <b>ya probados</b><small>Si nunca has corrido con el cinturón cargado, pruébalo el viernes</small></div></div>
+  <div class="ci"><div class="box"></div><div class="q">—</div><div class="w">Capa desechable para el largador<small>La sueltas en el primer kilómetro</small></div></div>
+</div>
+
+<div class="note">
+  <div class="nt">Si algo se sale del plan</div>
+  <p><b>Se te cae un gel:</b> tomas un vaso de Powerade en el siguiente puesto. Reemplaza más o menos la mitad de un gel y es mejor que quedarte sin nada.</p>
+  <p><b>Sientes molestia en el estómago:</b> no te saltes el gel — <b>espácialo</b>. Sáltate un puesto y tómalo en el siguiente, con más agua. Saltártelo del todo es peor: te quedas sin combustible y el problema aparece veinte minutos después en las piernas.</p>
+  <p><b>Te sientes mareada o con náuseas y has estado tomando mucha agua:</b> para de tomar líquido, toma una pastilla de sodio y avisa en el siguiente puesto médico.</p>
+</div>
+</section>
+
+<!-- ══════════ 5. POST ══════════ -->
+<section>
+<div class="sechead"><div class="secnum">05</div><h2>Post-carrera · la recuperación empieza en la meta</h2></div>
+<p class="seclead">Lo que hagas en las primeras dos horas define cómo te sientes los tres días siguientes. Ten esto listo en la mochila de la meta o con quien te acompañe.</p>
+
+<div class="tl">
+  <div class="ev key"><div class="evtime">Primeros 30 minutos</div>
+    <div class="evtitle">Líquido, fruta y leche chocolatada</div>
+    <div class="evbody">
+      <b>500 a 750 ml de líquido</b> en sorbos, sin apurarte, más <b>1 pastilla de sodio de 250 mg</b>.<br>
+      <b>1 banano</b> o la fruta que te provoque.<br>
+      <b>350 a 400 ml de leche chocolatada.</b> No es un premio: trae carbohidrato y proteína en la proporción justa, más líquido, sodio y potasio. Es de las cosas mejor estudiadas para recuperar después de un esfuerzo largo.
+    </div>
+  </div>
+
+  <div class="ev"><div class="evtime">A la hora</div>
+    <div class="evtitle">Batido de proteína</div>
+    <div class="evbody"><b>1 scoop de whey</b> (ON Gold Standard, 24 g) + <b>250 ml de leche de almendras</b> + <b>1 banano</b> + <b>1 cucharada de miel</b>. Acá es donde arranca de verdad la reparación del músculo.</div>
+  </div>
+
+  <div class="ev"><div class="evtime">2 a 3 horas después</div>
+    <div class="evtitle">Comida completa</div>
+    <div class="evbody">Arroz o pasta en buena cantidad, tofu o huevo, y vegetales. <b>Alrededor de 70 gramos de carbohidrato.</b> Acá ya puedes volver a la fibra normal.</div>
+  </div>
+
+  <div class="ev"><div class="evtime">El resto del día</div>
+    <div class="evtitle">Rehidratación</div>
+    <div class="evbody">Si te pesas antes de salir y al llegar, toma <b>1,5 litros por cada kilo perdido</b>, repartidos durante el día y con algo de sodio. No de una sentada.</div>
+  </div>
+</div>
+
+<div class="g2">
+  <div class="c">
+    <div class="ct">🍺 Sobre el alcohol</div>
+    <p>Es tu maratón y te la vas a querer celebrar. Solo <b>déjalo para después de haber comido y rehidratado</b>, no en la primera hora: el alcohol frena la reposición de glucógeno y aumenta la pérdida de líquido justo cuando estás deshidratada.</p>
+  </div>
+  <div class="c">
+    <div class="ct">💊 Los días siguientes</div>
+    <p>Retoma tu suplementación normal — <b>hierro, B12, vitamina D, omega 3 de algas y el magnesio</b> — desde el lunes.</p>
+    <p style="margin-top:10px">Y agenda el <b>hemograma con ferritina y B12</b> apenas pase la carrera. Esto es lo más importante de tu seguimiento a mediano plazo.</p>
+  </div>
+</div>
+</section>
+
+<!-- ══════════ REGLAS ══════════ -->
+<section>
+<div class="sechead"><div class="secnum">06</div><h2>Las seis reglas del domingo</h2></div>
+<div class="rules">
+  <div class="rule"><div class="rt">Nada nuevo</div><div class="rb">Ni un gel distinto, ni una bebida que no hayas probado, ni un desayuno diferente. Ya no hay tiempo de que el intestino se adapte a nada. <b>Todo lo de este documento ya lo has hecho.</b></div></div>
+  <div class="rule"><div class="rt">Los geles no se apilan</div><div class="rb">Un gel a la vez, con agua. <b>Nunca gel más Powerade al mismo tiempo</b>, y nada del polvo con carbohidrato.</div></div>
+  <div class="rule"><div class="rt">Ves el puesto, tomas el gel</div><div class="rb">Sin pensarlo y sin evaluar cómo te sientes. El gel del kilómetro 25 te va a parecer innecesario porque vas a ir bien. <b>Tómalo igual.</b> Cuando sientes que necesitas el gel, ya es tarde.</div></div>
+  <div class="rule"><div class="rt">Agua con techo</div><div class="rb">Entre 400 y 600 ml por hora. Un vaso por puesto, no dos. Más no es mejor.</div></div>
+  <div class="rule"><div class="rt">El sodio en los kilómetros pares de diez</div><div class="rb">Km 10, 20, 30 y 40. Si el día calienta o sudas más de lo normal, agrega una en el 15 y en el 25.</div></div>
+  <div class="rule"><div class="rt">Si algo falla, se ajusta — no se abandona</div><div class="rb">Un gel que se cae no arruina la carrera. Saltarse tres seguidos sí. <b>Espacía, no elimines.</b></div></div>
+</div>
+</section>
+
+<div class="note teal" style="margin-top:44px">
+  <div class="nt">Diana</div>
+  <p><b>El trabajo duro ya está hecho.</b> Los fondos, los intervalos, las madrugadas, las semanas de 64 kilómetros — todo eso ya está guardado en tus piernas y nadie te lo puede quitar. Lo que queda de aquí al domingo no es entrenar más: es comer bien, dormir e ir a cobrar lo que ya construiste.</p>
+  <p>Has sido una paciente enormemente disciplinada. Cumpliste con cada indicación, incluso con las incómodas, y eso se nota en cómo estás llegando a esta semana. <b>Confía en eso.</b></p>
+  <p>Esta semana bajaste los carbohidratos a propósito, así que si sientes las piernas pesadas o te sientes plana, es normal y está calculado. <b>El viernes y el sábado vamos a asegurar la gasolina para el domingo.</b></p>
+  <p>El domingo no vas a estrenar nada. Cada gel, cada sorbo y cada bocado de este documento ya los has hecho antes. Lo único distinto va a ser el paisaje — y la sensación de cruzar esa meta con la Ópera de fondo.</p>
+  <p><b>Ve tranquila, disfrútala y córrela con la cabeza fría. Vas a llegar fuerte.</b> 🏅</p>
+</div>
+
+<footer>
+  <div class="nm">Juan Sebastián Muñoz Ortiz</div>
+  <div>Nutricionista Deportivo · 317 549 9759 · @juanse_nutricionista</div>
+  <div style="margin-top:12px;font-size:.78rem">Documento complementario al plan de alimentación · Maratón de Sídney, 30 de agosto de 2026</div>
+</footer>
+
+</div>
+</body>
+</html>
