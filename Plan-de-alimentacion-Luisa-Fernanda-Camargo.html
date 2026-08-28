@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plan Nutricional · Luisa Fernanda Camargo · JSMO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#001F3D;
+  --navy-soft:#0A3763;
+  --cream:#EFE7DB;
+  --green:#2A7A4A;
+  --green-light:#E4F0E8;
+  --gold:#C9A84C;
+  --gold-light:#FBF3E1;
+  --card:#ffffff;
+  --muted:#5B6B78;
+  --border:#E2D9C9;
+  --shadow:0 4px 18px rgba(0,31,61,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Poppins',sans-serif;background:var(--cream);color:var(--navy);line-height:1.5;min-height:100vh;font-size:15px}
+.header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-soft) 100%);color:#fff;padding:2rem 1.25rem 1.6rem;text-align:center}
+.header-badge{display:inline-block;background:rgba(201,168,76,.18);border:1px solid var(--gold);color:var(--gold);border-radius:999px;padding:.25rem .9rem;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:.8rem}
+.header h1{font-size:1.8rem;font-weight:800;letter-spacing:-.01em}
+.header-sub{opacity:.85;font-size:.88rem;margin-top:.35rem;font-weight:500}
+.header-note{margin-top:1rem;font-size:.75rem;opacity:.65}
+.section-intro{padding:1.1rem 1rem 0}
+.intro-card{background:var(--card);border-radius:16px;padding:1.2rem 1.25rem;box-shadow:var(--shadow);border:1.5px solid var(--border)}
+.intro-greeting{font-size:1.05rem;font-weight:800;color:var(--navy);margin-bottom:.6rem}
+.intro-text{font-size:.85rem;color:var(--muted);line-height:1.65;margin-bottom:.6rem}
+.intro-text:last-child{margin-bottom:0}
+.intro-signoff{margin-top:.8rem;font-size:.8rem;color:var(--navy-soft);font-weight:600;font-style:italic}
+.objetivo-list{list-style:none;margin-top:.2rem}
+.objetivo-item{display:flex;gap:.6rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.83rem;color:var(--navy-soft);line-height:1.5}
+.objetivo-item:last-child{border-bottom:none}
+.objetivo-check{color:var(--green);font-weight:800;flex-shrink:0}
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.6rem;margin-top:.9rem}
+.comp-card{background:var(--cream);border-radius:12px;padding:.75rem .85rem;border:1px solid var(--border)}
+.comp-label{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy-soft);margin-bottom:.5rem}
+.comp-row{display:flex;align-items:center;justify-content:space-between;gap:.35rem}
+.comp-val{text-align:center;flex:1}
+.comp-val strong{display:block;font-size:1.1rem;font-weight:800;color:var(--navy)}
+.comp-val.ideal strong{color:var(--green)}
+.comp-val span{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.comp-arrow{color:var(--gold);font-size:1rem;font-weight:800;flex-shrink:0}
+.comp-source{font-size:.65rem;font-style:italic;color:var(--muted);margin-top:.7rem;display:block}
+.hydration-card{display:flex;flex-direction:column;gap:.7rem;align-items:center}
+.hydration-count{font-size:.85rem;color:var(--navy-soft);font-weight:700}
+.hydration-count strong{color:var(--green);font-size:1.15rem}
+.hydration-drops{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center}
+.drop{font-size:1.6rem;cursor:pointer;opacity:.22;transition:opacity .15s,transform .1s;user-select:none;-webkit-tap-highlight-color:transparent}
+.drop.filled{opacity:1}
+.drop:active{transform:scale(1.2)}
+.meal-check{width:26px;height:26px;min-width:26px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:transparent;cursor:pointer;flex-shrink:0;transition:all .15s;background:#fff}
+.meal-check.checked{background:var(--green);border-color:var(--green);color:#fff}
+.meal-card.done{opacity:.55}
+.meal-card.done .meal-title{text-decoration:line-through}
+.sticky-bar{position:sticky;top:0;z-index:40;background:var(--cream);padding:.75rem 1rem .5rem;border-bottom:1px solid var(--border)}
+.day-selector{display:flex;gap:.5rem;justify-content:center;max-width:520px;margin:0 auto;flex-wrap:wrap}
+.day-btn{flex:1;min-width:80px;padding:.55rem .4rem;border:2px solid var(--border);border-radius:10px;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .18s;background:#fff;color:var(--muted);text-align:center;font-family:inherit}
+.day-btn small{display:block;font-size:.63rem;font-weight:500;opacity:.75;margin-top:1px}
+.day-btn.active{color:#fff;border-color:transparent}
+.day-info-wrap{padding:.9rem 1rem 0}
+.day-info{border-radius:14px;padding:1rem 1.1rem;border:1.5px solid}
+.day-info-top{display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem}
+.day-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.day-info-title{font-size:1rem;font-weight:800}
+.day-info-desc{font-size:.8rem;color:var(--muted);margin-bottom:.75rem;line-height:1.45}
+.macro-row{display:flex;flex-wrap:wrap;gap:.45rem}
+.macro-chip{background:#fff;border-radius:9px;padding:.35rem .6rem;font-size:.76rem;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.macro-chip strong{display:block;font-size:.94rem;font-weight:800;line-height:1.1}
+.macro-chip span{color:var(--muted);font-size:.68rem}
+.ref-tag{font-size:.65rem;font-style:italic;color:var(--muted);margin-top:.5rem;display:block}
+.section{padding:1.1rem 1rem 0}
+.section-title{font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--navy-soft);margin-bottom:.7rem;padding-left:.1rem}
+.meal-card{background:var(--card);border-radius:16px;margin-bottom:.7rem;box-shadow:var(--shadow);overflow:hidden;border:1.5px solid var(--border)}
+.meal-header{display:flex;align-items:center;gap:.7rem;padding:.85rem 1rem;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+.meal-lbl{font-size:.6rem;font-weight:900;letter-spacing:.08em;padding:.22rem .55rem;border-radius:6px;color:#fff;flex-shrink:0;text-transform:uppercase}
+.meal-title-wrap{flex:1;min-width:0}
+.meal-title{font-size:.95rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meal-time{font-size:.74rem;color:var(--muted);margin-top:.05rem}
+.meal-tags{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.3rem}
+.tag{background:var(--cream);border:1px solid var(--border);color:var(--navy-soft);font-size:.65rem;font-weight:700;padding:.12rem .45rem;border-radius:999px}
+.meal-chevron{color:var(--muted);font-size:.9rem;transition:transform .2s;flex-shrink:0}
+.meal-chevron.open{transform:rotate(180deg)}
+.meal-body{display:none;padding:0 1rem 1rem}
+.meal-body.open{display:block}
+.meal-tip{background:var(--cream);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:.55rem .7rem;font-size:.77rem;color:var(--navy-soft);margin-bottom:.75rem;line-height:1.45}
+.opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:.45rem}
+@media(max-width:420px){.opt-grid{grid-template-columns:1fr}}
+.opt-card{border:1.5px solid var(--border);border-radius:12px;padding:.65rem .75rem;cursor:pointer;transition:all .15s;background:#fff}
+.opt-card:hover,.opt-card:focus{border-color:var(--green);background:var(--green-light);outline:none}
+.opt-card.selected{border-color:var(--green);background:var(--green-light)}
+.opt-num{font-size:.62rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.06em}
+.opt-name{font-size:.86rem;font-weight:700;color:var(--navy);margin-top:.1rem}
+.opt-desc{font-size:.74rem;color:var(--muted);margin-top:.18rem;line-height:1.4}
+.opt-macro{font-size:.7rem;color:var(--green);font-weight:700;margin-top:.35rem}
+.totals-bar{display:flex;gap:.5rem;flex-wrap:wrap;background:var(--navy);border-radius:14px;padding:.9rem 1rem;margin:.9rem 1rem 0;color:#fff}
+.totals-item{flex:1;min-width:70px;text-align:center}
+.totals-item strong{display:block;font-size:1.05rem;font-weight:800;color:var(--gold)}
+.totals-item span{font-size:.65rem;opacity:.75;text-transform:uppercase;letter-spacing:.05em}
+.special-card{background:var(--card);border-radius:16px;padding:1.1rem 1.1rem;margin-bottom:.75rem;box-shadow:var(--shadow);border:1.5px solid var(--border)}
+.special-card h3{font-size:.98rem;font-weight:800;color:var(--navy);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
+.supp-item{display:flex;gap:.75rem;align-items:flex-start;padding:.7rem 0;border-bottom:1px solid var(--border)}
+.supp-item:last-child{border-bottom:none}
+.supp-icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;background:var(--cream)}
+.supp-icon.critical{background:var(--gold-light)}
+.supp-body{flex:1;min-width:0}
+.supp-name{font-size:.9rem;font-weight:700}
+.supp-badge{display:inline-block;font-size:.6rem;font-weight:800;padding:.08rem .38rem;border-radius:4px;margin-left:.35rem;vertical-align:middle;background:var(--gold-light);color:#8a6d1f}
+.supp-dose{font-size:.78rem;color:var(--green);font-weight:700;margin-top:.15rem}
+.supp-note{font-size:.74rem;color:var(--muted);margin-top:.15rem;line-height:1.45}
+.nota-card{background:var(--gold-light);border:1.5px solid var(--gold);border-radius:12px;padding:.9rem 1rem;margin-bottom:.55rem}
+.nota-card.green{background:var(--green-light);border-color:var(--green)}
+.nota-card h4{font-size:.83rem;font-weight:800;margin-bottom:.35rem;color:var(--navy)}
+.nota-card p{font-size:.78rem;color:var(--muted);line-height:1.55}
+.footer{text-align:center;padding:2rem 1rem 1.5rem;color:var(--muted);font-size:.76rem;line-height:1.7}
+.footer strong{color:var(--navy)}
+.footer .brand{color:var(--gold);font-weight:800;letter-spacing:.04em}
+.allergy-alert{background:var(--navy);border-left:5px solid var(--gold);margin:0;padding:.85rem 1.1rem;display:flex;gap:.7rem;align-items:flex-start;color:#fff}
+.allergy-icon{font-size:1.2rem;flex-shrink:0}
+.allergy-body strong{display:block;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:.25rem}
+.allergy-list{font-size:.82rem;line-height:1.5;opacity:.95}
+.appointment-box{margin-top:1.1rem;display:inline-flex;align-items:center;gap:.9rem;background:rgba(255,255,255,.1);border-radius:14px;padding:.7rem 1.1rem;border:1px solid rgba(255,255,255,.2)}
+.appt-countdown{text-align:center}
+.appt-countdown strong{font-size:1.7rem;font-weight:900;color:var(--gold);display:block;line-height:1}
+.appt-countdown span{font-size:.62rem;opacity:.75;text-transform:uppercase;letter-spacing:.06em}
+.appt-info{text-align:left;font-size:.78rem;opacity:.9}
+.appt-info strong{display:block;font-size:.85rem;font-weight:700}
+.action-toolbar{display:flex;justify-content:center;gap:.6rem;padding:.9rem 1rem 0;flex-wrap:wrap}
+.action-btn{border:1.5px solid var(--navy);color:var(--navy);background:#fff;border-radius:10px;padding:.5rem 1rem;font-size:.78rem;font-weight:700;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;transition:all .15s}
+.action-btn:hover{background:var(--navy);color:#fff}
+.shopping-cat{margin-bottom:.9rem}
+.shopping-cat:last-child{margin-bottom:0}
+.shopping-cat-title{font-size:.72rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem}
+.shopping-list{list-style:none}
+.shopping-item{display:flex;align-items:center;gap:.6rem;padding:.4rem 0;border-bottom:1px solid var(--border);font-size:.83rem;color:var(--navy-soft);cursor:pointer;user-select:none}
+.shopping-item:last-child{border-bottom:none}
+.shopping-check{width:20px;height:20px;min-width:20px;border-radius:6px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.68rem;color:transparent;transition:all .15s}
+.shopping-check.checked{background:var(--green);border-color:var(--green);color:#fff}
+.shopping-item.checked span.label{text-decoration:line-through;opacity:.55}
+.whatsapp-card{background:linear-gradient(135deg,var(--green) 0%,#1E5C38 100%);border-radius:16px;padding:1.3rem 1.2rem;text-align:center;color:#fff;box-shadow:var(--shadow)}
+.whatsapp-card p{font-size:.85rem;opacity:.95;margin-bottom:.9rem;line-height:1.5}
+.whatsapp-btn{display:inline-flex;align-items:center;gap:.5rem;background:#fff;color:var(--green);font-weight:800;font-size:.85rem;padding:.65rem 1.3rem;border-radius:999px;text-decoration:none}
+@media print{
+  .sticky-bar{position:static}
+  .action-toolbar, .meal-check, .drop, .shopping-check{display:none!important}
+  .meal-body{display:block!important}
+  .meal-chevron{display:none}
+  .meal-card{break-inside:avoid}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">Plan Nutricional Deportivo</div>
+  <h1 id="patientName">Luisa Fernanda Camargo</h1>
+  <div class="header-sub" id="patientSub">Colon Irritable · FODMAP Baja Fase 1 · Pérdida de Grasa</div>
+  <div class="header-note" id="patientNote"></div>
+  <div id="appointmentBox"></div>
+</div>
+
+<div id="allergyAlert" style="display:none"></div>
+
+<div class="action-toolbar">
+  <button class="action-btn" onclick="window.print()">🖨️ Exportar / Imprimir PDF</button>
+</div>
+
+<div class="section-intro" id="introSectionWrap" style="display:none">
+  <div class="intro-card" id="introCard"></div>
+</div>
+
+<div class="section" id="objectivesSectionWrap" style="display:none">
+  <div class="section-title">🎯 Objetivos y Composición Corporal</div>
+  <div class="special-card" id="objectivesCard"></div>
+</div>
+
+<div class="section" id="hydrationSectionWrap" style="display:none">
+  <div class="section-title">💧 Hidratación de Hoy</div>
+  <div class="special-card hydration-card">
+    <div class="hydration-count"><strong id="hydrationCount">0</strong> / <span id="hydrationGoalLbl"></span> vasos</div>
+    <div class="hydration-drops" id="hydrationDrops"></div>
+  </div>
+</div>
+
+<div class="sticky-bar">
+  <div class="day-selector" id="daySelector"></div>
+</div>
+
+<div class="day-info-wrap" id="dayInfoWrap"></div>
+
+<div class="section">
+  <div class="section-title">Plan de Alimentación · 4 Opciones por Tiempo de Comida</div>
+  <div id="meals-container"></div>
+</div>
+
+<div class="section" id="suppSection" style="display:none">
+  <div class="section-title">💊 Suplementación</div>
+  <div class="special-card" id="suppContainer"></div>
+</div>
+
+<div class="section" id="notesSection" style="display:none">
+  <div class="section-title">📝 Notas Clínicas</div>
+  <div id="notesContainer"></div>
+</div>
+
+<div class="section" id="shoppingSection" style="display:none">
+  <div class="section-title">🛒 Lista de Mercado Semanal</div>
+  <div class="special-card" id="shoppingContainer"></div>
+</div>
+
+<div class="section" id="whatsappSection" style="display:none;padding-bottom:1rem">
+  <div class="whatsapp-card">
+    <p>¿Dudas sobre tu plan? Escríbeme directo.</p>
+    <a class="whatsapp-btn" id="whatsappBtn" href="#" target="_blank" rel="noopener">💬 Escribir por WhatsApp</a>
+  </div>
+</div>
+
+<div class="footer">
+  Elaborado por <strong>Juan Sebastián Muñoz Ortiz</strong><br>
+  <span class="brand">JSMO Nutricionista Deportivo</span><br>
+  📱 317 549 9759 · @juansenutricionista
+</div>
+
+<script>
+/* 1) DATOS DEL PACIENTE */
+document.getElementById('patientName').textContent = "Luisa Fernanda Camargo";
+document.getElementById('patientSub').textContent = "Colon Irritable · FODMAP Baja Fase 1 · Pérdida de Grasa";
+document.getElementById('patientNote').textContent = "";
+document.title = 'Plan Nutricional · Luisa Fernanda Camargo · JSMO';
+
+/* 2) ALERGIAS Y RESTRICCIONES */
+const ALLERGIES = ["Nunca juntar yogurt con frutos rojos: esa mezcla puntual sí te da reacción", "Sin cebolla ni ajo en ninguna preparación — el sabor va con hierbas y con la parte verde del cebollín", "Sin café ni cítricos, por la gastritis", "Sin salmón, que me dijiste que te cae pesado", "Sin zucchini, que te sabe a mata", "Todo va caliente, como me dijiste que te gusta: no hay ensaladas frías ni fiambres"];
+
+/* 3) INTRODUCCIÓN / SALUDO */
+const PATIENT_INTRO = {"greeting": "¡Hola, Luisa Fernanda!", "paragraphs": ["Soy Juan Sebastián Muñoz O., tu nutricionista deportivo. Empiezo por lo que más me interesa que sepas: la lista de alimentos que tú misma identificaste como los que te inflaman es, sin que lo supieras, casi exactamente la lista de un grupo de carbohidratos que se llaman FODMAP. Las legumbres, la cebolla, el ajo, el maíz tierno, los lácteos y —este me pareció brillante que lo notaras— las gomitas. Ningún otro cuadro produce esa combinación. No estás inflamándote por comer mucho ni por comer mal: te estás inflamando por un grupo específico de carbohidratos que tu intestino no absorbe bien.", "Lo segundo, y te lo digo de frente porque te lo mereces. Llevas cerca de dos años comiendo alrededor de 1.400 calorías. Tu cuerpo gasta bastante más que eso, y cuando alguien pasa dos años comiendo por debajo de su gasto, el organismo se adapta bajando el suyo. Por eso puedes estar midiendo cada gramo en Fitia y aun así no ver cambios. Este plan te va a pedir algo que va a sonar contradictorio: comer más para bajar grasa. Y lo vamos a hacer despacio, subiendo por semanas, para que tanto tu cabeza como tu intestino se acostumbren.", "Y lo tercero. Este plan tiene dos fases. La primera son entre cuatro y seis semanas quitando esos carbohidratos, no para siempre, sino para que el intestino se calme y podamos ver quién es el culpable de verdad. La segunda es devolverlos uno por uno para saber cuáles sí puedes comer y en qué cantidad. Quiero que sepas desde hoy que la meta no es que comas menos cosas: es que sepas exactamente cuáles son las tuyas."], "signoff": "Esto tiene fecha de vencimiento. La fase 1 no es tu dieta de por vida."};
+
+/* 4) OBJETIVOS Y COMPOSICIÓN CORPORAL (ISAK pendiente) */
+const OBJECTIVES = ["Calmar la inflamación con cuatro a seis semanas sin los carbohidratos que te disparan.", "Identificar en la fase 2 cuáles sí puedes comer, para dejar de eliminar a ciegas.", "Subir tus calorías de forma escalonada para salir del estancamiento de dos años.", "Bajar el perímetro de cintura, que hoy es tu único indicador fuera de rango.", "Llenar el hueco de las cinco de la tarde, de donde salen la chocolatina y las galletas.", "Dejar de depender del medicamento para la inflamación."];
+const BODY_COMP = [{"label": "Perímetro de cintura", "current": "97 cm", "ideal": "En descenso — es tu métrica principal por ahora"}, {"label": "Índice cintura-talla", "current": "0,58 — por encima del rango deseable", "ideal": "Bajar de 0,50 (unos 84 cm de cintura)"}, {"label": "Relación cintura-cadera", "current": "0,84", "ideal": "Bajar de 0,85 — ya estás en el borde"}, {"label": "Peso corporal", "current": "74,8 kg", "ideal": "En descenso lento y sostenido"}, {"label": "Distensión abdominal", "current": "Diaria", "ideal": "Que baje a ocasional en 4-6 semanas"}, {"label": "Calorías diarias", "current": "~1.400 kcal", "ideal": "Subir a 1.850 de forma escalonada"}];
+
+/* 5) META DE HIDRATACIÓN */
+const HYDRATION_GOAL = 8;
+
+/* 6) PRÓXIMA CITA */
+const NEXT_APPOINTMENT = {"date": "2026-09-30", "label": "Control — inicio de la fase 2"};
+
+/* 7) TIPOS DE DÍA */
+const DAY_TYPES = [{"key": "alta", "label": "🍽️ Fase 1 · Eliminación", "days": "Semanas 1 a 5", "icon": "🌱", "color": "navy", "title": "🌱 Fase 1 · Cuatro a seis semanas", "desc": "Cinco tiempos sin los carbohidratos que te inflaman. Las calorías suben por semanas: 1.550 la primera, 1.700 la segunda, y 1.850 de la tercera en adelante. Todo caliente.", "kcal": "~1.850 kcal", "cho": "~193 g", "choPerKg": "2,6 g/kg", "pro": "~135 g (1,8 g/kg)", "fat": "~60 g (0,8 g/kg)", "ref": "FODMAP baja fase 1 · Déficit moderado"}];
+
+/* 8) TIEMPOS DE COMIDA */
+const MEALS = [{"id": "desayuno", "alta": {"lbl": "Desayuno", "title": "Desayuno", "time": "5:30 am, antes de salir", "tags": ["Caliente", "Acá va tu chía"], "tip": "Me dijiste que la chía te gusta pero solo en la mañana, así que quedó acá. Y todas van calientes, como las prefieres. La avena está en una sola opción a propósito: te sirve, pero si la repites dos días seguidos te infla.", "opts": [{"name": "Avena caliente con banano y chía", "desc": "½ taza de avena en hojuelas cocida en agua · ½ banano en rodajas · 1 cda de chía · canela · 2 huevos cocidos aparte"}, {"name": "Huevos a la plancha con papa y tomate", "desc": "2 huevos a la plancha sin aceite · 2 tajadas de pan sin gluten tostado · 1 tomate mediano en rodajas, salteado · 1 taza de papaya"}, {"name": "Galletas de arroz con huevo revuelto", "desc": "2 galletas de arroz · 2 huevos revueltos con tomate y cebollín (solo la parte verde) · 1 taza de fresas"}, {"name": "Caldo de pollo con papa y huevo", "desc": "1 taza de caldo casero sin cebolla ni ajo · 100 g de pechuga de pollo cocida y desmechada adentro · ½ papa pastusa · 1 huevo cocido"}]}, "media": null, "baja": null, "competencia": null}, {"id": "am", "alta": {"lbl": "Media mañana", "title": "Media Mañana", "time": "9:30 am, en la oficina", "tags": ["Portátil", "Reemplaza las Chokis"], "tip": "Este tiempo ya lo tienes, solo le cambio el contenido: hoy es manzana con Chokis. Un aviso que te va a sorprender — la manzana es de las frutas más altas en estos carbohidratos, así que sale en la fase 1 y vuelve en la fase 2. Y todas estas llevan proteína, porque una fruta sola te deja con hambre a las once.", "opts": [{"name": "Huevos cocidos con fruta", "desc": "2 huevos cocidos · 1 taza de piña picada"}, {"name": "Queso cuajada con banano", "desc": "2 tajadas de queso cuajada · 1 banano no muy maduro"}, {"name": "Atún con galletas de arroz", "desc": "1 lata de atún en agua escurrido, sin limón · 3 galletas de arroz"}, {"name": "Batido de proteína con papaya", "desc": "1 scoop de proteína aislada sin lactosa en agua · 1 taza de papaya picada"}]}, "media": null, "baja": null, "competencia": null}, {"id": "almuerzo", "alta": {"lbl": "Almuerzo", "title": "Almuerzo", "time": "1:00 pm, llevado en termo", "tags": ["Caliente", "Sin cebolla ni ajo"], "tip": "La pasta se queda, y quiero que sepas por qué: lo que te inflamaba no era la pasta ni los champiñones, era la cebolla y el ajo de la salsa. Sin ellos la puedes comer tranquila. Para el sabor usa aceite de oliva, orégano, tomillo, romero y la parte verde del cebollín, que esa no te hace nada.", "opts": [{"name": "Pasta de arroz con pollo y champiñones", "desc": "1 taza de pasta de arroz ya cocida · 120 g de pechuga de pollo a la plancha · champiñones salteados con aceite de oliva y orégano · 1 cda de queso parmesano · ensalada tibia de espinaca y tomate cherry"}, {"name": "Carne en bistec con arroz y maduro", "desc": "120 g de carne de res en bistec · ½ maduro al airfryer · espinaca salteada con fresas en láminas · tomate en rodajas"}, {"name": "Quinoa con pollo y pimentón", "desc": "1 taza de quinoa ya cocida · 120 g de pechuga de pollo a la plancha · pimentón rojo y tomate salteados (el rojo es el que te sirve, el verde no) · ⅛ de aguacate"}, {"name": "Mojarra con papa y brócoli", "desc": "Filete de mojarra o basa al airfryer (150 g) · 1 papa pastusa mediana cocida · floretes de brócoli al vapor, sin los tallos, con aceite de oliva"}]}, "media": null, "baja": null, "competencia": null}, {"id": "pm", "alta": {"lbl": "Media tarde", "title": "Media Tarde", "time": "5:00 pm, al salir de la oficina", "tags": ["Es el tiempo nuevo", "Portátil"], "tip": "Este es el cambio más importante del plan. Hoy pasas de la 1 de la tarde a las 9 de la noche sin comer, ocho horas, y me dijiste que no tienes tiempo. Estas cuatro se comen en dos minutos caminando a la patineta. No es un antojo: es la comida que evita que a las nueve llegues a arrasar, y es de donde sale la chocolatina de las cuatro.", "opts": [{"name": "Galletas Saltinas con fruta", "desc": "1 paquete de galletas Saltinas Sanissimas · 2 tajadas de queso cuajada · 1 tajada de piña"}, {"name": "Fruta con palito de queso", "desc": "1 taza de uvas verdes · 1 palito de queso bajo en grasa Vital Latti"}, {"name": "Batido de proteína", "desc": "1 scoop de proteína aislada sin lactosa en agua"}, {"name": "Batido con chocolate oscuro y fresas", "desc": "1 scoop de proteína aislada sin lactosa en agua · 2 cuadritos de chocolate oscuro del 70% o más · 1 taza de fresas"}]}, "media": null, "baja": null, "competencia": null}, {"id": "cena", "alta": {"lbl": "Cena", "title": "Cena", "time": "8:30 pm, al llegar del gimnasio", "tags": ["Caliente", "Ligera"], "tip": "Cena caliente y con proteína, que es lo que el músculo pide después de entrenar. Van más ligeras que el almuerzo a propósito: te acuestas entre nueve y diez, y un intestino irritable duerme mejor sin una comida pesada encima.", "opts": [{"name": "Crema de ahuyama con pollo", "desc": "1 taza de crema de ahuyama licuada con zanahoria, sin cebolla · 120 g de pechuga de pollo cocida y desmechada adentro · 1 tajada de pan de masa madre tostada en plancha"}, {"name": "Tortilla de huevo con papa", "desc": "Tortilla de 3 huevos con tomate y cebollín (solo la parte verde) · 4 papas amarillas medianas al airfryer · espinaca salteada con aceite de oliva"}, {"name": "Crema de tomate con carne", "desc": "1 taza de crema de tomate casera, sin cebolla ni ajo · 100 g de carne de res desmechada adentro · ½ taza de quinoa cocida adentro"}, {"name": "Arepa de arroz con atún caliente", "desc": "1 arepa de arroz asada · 1 lata de atún en agua escurrido, salteado con tomate y cebollín (solo la parte verde) · ⅛ de aguacate"}]}, "media": null, "baja": null, "competencia": null}];
+
+/* 9) SUPLEMENTACIÓN */
+const SUPPLEMENTS = [{"icon": "🦠", "critical": true, "name": "Probiótico", "badge": "Iniciar", "dose": "1 al día, en ayunas o antes de dormir", "note": "Nunca has tomado uno y en tu caso vale la pena. Busca uno que incluya Bifidobacterium, que es la que más respaldo tiene en colon irritable. Dale mínimo cuatro semanas antes de juzgarlo: los probióticos no funcionan en tres días. Importante: si al empezarlo sientes más gas la primera semana, es esperable y se pasa — no lo suspendas por eso."}, {"icon": "🥤", "critical": true, "name": "Proteína aislada SIN lactosa", "badge": "Iniciar", "dose": "1 scoop en agua", "note": "Con 135 gramos de proteína al día como objetivo, sin lácteos en la fase 1 y comiendo por fuera, llegar solo con comida es muy difícil. Tiene que ser AISLADA o vegetal, nunca concentrada: la concentrada trae lactosa y ahí sí te iría mal. En agua, no en leche."}, {"icon": "☀️", "critical": false, "name": "Vitamina D", "badge": "Medir", "dose": "Según laboratorio", "note": "Pídela en el próximo laboratorio. Trabajas en oficina todo el día y entrenas de noche, así que prácticamente no te da sol. Y hay algo más: en colon irritable la absorción de varios micronutrientes puede estar comprometida, así que vale la pena mirarla junto con hierro y B12."}, {"icon": "💊", "critical": false, "name": "Tu medicamento para la inflamación", "badge": "No lo suspendas", "dose": "Como te lo formuló tu médico", "note": "Sigue tomándolo exactamente como te lo mandaron. No lo cambies ni lo suspendas por tu cuenta, ni siquiera si empiezas a sentirte mejor en dos semanas. La idea es que en el control veamos si ya puedes hablar con tu médico de bajarlo, pero esa decisión es de él, con datos y no con sensaciones."}];
+
+/* 10) NOTAS CLÍNICAS */
+const NOTES = [{"type": "green", "title": "🧩 Tu lista de alimentos era el diagnóstico", "text": "Quiero que veas lo que hiciste sin saberlo. Me contaste que te inflaman las lentejas, los garbanzos, los fríjoles, el maíz tierno, la cebolla, el ajo, los lácteos y —esta es la que más me llamó la atención— más de tres gomitas. Esa combinación no es casual: son todos FODMAP, un grupo de carbohidratos que el intestino delgado no absorbe bien y que terminan fermentando en el colon, produciendo gas y distensión. Las legumbres son un tipo, la cebolla y el ajo son otro, los lácteos otro, y las gomitas otro más. Que tú hayas identificado uno de cada grupo, sola y a punta de observación, es bastante notable. No estabas inflamándote por comer mal. Estabas comiendo, sin saberlo, de los cuatro grupos."}, {"type": "", "title": "📅 Esto tiene dos fases y fecha de vencimiento", "text": "Quiero ser muy claro en esto porque es lo que más me importa que entiendas. La fase 1 son cuatro a seis semanas quitando estos carbohidratos, y su único objetivo es bajarle el ruido al intestino para que podamos escuchar bien. La fase 2, que empezamos en el control, es devolverlos de a un grupo por vez, esperando unos días entre cada uno, para ver cuál te cae mal de verdad y en qué cantidad. Muchas personas descubren que toleran perfectamente tres de los cuatro grupos y que el problema era solo uno. Esta lista de hoy NO es tu dieta de por vida, y si alguien te dice que sí, se equivoca. Quedarse en fase 1 indefinidamente le hace daño a la flora intestinal."}, {"type": "green", "title": "🍝 Tu pasta se queda, y te explico por qué", "text": "Me dijiste que te encanta la pasta, que la boloñesa te mata y que la de champiñones es tu favorita pero te inflama. Buena noticia: el problema nunca fue la pasta ni los champiñones. Era la cebolla y el ajo de la salsa, que son de los alimentos más altos en estos carbohidratos que existen. Sin ellos puedes comer pasta tranquila. Para que no te sepa a nada, usa aceite de oliva, orégano, tomillo, romero, albahaca y la parte verde del cebollín — esa parte no te hace nada, la blanca sí. En la fase 1 la pasta va de arroz; el trigo lo probamos en la fase 2 y es muy posible que lo toleres."}, {"type": "", "title": "🍎 La manzana y el aguacate", "text": "Dos cosas que estás comiendo a diario creyendo que no te hacen nada. La manzana es de las frutas más altas en estos carbohidratos, y tú te comes una manzana roja todos los días en la media mañana. Y el aguacate, en porción normal, también — por eso en la fase 1 lo vas a ver siempre en cantidades pequeñas, un octavo de aguacate. Las dos vuelven en la fase 2 y es muy posible que las toleres bien; solo necesitamos sacarlas ahora para que el intestino descanse. Las frutas que sí puedes sin problema: banano no muy maduro, fresa, piña, papaya, uvas y kiwi."}, {"type": "green", "title": "🔄 No repitas dos días seguidos", "text": "Me dijiste algo muy fino y quiero que lo tengamos como regla: que la espinaca, el brócoli y el pimentón te caen bien, pero que si los repites dos días seguidos te inflamas horrible. Y en cambio los champiñones sí los toleras seguido. Eso me dice que en tu caso no solo importa cuál alimento comes, sino cuánto se te va acumulando. Por eso el plan tiene cuatro opciones distintas en cada tiempo: no es para darte variedad bonita, es parte del tratamiento. Rota. Y tus champiñones se quedan, porque tú los toleras y eso manda sobre cualquier lista. Dos precisiones que te van a servir: del brócoli come solo los floretes, nunca los tallos, porque el tallo sí te va a caer mal; y del pimentón usa el rojo, que el verde no te sirve igual."}, {"type": "", "title": "📊 Vas a comer más para bajar grasa", "text": "Esto va a sonarte al revés y quiero explicártelo bien. Llevas desde 2024 comiendo alrededor de 1.400 calorías, primero por el reto y después porque se te volvió costumbre. Tu cuerpo gasta bastante más que eso. Cuando alguien pasa años comiendo por debajo de su gasto, el organismo se defiende bajando el suyo: menos energía, menos movimiento espontáneo, el metabolismo más lento. Por eso puedes estar midiendo cada gramo en Fitia y no ver cambios. Lo que vamos a hacer es subirte a 1.850, que sigue estando por debajo de tu gasto, pero muy por encima de lo que comes hoy. Y lo subimos por escalones: 1.550 la primera semana, 1.700 la segunda, 1.850 de la tercera en adelante. Anótalo así en Fitia para que te cuadre."}, {"type": "", "title": "⏰ Las ocho horas sin comer", "text": "Tú misma me lo dijiste: tienes un ayuno desde la 1 de la tarde hasta las 9 de la noche, porque no tienes tiempo para la media tarde. Y en el mismo recordatorio me contaste que en la media mañana te comes unas Chokis y en la tarde una chocolatina burbuja. Esas dos cosas están conectadas. Ocho horas sin comer, con estrés alto y trabajo nuevo, es una receta para que el cerebro pida azúcar rápido. Por eso tienes un tiempo a las 5 de la tarde, justo cuando sales, y las cuatro opciones se comen en dos minutos caminando. Una de ellas es chocolate oscuro, porque las ganas de dulce son reales y prefiero que estén dentro del plan."}, {"type": "green", "title": "🧠 El estrés y tu intestino sí están conectados", "text": "Me dijiste que cambiaste de empresa hace dos semanas y que el estrés está elevadísimo. Eso importa acá más de lo que parece: el intestino y el cerebro están conectados por vías nerviosas directas, y en el colon irritable el estrés no es un factor secundario, es uno de los principales. Te lo digo por dos razones. La primera, para que sepas que si en estas semanas sientes que la inflamación no cede tan rápido como esperabas, puede ser eso y no que el plan esté fallando. La segunda, para reconocerte que arrancar un cambio alimentario en la tercera semana de un trabajo nuevo tiene mérito. Si en algún momento se vuelve demasiado, dímelo y ajustamos el ritmo."}, {"type": "", "title": "📏 Sobre tu cintura", "text": "Quiero ser honesto contigo con este dato. Tu perímetro de cintura está en 97 cm, y al dividirlo por tu estatura da 0,58. El rango deseable es por debajo de 0,50. Ese es el único indicador tuyo que está fuera de rango, y es justamente el que mejor se relaciona con el riesgo metabólico a largo plazo. No te lo digo para asustarte: te lo digo porque es la métrica que vamos a seguir y porque responde bien y rápido cuando las cosas se hacen bien. Mídete la cintura una vez al mes, en ayunas, a la altura del ombligo y sin apretar. Ese número me dice más que la báscula."}, {"type": "", "title": "🌡️ Todo caliente, y el termo", "text": "Me dijiste que las comidas frías no te pasan y que prefieres todo caliente. Lo respeté completo: en este plan no vas a encontrar una sola ensalada fría ni una lonchera tipo fiambre, que es lo que normalmente le mandaría a alguien con tu horario. Todo va caliente. Eso significa que necesitas un buen termo de comida, de los que mantienen la temperatura cuatro o cinco horas. Es la única inversión que te pido para este plan, y sin ella no funciona."}, {"type": "green", "title": "🦵 Tu rodilla", "text": "Me contaste que se te está inflamando y doliendo la rodilla, y que crees que puede ser por el trayecto en patineta. Puede ser, y también puede influir el peso. No es mi campo, así que no te voy a dar un diagnóstico, pero sí quiero que lo revises con un fisioterapeuta o un ortopedista antes de que se vuelva algo que te saque del gimnasio. Mientras tanto, en el gimnasio prioriza lo que no le cargue: bicicleta estática, elíptica y trabajo de fuerza sentada o acostada. Y tu bicicleta de los domingos está perfecta, esa no le hace daño."}, {"type": "", "title": "🍕 La pizza y el helado", "text": "Me dijiste que comes pizza unas tres o cuatro veces al mes y que los fines de semana te gusta el helado de Crepes. En la fase 1 los dos van a caerte mal, y es mejor que lo sepas de antemano: la pizza por el trigo y por la cebolla y el ajo de la salsa, y el helado por la lactosa. No te los prohíbo, pero sí te pido que en estas cuatro a seis semanas los espacies lo más que puedas, porque cada episodio de inflamación nos borra la información que estamos tratando de recoger. En la fase 2 miramos cuál de los dos toleras y en qué cantidad. Y ojo con algo: es muy probable que la pizza sí puedas volver a comerla, solo que en versión sin cebolla."}];
+
+/* 11) WHATSAPP */
+const WHATSAPP_NUMBER = "";
+
+/* 12) PALABRAS CLAVE LISTA DE MERCADO */
+const SHOPPING_KEYWORDS = [{"match": "huevo", "label": "Huevos", "category": "Proteínas"}, {"match": "pollo", "label": "Pechuga/pollo", "category": "Proteínas"}, {"match": "carne", "label": "Carne de res magra", "category": "Proteínas"}, {"match": "pescado", "label": "Pescado (filete)", "category": "Proteínas"}, {"match": "salmón", "label": "Salmón", "category": "Proteínas"}, {"match": "tilapia", "label": "Tilapia", "category": "Proteínas"}, {"match": "atún", "label": "Atún en agua", "category": "Proteínas"}, {"match": "jamón de pavo zenú", "label": "Jamón de pavo Zenú", "category": "Proteínas"}, {"match": "proteína", "label": "Proteína en polvo", "category": "Proteínas"}, {"match": "tofu", "label": "Tofu", "category": "Proteínas"}, {"match": "lentejas", "label": "Lentejas", "category": "Proteínas"}, {"match": "garbanzos", "label": "Garbanzos", "category": "Proteínas"}, {"match": "hummus", "label": "Hummus casero (garbanzos)", "category": "Proteínas"}, {"match": "edamame", "label": "Edamame", "category": "Proteínas"}, {"match": "crema de maní", "label": "Crema de maní", "category": "Proteínas"}, {"match": "gelatina sin azúcar", "label": "Gelatina sin azúcar", "category": "Proteínas"}, {"match": "fríjoles", "label": "Fríjoles", "category": "Proteínas"}, {"match": "blanquillos", "label": "Fríjoles blanquillos", "category": "Proteínas"}, {"match": "yogurt griego alpina", "label": "Yogurt griego Alpina", "category": "Lácteos"}, {"match": "yogurt griego san martín", "label": "Yogurt griego San Martín", "category": "Lácteos"}, {"match": "kéfir", "label": "Kéfir", "category": "Lácteos"}, {"match": "queso colanta", "label": "Queso Colanta", "category": "Lácteos"}, {"match": "queso cuajada", "label": "Queso cuajada", "category": "Lácteos"}, {"match": "queso campesino", "label": "Queso campesino", "category": "Lácteos"}, {"match": "queso mozzarella", "label": "Queso mozzarella", "category": "Lácteos"}, {"match": "leche alquería", "label": "Leche Alquería", "category": "Lácteos"}, {"match": "leche deslactosada", "label": "Leche deslactosada", "category": "Lácteos"}, {"match": "arepa alquería", "label": "Arepa Alquería (maíz tipo tela)", "category": "Carbohidratos"}, {"match": "avena quaker", "label": "Avena Quaker", "category": "Carbohidratos"}, {"match": "pan bimbo fit", "label": "Pan Bimbo Fit", "category": "Carbohidratos"}, {"match": "pan de masa madre", "label": "Pan de masa madre (Molino)", "category": "Carbohidratos"}, {"match": "granola tosh", "label": "Granola Tosh", "category": "Carbohidratos"}, {"match": "arroz", "label": "Arroz", "category": "Carbohidratos"}, {"match": "papa", "label": "Papa", "category": "Carbohidratos"}, {"match": "yuca", "label": "Yuca", "category": "Carbohidratos"}, {"match": "pasta", "label": "Pasta", "category": "Carbohidratos"}, {"match": "plátano", "label": "Plátano maduro", "category": "Carbohidratos"}, {"match": "quinoa", "label": "Quinoa", "category": "Carbohidratos"}, {"match": "banano", "label": "Banano", "category": "Frutas y Verduras"}, {"match": "aguacate", "label": "Aguacate", "category": "Frutas y Verduras"}, {"match": "ensalada", "label": "Mix de ensalada / lechuga", "category": "Frutas y Verduras"}, {"match": "tomate", "label": "Tomate", "category": "Frutas y Verduras"}, {"match": "espinaca", "label": "Espinaca", "category": "Frutas y Verduras"}, {"match": "champiñones", "label": "Champiñones", "category": "Frutas y Verduras"}, {"match": "fresa", "label": "Fresas", "category": "Frutas y Verduras"}, {"match": "pepino", "label": "Pepino", "category": "Frutas y Verduras"}, {"match": "zanahoria", "label": "Zanahoria", "category": "Frutas y Verduras"}, {"match": "miel", "label": "Miel", "category": "Otros"}, {"match": "mermelada", "label": "Mermelada sin azúcar", "category": "Otros"}, {"match": "almendras", "label": "Almendras", "category": "Otros"}, {"match": "nueces", "label": "Nueces", "category": "Otros"}, {"match": "creatina", "label": "Creatina", "category": "Suplementos"}, {"match": "yogurt griego yen", "label": "Yogurt griego YEN", "category": "Lácteos"}, {"match": "granola yen", "label": "Granola YEN", "category": "Carbohidratos"}, {"match": "arepa de yuca yen", "label": "Arepa de yuca YEN", "category": "Carbohidratos"}, {"match": "arepa de maduro yen", "label": "Arepa de maduro YEN", "category": "Carbohidratos"}, {"match": "arepa de arroz integral yen", "label": "Arepa de arroz integral YEN", "category": "Carbohidratos"}, {"match": "arepa de pan de bono yen", "label": "Arepa de pan de bono YEN", "category": "Carbohidratos"}, {"match": "arepa de maíz yen", "label": "Arepa de maíz YEN", "category": "Carbohidratos"}, {"match": "avena", "label": "Avena en hojuelas", "category": "Carbohidratos"}, {"match": "arepa de arroz", "label": "Arepa de arroz", "category": "Carbohidratos"}, {"match": "pasta de arroz", "label": "Pasta de arroz (sin gluten)", "category": "Carbohidratos"}, {"match": "arroz blanco", "label": "Arroz blanco", "category": "Carbohidratos"}, {"match": "quinoa", "label": "Quinoa", "category": "Carbohidratos"}, {"match": "papa", "label": "Papa pastusa", "category": "Carbohidratos"}, {"match": "maduro", "label": "Plátano maduro", "category": "Carbohidratos"}, {"match": "galletas de arroz", "label": "Galletas de arroz", "category": "Carbohidratos"}, {"match": "pan sin gluten", "label": "Pan sin gluten", "category": "Carbohidratos"}, {"match": "pollo", "label": "Pechuga de pollo", "category": "Proteínas"}, {"match": "carne de res", "label": "Carne de res (bistec y para desmechar)", "category": "Proteínas"}, {"match": "mojarra", "label": "Mojarra o basa", "category": "Proteínas"}, {"match": "atún", "label": "Atún en agua", "category": "Proteínas"}, {"match": "huevos", "label": "Huevos", "category": "Proteínas"}, {"match": "proteína aislada", "label": "Proteína aislada sin lactosa", "category": "Proteínas"}, {"match": "queso cuajada", "label": "Queso cuajada", "category": "Lácteos"}, {"match": "parmesano", "label": "Queso parmesano", "category": "Lácteos"}, {"match": "aceite de oliva", "label": "Aceite de oliva", "category": "Otros"}, {"match": "orégano", "label": "Orégano, tomillo y romero", "category": "Otros"}, {"match": "chía", "label": "Semillas de chía", "category": "Otros"}, {"match": "chocolate oscuro", "label": "Chocolate oscuro 70% o más", "category": "Otros"}, {"match": "canela", "label": "Canela", "category": "Otros"}, {"match": "probiótico", "label": "Probiótico con Bifidobacterium", "category": "Otros"}, {"match": "banano", "label": "Banano (no muy maduro)", "category": "Frutas y Verduras"}, {"match": "fresas", "label": "Fresas", "category": "Frutas y Verduras"}, {"match": "piña", "label": "Piña", "category": "Frutas y Verduras"}, {"match": "papaya", "label": "Papaya", "category": "Frutas y Verduras"}, {"match": "uvas", "label": "Uvas verdes", "category": "Frutas y Verduras"}, {"match": "champiñones", "label": "Champiñones", "category": "Frutas y Verduras"}, {"match": "espinaca", "label": "Espinaca", "category": "Frutas y Verduras"}, {"match": "brócoli", "label": "Brócoli", "category": "Frutas y Verduras"}, {"match": "pimentón", "label": "Pimentón rojo", "category": "Frutas y Verduras"}, {"match": "ahuyama", "label": "Ahuyama", "category": "Frutas y Verduras"}, {"match": "zanahoria", "label": "Zanahoria", "category": "Frutas y Verduras"}, {"match": "tomate", "label": "Tomate", "category": "Frutas y Verduras"}, {"match": "cebollín", "label": "Cebollín (solo la parte verde)", "category": "Frutas y Verduras"}, {"match": "aguacate", "label": "Aguacate", "category": "Frutas y Verduras"}];
+
+/* ═══════════════════════════════════════════════════════════════════════
+   MOTOR — NO EDITAR DE AQUÍ EN ADELANTE
+   ═══════════════════════════════════════════════════════════════════════ */
+const COLOR_MAP = { gold:'var(--gold)', green:'var(--green)', navy:'var(--navy)' };
+const COLOR_LIGHT_MAP = { gold:'var(--gold-light)', green:'var(--green-light)', navy:'var(--cream)' };
+
+const LS_PREFIX = 'jsmo_' + (document.getElementById('patientName').textContent || 'plan').replace(/\s+/g,'_');
+let day = localStorage.getItem(LS_PREFIX+'_day') || DAY_TYPES[0].key;
+let savedOpts = JSON.parse(localStorage.getItem(LS_PREFIX+'_opts') || '{}');
+
+function todayKey(){ return new Date().toISOString().slice(0,10); }
+let checkedMeals = JSON.parse(localStorage.getItem(LS_PREFIX+'_checked_'+todayKey()) || '{}');
+let hydrationCount = parseInt(localStorage.getItem(LS_PREFIX+'_hydration_'+todayKey()) || '0', 10);
+
+function buildDaySelector(){
+  const wrap = document.getElementById('daySelector');
+  wrap.innerHTML = DAY_TYPES.map(dt => `
+    <button class="day-btn" data-key="${dt.key}" style="border-color:${COLOR_MAP[dt.color]}" onclick="setDay('${dt.key}')">
+      ${dt.label}
+      <small>${dt.days||''}</small>
+    </button>
+  `).join('');
+}
+
+function buildDayInfo(){
+  const wrap = document.getElementById('dayInfoWrap');
+  wrap.innerHTML = DAY_TYPES.map(dt => `
+    <div class="day-info" id="info-${dt.key}" style="background:${COLOR_LIGHT_MAP[dt.color]};border-color:${COLOR_MAP[dt.color]}">
+      <div class="day-info-top">
+        <div class="day-dot" style="background:${COLOR_MAP[dt.color]}"></div>
+        <div class="day-info-title" style="color:${COLOR_MAP[dt.color]}">${dt.title}</div>
+      </div>
+      <div class="day-info-desc">${dt.desc}</div>
+      <div class="macro-row">
+        <div class="macro-chip"><strong>${dt.kcal}</strong><span>Energía total</span></div>
+        <div class="macro-chip"><strong>${dt.cho}</strong><span>CHO${dt.choPerKg?' · '+dt.choPerKg:''}</span></div>
+        <div class="macro-chip"><strong>${dt.pro}</strong><span>Proteína</span></div>
+        <div class="macro-chip"><strong>${dt.fat}</strong><span>Grasas</span></div>
+      </div>
+      ${dt.ref?`<span class="ref-tag">${dt.ref}</span>`:''}
+    </div>
+  `).join('');
+}
+
+function getMdata(m){ return m[day]; }
+function getActiveMeals(){ return MEALS.filter(m => m[day] !== null && m[day] !== undefined); }
+
+function renderMeals(){
+  ['alta','media','baja','competencia'].forEach(k=>{
+    const el = document.getElementById(`info-${k}`);
+    if(el) el.style.display = (k===day) ? '' : 'none';
+  });
+  document.querySelectorAll('.day-btn').forEach(b=>{
+    const dt = DAY_TYPES.find(d=>d.key===b.dataset.key);
+    const isActive = b.dataset.key === day;
+    b.classList.toggle('active', isActive);
+    b.style.background = isActive ? COLOR_MAP[dt.color] : '#fff';
+  });
+
+  const container = document.getElementById('meals-container');
+  container.innerHTML = '';
+  getActiveMeals().forEach(m=>{
+    const data = getMdata(m);
+    const dt = DAY_TYPES.find(d=>d.key===day);
+    const savedOpt = savedOpts[m.id] ?? null;
+    const isChecked = !!checkedMeals[m.id];
+    const card = document.createElement('div');
+    card.className = 'meal-card' + (isChecked ? ' done' : '');
+    const optsHtml = data.opts.map((o,i)=>`
+      <div class="opt-card${i===savedOpt?' selected':''}" tabindex="0"
+           onclick="selectOpt('${m.id}',${i},this)"
+           onkeydown="if(event.key==='Enter'||event.key===' ')selectOpt('${m.id}',${i},this)">
+        <div class="opt-num">Opción ${i+1}</div>
+        <div class="opt-name">${o.name}</div>
+        <div class="opt-desc">${o.desc}</div>
+        ${o.macro?`<div class="opt-macro">${o.macro}</div>`:''}
+      </div>
+    `).join('');
+    const tagsHtml = (data.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('');
+    card.innerHTML = `
+      <div class="meal-header" onclick="toggleMeal(this)">
+        <div class="meal-check${isChecked?' checked':''}" title="Marcar como consumida" onclick="event.stopPropagation();toggleMealCheck('${m.id}',this)">✓</div>
+        <div class="meal-lbl" style="background:${COLOR_MAP[dt.color]}">${data.lbl}</div>
+        <div class="meal-title-wrap">
+          <div class="meal-title">${data.title}</div>
+          <div class="meal-time">${data.time||''}</div>
+          <div class="meal-tags">${tagsHtml}</div>
+        </div>
+        <div class="meal-chevron">▾</div>
+      </div>
+      <div class="meal-body">
+        ${data.tip?`<div class="meal-tip">${data.tip}</div>`:''}
+        <div class="opt-grid">${optsHtml}</div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function toggleMeal(header){
+  const body = header.nextElementSibling;
+  const chevron = header.querySelector('.meal-chevron');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+}
+
+function toggleMealCheck(mealId, el){
+  const nowChecked = !el.classList.contains('checked');
+  el.classList.toggle('checked', nowChecked);
+  el.closest('.meal-card').classList.toggle('done', nowChecked);
+  checkedMeals[mealId] = nowChecked;
+  localStorage.setItem(LS_PREFIX+'_checked_'+todayKey(), JSON.stringify(checkedMeals));
+}
+
+function selectOpt(mealId, idx, el){
+  el.closest('.opt-grid').querySelectorAll('.opt-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  savedOpts[mealId] = idx;
+  localStorage.setItem(LS_PREFIX+'_opts', JSON.stringify(savedOpts));
+}
+
+function setDay(d){
+  day = d;
+  localStorage.setItem(LS_PREFIX+'_day', d);
+  renderMeals();
+}
+
+function buildIntro(){
+  if(!PATIENT_INTRO || !PATIENT_INTRO.paragraphs || !PATIENT_INTRO.paragraphs.length) return;
+  document.getElementById('introSectionWrap').style.display = '';
+  const parasHtml = PATIENT_INTRO.paragraphs.map(p=>`<div class="intro-text">${p}</div>`).join('');
+  document.getElementById('introCard').innerHTML = `
+    <div class="intro-greeting">${PATIENT_INTRO.greeting||''}</div>
+    ${parasHtml}
+    ${PATIENT_INTRO.signoff?`<div class="intro-signoff">${PATIENT_INTRO.signoff}</div>`:''}
+  `;
+}
+
+function buildObjectives(){
+  const hasObjectives = OBJECTIVES && OBJECTIVES.length;
+  const hasComp = BODY_COMP && BODY_COMP.length;
+  if(!hasObjectives && !hasComp) return;
+  document.getElementById('objectivesSectionWrap').style.display = '';
+  let html = '';
+  if(hasObjectives){
+    html += `<ul class="objetivo-list">${OBJECTIVES.map(o=>`<li class="objetivo-item"><span class="objetivo-check">✓</span><span>${o}</span></li>`).join('')}</ul>`;
+  }
+  if(hasComp){
+    html += `<div class="comp-grid">${BODY_COMP.map(c=>`
+      <div class="comp-card">
+        <div class="comp-label">${c.label}</div>
+        <div class="comp-row">
+          <div class="comp-val"><strong>${c.current}</strong><span>Actual</span></div>
+          <div class="comp-arrow">→</div>
+          <div class="comp-val ideal"><strong>${c.ideal}</strong><span>Meta</span></div>
+        </div>
+      </div>
+    `).join('')}</div>`;
+    html += `<span class="comp-source">Datos de composición corporal según protocolo ISAK.</span>`;
+  }
+  document.getElementById('objectivesCard').innerHTML = html;
+}
+
+function buildHydration(){
+  if(!HYDRATION_GOAL || HYDRATION_GOAL <= 0) return;
+  document.getElementById('hydrationSectionWrap').style.display = '';
+  document.getElementById('hydrationGoalLbl').textContent = HYDRATION_GOAL;
+  renderHydration();
+}
+
+function renderHydration(){
+  document.getElementById('hydrationCount').textContent = hydrationCount;
+  const drops = [];
+  for(let i=0;i<HYDRATION_GOAL;i++){
+    drops.push(`<span class="drop${i<hydrationCount?' filled':''}" onclick="setHydration(${i+1})">💧</span>`);
+  }
+  document.getElementById('hydrationDrops').innerHTML = drops.join('');
+}
+
+function setHydration(n){
+  hydrationCount = (hydrationCount === n) ? n-1 : n;
+  localStorage.setItem(LS_PREFIX+'_hydration_'+todayKey(), String(hydrationCount));
+  renderHydration();
+}
+
+function buildSupplements(){
+  if(!SUPPLEMENTS.length) return;
+  document.getElementById('suppSection').style.display = '';
+  document.getElementById('suppContainer').innerHTML = SUPPLEMENTS.map(s=>`
+    <div class="supp-item">
+      <div class="supp-icon${s.critical?' critical':''}">${s.icon}</div>
+      <div class="supp-body">
+        <div class="supp-name">${s.name}${s.badge?`<span class="supp-badge">${s.badge}</span>`:''}</div>
+        <div class="supp-dose">${s.dose}</div>
+        <div class="supp-note">${s.note}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function buildNotes(){
+  if(!NOTES.length) return;
+  document.getElementById('notesSection').style.display = '';
+  document.getElementById('notesContainer').innerHTML = NOTES.map(n=>`
+    <div class="nota-card${n.type?' '+n.type:''}">
+      <h4>${n.title}</h4>
+      <p>${n.text}</p>
+    </div>
+  `).join('');
+}
+
+function buildAllergyAlert(){
+  if(!ALLERGIES || !ALLERGIES.length) return;
+  document.getElementById('allergyAlert').style.display = '';
+  document.getElementById('allergyAlert').innerHTML = `
+    <div class="allergy-alert">
+      <div class="allergy-icon">📋</div>
+      <div class="allergy-body">
+        <strong>Lo que tuve en cuenta para tu plan</strong>
+        <div class="allergy-list">${ALLERGIES.join(' · ')}</div>
+      </div>
+    </div>
+  `;
+}
+
+function buildAppointment(){
+  if(!NEXT_APPOINTMENT || !NEXT_APPOINTMENT.date) return;
+  const target = new Date(NEXT_APPOINTMENT.date+'T00:00:00');
+  const today = new Date(); today.setHours(0,0,0,0);
+  const diff = Math.round((target-today)/(1000*60*60*24));
+  const dateFmt = target.toLocaleDateString('es-CO',{ day:'numeric', month:'long', year:'numeric' });
+  document.getElementById('appointmentBox').innerHTML = `
+    <div class="appointment-box">
+      <div class="appt-countdown"><strong>${diff>0?diff:'¡Hoy!'}</strong><span>${diff>0?'días':''}</span></div>
+      <div class="appt-info"><strong>📅 ${NEXT_APPOINTMENT.label}</strong>${dateFmt}</div>
+    </div>
+  `;
+}
+
+function buildWhatsapp(){
+  if(!WHATSAPP_NUMBER) return;
+  document.getElementById('whatsappSection').style.display = '';
+  const name = document.getElementById('patientName').textContent || '';
+  const msg = encodeURIComponent(`Hola Juan Sebastián, tengo una duda sobre mi plan de alimentación (${name}).`);
+  document.getElementById('whatsappBtn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+}
+
+function normalize(str){
+  return (str||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+}
+function weekKey(){
+  const d = new Date();
+  const onejan = new Date(d.getFullYear(),0,1);
+  const week = Math.ceil((((d - onejan)/86400000) + onejan.getDay()+1)/7);
+  return d.getFullYear()+'-w'+week;
+}
+let shoppingChecked = JSON.parse(localStorage.getItem(LS_PREFIX+'_shopping_'+weekKey()) || '{}');
+
+function buildShoppingList(){
+  if(!SHOPPING_KEYWORDS || !SHOPPING_KEYWORDS.length) return;
+  let allText = '';
+  MEALS.forEach(m=>{
+    DAY_TYPES.forEach(dt=>{
+      const variant = m[dt.key];
+      if(!variant) return;
+      variant.opts.forEach(o=>{ allText += ' ' + o.name + ' ' + o.desc; });
+    });
+  });
+  const normText = normalize(allText);
+  const found = {};
+  SHOPPING_KEYWORDS.forEach(k=>{
+    if(normText.includes(normalize(k.match))){
+      if(!found[k.category]) found[k.category] = [];
+      if(!found[k.category].includes(k.label)) found[k.category].push(k.label);
+    }
+  });
+  const categories = Object.keys(found);
+  if(!categories.length) return;
+  document.getElementById('shoppingSection').style.display = '';
+  document.getElementById('shoppingContainer').innerHTML = categories.map(cat=>`
+    <div class="shopping-cat">
+      <div class="shopping-cat-title">${cat}</div>
+      <ul class="shopping-list">
+        ${found[cat].map(label=>{
+          const key = normalize(cat+'_'+label);
+          const isChecked = !!shoppingChecked[key];
+          return `<li class="shopping-item${isChecked?' checked':''}" onclick="toggleShoppingItem('${key}',this)">
+            <div class="shopping-check${isChecked?' checked':''}">✓</div>
+            <span class="label">${label}</span>
+          </li>`;
+        }).join('')}
+      </ul>
+    </div>
+  `).join('');
+}
+
+function toggleShoppingItem(key, el){
+  const nowChecked = !el.classList.contains('checked');
+  el.classList.toggle('checked', nowChecked);
+  el.querySelector('.shopping-check').classList.toggle('checked', nowChecked);
+  shoppingChecked[key] = nowChecked;
+  localStorage.setItem(LS_PREFIX+'_shopping_'+weekKey(), JSON.stringify(shoppingChecked));
+}
+
+buildAllergyAlert();
+buildAppointment();
+buildIntro();
+buildObjectives();
+buildHydration();
+buildDaySelector();
+buildDayInfo();
+renderMeals();
+buildSupplements();
+buildNotes();
+buildShoppingList();
+buildWhatsapp();
+</script>
+</body>
+</html>
