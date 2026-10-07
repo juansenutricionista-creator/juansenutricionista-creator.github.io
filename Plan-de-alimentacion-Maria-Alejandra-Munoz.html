@@ -342,8 +342,18 @@ const SHOPPING_KEYWORDS = [{"match": "huevo", "label": "Huevos", "category": "Pr
 /* ═══════════════════════════════════════════════════════════════════════
    MOTOR — NO EDITAR DE AQUÍ EN ADELANTE
    ═══════════════════════════════════════════════════════════════════════ */
-const COLOR_MAP = { gold:'var(--gold)', green:'var(--green)', navy:'var(--navy)' };
-const COLOR_LIGHT_MAP = { gold:'var(--gold-light)', green:'var(--green-light)', navy:'var(--cream)' };
+const COLOR_MAP = { gold:'var(--gold)', green:'var(--green)', navy:'var(--navy)', blue:'var(--navy-soft)' };
+const COLOR_LIGHT_MAP = { gold:'var(--gold-light)', green:'var(--green-light)', navy:'var(--cream)', blue:'var(--cream)' };
+/* 07-10-2026 — BUG ENCONTRADO EN PRODUCCIÓN.
+   Si un day_type trae un color que no está en COLOR_MAP, el lookup devolvía
+   undefined y el botón activo se quedaba con fondo blanco mientras la clase
+   .day-btn.active le pone color:#fff → TEXTO BLANCO SOBRE FONDO BLANCO: el
+   botón se veía vacío, solo con el emoji. Pasó con color:"blue" en los planes
+   de Olga Lucía, María Alejandra y Tatiana.
+   Estas dos funciones hacen que un color desconocido caiga en navy en vez de
+   romperse. Usar SIEMPRE cMain()/cLight(), nunca COLOR_MAP[...] directo. */
+function cMain(dt){ return COLOR_MAP[dt && dt.color] || COLOR_MAP.navy; }
+function cLight(dt){ return COLOR_LIGHT_MAP[dt && dt.color] || COLOR_LIGHT_MAP.navy; }
 
 const LS_PREFIX = 'jsmo_' + (document.getElementById('patientName').textContent || 'plan').replace(/\s+/g,'_');
 let day = localStorage.getItem(LS_PREFIX+'_day') || DAY_TYPES[0].key;
@@ -356,7 +366,7 @@ let hydrationCount = parseInt(localStorage.getItem(LS_PREFIX+'_hydration_'+today
 function buildDaySelector(){
   const wrap = document.getElementById('daySelector');
   wrap.innerHTML = DAY_TYPES.map(dt => `
-    <button class="day-btn" data-key="${dt.key}" style="border-color:${COLOR_MAP[dt.color]}" onclick="setDay('${dt.key}')">
+    <button class="day-btn" data-key="${dt.key}" style="border-color:${cMain(dt)}" onclick="setDay('${dt.key}')">
       ${dt.label}
       <small>${dt.days||''}</small>
     </button>
@@ -366,10 +376,10 @@ function buildDaySelector(){
 function buildDayInfo(){
   const wrap = document.getElementById('dayInfoWrap');
   wrap.innerHTML = DAY_TYPES.map(dt => `
-    <div class="day-info" id="info-${dt.key}" style="background:${COLOR_LIGHT_MAP[dt.color]};border-color:${COLOR_MAP[dt.color]}">
+    <div class="day-info" id="info-${dt.key}" style="background:${cLight(dt)};border-color:${cMain(dt)}">
       <div class="day-info-top">
-        <div class="day-dot" style="background:${COLOR_MAP[dt.color]}"></div>
-        <div class="day-info-title" style="color:${COLOR_MAP[dt.color]}">${dt.title}</div>
+        <div class="day-dot" style="background:${cMain(dt)}"></div>
+        <div class="day-info-title" style="color:${cMain(dt)}">${dt.title}</div>
       </div>
       <div class="day-info-desc">${dt.desc}</div>
       <div class="macro-row">
@@ -395,7 +405,7 @@ function renderMeals(){
     const dt = DAY_TYPES.find(d=>d.key===b.dataset.key);
     const isActive = b.dataset.key === day;
     b.classList.toggle('active', isActive);
-    b.style.background = isActive ? COLOR_MAP[dt.color] : '#fff';
+    b.style.background = isActive ? cMain(dt) : '#fff';
   });
 
   const container = document.getElementById('meals-container');
@@ -421,7 +431,7 @@ function renderMeals(){
     card.innerHTML = `
       <div class="meal-header" onclick="toggleMeal(this)">
         <div class="meal-check${isChecked?' checked':''}" title="Marcar como consumida" onclick="event.stopPropagation();toggleMealCheck('${m.id}',this)">✓</div>
-        <div class="meal-lbl" style="background:${COLOR_MAP[dt.color]}">${data.lbl}</div>
+        <div class="meal-lbl" style="background:${cMain(dt)}">${data.lbl}</div>
         <div class="meal-title-wrap">
           <div class="meal-title">${data.title}</div>
           <div class="meal-time">${data.time||''}</div>
