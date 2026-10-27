@@ -192,6 +192,36 @@ body{font-family:'Poppins',sans-serif;background:var(--cream);color:var(--navy);
   .meal-card{break-inside:avoid}
   body{background:#fff}
 }
+
+/* ── REGISTRO DIARIO (23-10-2026) ─────────────────────────────────── */
+.opt-peso{display:inline-block;font-size:.60rem;font-weight:800;letter-spacing:.04em;
+  text-transform:uppercase;padding:2px 8px;border-radius:999px;margin-left:8px;vertical-align:middle}
+.opt-peso.liviana{background:#e8f4ff;color:#1b5e8a}
+.opt-peso.media{background:#eef0f2;color:#5a6672}
+.opt-peso.completa{background:#fff2e0;color:#8a5a1b}
+#regCard{margin:26px 0;padding:22px;border-radius:16px;background:#fff;
+  border:1px solid #e6e8ea;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+#regCard h3{margin:0 0 6px;font-size:1.05rem}
+#regCard .sub{color:#6b7580;font-size:.86rem;margin-bottom:18px;line-height:1.6}
+.regDia{border-top:1px solid #f0f1f3;padding-top:16px;margin-top:4px}
+.regFila{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:11px}
+.regFila>span.lbl{font-size:.84rem;font-weight:700;min-width:104px;color:#49535d}
+.regOpt{border:1px solid #dfe3e6;background:#fff;border-radius:9px;padding:7px 13px;
+  font-size:.82rem;cursor:pointer;font-family:inherit;color:#49535d}
+.regOpt.on{background:#123a5c;color:#fff;border-color:#123a5c;font-weight:700}
+#regLista{font-size:.86rem;line-height:1.7;max-height:210px;overflow-y:auto;
+  border-top:1px solid #f0f1f3;padding-top:12px;margin-top:16px}
+#regLista .f{font-weight:700;margin-top:10px}
+#regLista .it{color:#49535d;padding-left:14px}
+#regResumen{margin-top:14px;padding:13px 15px;background:#f7f9fa;border-radius:11px;
+  font-size:.85rem;line-height:1.7}
+#regBtns{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
+#regBtns button{border:0;border-radius:10px;padding:11px 17px;font-weight:700;
+  font-size:.86rem;cursor:pointer;font-family:inherit}
+.regMain{background:#123a5c;color:#fff}
+.regGhost{background:#eef0f2;color:#49535d}
+@media print{#regCard{display:none}}
+
 </style>
 </head>
 <body>
@@ -236,6 +266,23 @@ body{font-family:'Poppins',sans-serif;background:var(--cream);color:var(--navy);
 <div class="section">
   <div class="section-title">Plan de Alimentación · 4 Opciones por Tiempo de Comida</div>
   <div id="meals-container"></div>
+<div id="regCard">
+  <h3>📓 Tu registro diario</h3>
+  <div class="sub">Dos cosas, y las dos toman segundos. Cada vez que toques la opci&oacute;n que escogiste en un tiempo de comida, queda guardada ac&aacute; con la fecha. Y abajo marcas c&oacute;mo te fue el d&iacute;a. En el control lo revisamos juntos: as&iacute; el ajuste se hace con lo que de verdad pas&oacute;, no con lo que alcancemos a recordar.</div>
+  <div class="regDia">
+    <div class="regFila"><span class="lbl">&#9889; Energ&iacute;a</span><span id="regEnergia"></span></div>
+    <div class="regFila"><span class="lbl">&#127860; Hambre</span><span id="regHambre"></span></div>
+    <div class="regFila"><span class="lbl">&#128701; Ba&ntilde;o</span><span id="regBano"></span></div>
+    <div class="regFila"><span class="lbl">&#127769; Sue&ntilde;o</span><span id="regSueno"></span></div>
+  </div>
+  <div id="regLista"></div>
+  <div id="regResumen"></div>
+  <div id="regBtns">
+    <button id="regCopiarBtn" class="regMain" onclick="regCopiar()">Copiar para envi&aacute;rselo a Juan Sebasti&aacute;n</button>
+    <button class="regGhost" onclick="regBorrar()">Borrar registro</button>
+  </div>
+</div>
+
 </div>
 
 <div class="section" id="suppSection" style="display:none">
@@ -313,6 +360,7 @@ const NEXT_APPOINTMENT = {"date": "2026-11-22", "label": "Primer control de los 
 const DAY_TYPES = [{"key": "alta", "label": "🏙️ Semana en Cali", "days": "Tres semanas de cada cuatro", "icon": "💪", "color": "navy", "title": "💪 Tu Semana en Cali", "desc": "Seis tiempos, con una media mañana que cierra el hueco de las 8 a la 1 y un postre todos los días en la media tarde. La proteína alta es la pieza que sostiene el músculo mientras bajan los pliegues.", "kcal": "~1.700 kcal", "cho": "~175 g", "choPerKg": "2,9 g/kg", "pro": "~136 g (2,2 g/kg)", "fat": "~56 g (0,9 g/kg)", "ref": "Recomposición · preparaciones suaves"}, {"key": "baja", "label": "✈️ Semana de Viaje", "days": "Una semana de cada cuatro", "icon": "✈️", "color": "teal", "title": "✈️ Tu Semana de Viaje", "desc": "La misma energía y las mismas porciones que tu semana en Cali — lo que cambia es dónde estás, no cuánto comes. Cinco tiempos pensados para buffet de hotel, aeropuerto y restaurante.", "kcal": "~1.700 kcal", "cho": "~160 g", "choPerKg": "2,6 g/kg", "pro": "~142 g (2,3 g/kg)", "fat": "~54 g (0,9 g/kg)", "ref": "Misma meta · otra logística"}];
 
 /* 8) TIEMPOS DE COMIDA */
+const PESOS = {"preentreno|alta|0": "media", "preentreno|alta|1": "liviana", "preentreno|alta|2": "completa", "preentreno|alta|3": "completa", "desayuno|alta|0": "media", "desayuno|alta|1": "media", "desayuno|alta|2": "completa", "desayuno|alta|3": "liviana", "desayuno|alta|4": "media", "desayuno|baja|0": "media", "desayuno|baja|1": "media", "desayuno|baja|2": "media", "desayuno|baja|3": "liviana", "am|alta|0": "completa", "am|alta|1": "media", "am|alta|2": "liviana", "am|alta|3": "media", "am|baja|0": "media", "am|baja|1": "media", "am|baja|2": "liviana", "am|baja|3": "completa", "almuerzo|alta|0": "media", "almuerzo|alta|1": "media", "almuerzo|alta|2": "media", "almuerzo|alta|3": "completa", "almuerzo|alta|4": "liviana", "almuerzo|baja|0": "media", "almuerzo|baja|1": "media", "almuerzo|baja|2": "media", "almuerzo|baja|3": "media", "pm|alta|0": "completa", "pm|alta|1": "completa", "pm|alta|2": "liviana", "pm|alta|3": "liviana", "pm|baja|0": "media", "pm|baja|1": "media", "pm|baja|2": "media", "pm|baja|3": "completa", "cena|alta|0": "media", "cena|alta|1": "liviana", "cena|alta|2": "media", "cena|alta|3": "media", "cena|alta|4": "completa", "cena|alta|5": "media", "cena|baja|0": "media", "cena|baja|1": "media", "cena|baja|2": "media", "cena|baja|3": "media"};
 const MEALS = [{"id": "preentreno", "alta": {"lbl": "Pre-Entreno", "title": "Pre-Entreno", "time": "4:45 am, antes del gimnasio", "tags": ["Suave"], "tip": "Me contaste que empezaste a comer algo antes de entrenar y que te cayó bien. Se queda, y suave como está: a esa hora el estómago no quiere nada pesado ni ácido.", "opts": [{"name": "Tu yogurt griego con avena y banano", "desc": "½ taza de yogurt griego Alimentos YEN Escobar · 3 cdas de avena en hojuelas · ½ banano en rodajas"}, {"name": "Tostadas de arroz con cottage y miel", "desc": "2 galletas de arroz · 2 cdas de queso cottage · 1 cdita de miel"}, {"name": "Batido de proteína con mango o arándanos", "desc": "1 scoop de proteína · 1 taza de mango picado, o 15 arándanos · ½ vaso de leche de almendras"}, {"name": "Pudín de chía con papaya", "desc": "1 cda de chía remojada en leche de almendras · ½ taza de yogurt griego Alimentos YEN Escobar · 1 taza de papaya picada"}]}, "baja": null, "competencia": null}, {"id": "desayuno", "alta": {"lbl": "Desayuno", "title": "Desayuno", "time": "8:00 am", "tags": ["Post-entreno"], "tip": "Me dijiste que te cuesta comer lo mismo todos los días, así que acá hay cinco y ninguna se parece a la otra. Tu porción de huevo en este tiempo son 2 enteros y 1 clara.", "opts": [{"name": "Huevos revueltos con champiñones y arepa crunchy", "desc": "2 huevos enteros y 1 clara revueltos con 1 puñado de champiñones · 1 arepa crunchy de Sary con 2 cdas de queso cuajada triturado encima · ½ taza de papaya picada"}, {"name": "Huevos revueltos con cherry salteados y arroz", "desc": "2 huevos enteros y 1 clara revueltos · 6 tomates cherry salteados con aceite de oliva, ajo y orégano · 2 cdas de maicitos · 4 cdas de arroz · 1 taza de piña picada"}, {"name": "Omelette de zanahoria relleno de mozzarella y kale", "desc": "Omelette de 2 huevos enteros y 1 clara con zanahoria rallada en la mezcla, relleno de 1 tajada de queso mozzarella Finesse y kale · 1 tajada de pan de masa madre del Molino Francés de Campo con 2 cdas de queso cottage y 1 chorrito de miel · 5 fresas picadas"}, {"name": "Pancakes de avena con proteína y arándanos", "desc": "2 pancakes de 5 cdas de avena con 1 huevo · 1 scoop de proteína · 2 cdas de yogurt griego Alimentos YEN Escobar · 15 arándanos"}, {"name": "Huevos napolitanos con nachos de arepa", "desc": "2 huevos enteros y 1 clara en cacerola con 2 cdas de salsa napolitana sin azúcar casera · 1 tajada de queso mozzarella Finesse · ½ arepa de maíz tipo tela en triángulos al airfryer · 4 cdas de mango picado"}]}, "baja": {"lbl": "Desayuno", "title": "Desayuno", "time": "Al bajar al buffet", "tags": ["Hotel"], "tip": "El buffet de hotel es el mejor momento del día cuando viajas: hay huevos al momento, fruta y avena en casi todos. Arma el plato antes de dar la primera vuelta — eso solo ya te resuelve la mañana.", "opts": [{"name": "Buffet: huevos al momento con tostadas", "desc": "2 huevos enteros y 1 clara revueltos (pedidos al momento) · 2 tostadas de pan integral · 1 taza de papaya picada · 1 cdita de mantequilla"}, {"name": "Buffet: avena con yogurt griego y fruta", "desc": "1 taza de avena cocida · ¾ taza de yogurt griego Alimentos YEN Escobar · ½ taza de frutos rojos · 1 cda de semillas de chía · 1 scoop de proteína"}, {"name": "Buffet: omelette de verduras con queso", "desc": "Omelette de 2 huevos enteros y 1 clara con tomate · 1 tajada de queso mozzarella Finesse · 1 arepa de maíz tipo tela asada · 1 cdita de mantequilla · 1 taza de piña picada"}, {"name": "Sin buffet: batido y fruta del aeropuerto", "desc": "1 scoop de proteína en agua · 1 banano · 6 almendras · 2 galletas de arroz"}]}, "competencia": null}, {"id": "am", "alta": {"lbl": "A.M.", "title": "Media Mañana", "time": "10:30 am, en la oficina", "tags": ["El hueco"], "tip": "Esta es la comida más importante del plan. Hoy pasas de las 8 de la mañana a la una de la tarde sin comer nada, y eso es justo lo que no le conviene a tu estómago. Las cuatro se llevan en el bolso y ninguna necesita nevera ni preparación.", "opts": [{"name": "Batido de proteína con mango y chía", "desc": "1 scoop de proteína · 1 taza de mango picado · 1 cda de chía · agua"}, {"name": "Tu yogurt griego con frutos rojos", "desc": "¾ taza de yogurt griego Alimentos YEN Escobar · ½ taza de frutos rojos · 1 tostada de arroz triturada dentro del yogurt · ½ scoop de proteína"}, {"name": "Palito de queso con kiwi", "desc": "1 palito de queso bajo en grasa de Vital Latti o Alpina · 1 kiwi, o 4 cdas de mango picado"}, {"name": "Yogurt bebible con rosquillas caleñas", "desc": "1 vaso de yogurt Finesse bebible · 1 paquete de rosquillas caleñas"}]}, "baja": {"lbl": "A.M.", "title": "Media Mañana", "time": "A media mañana, donde estés", "tags": ["De la maleta"], "tip": "Esta es la que hay que empacar antes de salir de la casa. Un scoop de proteína en una bolsita y unas almendras ocupan nada en la maleta y te salvan la mañana en cualquier aeropuerto.", "opts": [{"name": "De la maleta: proteína con almendras", "desc": "1 scoop de proteína en agua · 6 almendras · 2 galletas de arroz"}, {"name": "Yogurt griego con fruta de tienda", "desc": "¾ taza de yogurt griego Alimentos YEN Escobar · 1 taza de papaya picada · ½ scoop de proteína revuelto"}, {"name": "Barra de proteína con banano", "desc": "1 barra de proteína · 1 banano"}, {"name": "Galletas de arroz con queso", "desc": "2 galletas de arroz · 2 tajadas de queso mozzarella Finesse · ½ scoop de proteína en agua"}]}, "competencia": null}, {"id": "almuerzo", "alta": {"lbl": "Almuerzo", "title": "Almuerzo", "time": "1:00 pm", "tags": [], "tip": "Cinco opciones, y tres de ellas se piden igual en un restaurante. El arroz y la pasta están acá a propósito: me dijiste que los amas y tu cuerpo los necesita para entrenar como entrenas.", "opts": [{"name": "Carne de res con lentejas, arroz y ensalada", "desc": "160 g de carne de res a la plancha · 3 cdas de lentejas guisadas · 4 cdas de arroz · 1 taza de ensalada de lechuga romana, tomate y cebolla con limón y sal · ¼ de aguacate"}, {"name": "Tu bowl tipo Chilitaco con fajitas de res", "desc": "160 g de carne de res en tiras tipo fajitas salteada con pimentón y cebolla en julianas · ½ maduro picado en cubitos al airfryer · 1 cda de guacamole casero · 2 cdas de pico de gallo con 2 cdas de mango picado · lechuga romana picada"}, {"name": "Batata rellena de carne molida", "desc": "1 batata al horno rellena con 160 g de carne molida magra · 2 cdas de queso cottage · 3 cdas de pico de gallo"}, {"name": "Pasta con pollo en salsa de yogurt griego y cilantro", "desc": "170 g de pollo desmechado · salsa de yogurt griego Alimentos YEN Escobar y cilantro licuados con limón y sal · 7 cdas de pasta corta tipo penne o tornillo · 1 cda de queso parmesano · 1 taza de brócoli al vapor con 6 tomates cherry"}, {"name": "Salmón al ajillo con papa amarilla y kale", "desc": "160 g de salmón al ajillo · 3 papas amarillas con paprika al airfryer · 1 puñado de kale con tomate y cebolla"}]}, "baja": {"lbl": "Almuerzo", "title": "Almuerzo", "time": "Del mediodía a la una", "tags": ["Restaurante"], "tip": "En un menú siempre hay una proteína a la plancha y siempre hay arroz. Pide la salsa aparte y una ensalada para la mesa antes del plato fuerte — ese solo cambio te resuelve casi todo.", "opts": [{"name": "Restaurante: proteína a la plancha con arroz", "desc": "160 g de carne de res, pollo o salmón a la plancha · 5 cdas colmadas de arroz · 1 taza de ensalada de lechuga, tomate y cebolla con limón y sal · ¼ de aguacate"}, {"name": "Restaurante: pasta con pollo en salsa de tomate", "desc": "160 g de pollo en cubos salteado · 9 cdas de pasta corta en salsa de tomate · 1 taza de ensalada de lechuga romana y tomate"}, {"name": "Restaurante: bowl armado", "desc": "160 g de carne de res en tiras a la parrilla · ½ taza de fríjoles · 4 cdas de maíz tierno · lechuga romana picada · 2 cdas de pico de gallo · 1 cda de guacamole casero"}, {"name": "Restaurante de mar: camarones a la plancha", "desc": "160 g de camarones salteados al ajillo · 3 papas amarillas al airfryer · 1 taza de ensalada de lechuga, tomate y pimentón · ¼ de aguacate"}]}, "competencia": null}, {"id": "pm", "alta": {"lbl": "P.M.", "title": "Media Tarde", "time": "4:30 pm", "tags": ["Tu postre"], "tip": "Me dijiste que a esta hora comes seis bolitas de granola porque no sabes qué comer. Acá tienes cuatro respuestas y todas llevan algo dulce. Es a propósito: un antojo resuelto a las cuatro y media no desordena nada.", "opts": [{"name": "Tu postre de yogurt griego con frutos rojos", "desc": "3 cdas de yogurt griego Alimentos YEN Escobar · ½ taza de frutos rojos · 2 cdas de granola tostada de chocolate"}, {"name": "Crispetas con batido de proteína y banano", "desc": "1 plato sopero de crispetas de maíz con sal · 1 scoop de proteína en agua con ½ banano"}, {"name": "Manzana verde con limón y sal", "desc": "1 manzana verde · limón y sal al gusto"}, {"name": "Gelatina con yogurt griego y fresas", "desc": "1 plato sopero de gelatina sin azúcar · 3 cdas de yogurt griego Alimentos YEN Escobar revueltos con ½ scoop de proteína · 4 fresas picadas"}]}, "baja": {"lbl": "P.M.", "title": "Media Tarde", "time": "A media tarde", "tags": ["Tu postre"], "tip": "Viajando esta comida importa más, no menos: es la que evita que llegues a una cena de trabajo con hambre de tres horas. Todas caben en un bolso.", "opts": [{"name": "Chocolate al 70% con almendras", "desc": "2 cuadritos de chocolate al 70% · 6 almendras · 1 scoop de proteína en agua"}, {"name": "Yogurt griego con frutos rojos", "desc": "¾ taza de yogurt griego Alimentos YEN Escobar · ½ taza de frutos rojos · ½ scoop de proteína revuelto"}, {"name": "Crispetas con batido de proteína y chocolate", "desc": "1 plato sopero de crispetas de maíz con sal · 1 scoop de proteína en agua · 2 cuadritos de chocolate al 70%"}, {"name": "Fruta de tienda con proteína", "desc": "1 taza de mango picado · 1 scoop de proteína en agua · 6 almendras"}]}, "competencia": null}, {"id": "cena", "alta": {"lbl": "Cena", "title": "Cena", "time": "7:30 pm", "tags": ["Suave"], "tip": "Seis opciones y todas con su porción exacta. Comes con tu familia y te acuestas temprano, así que ninguna pasa de unos pocos minutos.", "opts": [{"name": "Tus huevos tipo samba con maduro", "desc": "2 huevos enteros y 2 claras · ½ maduro picado en cubitos al airfryer · 1 tajada de queso mozzarella Finesse para gratinar"}, {"name": "Arepa de arroz con pollo desmechado", "desc": "1 arepa de arroz integral de Alimentos YEN · 150 g de pollo desmechado guisado encima · 2 cdas de pico de gallo"}, {"name": "Tu arepa con carne y ensalada", "desc": "1 arepa de maíz tipo tela asada · 150 g de carne molida magra en hamburguesa a la plancha · 1 tajada de queso mozzarella Finesse · 1 taza de ensalada de lechuga y tomate"}, {"name": "Crema de auyama con pollo desmechado", "desc": "1 plato sopero de crema de auyama, o de tomate · 150 g de pollo desmechado guisado · ¼ de aguacate picado · 1 cdita de maicitos"}, {"name": "Bowl de camarones con quinoa y espárragos", "desc": "150 g de camarones salteados al ajillo · 6 cdas de quinoa cocida · 1 taza de espárragos salteados · ¼ de aguacate"}, {"name": "Tu wrap de atún", "desc": "1 lata de atún en agua con 2 claras picadas, tomate, cebolla, limón y sal · 1 tortilla integral talla M"}]}, "baja": {"lbl": "Cena", "title": "Cena", "time": "En la noche", "tags": ["Restaurante"], "tip": "Las cenas de viaje suelen ser de trabajo y suelen ser tarde. La regla es simple: una proteína a la plancha o al horno, verduras sin límite, y el almidón del tamaño de tu puño.", "opts": [{"name": "Restaurante: proteína con verduras", "desc": "160 g de pollo, carne de res o salmón a la plancha · 4 cdas de arroz · 1 taza de verduras salteadas o al vapor · 1 taza de ensalada de lechuga y tomate"}, {"name": "Sopa clara con pollo", "desc": "1 plato sopero de sopa de verduras · 150 g de pollo desmechado · 4 cdas de quinoa cocida · 1 taza de ensalada de lechuga romana"}, {"name": "Ensalada grande con camarones", "desc": "150 g de camarones salteados · 1 taza de ensalada de lechuga romana, tomate y pimentón · ¼ de aguacate · 2 galletas de arroz"}, {"name": "Room service: huevos con tostadas", "desc": "2 huevos enteros y 1 clara revueltos · 1 tostada de pan integral · 1 tajada de queso mozzarella Finesse · 1 taza de ensalada de lechuga y tomate"}]}, "competencia": null}];
 
 /* 9) SUPLEMENTACIÓN */
@@ -421,7 +469,7 @@ function renderMeals(){
       <div class="opt-card${i===savedOpt?' selected':''}" tabindex="0"
            onclick="selectOpt('${m.id}',${i},this)"
            onkeydown="if(event.key==='Enter'||event.key===' ')selectOpt('${m.id}',${i},this)">
-        <div class="opt-num">Opción ${i+1}</div>
+        <div class="opt-num">Opción ${i+1}${(typeof PESOS!=='undefined'&&PESOS[m.id+'|'+day+'|'+i])?`<span class="opt-peso ${PESOS[m.id+'|'+day+'|'+i]}">${PESOS[m.id+'|'+day+'|'+i]}</span>`:''}</div>
         <div class="opt-name">${o.name}</div>
         <div class="opt-desc">${o.desc}</div>
         ${o.macro?`<div class="opt-macro">${o.macro}</div>`:''}
@@ -464,17 +512,153 @@ function toggleMealCheck(mealId, el){
   localStorage.setItem(LS_PREFIX+'_checked_'+todayKey(), JSON.stringify(checkedMeals));
 }
 
+
+// ══════════════════════════════════════════════════════════════════════
+// REGISTRO DIARIO — elecciones + energía, hambre, baño y sueño
+// El motor ya guardaba la última opción escogida, pero sin fecha y sin
+// historia, así que esa información se perdía. Acá se convierte en un
+// registro que la paciente puede mandar, y el control se arma con datos
+// en vez de con memoria.
+// ══════════════════════════════════════════════════════════════════════
+var REG_KEY = LS_PREFIX + '_registro';
+var REG = [];
+try { REG = JSON.parse(localStorage.getItem(REG_KEY) || '[]'); } catch(e) { REG = []; }
+var DIA_KEY = LS_PREFIX + '_diario';
+var DIARIO = {};
+try { DIARIO = JSON.parse(localStorage.getItem(DIA_KEY) || '{}'); } catch(e) { DIARIO = {}; }
+
+var ESCALAS = {
+  energia: ['En el piso','Bajita','Normal','Bien','Con pila de sobra'],
+  hambre:  ['Sin hambre','Poca','Normal','Bastante','Con mucha hambre'],
+  bano:    ['No fui','Me costó','Normal'],
+  sueno:   ['Dormí mal','Regular','Bien','Muy bien']
+};
+
+function regGuardar(){
+  try{
+    localStorage.setItem(REG_KEY, JSON.stringify(REG.slice(-500)));
+    localStorage.setItem(DIA_KEY, JSON.stringify(DIARIO));
+  }catch(e){}
+}
+function regHoy(){
+  var f = new Date();
+  return f.getFullYear()+'-'+String(f.getMonth()+1).padStart(2,'0')+'-'+String(f.getDate()).padStart(2,'0');
+}
+
+function registrarEleccion(mealId, idx){
+  var meal = MEALS.find(function(x){ return x.id === mealId; });
+  if(!meal) return;
+  var data = meal[day] || meal.alta; if(!data) return;
+  var o = data.opts[idx]; if(!o) return;
+  var fecha = regHoy();
+  REG = REG.filter(function(r){ return !(r.fecha===fecha && r.meal===mealId); });
+  REG.push({fecha:fecha, dia:day, meal:mealId, lbl:data.lbl, idx:idx, nombre:o.name,
+            peso:(typeof PESOS!=='undefined' ? (PESOS[mealId+'|'+day+'|'+idx]||'media') : 'media')});
+  regGuardar(); pintarRegistro();
+}
+
+function marcarDiario(campo, valor){
+  var f = regHoy();
+  DIARIO[f] = DIARIO[f] || {};
+  DIARIO[f][campo] = (DIARIO[f][campo] === valor) ? null : valor;
+  regGuardar(); pintarRegistro();
+}
+
+function pintarEscalas(){
+  var f = regHoy(), hoy = DIARIO[f] || {};
+  [['regEnergia','energia'],['regHambre','hambre'],['regBano','bano'],['regSueno','sueno']]
+  .forEach(function(par){
+    var el = document.getElementById(par[0]); if(!el) return;
+    el.innerHTML = ESCALAS[par[1]].map(function(t,i){
+      return '<button class="regOpt'+(hoy[par[1]]===i?' on':'')+'" onclick="marcarDiario(\''+par[1]+'\','+i+')">'+t+'</button>';
+    }).join(' ');
+  });
+}
+
+function pintarRegistro(){
+  pintarEscalas();
+  var cont = document.getElementById('regLista');
+  var res  = document.getElementById('regResumen');
+  if(!cont) return;
+  var porDia = {};
+  REG.forEach(function(r){ (porDia[r.fecha] = porDia[r.fecha] || []).push(r); });
+  Object.keys(DIARIO).forEach(function(f){ porDia[f] = porDia[f] || []; });
+  var fechas = Object.keys(porDia).sort().reverse().slice(0,14);
+
+  if(!fechas.length){
+    cont.innerHTML = '<div style="color:#8a929b">Todavía no hay nada registrado. Toca la opción que escogiste en cada tiempo de comida y marca cómo te fue el día.</div>';
+    res.innerHTML = ''; return;
+  }
+  cont.innerHTML = fechas.map(function(f){
+    var d = DIARIO[f] || {};
+    var extra = [];
+    if(d.energia!=null) extra.push('energía: '+ESCALAS.energia[d.energia]);
+    if(d.hambre!=null)  extra.push('hambre: '+ESCALAS.hambre[d.hambre]);
+    if(d.bano!=null)    extra.push('baño: '+ESCALAS.bano[d.bano]);
+    if(d.sueno!=null)   extra.push('sueño: '+ESCALAS.sueno[d.sueno]);
+    return '<div class="f">'+f+(extra.length?' <span style="font-weight:400;color:#6b7580">— '+extra.join(' · ')+'</span>':'')+'</div>'
+      + (porDia[f]||[]).map(function(r){
+          return '<div class="it">· '+r.lbl+': '+r.nombre+' <span class="opt-peso '+r.peso+'">'+r.peso+'</span></div>';
+        }).join('');
+  }).join('');
+
+  var cuenta = {}, livianas = 0;
+  REG.forEach(function(r){
+    var k = r.lbl+' · '+r.nombre;
+    cuenta[k] = (cuenta[k]||0)+1;
+    if(r.peso==='liviana') livianas++;
+  });
+  var top = Object.keys(cuenta).sort(function(a,b){return cuenta[b]-cuenta[a];}).slice(0,3);
+  var txt = '<b>'+REG.length+' comidas registradas en '+fechas.length+' días.</b>';
+  if(top.length) txt += '<br>Lo que más repites: ' + top.map(function(k){ return k+' ('+cuenta[k]+')'; }).join(' · ');
+  if(REG.length){
+    var pct = Math.round(livianas/REG.length*100);
+    txt += '<br>Proporción de opciones livianas: <b>'+pct+'%</b>';
+    if(pct > 55) txt += ' — coméntaselo a Juan Sebastián en el control.';
+  }
+  res.innerHTML = txt;
+}
+
+function regCopiar(){
+  var porDia = {};
+  REG.forEach(function(r){ (porDia[r.fecha] = porDia[r.fecha] || []).push(r); });
+  Object.keys(DIARIO).forEach(function(f){ porDia[f] = porDia[f] || []; });
+  var nom = document.getElementById('patientName');
+  var txt = 'Registro de ' + (nom ? nom.textContent.trim() : '') + '\n\n';
+  Object.keys(porDia).sort().forEach(function(f){
+    var d = DIARIO[f] || {};
+    txt += f + '\n';
+    (porDia[f]||[]).forEach(function(r){ txt += '  · ' + r.lbl + ': ' + r.nombre + ' (' + r.peso + ')\n'; });
+    var e = [];
+    if(d.energia!=null) e.push('energía: '+ESCALAS.energia[d.energia]);
+    if(d.hambre!=null)  e.push('hambre: '+ESCALAS.hambre[d.hambre]);
+    if(d.bano!=null)    e.push('baño: '+ESCALAS.bano[d.bano]);
+    if(d.sueno!=null)   e.push('sueño: '+ESCALAS.sueno[d.sueno]);
+    if(e.length) txt += '  [' + e.join(' · ') + ']\n';
+    txt += '\n';
+  });
+  if(navigator.clipboard){ navigator.clipboard.writeText(txt); }
+  var b = document.getElementById('regCopiarBtn');
+  if(b){ var t=b.textContent; b.textContent='✓ Copiado'; setTimeout(function(){ b.textContent=t; },1800); }
+}
+
+function regBorrar(){
+  if(!confirm('¿Borrar todo el registro?')) return;
+  REG = []; DIARIO = {}; regGuardar(); pintarRegistro();
+}
+
 function selectOpt(mealId, idx, el){
   el.closest('.opt-grid').querySelectorAll('.opt-card').forEach(c=>c.classList.remove('selected'));
   el.classList.add('selected');
   savedOpts[mealId] = idx;
-  localStorage.setItem(LS_PREFIX+'_opts', JSON.stringify(savedOpts));
+  try{ localStorage.setItem(LS_PREFIX+'_opts', JSON.stringify(savedOpts)); }catch(e){}
+  if(typeof registrarEleccion === 'function') registrarEleccion(mealId, idx);
 }
 
 function setDay(d){
   day = d;
   localStorage.setItem(LS_PREFIX+'_day', d);
-  renderMeals();
+  renderMeals(); if(typeof pintarRegistro==="function") pintarRegistro();
 }
 
 function buildIntro(){
@@ -739,7 +923,7 @@ buildObjectives();
 buildHydration();
 buildDaySelector();
 buildDayInfo();
-renderMeals();
+renderMeals(); if(typeof pintarRegistro==="function") pintarRegistro();
 buildSupplements();
 buildNotes();
 buildShoppingList();
