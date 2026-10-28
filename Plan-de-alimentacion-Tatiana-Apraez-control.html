@@ -97,7 +97,14 @@ body{font-family:'Poppins',sans-serif;background:var(--cream);color:var(--navy);
 .opt-card.selected{border-color:var(--green);background:var(--green-light)}
 .opt-num{font-size:.62rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.06em}
 .opt-name{font-size:.86rem;font-weight:700;color:var(--navy);margin-top:.1rem}
-.opt-desc{font-size:.74rem;color:var(--muted);margin-top:.18rem;line-height:1.4}
+.opt-desc{font-size:.74rem;color:var(--muted);margin-top:.3rem;line-height:1.5}
+/* 28-10-2026 — Juanse: "la descripcion se ve desordenada y puede ser dificil de
+   entender... que cada alimento tenga su espacio". Antes los alimentos iban
+   todos pegados separados por un punto medio. Ahora cada uno es un renglon. */
+.opt-desc ul{list-style:none;margin:0;padding:0}
+.opt-desc li{position:relative;padding-left:.72rem;margin:.16rem 0}
+.opt-desc li::before{content:"";position:absolute;left:0;top:.52em;
+  width:.26rem;height:.26rem;border-radius:50%;background:var(--muted);opacity:.55}
 .opt-macro{font-size:.7rem;color:var(--green);font-weight:700;margin-top:.35rem}
 .totals-bar{display:flex;gap:.5rem;flex-wrap:wrap;background:var(--navy);border-radius:14px;padding:.9rem 1rem;margin:.9rem 1rem 0;color:#fff}
 .totals-item{flex:1;min-width:70px;text-align:center}
@@ -367,7 +374,7 @@ const MEALS = [{"id": "preentreno", "alta": {"lbl": "Pre-entreno", "title": "☀
 const SUPPLEMENTS = [{"icon": "🥛", "name": "Proteína en polvo", "dose": "1 scoop según la opción", "note": "La que ya usas. Aparece en el pre-entreno, en las medias y en el batido del domingo antes del agua, que es donde más fácil te entra."}, {"icon": "💪", "name": "Creatina", "dose": "3 g diarios, sin falta", "note": "Todos los días, también el domingo. Es la que más aporta a sostener el músculo que ganaste este ciclo."}, {"icon": "🌙", "name": "Glicinato de magnesio", "dose": "2 tabletas, 2 horas antes de dormir", "note": "De la Farmacia Biológica. Te acuestas a las 11 y te levantas a las 4: lo que más rinde ahí es que esas horas sean de sueño profundo."}, {"icon": "🧪", "name": "Exámenes de rutina", "dose": "Cuando puedas, antes del próximo control", "note": "Te pido el favor de llevarlos al control: perfil lipídico, glicemia, TSH, ferritina y hemoglobina. Nos sirven para afinar el plan con datos y no con suposiciones."}];
 
 /* 10) NOTAS CLÍNICAS */
-const NOTES = [{"title": "Sí, al huevo le puedes echar aceite de oliva", "body": "Me lo preguntaste y la respuesta es sí: 1 cucharadita, medida. Es grasa buena y ayuda a que el desayuno te sostenga más. La cucharadita ya está contada dentro de las opciones que la llevan, así que no hay que sumarle nada aparte."}, {"title": "Por qué el almuerzo creció", "body": "Tú lo dijiste: <i>«sigo con hambre apenas termino de almorzar y a la hora me estoy comiendo la media tarde»</i>. Eso no era falta de voluntad, era un almuerzo corto. Ahora lleva 150 g de proteína, más almidón, dos tazas de ensalada y una grasa medida. El objetivo no es que comas más por comer: es que a las 4 de la tarde no estés peleando con el hambre."}, {"title": "El tránsito intestinal", "body": "Tú misma encontraste la respuesta antes: <i>«cuando no había ensalada había jugo verde, toda mi vida había sufrido estreñimiento y eso me salvó»</i>. Por eso la ensalada pasó a dos tazas en el almuerzo y en la cena, y hay fruta entera en casi todos los tiempos. Súmale el agua del día. Si en tres semanas no ves cambio, hablamos de reforzarlo con algo más."}, {"title": "Tu domingo, hora por hora", "body": "<b>9:00 am</b> — desayunas completo en Cali, antes de salir. <b>12:00 m</b> — algo pequeño, lo último antes del agua; está hecho para que no te pese ni te maree. <b>2:00 a 4:30 pm</b> — navegas. <b>6:00 pm</b> — al salir del lago, el tiempo fuerte del día: ahí va el sándwich. <b>9:00 pm</b> — cena al llegar a Cali. La idea es simple: que no vuelvas a hacer el domingo entero aguantando hambre."}, {"title": "Lo que ya ganaste", "body": "Tu tejido muscular subió de 21,87 a 22,43 kg en tres meses. Eso es lo que sostiene el metabolismo y es lo que hace que el plan funcione más rápido ahora que en julio. El trabajo de las 5 de la mañana está puesto ahí."}];
+const NOTES = [{"title": "Sí, al huevo le puedes echar aceite de oliva", "text": "Me lo preguntaste y la respuesta es sí: 1 cucharadita, medida. Es grasa buena y ayuda a que el desayuno te sostenga más. La cucharadita ya está contada dentro de las opciones que la llevan, así que no hay que sumarle nada aparte."}, {"title": "Por qué el almuerzo creció", "text": "Tú lo dijiste: <i>«sigo con hambre apenas termino de almorzar y a la hora me estoy comiendo la media tarde»</i>. Eso no era falta de voluntad, era un almuerzo corto. Ahora lleva 150 g de proteína, más almidón, dos tazas de ensalada y una grasa medida. El objetivo no es que comas más por comer: es que a las 4 de la tarde no estés peleando con el hambre."}, {"title": "El tránsito intestinal", "text": "Tú misma encontraste la respuesta antes: <i>«cuando no había ensalada había jugo verde, toda mi vida había sufrido estreñimiento y eso me salvó»</i>. Por eso la ensalada pasó a dos tazas en el almuerzo y en la cena, y hay fruta entera en casi todos los tiempos. Súmale el agua del día. Si en tres semanas no ves cambio, hablamos de reforzarlo con algo más."}, {"title": "Tu domingo, hora por hora", "text": "<b>9:00 am</b> — desayunas completo en Cali, antes de salir. <b>12:00 m</b> — algo pequeño, lo último antes del agua; está hecho para que no te pese ni te maree. <b>2:00 a 4:30 pm</b> — navegas. <b>6:00 pm</b> — al salir del lago, el tiempo fuerte del día: ahí va el sándwich. <b>9:00 pm</b> — cena al llegar a Cali. La idea es simple: que no vuelvas a hacer el domingo entero aguantando hambre."}, {"title": "Lo que ya ganaste", "text": "Tu tejido muscular subió de 21,87 a 22,43 kg en tres meses. Eso es lo que sostiene el metabolismo y es lo que hace que el plan funcione más rápido ahora que en julio. El trabajo de las 5 de la mañana está puesto ahí."}];
 
 /* 11) WHATSAPP */
 const WHATSAPP_NUMBER = "573175499759";
@@ -471,7 +478,7 @@ function renderMeals(){
            onkeydown="if(event.key==='Enter'||event.key===' ')selectOpt('${m.id}',${i},this)">
         <div class="opt-num">Opción ${i+1}${(typeof PESOS!=='undefined'&&PESOS[m.id+'|'+day+'|'+i])?`<span class="opt-peso ${PESOS[m.id+'|'+day+'|'+i]}">${PESOS[m.id+'|'+day+'|'+i]}</span>`:''}</div>
         <div class="opt-name">${o.name}</div>
-        <div class="opt-desc">${o.desc}</div>
+        <div class="opt-desc"><ul>${o.desc.split(" · ").map(x=>`<li>${x.trim()}</li>`).join("")}</ul></div>
         ${o.macro?`<div class="opt-macro">${o.macro}</div>`:''}
       </div>
     `).join('');
