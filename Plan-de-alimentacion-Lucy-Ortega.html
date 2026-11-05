@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plan Nutricional · Lucy Ortega · JSMO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#001F3D;
+  --navy-soft:#0A3763;
+  --cream:#EFE7DB;
+  --green:#2A7A4A;
+  --green-light:#E4F0E8;
+  --gold:#C9A84C;
+  --gold-light:#FBF3E1;
+  --card:#ffffff;
+  --muted:#5B6B78;
+  --border:#E2D9C9;
+  --shadow:0 4px 18px rgba(0,31,61,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Poppins',sans-serif;background:var(--cream);color:var(--navy);line-height:1.5;min-height:100vh;font-size:15px}
+.header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-soft) 100%);color:#fff;padding:2rem 1.25rem 1.6rem;text-align:center}
+.header-badge{display:inline-block;background:rgba(201,168,76,.18);border:1px solid var(--gold);color:var(--gold);border-radius:999px;padding:.25rem .9rem;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:.8rem}
+.header h1{font-size:1.8rem;font-weight:800;letter-spacing:-.01em}
+.header-sub{opacity:.85;font-size:.88rem;margin-top:.35rem;font-weight:500}
+.header-note{margin-top:1rem;font-size:.75rem;opacity:.65}
+.section-intro{padding:1.1rem 1rem 0}
+.intro-card{background:var(--card);border-radius:16px;padding:1.2rem 1.25rem;box-shadow:var(--shadow);border:1.5px solid var(--border)}
+.intro-greeting{font-size:1.05rem;font-weight:800;color:var(--navy);margin-bottom:.6rem}
+.intro-text{font-size:.85rem;color:var(--muted);line-height:1.65;margin-bottom:.6rem}
+.intro-text:last-child{margin-bottom:0}
+.intro-signoff{margin-top:.8rem;font-size:.8rem;color:var(--navy-soft);font-weight:600;font-style:italic}
+.objetivo-list{list-style:none;margin-top:.2rem}
+.objetivo-item{display:flex;gap:.6rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.83rem;color:var(--navy-soft);line-height:1.5}
+.objetivo-item:last-child{border-bottom:none}
+.objetivo-check{color:var(--green);font-weight:800;flex-shrink:0}
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.6rem;margin-top:.9rem}
+.comp-card{background:var(--cream);border-radius:12px;padding:.75rem .85rem;border:1px solid var(--border)}
+.comp-label{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--navy-soft);margin-bottom:.5rem}
+.comp-row{display:flex;align-items:center;justify-content:space-between;gap:.35rem}
+.comp-val{text-align:center;flex:1}
+.comp-val strong{display:block;font-size:1.1rem;font-weight:800;color:var(--navy)}
+.comp-val.ideal strong{color:var(--green)}
+.comp-val span{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.comp-arrow{color:var(--gold);font-size:1rem;font-weight:800;flex-shrink:0}
+.comp-source{font-size:.65rem;font-style:italic;color:var(--muted);margin-top:.7rem;display:block}
+.hydration-card{display:flex;flex-direction:column;gap:.7rem;align-items:center}
+.hydration-count{font-size:.85rem;color:var(--navy-soft);font-weight:700}
+.hydration-count strong{color:var(--green);font-size:1.15rem}
+.hydration-drops{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center}
+.drop{font-size:1.6rem;cursor:pointer;opacity:.22;transition:opacity .15s,transform .1s;user-select:none;-webkit-tap-highlight-color:transparent}
+.drop.filled{opacity:1}
+.drop:active{transform:scale(1.2)}
+.meal-check{width:26px;height:26px;min-width:26px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:transparent;cursor:pointer;flex-shrink:0;transition:all .15s;background:#fff}
+.meal-check.checked{background:var(--green);border-color:var(--green);color:#fff}
+.meal-card.done{opacity:.55}
+.meal-card.done .meal-title{text-decoration:line-through}
+.sticky-bar{position:sticky;top:0;z-index:40;background:var(--cream);padding:.75rem 1rem .5rem;border-bottom:1px solid var(--border)}
+.day-selector{display:flex;gap:.5rem;justify-content:center;max-width:520px;margin:0 auto;flex-wrap:wrap}
+.day-btn{flex:1;min-width:80px;padding:.55rem .4rem;border:2px solid var(--border);border-radius:10px;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .18s;background:#fff;color:var(--muted);text-align:center;font-family:inherit}
+.day-btn small{display:block;font-size:.63rem;font-weight:500;opacity:.75;margin-top:1px}
+.day-btn.active{color:#fff;border-color:transparent}
+.day-info-wrap{padding:.9rem 1rem 0}
+.day-info{border-radius:14px;padding:1rem 1.1rem;border:1.5px solid}
+.day-info-top{display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem}
+.day-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.day-info-title{font-size:1rem;font-weight:800}
+.day-info-desc{font-size:.8rem;color:var(--muted);margin-bottom:.75rem;line-height:1.45}
+.macro-row{display:flex;flex-wrap:wrap;gap:.45rem}
+.macro-chip{background:#fff;border-radius:9px;padding:.35rem .6rem;font-size:.76rem;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.macro-chip strong{display:block;font-size:.94rem;font-weight:800;line-height:1.1}
+.macro-chip span{color:var(--muted);font-size:.68rem}
+.ref-tag{font-size:.65rem;font-style:italic;color:var(--muted);margin-top:.5rem;display:block}
+.section{padding:1.1rem 1rem 0}
+.section-title{font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--navy-soft);margin-bottom:.7rem;padding-left:.1rem}
+.meal-card{background:var(--card);border-radius:16px;margin-bottom:.7rem;box-shadow:var(--shadow);overflow:hidden;border:1.5px solid var(--border)}
+.meal-header{display:flex;align-items:center;gap:.7rem;padding:.85rem 1rem;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+.meal-lbl{font-size:.6rem;font-weight:900;letter-spacing:.08em;padding:.22rem .55rem;border-radius:6px;color:#fff;flex-shrink:0;text-transform:uppercase}
+.meal-title-wrap{flex:1;min-width:0}
+.meal-title{font-size:.95rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meal-time{font-size:.74rem;color:var(--muted);margin-top:.05rem}
+.meal-tags{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.3rem}
+.tag{background:var(--cream);border:1px solid var(--border);color:var(--navy-soft);font-size:.65rem;font-weight:700;padding:.12rem .45rem;border-radius:999px}
+.meal-chevron{color:var(--muted);font-size:.9rem;transition:transform .2s;flex-shrink:0}
+.meal-chevron.open{transform:rotate(180deg)}
+.meal-body{display:none;padding:0 1rem 1rem}
+.meal-body.open{display:block}
+.meal-tip{background:var(--cream);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:.55rem .7rem;font-size:.77rem;color:var(--navy-soft);margin-bottom:.75rem;line-height:1.45}
+.opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:.45rem}
+@media(max-width:420px){.opt-grid{grid-template-columns:1fr}}
+.opt-card{border:1.5px solid var(--border);border-radius:12px;padding:.65rem .75rem;cursor:pointer;transition:all .15s;background:#fff}
+.opt-card:hover,.opt-card:focus{border-color:var(--green);background:var(--green-light);outline:none}
+.opt-card.selected{border-color:var(--green);background:var(--green-light)}
+.opt-num{font-size:.62rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.06em}
+.opt-name{font-size:.86rem;font-weight:700;color:var(--navy);margin-top:.1rem}
+.opt-desc{font-size:.74rem;color:var(--muted);margin-top:.3rem;line-height:1.5}
+/* 28-10-2026 — Juanse: "la descripcion se ve desordenada y puede ser dificil de
+   entender... que cada alimento tenga su espacio". Antes los alimentos iban
+   todos pegados separados por un punto medio. Ahora cada uno es un renglon. */
+.opt-desc ul{list-style:none;margin:0;padding:0}
+.opt-desc li{position:relative;padding-left:.72rem;margin:.16rem 0}
+.opt-desc li::before{content:"";position:absolute;left:0;top:.52em;
+  width:.26rem;height:.26rem;border-radius:50%;background:var(--muted);opacity:.55}
+.opt-macro{font-size:.7rem;color:var(--green);font-weight:700;margin-top:.35rem}
+.totals-bar{display:flex;gap:.5rem;flex-wrap:wrap;background:var(--navy);border-radius:14px;padding:.9rem 1rem;margin:.9rem 1rem 0;color:#fff}
+.totals-item{flex:1;min-width:70px;text-align:center}
+.totals-item strong{display:block;font-size:1.05rem;font-weight:800;color:var(--gold)}
+.totals-item span{font-size:.65rem;opacity:.75;text-transform:uppercase;letter-spacing:.05em}
+.special-card{background:var(--card);border-radius:16px;padding:1.1rem 1.1rem;margin-bottom:.75rem;box-shadow:var(--shadow);border:1.5px solid var(--border)}
+.special-card h3{font-size:.98rem;font-weight:800;color:var(--navy);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
+.supp-item{display:flex;gap:.75rem;align-items:flex-start;padding:.7rem 0;border-bottom:1px solid var(--border)}
+.supp-item:last-child{border-bottom:none}
+.supp-icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;background:var(--cream)}
+.supp-icon.critical{background:var(--gold-light)}
+.supp-body{flex:1;min-width:0}
+.supp-name{font-size:.9rem;font-weight:700}
+.supp-badge{display:inline-block;font-size:.6rem;font-weight:800;padding:.08rem .38rem;border-radius:4px;margin-left:.35rem;vertical-align:middle;background:var(--gold-light);color:#8a6d1f}
+.supp-dose{font-size:.78rem;color:var(--green);font-weight:700;margin-top:.15rem}
+.supp-note{font-size:.74rem;color:var(--muted);margin-top:.15rem;line-height:1.45}
+.nota-card{background:var(--gold-light);border:1.5px solid var(--gold);border-radius:12px;padding:.9rem 1rem;margin-bottom:.55rem}
+.nota-card.green{background:var(--green-light);border-color:var(--green)}
+.nota-card h4{font-size:.83rem;font-weight:800;margin-bottom:.35rem;color:var(--navy)}
+.nota-card p{font-size:.78rem;color:var(--muted);line-height:1.55}
+.footer{text-align:center;padding:2rem 1rem 1.5rem;color:var(--muted);font-size:.76rem;line-height:1.7}
+.footer strong{color:var(--navy)}
+.footer .brand{color:var(--gold);font-weight:800;letter-spacing:.04em}
+.allergy-alert{background:var(--navy);border-left:5px solid var(--gold);margin:0;padding:.85rem 1.1rem;display:flex;gap:.7rem;align-items:flex-start;color:#fff}
+.allergy-icon{font-size:1.2rem;flex-shrink:0}
+.allergy-body strong{display:block;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:.25rem}
+.allergy-list{font-size:.82rem;line-height:1.5;opacity:.95}
+.appointment-box{margin-top:1.1rem;display:inline-flex;align-items:center;gap:.9rem;background:rgba(255,255,255,.1);border-radius:14px;padding:.7rem 1.1rem;border:1px solid rgba(255,255,255,.2)}
+.appt-countdown{text-align:center}
+.appt-countdown strong{font-size:1.7rem;font-weight:900;color:var(--gold);display:block;line-height:1}
+.appt-countdown span{font-size:.62rem;opacity:.75;text-transform:uppercase;letter-spacing:.06em}
+.appt-info{text-align:left;font-size:.78rem;opacity:.9}
+.appt-info strong{display:block;font-size:.85rem;font-weight:700}
+.action-toolbar{display:flex;justify-content:center;gap:.6rem;padding:.9rem 1rem 0;flex-wrap:wrap}
+.action-btn{border:1.5px solid var(--navy);color:var(--navy);background:#fff;border-radius:10px;padding:.5rem 1rem;font-size:.78rem;font-weight:700;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;transition:all .15s}
+.action-btn:hover{background:var(--navy);color:#fff}
+.shopping-cat{margin-bottom:.9rem}
+.shopping-cat:last-child{margin-bottom:0}
+.shopping-cat-title{font-size:.72rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem}
+.shopping-list{list-style:none}
+.shopping-item{display:flex;align-items:center;gap:.6rem;padding:.4rem 0;border-bottom:1px solid var(--border);font-size:.83rem;color:var(--navy-soft);cursor:pointer;user-select:none}
+.shopping-item:last-child{border-bottom:none}
+.shopping-check{width:20px;height:20px;min-width:20px;border-radius:6px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.68rem;color:transparent;transition:all .15s}
+.shopping-check.checked{background:var(--green);border-color:var(--green);color:#fff}
+.shopping-item.checked span.label{text-decoration:line-through;opacity:.55}
+.whatsapp-card{background:linear-gradient(135deg,var(--green) 0%,#1E5C38 100%);border-radius:16px;padding:1.3rem 1.2rem;text-align:center;color:#fff;box-shadow:var(--shadow)}
+.whatsapp-card p{font-size:.85rem;opacity:.95;margin-bottom:.9rem;line-height:1.5}
+.rec-row{display:flex;gap:.65rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--border)}
+.rec-row:last-child{border-bottom:none}
+.rec-icon{font-size:1.05rem;flex-shrink:0;width:24px;text-align:center;line-height:1.4}
+.rec-text{flex:1;min-width:0;font-size:.81rem;color:var(--navy-soft);line-height:1.55}
+.rec-text b{color:var(--navy)}
+.rec-row.destacada{background:var(--gold-light);border-radius:10px;padding:.6rem .7rem;border:1px solid var(--gold);margin:.3rem 0}
+.rec-row.destacada .rec-text{color:var(--navy)}
+.pg-group{margin-bottom:1rem}
+.pg-group:last-child{margin-bottom:0}
+.pg-group-title{font-size:.72rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.45rem}
+.pg-row{display:flex;gap:.7rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--border)}
+.pg-row:last-child{border-bottom:none}
+.pg-icon{font-size:1.15rem;flex-shrink:0;width:26px;text-align:center;line-height:1.3}
+.pg-body{flex:1;min-width:0}
+.pg-name{font-size:.84rem;font-weight:700;color:var(--navy)}
+.pg-eq{font-size:.76rem;color:var(--green);font-weight:700;margin-top:.1rem}
+.pg-note{font-size:.73rem;color:var(--muted);margin-top:.12rem;line-height:1.45}
+.faq-item{background:var(--card);border:1.5px solid var(--border);border-radius:12px;margin-bottom:.5rem;overflow:hidden;box-shadow:var(--shadow)}
+.faq-q{display:flex;gap:.6rem;align-items:center;padding:.75rem .9rem;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;font-size:.84rem;font-weight:700;color:var(--navy)}
+.faq-q .faq-mark{color:var(--gold);font-weight:900;flex-shrink:0}
+.faq-chev{margin-left:auto;color:var(--muted);font-size:.85rem;transition:transform .2s;flex-shrink:0}
+.faq-chev.open{transform:rotate(180deg)}
+.faq-a{display:none;padding:0 .9rem .85rem 2.1rem;font-size:.79rem;color:var(--muted);line-height:1.6}
+.faq-a.open{display:block}
+.faq-a strong{color:var(--navy-soft)}
+.resto-intro{background:var(--green-light);border:1.5px solid var(--green);border-radius:12px;padding:.85rem 1rem;margin-bottom:.7rem;font-size:.79rem;color:var(--navy-soft);line-height:1.6}
+.resto-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:.9rem 1rem;margin-bottom:.55rem;box-shadow:var(--shadow)}
+.resto-head{display:flex;align-items:center;gap:.55rem;margin-bottom:.5rem}
+.resto-logo{width:32px;height:32px;border-radius:9px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0}
+.resto-name{font-size:.92rem;font-weight:800;color:var(--navy)}
+.resto-kind{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+.resto-dish{display:flex;gap:.5rem;align-items:flex-start;padding:.38rem 0;font-size:.79rem;color:var(--navy-soft);line-height:1.45;border-bottom:1px solid var(--border)}
+.resto-dish:last-of-type{border-bottom:none}
+.resto-dish .bullet{color:var(--green);font-weight:900;flex-shrink:0}
+.resto-dish b{color:var(--navy)}
+.resto-ask{background:var(--cream);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:.5rem .65rem;font-size:.75rem;color:var(--navy-soft);margin-top:.55rem;line-height:1.5}
+.resto-ask b{color:var(--navy)}
+.whatsapp-btn{display:inline-flex;align-items:center;gap:.5rem;background:#fff;color:var(--green);font-weight:800;font-size:.85rem;padding:.65rem 1.3rem;border-radius:999px;text-decoration:none}
+@media print{
+  .sticky-bar{position:static}
+  .action-toolbar, .meal-check, .drop, .shopping-check{display:none!important}
+  .meal-body, .faq-a{display:block!important}
+  .faq-chev{display:none}
+  .meal-chevron{display:none}
+  .meal-card{break-inside:avoid}
+  body{background:#fff}
+}
+
+/* ── REGISTRO DIARIO (23-10-2026) ─────────────────────────────────── */
+.opt-peso{display:inline-block;font-size:.60rem;font-weight:800;letter-spacing:.04em;
+  text-transform:uppercase;padding:2px 8px;border-radius:999px;margin-left:8px;vertical-align:middle}
+.opt-peso.liviana{background:#e8f4ff;color:#1b5e8a}
+.opt-peso.media{background:#eef0f2;color:#5a6672}
+.opt-peso.completa{background:#fff2e0;color:#8a5a1b}
+#regCard{margin:26px 0;padding:22px;border-radius:16px;background:#fff;
+  border:1px solid #e6e8ea;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+#regCard h3{margin:0 0 6px;font-size:1.05rem}
+#regCard .sub{color:#6b7580;font-size:.86rem;margin-bottom:18px;line-height:1.6}
+.regDia{border-top:1px solid #f0f1f3;padding-top:16px;margin-top:4px}
+.regFila{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:11px}
+.regFila>span.lbl{font-size:.84rem;font-weight:700;min-width:104px;color:#49535d}
+.regOpt{border:1px solid #dfe3e6;background:#fff;border-radius:9px;padding:7px 13px;
+  font-size:.82rem;cursor:pointer;font-family:inherit;color:#49535d}
+.regOpt.on{background:#123a5c;color:#fff;border-color:#123a5c;font-weight:700}
+#regLista{font-size:.86rem;line-height:1.7;max-height:210px;overflow-y:auto;
+  border-top:1px solid #f0f1f3;padding-top:12px;margin-top:16px}
+#regLista .f{font-weight:700;margin-top:10px}
+#regLista .it{color:#49535d;padding-left:14px}
+#regResumen{margin-top:14px;padding:13px 15px;background:#f7f9fa;border-radius:11px;
+  font-size:.85rem;line-height:1.7}
+#regBtns{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
+#regBtns button{border:0;border-radius:10px;padding:11px 17px;font-weight:700;
+  font-size:.86rem;cursor:pointer;font-family:inherit}
+.regMain{background:#123a5c;color:#fff}
+.regGhost{background:#eef0f2;color:#49535d}
+@media print{#regCard{display:none}}
+
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">Plan Nutricional Deportivo</div>
+  <h1 id="patientName">Lucy Ortega</h1>
+  <div class="header-sub" id="patientSub">Gimnasio cinco días · Bajarle al colesterol</div>
+  <div class="header-note" id="patientNote"></div>
+  <div id="appointmentBox"></div>
+</div>
+
+<div id="allergyAlert" style="display:none"></div>
+
+<div class="action-toolbar">
+  <button class="action-btn" onclick="window.print()">🖨️ Exportar / Imprimir PDF</button>
+</div>
+
+<div class="section-intro" id="introSectionWrap" style="display:none">
+  <div class="intro-card" id="introCard"></div>
+</div>
+
+<div class="section" id="objectivesSectionWrap" style="display:none">
+  <div class="section-title">🎯 Objetivos y Composición Corporal</div>
+  <div class="special-card" id="objectivesCard"></div>
+</div>
+
+<div class="section" id="hydrationSectionWrap" style="display:none">
+  <div class="section-title">💧 Hidratación de Hoy</div>
+  <div class="special-card hydration-card">
+    <div class="hydration-count"><strong id="hydrationCount">0</strong> / <span id="hydrationGoalLbl"></span> vasos</div>
+    <div class="hydration-drops" id="hydrationDrops"></div>
+  </div>
+</div>
+
+<div class="sticky-bar">
+  <div class="day-selector" id="daySelector"></div>
+</div>
+
+<div class="day-info-wrap" id="dayInfoWrap"></div>
+
+<div class="section">
+  <div class="section-title">Plan de Alimentación · 4 Opciones por Tiempo de Comida</div>
+  <div id="meals-container"></div>
+<div id="regCard">
+  <h3>📓 Tu registro diario</h3>
+  <div class="sub">Dos cosas, y las dos toman segundos. Cada vez que toques la opci&oacute;n que escogiste en un tiempo de comida, queda guardada ac&aacute; con la fecha. Y abajo marcas c&oacute;mo te fue el d&iacute;a. En el control lo revisamos juntos: as&iacute; el ajuste se hace con lo que de verdad pas&oacute;, no con lo que alcancemos a recordar.</div>
+  <div class="regDia">
+    <div class="regFila"><span class="lbl">&#9889; Energ&iacute;a</span><span id="regEnergia"></span></div>
+    <div class="regFila"><span class="lbl">&#127860; Hambre</span><span id="regHambre"></span></div>
+    <div class="regFila"><span class="lbl">&#128701; Ba&ntilde;o</span><span id="regBano"></span></div>
+    <div class="regFila"><span class="lbl">&#127769; Sue&ntilde;o</span><span id="regSueno"></span></div>
+  </div>
+  <div id="regLista"></div>
+  <div id="regResumen"></div>
+  <div id="regBtns">
+    <button id="regCopiarBtn" class="regMain" onclick="regCopiar()">Copiar para envi&aacute;rselo a Juan Sebasti&aacute;n</button>
+    <button class="regGhost" onclick="regBorrar()">Borrar registro</button>
+  </div>
+</div>
+
+</div>
+
+<div class="section" id="suppSection" style="display:none">
+  <div class="section-title">💊 Suplementación</div>
+  <div class="special-card" id="suppContainer"></div>
+</div>
+
+<div class="section" id="notesSection" style="display:none">
+  <div class="section-title">📝 Notas Clínicas</div>
+  <div id="notesContainer"></div>
+</div>
+
+<div class="section" id="shoppingSection" style="display:none">
+  <div class="section-title">🛒 Lista de Mercado Semanal</div>
+  <div class="special-card" id="shoppingContainer"></div>
+</div>
+
+<div class="section" id="recsSection" style="display:none">
+  <div class="section-title">✅ Recomendaciones Generales</div>
+  <div class="special-card" id="recsContainer"></div>
+</div>
+
+<div class="section" id="portionSection" style="display:none">
+  <div class="section-title">🥄 Guía de Porciones</div>
+  <div class="special-card" id="portionContainer"></div>
+</div>
+
+<div class="section" id="faqSection" style="display:none">
+  <div class="section-title">❓ Preguntas Frecuentes</div>
+  <div id="faqContainer"></div>
+</div>
+
+<div class="section" id="restoSection" style="display:none">
+  <div class="section-title">🍽️ Comer Afuera · Restaurantes</div>
+  <div id="restoContainer"></div>
+</div>
+
+<div class="section" id="whatsappSection" style="display:none;padding-bottom:1rem">
+  <div class="whatsapp-card">
+    <p>¿Dudas sobre tu plan? Escríbeme directo.</p>
+    <a class="whatsapp-btn" id="whatsappBtn" href="#" target="_blank" rel="noopener">💬 Escribir por WhatsApp</a>
+  </div>
+</div>
+
+<div class="footer">
+  Elaborado por <strong>Juan Sebastián Muñoz Ortiz</strong><br>
+  <span class="brand">JSMO Nutricionista Deportivo</span><br>
+  📱 317 549 9759 · @juansenutricionista
+</div>
+
+<script>
+/* 1) DATOS DEL PACIENTE */
+document.getElementById('patientName').textContent = "Lucy Ortega";
+document.getElementById('patientSub').textContent = "Gimnasio cinco días · Bajarle al colesterol";
+document.getElementById('patientNote').textContent = "Un solo tipo de día. Escoge una opción de cada tiempo y listo.";
+document.title = 'Plan Nutricional · Lucy Ortega · JSMO';
+
+/* 2) ALERGIAS Y RESTRICCIONES */
+const ALLERGIES = ["Sin alergias alimentarias", "El único lácteo del plan es el kéfir, que es el que te cae bien", "El legumbre del plan es el garbanzo", "Las proteínas son huevo, pollo, carne de res, tilapia, salmón y atún en aceite de oliva", "Las verduras son lechuga, tomate, pepino, zanahoria, cebolla y las que vengan en la sopa"];
+
+/* 3) INTRODUCCIÓN / SALUDO */
+const PATIENT_INTRO = {"greeting": "¡Hola, Lucy!", "paragraphs": ["Lo primero que quiero decirte es que <b>ya vienes haciendo bien la parte más difícil</b>. Levantarte a las 6 y estar en el gimnasio cinco días a la semana, más la caminata del sábado, es más de lo que hace la mayoría de la gente — y eso ya está protegiendo tu cuerpo todos los días, aunque no lo veas en la báscula.", "Tú me dijiste que lo que más te preocupa es <b>el colesterol</b>, y ese es el objetivo de este plan. La buena noticia es que el colesterol se trabaja muy bien desde la comida, y no quitándote cosas: metiendo otras. La avena, el kiwi, el garbanzo, las almendras, el aguacate, el aceite de oliva y el pescado son los que hacen ese trabajo, y por eso vas a verlos repartidos en todo el plan.", "Lo otro que hay que arreglar no es <i>qué</i> comes, sino <b>a qué horas</b>. Desayunas a las 7 y almuerzas a las 12:30: son cinco horas seguidas sin nada. Y del almuerzo a la cena pasan casi siete, porque a media tarde no comes. Cuando uno pasa tanto tiempo sin comer, llega con mucha más hambre a la comida siguiente y come más de lo que piensa. No es falta de voluntad: le pasa a todo el mundo.", "Por eso este plan te pone <b>dos comidas nuevas</b>, una a las 10 de la mañana y otra a las 4 de la tarde. Son pequeñas, caben en el bolso y no necesitan nevera. Y el almuerzo que compras se queda igual: más abajo te dejo escrito, con las palabras exactas, cómo pedirlo para que juegue a tu favor.", "Esto no es una dieta de las de sufrir. Es un plan para que te sientas con energía, duermas mejor y en el control veamos el examen mejor que hoy. Vamos con calma y con constancia, que es lo que de verdad funciona."]};
+
+/* 4) OBJETIVOS Y COMPOSICIÓN CORPORAL (ISAK pendiente) */
+const OBJECTIVES = ["Bajarle al colesterol desde la comida, que es tu objetivo principal", "Meter la media mañana y la media tarde, que son los dos huecos del día", "Pedir el almuerzo corriente de otra manera, sin dejar de pedirlo", "Defender tu músculo, que a los 65 y entrenando es lo que más hay que cuidar", "Ir al baño todos los días, no de vez en cuando"];
+const BODY_COMP = [{"label": "Medida de la cintura", "current": "83,5 cm", "ideal": "79-80 cm"}, {"label": "Grasa medida con el calibrador", "current": "137 mm", "ideal": "bajar 15 a 20 mm"}, {"label": "Músculo", "current": "23,12 kg", "ideal": "mantenerlo o subirlo"}];
+
+/* 5) META DE HIDRATACIÓN */
+const HYDRATION_GOAL = 8;
+
+/* 6) PRÓXIMA CITA */
+const NEXT_APPOINTMENT = {"date": "2026-12-04", "label": "Control y nueva antropometría"};
+
+/* 7) TIPOS DE DÍA */
+const DAY_TYPES = [{"key": "alta", "label": "🍽️ Plan diario", "days": "Todos los días", "icon": "🍽️", "color": "blue", "title": "🍽️ Plan diario", "desc": "Cinco tiempos. El desayuno es el único que preparas en casa, así que es el más completo. La media mañana y la media tarde son nuevas y son las dos que cambian el día. El almuerzo es el que pides. Y la cena es liviana porque te acuestas a las 9.", "kcal": "~1.270 kcal", "cho": "~129 g", "choPerKg": "1,8 g/kg", "pro": "~102 g (1,4 g/kg)", "fat": "~43 g (0,59 g/kg)", "ref": "Gimnasio 6:00-7:00 · Desayuno 7:15 · Media mañana 10:00 · Almuerzo 12:30 · Media tarde 4:00 · Cena 7:00"}];
+
+/* 8) TIEMPOS DE COMIDA */
+const PESOS = {"desayuno|alta|0": "completa", "desayuno|alta|1": "media", "desayuno|alta|2": "liviana", "desayuno|alta|3": "liviana", "am|alta|0": "media", "am|alta|1": "media", "am|alta|2": "liviana", "am|alta|3": "media", "almuerzo|alta|0": "media", "almuerzo|alta|1": "media", "almuerzo|alta|2": "media", "almuerzo|alta|3": "media", "pm|alta|0": "completa", "pm|alta|1": "liviana", "pm|alta|2": "completa", "pm|alta|3": "liviana", "cena|alta|0": "completa", "cena|alta|1": "media", "cena|alta|2": "media", "cena|alta|3": "liviana"};
+const MEALS = [{"id": "desayuno", "alta": {"lbl": "Desayuno", "title": "🍳 Desayuno", "time": "7:15 am, al volver del gimnasio", "tags": ["El único que haces en casa", "Después del gimnasio"], "tip": "Es el único tiempo que preparas tú, así que vale la pena que sea el más completo. Tus dos huevos duros se quedan: funcionan y ya son costumbre.", "opts": [{"name": "Tus huevos duros con arepa", "desc": "2 huevos duros (100 g) · 1 arepa de maíz tipo tela (40 g) · 1 tajada de aguacate (30 g) · 1 vaso de kéfir (200 g) · 1 taza de café"}, {"name": "Avena con kiwi y almendras", "desc": "40 g de avena en hojuelas cocida en agua · 1 huevo duro (50 g) · 1 kiwi (82 g) · 6 almendras (7 g) · 1 taza de café"}, {"name": "Huevos pericos con arroz", "desc": "2 huevos en pericos (100 g) con tomate y cebolla larga · 4 cdas de arroz cocido (50 g) · 1 taza de café"}, {"name": "Kéfir con avena y fresas", "desc": "1 vaso de kéfir (200 g) · 4 cdas de avena en hojuelas (24 g) · 4 fresas (48 g) · 4 almendras"}]}, "media": null, "baja": null, "competencia": null}, {"id": "am", "alta": {"lbl": "Media mañana", "title": "☕ Media mañana", "time": "10:00 am, en la oficina", "tags": ["Nueva", "Cabe en el bolso"], "tip": "Esta no la estabas haciendo. Entre el desayuno y el almuerzo pasan cinco horas, y ese hueco es el que hace que llegues con hambre a pedir el corriente.", "opts": [{"name": "Kéfir con arándanos", "desc": "1 vaso de kéfir (200 g) · 10 arándanos (15 g)"}, {"name": "Palito de queso con mandarina", "desc": "1 palito de queso bajo en grasa · 1 mandarina (105 g)"}, {"name": "Tostadas de arroz con yogurt y mango", "desc": "2 tostadas de arroz (18 g) · 2 cdas de yogurt griego San Martín (25 g) · 3 cdas de mango picado (45 g)"}, {"name": "Huevitos de codorniz con kiwi", "desc": "5 huevos de codorniz (50 g) · 1 kiwi (82 g)"}]}, "media": null, "baja": null, "competencia": null}, {"id": "almuerzo", "alta": {"lbl": "Almuerzo", "title": "🍽️ Almuerzo", "time": "12:30 pm", "tags": ["El que pides en la calle", "Mira cómo pedirlo"], "tip": "Este lo pides todos los días, así que el plan no es que dejes de pedirlo: es que lo pidas distinto. Más abajo, en la sección de restaurantes, está exactamente cómo.", "opts": [{"name": "Tu almuerzo corriente, pedido bien", "desc": "1 taza de sopa de verduras · 150 g de pechuga de pollo a la plancha · 5 cdas de arroz cocido (62 g) · 1 taza de ensalada de lechuga, tomate y pepino · 1 cdita de aceite de oliva"}, {"name": "Trucha con papa parda y ensalada", "desc": "150 g de trucha a la plancha · ½ papa parda cocida (75 g) con cáscara · 1 taza de ensalada de lechuga, tomate y pepino · 1 cdita de aceite de oliva"}, {"name": "Garbanzos con pollo desmechado", "desc": "150 g de pollo desmechado · ½ taza de garbanzos cocidos (120 g) · 1 taza de ensalada de lechuga, tomate y pepino · 1 cdita de aceite de oliva"}, {"name": "Carne sudada con yuca", "desc": "150 g de carne de res en sudado · 1 trozo de yuca cocida (80 g) · 1 taza de ensalada de lechuga, tomate y pepino"}]}, "media": null, "baja": null, "competencia": null}, {"id": "pm", "alta": {"lbl": "Media tarde", "title": "🍎 Media tarde", "time": "4:00 pm", "tags": ["La otra nueva", "Te sostiene hasta la cena"], "tip": "Tú me dijiste que a esta hora no comes nada. Por eso llegas a la cena con más hambre de la que crees. Acá entran el kiwi, los arándanos y las fresas, que son tus favoritos.", "opts": [{"name": "Wrap de atún", "desc": "1 tortilla integral (36 g) · ½ lata de atún en aceite de oliva escurrido (60 g) · tomate y cebolla picados · 1 taza de café"}, {"name": "Pera con nueces", "desc": "1 pera (133 g) · 6 nueces (12 g) · 1 taza de café"}, {"name": "Yogurt Finesse con rosquillas caleñas", "desc": "1 vaso de yogurt Finesse (200 g) · 1 paquete de rosquillas caleñas (30 g)"}, {"name": "Hummus con bastones de zanahoria", "desc": "3 cdas de hummus (45 g) · 1 zanahoria en bastones"}]}, "media": null, "baja": null, "competencia": null}, {"id": "cena", "alta": {"lbl": "Cena", "title": "🌙 Cena", "time": "7:00 pm", "tags": ["Liviana", "Te acuestas a las 9"], "tip": "Liviana a propósito, porque te acuestas a las 9. Tu pollo asado y tu arepa con chocolate se quedan: el chocolate va en agua y sin azúcar, que es como lo tomas.", "opts": [{"name": "Tu pollo asado con ensalada", "desc": "2 perniles de pollo asados sin piel (120 g) · 1 papa parda cocida (150 g) con cáscara · 1 taza de ensalada de lechuga, tomate y pepino · 1 cdita de aceite de oliva"}, {"name": "Salmón al horno con puré", "desc": "120 g de salmón al horno · 3 cdas de puré de papa (45 g) · 1 taza de verduras al vapor · 1 cdita de aceite de oliva · 1 taza de ensalada de lechuga, tomate y pepino"}, {"name": "Tu arepa con huevo y chocolate", "desc": "1 arepa de maíz tipo tela (40 g) · 2 huevos (100 g) y 1 clara en cacerola (33 g) con ½ tomate picado y 1 puñado de espinaca · 1 taza de chocolate en agua (10 g)"}, {"name": "Montadito de pollo desmechado", "desc": "½ arepa de maíz tipo tela (20 g) · 140 g de pollo desmechado guisado · 2 cdas de pico de gallo"}]}, "media": null, "baja": null, "competencia": null}];
+
+/* 9) SUPLEMENTACIÓN */
+const SUPPLEMENTS = [{"icon": "🐟", "name": "Omega 3", "dose": "2 g al día (EPA + DHA), con el almuerzo", "note": "Me preguntaste si lo podías retomar: <b>sí</b>, y me parece buena idea. Dos cosas para que quede claro, porque son importantes: el omega 3 baja sobre todo los <b>triglicéridos</b>, no tanto el colesterol LDL — así que ayuda, pero no es él el que va a hacer todo el trabajo. Y lo que de verdad te va a mover el colesterol en este plan es la avena, el kiwi, el garbanzo, las almendras y el pescado. El omega 3 acompaña."}, {"icon": "💪", "name": "Creatina monohidratada", "dose": "3 g diarios, a cualquier hora, todos los días", "note": "Esta te la propongo y la conversamos en el control si quieres pensarla. A los 65, entrenando fuerza cinco veces por semana con tu entrenador, es el suplemento que más te rinde: ayuda a que la fuerza suba y a defender el músculo, que es justo lo que no queremos perder mientras baja la adiposidad. No tiene azúcar, no engorda y se toma también los días que no entrenas."}, {"icon": "🌿", "name": "Lo que ya haces y se queda", "dose": "El café sin azúcar y tus 4 tintos", "note": "No hay nada que quitar acá. El café sin azúcar está perfecto y no interfiere con nada del plan. Lo único que te pido es que <b>el agua suba</b>: hoy tomas un vaso con cada comida, y con las dos comidas nuevas ya te quedan cinco. Apunta a ocho a lo largo del día."}];
+
+/* 10) NOTAS CLÍNICAS */
+const NOTES = [{"title": "Por qué este plan le baja al colesterol", "text": "Porque no es un plan de «comer menos»: tiene metidas, a propósito, las cosas que de verdad mueven ese número.<br><br><b>La fibra soluble</b> es la principal, y por eso la avena aparece en el desayuno y en la media mañana, el garbanzo en el almuerzo y el kiwi en tres tiempos distintos. Esa fibra atrapa parte de la grasa en el intestino y se la lleva.<br><br><b>Las almendras todos los días</b> — están en casi todas las opciones y no son relleno: son uno de los alimentos con mejor evidencia para el perfil de lípidos.<br><br><b>Cambiar la grasa, no quitarla.</b> El aceite de oliva y el aguacate se quedan; la que cuidamos es la del chicharrón, la costilla y las carnes muy grasosas. Y el pollo siempre <b>sin piel</b>.<br><br><b>Pescado dos o tres veces por semana.</b> Te gustan el salmón, la tilapia y el atún, así que esa parte ya la tenías ganada."}, {"title": "Sobre la pastilla", "text": "Me contaste que no quieres tomarla y que tu hija insiste. Yo no soy quien decide eso, y este plan <b>no está hecho para reemplazar un medicamento</b>: eso lo decides tú con tu médico, con el examen en la mano.<br><br>Lo que sí te puedo decir es que la alimentación mueve el colesterol de verdad, y que <b>funciona igual de bien tomes la pastilla o no la tomes</b>. Las dos cosas van para el mismo lado; no compiten.<br><br>Así que mi propuesta es sencilla: hagamos este plan, y en el control miramos el examen nuevo al lado del de ahora. Con ese número en la mesa la conversación con tu médico y con tu hija se vuelve mucho más fácil para todos, incluida tú."}, {"title": "El almuerzo de la calle, que es el que más pesa", "text": "Tú almuerzas corriente comprado <b>todos los días</b>. Ese es, de lejos, el tiempo de comida que más influye en cómo te va — y es el que menos controlas.<br><br>No te voy a pedir que empieces a llevar lonchera. Lo que hay que cambiar es <b>cómo lo pides</b>, y son tres frases que se dicen en diez segundos. Te las dejé escritas en la sección de <b>«Comer afuera»</b>, más abajo: ábrela, léela una vez, y de ahí en adelante sale sola.<br><br>Si solo logras aplicar esa sección y nada más del plan, ya habrías hecho la mitad del trabajo."}, {"title": "Las dos comidas nuevas", "text": "La media mañana a las 10 y la media tarde a las 4. Son las dos que no estabas haciendo, y son las que más van a cambiar cómo te sientes.<br><br>No están ahí para sumar comida: están para que <b>no llegues con hambre acumulada</b> al almuerzo que pides ni a la cena. Cuando uno lleva siete horas sin comer, no escoge bien — y eso no es falta de fuerza de voluntad, es fisiología.<br><br>Las dos caben en el bolso y ninguna necesita nevera ni microondas: kéfir, almendras, kiwi, fresas, arándanos, tostadas de arroz, huevo duro. Deja las almendras ya empacadas en bolsitas el domingo y el resto de la semana sale solo."}, {"title": "El kéfir y el baño", "text": "Esto lo descubriste tú sola y me parece un hallazgo buenísimo: <i>«cuando tomo kéfir sí puedo ir al baño»</i>. Tenías toda la razón, y por eso el kéfir quedó repartido en <b>tres tiempos</b> del plan.<br><br>Lo que le sumamos encima es la fibra soluble que ya vimos: avena, kiwi, garbanzo, arándanos. El kiwi en particular es de lo mejor que hay para el tránsito, y además es uno de tus favoritos.<br><br>Con eso y con el agua subiendo a ocho vasos, lo esperable es que el baño pase de «a veces» a todos los días. Si en dos semanas no pasó, me lo cuentas y lo ajustamos."}, {"title": "Cuando te despiertas a las 2", "text": "Me dijiste que te pasa hace mucho tiempo y que te quedas en el celular hasta que vuelves a dormirte como a las 4. Tu tiroides salió bien, así que por ese lado estamos tranquilos.<br><br>No te voy a prometer que la comida lo arregla. Pero sí hay dos cosas del plan que juegan a favor: que la <b>cena deje de ser liviana de más</b> (una cena muy corta a veces despierta a la madrugada) y que no llegues a ella con hambre acumulada de siete horas.<br><br>Y una sola cosa que te pido, que no es de comida: <b>cuando te despiertes, no cojas el celular.</b> La pantalla es lo que le dice a tu cerebro que ya es de día, y es la razón por la que esas dos horas se vuelven dos horas. Mejor quédate quieta, con la luz apagada, aunque no te duermas. Lo hablamos con calma en el control."}, {"title": "El garbanzo sí, el fríjol con cuidado", "text": "Me contaste que los fríjoles te generan gases y que casi no te gustan las lentejas, pero que el garbanzo sí te gusta. Perfecto: <b>el garbanzo es el legumbre de este plan</b>, y es una suerte, porque además es el que más fibra soluble tiene de los tres.<br><br>Si algún día quieres fríjol —el domingo, por ejemplo— el truco es sencillo: enjuágalo bien si es de lata, o cocínalo cambiándole el agua, y empieza por media porción. Casi siempre los gases vienen del tamaño de la porción, no del fríjol."}, {"title": "El domingo, sin pelear con él", "text": "Me dijiste que el domingo es el día de las harinas y del sancocho de gallina. No vamos a sacar el sancocho: es tu domingo y está bien que exista.<br><br>Lo que hacemos es <b>ordenarlo</b>. El sancocho ya trae papa, yuca y plátano — ese es el almidón del día completo, así que ese almuerzo no necesita arroz además. Sírvete la gallina (sin piel), toda la verdura que haya, y de los tres almidones escoge uno.<br><br>Y el resto del domingo mantén las otras cuatro comidas del plan como cualquier día. El domingo no se descompone por el sancocho; se descompone cuando el sancocho se come encima de todo lo demás."}];
+
+/* 11) WHATSAPP */
+const WHATSAPP_NUMBER = "573175499759";
+
+/* 12) RECOMENDACIONES GENERALES */
+const GENERAL_RECS = [{"icon": "🔥", "text": "<b>Todas las preparaciones van asadas, cocidas, a la plancha o al airfryer.</b> Frito solo en ocasiones contadas, y en el airfryer, que para efectos prácticos es lo mismo sin el aceite."}, {"icon": "⏱️", "text": "<b>Mantén horarios regulares e intenta no pasar más de 3 horas sin comer.</b> Esta es la regla que más rinde de toda la lista: los espacios largos son lo que dispara el hambre de las cinco de la tarde."}, {"icon": "🥚", "text": "<b>Incluye una fuente de proteína en cada comida</b>, incluidas las pequeñas. Lo dulce solo sube y baja; lo dulce con proteína al lado sostiene."}, {"icon": "📦", "text": "<b>No vamos a consumir productos empaquetados ni altos en azúcar</b>, y tampoco bebidas con azúcar añadida. Las opciones dulces de tu plan están puestas justo para que no te haga falta."}, {"icon": "🥗", "text": "<b>Más frutas y verduras cada día</b>, y que el plato tenga color. Las verduras de hoja van libres: ahí nunca te vas a pasar."}, {"icon": "🌾", "text": "<b>Prioriza los carbohidratos de calidad:</b> granos enteros —avena, quinoa, arroz integral—, legumbres, tubérculos y verduras. Las harinas refinadas y los azúcares añadidos son lo que de verdad cuidamos, no el carbohidrato en sí."}, {"icon": "🧂", "text": "<b>Menos sodio, más sabor natural.</b> Reduce la sal y los ultraprocesados, y gana sabor con ajo, cebolla sofrita, cilantro, comino, orégano, cúrcuma, laurel, limón y pimienta. El salero fuera de la mesa."}, {"icon": "🥣", "text": "<b>Para las ensaladas, solo limón y sal, o una vinagreta casera.</b> Las vinagretas y aderezos industriales le pueden sumar 150 calorías invisibles a un plato que creías ligero."}, {"icon": "🏠", "text": "<b>Vamos a reducir la comida de la calle.</b> La comida de tu casa siempre es la mejor opción — y cuando toque comer afuera, mira la sección de restaurantes de este plan."}, {"icon": "🥄", "text": "<b>Respeta las porciones y familiarízate con ellas.</b> Las primeras dos semanas vale la pena medir; después tu mano hace el trabajo. Tienes la guía de porciones más abajo."}, {"icon": "💧", "text": "<b>Hidrátate bien durante todo el día.</b> Mantén un termo con agua contigo durante tu jornada: es el hábito más fácil de cumplir y el que más se olvida."}, {"icon": "😴", "text": "<b>Le vamos a dar prioridad a tu descanso: procura dormir más de 7 horas.</b> No es un consejo de relleno — dormir poco sube el hambre del día siguiente y baja la recuperación. El descanso hace parte del plan igual que la comida."}, {"icon": "🍫", "text": "<b>Los antojos los manejamos con opciones dulces sin azúcar y con fruta</b>, no aguantándolos. Un antojo bien resuelto no desordena nada; un antojo aguantado tres días sí."}, {"icon": "🧘", "text": "<b>Atiende las señales de tu cuerpo.</b> Come con calma, mastica bien y reconoce cuando ya estás satisfecha. Buena parte de lo que uno come de más es por ansiedad o por aburrimiento, no por hambre."}, {"icon": "😊", "text": "<b>Vamos a disfrutar de la alimentación, sin extremos.</b> Ser feliz también hace parte de este plan de alimentación."}, {"icon": "🎯", "destacada": true, "text": "<b>Constancia sobre perfección.</b> No se trata de hacerlo perfecto, sino de ser constante. Si un día no sale como esperabas, retomas al día siguiente sin castigarte y sin compensar. Ese es el único hábito que de verdad decide el resultado."}, {"icon": "🍗", "text": "<b>El pollo siempre sin piel</b>, en la casa y en la calle. Es el cambio más sencillo y uno de los que más le aporta a tu objetivo."}, {"icon": "🥜", "text": "<b>Las almendras, todos los días.</b> Déjalas empacadas en bolsitas de 12 el domingo y repártelas en el bolso. Es el alimento que más trabaja a tu favor en este plan y el que más fácil se olvida."}, {"icon": "🚰", "text": "<b>Ocho vasos de agua.</b> Hoy tomas uno con cada comida; con las dos comidas nuevas ya van cinco. Los otros tres repártelos en la mañana, que es cuando menos tomas."}, {"icon": "🥦", "text": "<b>La ensalada no se mide.</b> En todas las opciones donde dice ensalada, si quieres más, sírvete más. Nunca es la ensalada la que sobra."}];
+
+/* 13) GUIA DE PORCIONES */
+const PORTION_GUIDE = [{"group": "Tu mano es la báscula que siempre llevas puesta", "items": [{"icon": "🤚", "name": "Palma de tu mano (sin dedos)", "eq": "≈ 100–120 g de proteína cocida", "note": "Del grosor de tu palma también. Si la carne queda más gruesa, es más porción."}, {"icon": "✊", "name": "Tu puño cerrado", "eq": "≈ 1 taza · 1 porción de verdura cocida o de fruta picada", "note": "Las verduras de hoja van libres: ahí el puño no manda."}, {"icon": "🫴", "name": "Tu mano en forma de copa", "eq": "≈ ½ taza de arroz, pasta o granos cocidos", "note": "Es la medida del almidón en el almuerzo y la cena."}, {"icon": "👍", "name": "Tu pulgar completo", "eq": "≈ 1 cucharada de grasa (aceite, mantequilla de maní, queso crema)", "note": "La punta del pulgar (primera falange) ≈ 1 cucharadita."}, {"icon": "🤏", "name": "Tu puño y medio", "eq": "≈ el plato de verduras que buscamos en almuerzo y cena", "note": "Mitad del plato en verduras: esa es la regla que más rinde."}]}, {"group": "Proteínas", "items": [{"icon": "🍗", "name": "Pechuga de pollo", "eq": "1 pechuga mediana ≈ 150 g crudo · 1 filete delgado ≈ 100 g", "note": "Un muslo sin piel ≈ 80 g. Dos muslos ≈ 1 pechuga mediana."}, {"icon": "🥩", "name": "Carne de res o cerdo", "eq": "1 bistec del tamaño de tu palma ≈ 120 g crudo", "note": "La carne molida: ½ taza compacta ≈ 110 g cruda."}, {"icon": "🐟", "name": "Pescado", "eq": "1 filete del tamaño de tu mano abierta ≈ 150 g crudo", "note": "1 lata de atún al agua escurrida ≈ 120 g ≈ 25 g de proteína."}, {"icon": "🥚", "name": "Huevo", "eq": "1 huevo entero ≈ 6 g de proteína", "note": "2 claras ≈ 1 huevo entero en proteína, sin la grasa de la yema."}, {"icon": "🧀", "name": "Queso campesino / cuajada", "eq": "1 tajada gruesa ≈ 30 g · 1 cubo de 3 cm ≈ 30 g", "note": "Queso costeño o doble crema rinden más grasa: media tajada."}, {"icon": "🥛", "name": "Yogur griego / kumis", "eq": "1 vasito comercial ≈ 150 g · 1 taza ≈ 200 g", "note": ""}]}, {"group": "Carbohidratos", "items": [{"icon": "🍚", "name": "Arroz, pasta, quinoa (cocidos)", "eq": "½ taza ≈ 1 mano en copa ≈ 100 g · 1 cucharón raso ≈ ½ taza", "note": "Crudo pesa la tercera parte: 35 g de arroz crudo ≈ ½ taza cocida."}, {"icon": "🫘", "name": "Fríjoles, lentejas, garbanzos (cocidos)", "eq": "½ cucharón ≈ ½ taza ≈ 110 g", "note": "Si van con arroz, baja el arroz a la mitad: los dos son almidón."}, {"icon": "🥔", "name": "Papa y yuca", "eq": "1 papa del tamaño de un huevo grande ≈ 100 g · 2 papas criollas ≈ 80 g", "note": "Un trozo de yuca del largo de tu dedo índice ≈ 80 g."}, {"icon": "🍌", "name": "Plátano", "eq": "½ maduro asado ≈ 80 g · 1 patacón del tamaño de la palma ≈ 60 g", "note": ""}, {"icon": "🫓", "name": "Arepa y pan", "eq": "1 arepa delgada de 12 cm ≈ 60 g · 1 tajada de pan integral ≈ 30 g", "note": "La arepa de la plaza (gruesa, de 15 cm) son casi dos porciones."}, {"icon": "🥣", "name": "Avena en hojuelas", "eq": "4 cucharadas colmadas ≈ 30 g · ½ taza ≈ 40 g", "note": ""}]}, {"group": "Grasas (acá la medida es pequeña y sí importa)", "items": [{"icon": "🥑", "name": "Aguacate", "eq": "1 tajada del ancho de dos dedos ≈ 50 g · ⅛ de aguacate grande", "note": "Medida casera: lo que cabe en una cucharada sopera colmada."}, {"icon": "🥜", "name": "Crema de maní o de almendras", "eq": "1 cucharadita de postre rasa ≈ 8 g", "note": "Es la cucharita pequeña del juego de cubiertos, no la sopera."}, {"icon": "🫒", "name": "Aceite de oliva o de aguacate", "eq": "1 cucharadita ≈ 5 ml · 1 chorrito de sartén ≈ 1 cucharadita", "note": "Para saltear alcanza con 1 cucharadita y la sartén bien caliente."}, {"icon": "🌰", "name": "Frutos secos", "eq": "1 puñado cerrado ≈ 20 g · 7 unidades de maní · 10 almendras · 6 nueces", "note": ""}, {"icon": "🥥", "name": "Semillas (chía, linaza, ajonjolí)", "eq": "1 cucharada ≈ 10 g", "note": ""}]}, {"group": "Verduras y frutas", "items": [{"icon": "🥗", "name": "Verduras de hoja (lechuga, espinaca, rúgula)", "eq": "Libres · 2 tazas ≈ 1 porción", "note": "Nunca te van a sobrar. Entre más color tenga el plato, mejor."}, {"icon": "🥕", "name": "Verduras cocidas o en ensalada", "eq": "1 taza ≈ 1 puño ≈ 120 g", "note": ""}, {"icon": "🍎", "name": "Fruta entera", "eq": "1 unidad del tamaño de tu puño ≈ 1 porción", "note": "Banano mediano, 1 manzana, 1 pera, 2 mandarinas, 10 uvas."}, {"icon": "🍉", "name": "Fruta picada", "eq": "1 taza ≈ 1 puño ≈ 150 g", "note": ""}, {"icon": "🫐", "name": "Frutos rojos", "eq": "1 taza ≈ 150 g · 8 fresas medianas", "note": ""}]}, {"group": "Las medidas de la cocina, traducidas", "items": [{"icon": "🥄", "name": "Cucharada sopera (rasa)", "eq": "≈ 15 ml · 15 g de líquido · 10 g de harina", "note": ""}, {"icon": "🥄", "name": "Cucharadita de postre (rasa)", "eq": "≈ 5 ml · 5 g", "note": "3 cucharaditas = 1 cucharada sopera."}, {"icon": "🍲", "name": "Cucharón de servir", "eq": "1 cucharón raso ≈ ½ taza ≈ 120 ml", "note": ""}, {"icon": "🥤", "name": "Taza medidora", "eq": "1 taza ≈ 240 ml · ½ taza ≈ 120 ml · ¼ taza ≈ 60 ml", "note": "Si no tienes taza medidora, un vaso de agua corriente ≈ 1 taza."}, {"icon": "🫗", "name": "Vaso de agua", "eq": "≈ 250 ml", "note": "Es la unidad con la que contamos tu hidratación del día."}]}];
+
+/* 14) PREGUNTAS FRECUENTES */
+const FAQ = [{"q": "¿El peso de la proteína es en crudo o en cocido?", "a": "<strong>En crudo.</strong> Siempre que en tu plan diga gramos de pollo, carne, cerdo o pescado, es el peso antes de cocinar. Al cocinarse pierde entre el 20 % y el 30 % de su peso en agua, así que 150 g de pollo crudo te quedan en unos 110 g en el plato — y eso está bien, no te está faltando comida.<br><br>Si solo puedes pesarlo ya cocido, usa esta regla: <strong>multiplica por 1,3</strong>. O sea, 100 g cocidos ≈ 130 g crudos."}, {"q": "¿Y el arroz, la pasta y los granos?", "a": "Al contrario: <strong>esos van en cocido</strong>, porque es como los sirves. Media taza de arroz cocido son unos 100 g, y salen de apenas 35 g de arroz crudo. Los fríjoles, las lentejas y los garbanzos también los contamos cocidos (½ cucharón ≈ ½ taza)."}, {"q": "¿Tengo que pesar todo con báscula?", "a": "No. La báscula ayuda <strong>las primeras dos semanas</strong> para que tu ojo se calibre, y después tu mano hace el trabajo. Mira la <em>Guía de Porciones</em> de este mismo plan: la palma, el puño y el pulgar son medidas que siempre llevas puestas y no fallan tanto como uno cree.<br><br>Lo que sí vale la pena pesar siempre es la grasa (aceite, crema de maní, frutos secos), porque ahí un error pequeño pesa mucho."}, {"q": "¿Puedo cambiar una opción por otra del mismo tiempo de comida?", "a": "Sí, para eso están. <strong>Todas las opciones de un mismo tiempo son equivalentes</strong> entre ellas, así que elige la que te quede más fácil ese día. Lo que no conviene es mover una opción de almuerzo a la cena o al contrario, porque cada tiempo está armado pensando en la hora del día y en tu entrenamiento."}, {"q": "¿Puedo repetir la misma opción toda la semana?", "a": "Puedes, pero no es lo ideal. Las opciones están pensadas para que rotes y tu cuerpo reciba <strong>distintos micronutrientes</strong>: no es lo mismo comer pollo cinco días que rotar entre pollo, pescado, huevo y carne. Mi sugerencia: no repitas la misma opción más de dos días seguidos."}, {"q": "¿Qué hago si se me pasa la hora de un tiempo de comida?", "a": "Cómelo cuando puedas, aunque sea tarde, y <strong>sigue con el resto del día normal</strong>. Lo que no quiero es que te lo salten y luego \"compenses\" comiendo doble en el siguiente: eso es lo que más desordena el hambre del resto del día.<br><br>Si de plano ya no alcanza (por ejemplo, la media tarde cuando ya son las 8 p.m.), déjala pasar y come tu cena normal."}, {"q": "Me quedé con hambre después de comer. ¿Qué hago?", "a": "Primero: <strong>tómate un vaso de agua y espera 15 minutos</strong>, porque buena parte del hambre inmediata después de comer es sed o es velocidad (comer rápido no le da tiempo al cuerpo de avisar que ya está lleno).<br><br>Si el hambre sigue, súmale <strong>verduras libres</strong>: ensalada, pepino, tomate, zanahoria. Y escríbeme: si te está pasando todos los días en el mismo tiempo de comida, es información útil y ajustamos ese tiempo en el control."}, {"q": "No me cabe toda la comida. ¿Está mal si dejo?", "a": "No está mal, y no quiero que comas con angustia. Si un plato te queda grande, <strong>come primero la proteína y la verdura</strong>, y deja el almidón. Eso conserva lo más importante del plato.<br><br>Pero igual cuéntame, porque si te pasa seguido significa que tenemos que redistribuir: quizá te sirve mejor comer un poco menos en cada tiempo y agregar uno más."}, {"q": "¿Puedo tomar café?", "a": "Sí. <strong>Hasta 3 tazas al día está perfecto</strong>, mejor antes de las 4 p.m. para que no te toque el sueño. Lo que cuidamos no es el café: es lo que le pones. Sin azúcar y sin crema de leche. Con un chorrito de leche no hay problema."}, {"q": "¿Y los endulzantes?", "a": "Puedes usarlos. Los que mejor tolera la mayoría son <strong>estevia y sucralosa</strong>. Si te caen pesados o te inflan, prueba con menos cantidad: casi siempre el problema es la dosis, no el producto. Lo ideal a mediano plazo es que tu paladar se vaya acostumbrando a menos dulce en general."}, {"q": "¿Tengo que hacer el plan perfecto para que funcione?", "a": "No, y esta es probablemente la idea más importante de toda esta sección. En consulta yo trabajo con el <strong>principio del 80-20</strong>, y funciona así: si el <strong>80 % de tus hábitos</strong> —la alimentación, el entrenamiento, el descanso y la hidratación— hacen parte de un estilo de vida saludable y siguen tu plan, entonces no va a haber mayor inconveniente en que en el <strong>20 % restante</strong> te permitas una comida por fuera, un postre, disfrutar un poquito de la vida.<br><br>Fíjate en lo que eso significa en la práctica: de las 35 comidas que haces en una semana, unas 28 son tu plan y <strong>unas 7 pueden ser flexibles</strong>. Eso es mucho más espacio del que la gente cree que tiene, y es justamente lo que hace que un proceso se sostenga durante años en lugar de durar tres semanas.<br><br>Y al revés también: el problema nunca es la comida del 20 %. El problema es cuando el 20 % se vuelve 50 % sin que uno se dé cuenta. Por eso prefiero decírtelo con un número."}, {"q": "¿Y si me invitan a una comida o a un cumpleaños?", "a": "Vas y comes. Eso es exactamente el 20 % del que te hablé arriba: <strong>un día no desarma un proceso</strong>, igual que un día perfecto no lo arma. Lo que sí funciona: ese día desayuna y almuerza normal (no llegues con hambre acumulada), sírvete primero proteína y verdura, y al otro día retomas tu plan sin \"castigos\" ni ayunos de compensación.<br><br>Mira también la sección de <em>Comer Afuera</em>: ahí te dejé qué pedir en los restaurantes a los que más vas."}, {"q": "¿Qué hago el fin de semana?", "a": "El plan aplica los siete días, pero <strong>el fin de semana lo manejamos con más flexibilidad</strong>: uno o dos tiempos libres, no dos días libres completos. Ahí está otra vez el 80-20 — una comida por fuera el sábado cabe de sobra; el sábado y el domingo enteros por fuera, no, porque eso ya son seis o siete comidas y se te fue el 20 % completo en dos días.<br><br>Mi recomendación: sábado o domingo, elige una comida que de verdad disfrutes y planéala. Lo que desordena no es el antojo: es el antojo sin plan."}, {"q": "Me dan muchas ganas de dulce. ¿Eso se quita?", "a": "Se baja bastante, sí, y hay dos razones por las que aparece: <strong>comer poca proteína</strong> y <strong>dejar pasar muchas horas sin comer</strong>. Si tus tiempos están completos y en hora, el antojo pierde fuerza en unas dos semanas.<br><br>Mientras tanto, no pelees con él: en tu plan hay opciones dulces pensadas para eso. Úsalas."}, {"q": "¿Puedo cambiar el pollo por pescado, o la carne por cerdo?", "a": "Sí, dentro del mismo grupo son intercambiables: <strong>pollo, pavo, pescado blanco, cerdo magro y res magra</strong> juegan en el mismo equipo con la misma porción. El pescado azul (salmón, trucha) trae más grasa buena, así que si lo usas, baja un poco el aceite de ese plato."}, {"q": "¿Cuánta agua debo tomar?", "a": "Tu meta diaria está marcada en la sección de hidratación de este plan, en vasos, para que la vayas marcando. Reparte: un vaso al despertar, uno con cada comida y uno entre comidas. <strong>Si tu orina es amarillo claro, vas bien</strong>; si es oscura, te falta agua."}, {"q": "¿Puedo echarle sal a la comida?", "a": "Sí, en cantidad normal al cocinar. Lo que no conviene es el salero en la mesa y, sobre todo, el <strong>sodio escondido</strong>: caldos en cubo, embutidos, salsas listas, snacks de paquete y sopas de sobre. Ahí está el 70 % del sodio que uno come sin darse cuenta."}, {"q": "¿Cuándo voy a ver cambios?", "a": "Lo primero que cambia no se ve en la báscula: <strong>energía, digestión y sueño mejoran en la primera o segunda semana</strong>. Los cambios de composición corporal se miden bien al mes, y eso es lo que comparamos en tu control con la antropometría.<br><br>La báscula sube y baja hasta 2 kg en un mismo día por agua, sal y ciclo menstrual. No tomes decisiones con un solo número."}, {"q": "¿Tengo que tomar los suplementos para que el plan funcione?", "a": "No. <strong>El plan funciona por sí solo</strong>; los suplementos están ahí para hacerte más fácil llegar a la meta, no para reemplazar comida. Si alguno no está a tu alcance este mes, dímelo y te doy el equivalente en comida real."}, {"q": "Me sentí mal del estómago / me inflé con algo del plan. ¿Qué hago?", "a": "Sácalo por ahora y <strong>escríbeme contándome qué fue</strong>. No hay un alimento imprescindible: siempre hay cómo reemplazarlo. Lo que no quiero es que aguantes incomodidad en silencio, porque eso es lo que termina tumbando los procesos."}, {"q": "¿Cómo te aviso si algo no me está funcionando?", "a": "Por WhatsApp, con el botón que está al final de este plan. Mientras más concreto, mejor: <strong>qué tiempo de comida, qué opción y qué te pasó</strong>. Con eso ajusto sin tener que esperar al control."}, {"q": "¿Puedo retomar el omega 3?", "a": "Sí, y me parece bien. 2 g al día de EPA + DHA, con el almuerzo. Lo único que quiero que tengas claro es que el omega 3 baja sobre todo los <b>triglicéridos</b>: ayuda, pero el que más te va a mover el colesterol es lo que está en el plato — la avena, el kiwi, el garbanzo, las almendras y el pescado."}, {"q": "¿El huevo me sube el colesterol?", "a": "No como se creía antes. Hoy sabemos que el colesterol que comes mueve bastante poco el de la sangre; lo que lo mueve de verdad es la <b>grasa saturada</b> — el chicharrón, la costilla, la piel del pollo, la mantequilla. Por eso tus dos huevos duros del desayuno se quedan sin problema, y por eso el plan le baja a lo otro. Si en el control el examen dice otra cosa, lo ajustamos ahí, con el número en la mano."}, {"q": "¿Puedo seguir comiendo solo ensalada y carne como hace tres meses?", "a": "Me dijiste que te sentías bien haciéndolo, y te creo: casi cualquier plan ordenado se siente mejor que comer desordenado. Pero ensalada y carne sola deja por fuera justo lo que necesitas para el colesterol, que es la <b>fibra soluble</b> — la avena, el garbanzo, el kiwi. Este plan tiene la misma sensación de orden y además sí ataca tu objetivo."}, {"q": "¿Y si un día no alcanzo a hacer la media mañana o la media tarde?", "a": "No pasa nada, pero no lo vuelvas la costumbre, porque son justo las dos que estamos recuperando. Para los días imposibles ten siempre en el bolso una bolsita de <b>12 almendras</b> y un kiwi: eso ya es media tarde. No es la opción ideal, es la opción que sí se puede, y esa siempre gana."}, {"q": "¿Tengo que pesar la comida?", "a": "No. Los gramos están escritos para que sepas de qué tamaño estamos hablando las primeras veces; después el ojo aprende. La proteína del tamaño de la palma de tu mano, el almidón del tamaño de tu puño y la verdura sin medida. Con eso vas bien."}, {"q": "¿Cuánto me voy a demorar en ver el colesterol bajar?", "a": "El perfil lipídico empieza a moverse entre las <b>6 y las 12 semanas</b>. Por eso el control está a un mes y el examen lo miramos ahí: alcanzamos a ver para dónde va. Si me puedes llevar el examen que te hicieron ahora, <b>por favor llévamelo</b> — lo comparamos con el nuevo y ahí sí sabemos exactamente qué está funcionando."}];
+
+/* 15) RESTAURANTES RECOMENDADOS */
+const RESTAURANTS = {"intro": "Tú me dijiste la frase más importante de toda la consulta: <strong>«solo como el desayuno en mi casa, de resto como en la calle»</strong>. Entonces esta sección no es un extra del plan — <strong>es el plan</strong>. Acá está cómo pedir lo que ya pides, de otra manera. Son frases cortas, se dicen en diez segundos y nadie se molesta.", "list": [{"icon": "🍛", "name": "El almuerzo corriente", "kind": "Todos los días · el más importante", "dishes": ["<b>La proteína, a la plancha, asada o sudada.</b> Nunca frita ni apanada. Casi todos los sitios tienen las dos y solo hay que pedirla. Y si es pollo, <b>sin piel</b>.", "<b>Un almidón, no tres.</b> El corriente llega con arroz + papa + plátano, y eso es triple. Escoge <b>uno</b> y pide doble ensalada en lugar de los otros dos.", "<b>La sopa:</b> si es de verduras, perfecta como entrada. Si viene cargada de papa, yuca y plátano, entonces ella <i>ya es</i> el almidón del almuerzo — y ahí el arroz sobra.", "<b>El jugo, en agua y sin azúcar.</b> Un jugo en leche con azúcar es casi un postre y es la caloría más invisible del corriente.", "<b>Si hay fríjol o garbanzo, pídelo</b> en lugar del plátano: misma cuchara, mucha más fibra."], "ask": "<b>Lo que le dices, tal cual:</b> «la carne asada o sudada, por favor, no frita · sin plátano y sin papa, mejor doble ensalada · y el jugo en agua sin azúcar». Tres frases. Eso solo te cambia el almuerzo por completo, todos los días, sin dejar de pedirlo."}, {"icon": "🍗", "name": "El pollo asado que compras", "kind": "Cena · tu pernil", "dishes": ["<b>Pídelo sin piel, o quítasela tú.</b> Es el cambio más grande de toda esta lista con el menor esfuerzo: la piel es casi toda la grasa de la pieza.", "<b>Pernil o muslo antes que la presa grande.</b> Dos perniles sin piel es la porción que le dejé a la cena en el plan.", "<b>Cambia la papa a la francesa por ensalada</b> o por una papa parda cocida, que además es tu favorita.", "<b>La arepa y el plátano del combo</b>, uno de los dos, no los dos.", "Si el sitio tiene <b>pollo al horno o a la plancha</b> en vez de asado al carbón con adobo dulce, mejor todavía."], "ask": "<b>Lo que le dices:</b> «dos perniles sin piel, con ensalada en vez de papa a la francesa». Y si llega con piel, quítasela antes de empezar a comer, no a mitad del plato."}, {"icon": "🔥", "name": "Asadero, parrilla, churrasquería", "kind": "Cuando sales", "dishes": ["<b>Lomo, punta de anca o pechuga a la parrilla</b>, término medio o tres cuartos y <b>sin mantequilla encima</b> — esa mantequilla que le ponen al final no se ve y sí pesa.", "<b>Chuzo de pollo o de carne</b> con ensalada: es la opción más sencilla de ajustar de toda la carta.", "<b>Ensalada verde o verduras asadas</b> en lugar de papa a la francesa y yuca frita.", "El <b>chicharrón, la morcilla y la costilla</b> son justo los que cuidamos en tu caso. Si hay en la mesa, una probada compartida y listo — no un plato."], "ask": "<b>Lo que le dices:</b> «sin mantequilla, con ensalada y un solo acompañamiento». Si la carne llega del tamaño de dos palmas de la mano, llevarte la mitad para la casa es totalmente válido."}, {"icon": "☕", "name": "Panadería, café, tinto de media mañana", "kind": "Media mañana · media tarde", "dishes": ["<b>Tinto o café negro sin azúcar</b> — eso ya lo haces y está perfecto.", "<b>Lo que le falta a una panadería es proteína.</b> Si hay <b>huevo cocido</b>, pídelo: es lo mejor del mostrador para ti.", "<b>Pan integral o pan de queso pequeño</b> antes que el hojaldrado, el pastel de pollo o la almojábana grande.", "Lo que cuidamos: <b>jugos de botella, capuchinos saborizados y gaseosa</b>. Ahí está el azúcar que tú misma no estás comiendo en la casa."], "ask": "<b>Lo que le dices:</b> «un tinto sin azúcar y un huevo cocido, por favor». Si no hay huevo, mejor te comes tus almendras del bolso con el tinto."}, {"icon": "🥢", "name": "Comida de la región", "kind": "Cuando estás de viaje", "dishes": ["<b>Pide el pescado.</b> Donde hay río hay pescado fresco, y para tu objetivo es la mejor proteína de toda la carta.", "<b>El sancocho y los sudados</b> son buenos platos: lleva gallina o pescado, verdura y caldo. Solo recuerda que la papa, la yuca y el plátano que traen <b>ya son el almidón</b>, así que ese plato no necesita arroz además.", "<b>El chicharrón y la costilla</b> son los dos que cuidamos. Son de los de «de vez en cuando y compartido», no de todos los días.", "<b>El patacón</b>, uno, no la torre. Y si hay plátano cocido en vez de frito, mejor."], "ask": "<b>Lo que le dices:</b> «el pescado, por favor, y sin arroz porque ya trae plátano». Comer bien de viaje se trata de escoger el plato, no de dejar de comer."}, {"icon": "🛵", "name": "Cuando pides a domicilio", "kind": "Los días que llegas tarde", "dishes": ["<b>Pide el plato, no el combo.</b> El combo es gaseosa, papas y postre que no pediste.", "<b>Sirve en plato y guarda el resto antes de empezar.</b> Comer del empaque es comer sin medida, y a las 9 de la noche eso se nota al otro día.", "<b>Añádele tú la verdura.</b> Una ensalada rápida de lechuga, tomate y pepino al lado cambia el plato entero y toma dos minutos.", "<b>Si llegaste muy tarde</b>, mejor una de las cenas del plan que son rápidas: la sopa de verduras con pollo o tu arepa con huevo. Se hacen en menos de lo que tarda el domicilio."], "ask": "<b>Lo que le dices:</b> «el plato solo, sin combo y sin gaseosa». Y el truco de servir en plato antes de empezar funciona siempre."}]};
+
+/* 16) PALABRAS CLAVE LISTA DE MERCADO */
+const SHOPPING_KEYWORDS = [{"match": "huevo", "label": "Huevos", "category": "Proteínas"}, {"match": "pollo", "label": "Pechuga/pollo", "category": "Proteínas"}, {"match": "carne", "label": "Carne de res magra", "category": "Proteínas"}, {"match": "pescado", "label": "Pescado (filete)", "category": "Proteínas"}, {"match": "salmón", "label": "Salmón", "category": "Proteínas"}, {"match": "tilapia", "label": "Tilapia", "category": "Proteínas"}, {"match": "atún", "label": "Atún en agua", "category": "Proteínas"}, {"match": "jamón de pavo zenú", "label": "Jamón de pavo Zenú", "category": "Proteínas"}, {"match": "proteína", "label": "Proteína en polvo", "category": "Proteínas"}, {"match": "tofu", "label": "Tofu", "category": "Proteínas"}, {"match": "lentejas", "label": "Lentejas", "category": "Proteínas"}, {"match": "garbanzos", "label": "Garbanzos", "category": "Proteínas"}, {"match": "hummus", "label": "Hummus casero (garbanzos)", "category": "Proteínas"}, {"match": "edamame", "label": "Edamame", "category": "Proteínas"}, {"match": "crema de maní", "label": "Crema de maní", "category": "Proteínas"}, {"match": "gelatina sin azúcar", "label": "Gelatina sin azúcar", "category": "Proteínas"}, {"match": "fríjoles", "label": "Fríjoles", "category": "Proteínas"}, {"match": "blanquillos", "label": "Fríjoles blanquillos", "category": "Proteínas"}, {"match": "yogurt griego alpina", "label": "Yogurt griego Alpina", "category": "Lácteos"}, {"match": "yogurt griego san martín", "label": "Yogurt griego San Martín", "category": "Lácteos"}, {"match": "kéfir", "label": "Kéfir", "category": "Lácteos"}, {"match": "queso colanta", "label": "Queso Colanta", "category": "Lácteos"}, {"match": "queso cuajada", "label": "Queso cuajada", "category": "Lácteos"}, {"match": "queso campesino", "label": "Queso campesino", "category": "Lácteos"}, {"match": "queso mozzarella", "label": "Queso mozzarella", "category": "Lácteos"}, {"match": "leche alquería", "label": "Leche Alquería", "category": "Lácteos"}, {"match": "leche deslactosada", "label": "Leche deslactosada", "category": "Lácteos"}, {"match": "arepa alquería", "label": "Arepa Alquería (maíz tipo tela)", "category": "Carbohidratos"}, {"match": "avena quaker", "label": "Avena Quaker", "category": "Carbohidratos"}, {"match": "pan bimbo fit", "label": "Pan Bimbo Fit", "category": "Carbohidratos"}, {"match": "pan de masa madre", "label": "Pan de masa madre (Molino)", "category": "Carbohidratos"}, {"match": "granola tosh", "label": "Granola Tosh", "category": "Carbohidratos"}, {"match": "arroz", "label": "Arroz", "category": "Carbohidratos"}, {"match": "papa", "label": "Papa", "category": "Carbohidratos"}, {"match": "yuca", "label": "Yuca", "category": "Carbohidratos"}, {"match": "pasta", "label": "Pasta", "category": "Carbohidratos"}, {"match": "plátano", "label": "Plátano maduro", "category": "Carbohidratos"}, {"match": "quinoa", "label": "Quinoa", "category": "Carbohidratos"}, {"match": "banano", "label": "Banano", "category": "Frutas y Verduras"}, {"match": "aguacate", "label": "Aguacate", "category": "Frutas y Verduras"}, {"match": "ensalada", "label": "Mix de ensalada / lechuga", "category": "Frutas y Verduras"}, {"match": "tomate", "label": "Tomate", "category": "Frutas y Verduras"}, {"match": "espinaca", "label": "Espinaca", "category": "Frutas y Verduras"}, {"match": "champiñones", "label": "Champiñones", "category": "Frutas y Verduras"}, {"match": "fresa", "label": "Fresas", "category": "Frutas y Verduras"}, {"match": "pepino", "label": "Pepino", "category": "Frutas y Verduras"}, {"match": "zanahoria", "label": "Zanahoria", "category": "Frutas y Verduras"}, {"match": "miel", "label": "Miel", "category": "Otros"}, {"match": "mermelada", "label": "Mermelada sin azúcar", "category": "Otros"}, {"match": "almendras", "label": "Almendras", "category": "Otros"}, {"match": "nueces", "label": "Nueces", "category": "Otros"}, {"match": "creatina", "label": "Creatina", "category": "Suplementos"}, {"match": "yogurt griego yen", "label": "Yogurt griego YEN", "category": "Lácteos"}, {"match": "granola yen", "label": "Granola YEN", "category": "Carbohidratos"}, {"match": "arepa de yuca yen", "label": "Arepa de yuca YEN", "category": "Carbohidratos"}, {"match": "arepa de maduro yen", "label": "Arepa de maduro YEN", "category": "Carbohidratos"}, {"match": "arepa de arroz integral yen", "label": "Arepa de arroz integral YEN", "category": "Carbohidratos"}, {"match": "arepa de pan de bono yen", "label": "Arepa de pan de bono YEN", "category": "Carbohidratos"}, {"match": "arepa de maíz yen", "label": "Arepa de maíz YEN", "category": "Carbohidratos"}, {"match": "arepa de maíz tipo tela", "label": "Arepas de maíz tipo tela", "category": "Carbohidratos"}, {"match": "avena en hojuelas", "label": "Avena en hojuelas", "category": "Carbohidratos"}, {"match": "tostadas de arroz", "label": "Tostadas de arroz", "category": "Carbohidratos"}, {"match": "arroz cocido", "label": "Arroz", "category": "Carbohidratos"}, {"match": "papa parda", "label": "Papa parda", "category": "Carbohidratos"}, {"match": "garbanzos cocidos", "label": "Garbanzos", "category": "Carbohidratos"}, {"match": "arveja cocida", "label": "Arveja", "category": "Carbohidratos"}, {"match": "huevos duros", "label": "Huevos", "category": "Proteínas"}, {"match": "pechuga de pollo", "label": "Pechuga de pollo", "category": "Proteínas"}, {"match": "perniles de pollo", "label": "Perniles de pollo", "category": "Proteínas"}, {"match": "pollo desmechado", "label": "Pollo para desmechar", "category": "Proteínas"}, {"match": "carne de res en sudado", "label": "Carne de res para sudar", "category": "Proteínas"}, {"match": "tilapia", "label": "Tilapia", "category": "Proteínas"}, {"match": "salmón", "label": "Salmón", "category": "Proteínas"}, {"match": "atún en aceite de oliva", "label": "Atún en aceite de oliva", "category": "Proteínas"}, {"match": "kéfir", "label": "Kéfir", "category": "Lácteos"}, {"match": "almendras", "label": "Almendras", "category": "Grasas"}, {"match": "aguacate", "label": "Aguacate", "category": "Grasas"}, {"match": "aceite de oliva", "label": "Aceite de oliva", "category": "Grasas"}, {"match": "hummus", "label": "Hummus", "category": "Grasas"}, {"match": "kiwi", "label": "Kiwi", "category": "Frutas y Verduras"}, {"match": "arándanos", "label": "Arándanos", "category": "Frutas y Verduras"}, {"match": "fresas", "label": "Fresas", "category": "Frutas y Verduras"}, {"match": "lechuga", "label": "Lechuga", "category": "Frutas y Verduras"}, {"match": "tomate", "label": "Tomate", "category": "Frutas y Verduras"}, {"match": "tomates cherry", "label": "Tomates cherry", "category": "Frutas y Verduras"}, {"match": "pepino", "label": "Pepino", "category": "Frutas y Verduras"}, {"match": "zanahoria", "label": "Zanahoria", "category": "Frutas y Verduras"}, {"match": "cebolla larga", "label": "Cebolla larga", "category": "Frutas y Verduras"}, {"match": "verduras al vapor", "label": "Verduras para vapor", "category": "Frutas y Verduras"}, {"match": "sopa de verduras", "label": "Verduras para sopa", "category": "Frutas y Verduras"}, {"match": "café", "label": "Café", "category": "Despensa"}, {"match": "chocolate en agua", "label": "Chocolate sin azúcar", "category": "Despensa"}];
+
+/* ═══════════════════════════════════════════════════════════════════════
+   MOTOR — NO EDITAR DE AQUÍ EN ADELANTE
+   ═══════════════════════════════════════════════════════════════════════ */
+const COLOR_MAP = { gold:'var(--gold)', green:'var(--green)', navy:'var(--navy)', blue:'var(--navy-soft)' };
+const COLOR_LIGHT_MAP = { gold:'var(--gold-light)', green:'var(--green-light)', navy:'var(--cream)', blue:'var(--cream)' };
+/* 07-10-2026 — BUG ENCONTRADO EN PRODUCCIÓN.
+   Si un day_type trae un color que no está en COLOR_MAP, el lookup devolvía
+   undefined y el botón activo se quedaba con fondo blanco mientras la clase
+   .day-btn.active le pone color:#fff → TEXTO BLANCO SOBRE FONDO BLANCO: el
+   botón se veía vacío, solo con el emoji. Pasó con color:"blue" en los planes
+   de Olga Lucía, María Alejandra y Tatiana.
+   Estas dos funciones hacen que un color desconocido caiga en navy en vez de
+   romperse. Usar SIEMPRE cMain()/cLight(), nunca COLOR_MAP[...] directo. */
+function cMain(dt){ return COLOR_MAP[dt && dt.color] || COLOR_MAP.navy; }
+function cLight(dt){ return COLOR_LIGHT_MAP[dt && dt.color] || COLOR_LIGHT_MAP.navy; }
+
+const LS_PREFIX = 'jsmo_' + (document.getElementById('patientName').textContent || 'plan').replace(/\s+/g,'_');
+let day = localStorage.getItem(LS_PREFIX+'_day') || DAY_TYPES[0].key;
+let savedOpts = JSON.parse(localStorage.getItem(LS_PREFIX+'_opts') || '{}');
+
+function todayKey(){ return new Date().toISOString().slice(0,10); }
+let checkedMeals = JSON.parse(localStorage.getItem(LS_PREFIX+'_checked_'+todayKey()) || '{}');
+let hydrationCount = parseInt(localStorage.getItem(LS_PREFIX+'_hydration_'+todayKey()) || '0', 10);
+
+function buildDaySelector(){
+  const wrap = document.getElementById('daySelector');
+  wrap.innerHTML = DAY_TYPES.map(dt => `
+    <button class="day-btn" data-key="${dt.key}" style="border-color:${cMain(dt)}" onclick="setDay('${dt.key}')">
+      ${dt.label}
+      <small>${dt.days||''}</small>
+    </button>
+  `).join('');
+}
+
+function buildDayInfo(){
+  const wrap = document.getElementById('dayInfoWrap');
+  wrap.innerHTML = DAY_TYPES.map(dt => `
+    <div class="day-info" id="info-${dt.key}" style="background:${cLight(dt)};border-color:${cMain(dt)}">
+      <div class="day-info-top">
+        <div class="day-dot" style="background:${cMain(dt)}"></div>
+        <div class="day-info-title" style="color:${cMain(dt)}">${dt.title}</div>
+      </div>
+      <div class="day-info-desc">${dt.desc}</div>
+      <div class="macro-row">
+        <div class="macro-chip"><strong>${dt.kcal}</strong><span>Energía total</span></div>
+        <div class="macro-chip"><strong>${dt.cho}</strong><span>CHO${dt.choPerKg?' · '+dt.choPerKg:''}</span></div>
+        <div class="macro-chip"><strong>${dt.pro}</strong><span>Proteína</span></div>
+        <div class="macro-chip"><strong>${dt.fat}</strong><span>Grasas</span></div>
+      </div>
+      ${dt.ref?`<span class="ref-tag">${dt.ref}</span>`:''}
+    </div>
+  `).join('');
+}
+
+function getMdata(m){ return m[day]; }
+function getActiveMeals(){ return MEALS.filter(m => m[day] !== null && m[day] !== undefined); }
+
+function renderMeals(){
+  ['alta','media','baja','competencia'].forEach(k=>{
+    const el = document.getElementById(`info-${k}`);
+    if(el) el.style.display = (k===day) ? '' : 'none';
+  });
+  document.querySelectorAll('.day-btn').forEach(b=>{
+    const dt = DAY_TYPES.find(d=>d.key===b.dataset.key);
+    const isActive = b.dataset.key === day;
+    b.classList.toggle('active', isActive);
+    b.style.background = isActive ? cMain(dt) : '#fff';
+  });
+
+  const container = document.getElementById('meals-container');
+  container.innerHTML = '';
+  getActiveMeals().forEach(m=>{
+    const data = getMdata(m);
+    const dt = DAY_TYPES.find(d=>d.key===day);
+    const savedOpt = savedOpts[m.id] ?? null;
+    const isChecked = !!checkedMeals[m.id];
+    const card = document.createElement('div');
+    card.className = 'meal-card' + (isChecked ? ' done' : '');
+    const optsHtml = data.opts.map((o,i)=>`
+      <div class="opt-card${i===savedOpt?' selected':''}" tabindex="0"
+           onclick="selectOpt('${m.id}',${i},this)"
+           onkeydown="if(event.key==='Enter'||event.key===' ')selectOpt('${m.id}',${i},this)">
+        <div class="opt-num">Opción ${i+1}${(typeof PESOS!=='undefined'&&PESOS[m.id+'|'+day+'|'+i])?`<span class="opt-peso ${PESOS[m.id+'|'+day+'|'+i]}">${PESOS[m.id+'|'+day+'|'+i]}</span>`:''}</div>
+        <div class="opt-name">${o.name}</div>
+        <div class="opt-desc"><ul>${o.desc.split(" · ").map(x=>`<li>${x.trim()}</li>`).join("")}</ul></div>
+        ${o.macro?`<div class="opt-macro">${o.macro}</div>`:''}
+      </div>
+    `).join('');
+    const tagsHtml = (data.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('');
+    card.innerHTML = `
+      <div class="meal-header" onclick="toggleMeal(this)">
+        <div class="meal-check${isChecked?' checked':''}" title="Marcar como consumida" onclick="event.stopPropagation();toggleMealCheck('${m.id}',this)">✓</div>
+        <div class="meal-lbl" style="background:${cMain(dt)}">${data.lbl}</div>
+        <div class="meal-title-wrap">
+          <div class="meal-title">${data.title}</div>
+          <div class="meal-time">${data.time||''}</div>
+          <div class="meal-tags">${tagsHtml}</div>
+        </div>
+        <div class="meal-chevron">▾</div>
+      </div>
+      <div class="meal-body">
+        ${data.tip?`<div class="meal-tip">${data.tip}</div>`:''}
+        <div class="opt-grid">${optsHtml}</div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function toggleMeal(header){
+  const body = header.nextElementSibling;
+  const chevron = header.querySelector('.meal-chevron');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+}
+
+function toggleMealCheck(mealId, el){
+  const nowChecked = !el.classList.contains('checked');
+  el.classList.toggle('checked', nowChecked);
+  el.closest('.meal-card').classList.toggle('done', nowChecked);
+  checkedMeals[mealId] = nowChecked;
+  localStorage.setItem(LS_PREFIX+'_checked_'+todayKey(), JSON.stringify(checkedMeals));
+}
+
+
+// ══════════════════════════════════════════════════════════════════════
+// REGISTRO DIARIO — elecciones + energía, hambre, baño y sueño
+// El motor ya guardaba la última opción escogida, pero sin fecha y sin
+// historia, así que esa información se perdía. Acá se convierte en un
+// registro que la paciente puede mandar, y el control se arma con datos
+// en vez de con memoria.
+// ══════════════════════════════════════════════════════════════════════
+var REG_KEY = LS_PREFIX + '_registro';
+var REG = [];
+try { REG = JSON.parse(localStorage.getItem(REG_KEY) || '[]'); } catch(e) { REG = []; }
+var DIA_KEY = LS_PREFIX + '_diario';
+var DIARIO = {};
+try { DIARIO = JSON.parse(localStorage.getItem(DIA_KEY) || '{}'); } catch(e) { DIARIO = {}; }
+
+var ESCALAS = {
+  energia: ['En el piso','Bajita','Normal','Bien','Con pila de sobra'],
+  hambre:  ['Sin hambre','Poca','Normal','Bastante','Con mucha hambre'],
+  bano:    ['No fui','Me costó','Normal'],
+  sueno:   ['Dormí mal','Regular','Bien','Muy bien']
+};
+
+function regGuardar(){
+  try{
+    localStorage.setItem(REG_KEY, JSON.stringify(REG.slice(-500)));
+    localStorage.setItem(DIA_KEY, JSON.stringify(DIARIO));
+  }catch(e){}
+}
+function regHoy(){
+  var f = new Date();
+  return f.getFullYear()+'-'+String(f.getMonth()+1).padStart(2,'0')+'-'+String(f.getDate()).padStart(2,'0');
+}
+
+function registrarEleccion(mealId, idx){
+  var meal = MEALS.find(function(x){ return x.id === mealId; });
+  if(!meal) return;
+  var data = meal[day] || meal.alta; if(!data) return;
+  var o = data.opts[idx]; if(!o) return;
+  var fecha = regHoy();
+  REG = REG.filter(function(r){ return !(r.fecha===fecha && r.meal===mealId); });
+  REG.push({fecha:fecha, dia:day, meal:mealId, lbl:data.lbl, idx:idx, nombre:o.name,
+            peso:(typeof PESOS!=='undefined' ? (PESOS[mealId+'|'+day+'|'+idx]||'media') : 'media')});
+  regGuardar(); pintarRegistro();
+}
+
+function marcarDiario(campo, valor){
+  var f = regHoy();
+  DIARIO[f] = DIARIO[f] || {};
+  DIARIO[f][campo] = (DIARIO[f][campo] === valor) ? null : valor;
+  regGuardar(); pintarRegistro();
+}
+
+function pintarEscalas(){
+  var f = regHoy(), hoy = DIARIO[f] || {};
+  [['regEnergia','energia'],['regHambre','hambre'],['regBano','bano'],['regSueno','sueno']]
+  .forEach(function(par){
+    var el = document.getElementById(par[0]); if(!el) return;
+    el.innerHTML = ESCALAS[par[1]].map(function(t,i){
+      return '<button class="regOpt'+(hoy[par[1]]===i?' on':'')+'" onclick="marcarDiario(\''+par[1]+'\','+i+')">'+t+'</button>';
+    }).join(' ');
+  });
+}
+
+function pintarRegistro(){
+  pintarEscalas();
+  var cont = document.getElementById('regLista');
+  var res  = document.getElementById('regResumen');
+  if(!cont) return;
+  var porDia = {};
+  REG.forEach(function(r){ (porDia[r.fecha] = porDia[r.fecha] || []).push(r); });
+  Object.keys(DIARIO).forEach(function(f){ porDia[f] = porDia[f] || []; });
+  var fechas = Object.keys(porDia).sort().reverse().slice(0,14);
+
+  if(!fechas.length){
+    cont.innerHTML = '<div style="color:#8a929b">Todavía no hay nada registrado. Toca la opción que escogiste en cada tiempo de comida y marca cómo te fue el día.</div>';
+    res.innerHTML = ''; return;
+  }
+  cont.innerHTML = fechas.map(function(f){
+    var d = DIARIO[f] || {};
+    var extra = [];
+    if(d.energia!=null) extra.push('energía: '+ESCALAS.energia[d.energia]);
+    if(d.hambre!=null)  extra.push('hambre: '+ESCALAS.hambre[d.hambre]);
+    if(d.bano!=null)    extra.push('baño: '+ESCALAS.bano[d.bano]);
+    if(d.sueno!=null)   extra.push('sueño: '+ESCALAS.sueno[d.sueno]);
+    return '<div class="f">'+f+(extra.length?' <span style="font-weight:400;color:#6b7580">— '+extra.join(' · ')+'</span>':'')+'</div>'
+      + (porDia[f]||[]).map(function(r){
+          return '<div class="it">· '+r.lbl+': '+r.nombre+' <span class="opt-peso '+r.peso+'">'+r.peso+'</span></div>';
+        }).join('');
+  }).join('');
+
+  var cuenta = {}, livianas = 0;
+  REG.forEach(function(r){
+    var k = r.lbl+' · '+r.nombre;
+    cuenta[k] = (cuenta[k]||0)+1;
+    if(r.peso==='liviana') livianas++;
+  });
+  var top = Object.keys(cuenta).sort(function(a,b){return cuenta[b]-cuenta[a];}).slice(0,3);
+  var txt = '<b>'+REG.length+' comidas registradas en '+fechas.length+' días.</b>';
+  if(top.length) txt += '<br>Lo que más repites: ' + top.map(function(k){ return k+' ('+cuenta[k]+')'; }).join(' · ');
+  if(REG.length){
+    var pct = Math.round(livianas/REG.length*100);
+    txt += '<br>Proporción de opciones livianas: <b>'+pct+'%</b>';
+    if(pct > 55) txt += ' — coméntaselo a Juan Sebastián en el control.';
+  }
+  res.innerHTML = txt;
+}
+
+function regCopiar(){
+  var porDia = {};
+  REG.forEach(function(r){ (porDia[r.fecha] = porDia[r.fecha] || []).push(r); });
+  Object.keys(DIARIO).forEach(function(f){ porDia[f] = porDia[f] || []; });
+  var nom = document.getElementById('patientName');
+  var txt = 'Registro de ' + (nom ? nom.textContent.trim() : '') + '\n\n';
+  Object.keys(porDia).sort().forEach(function(f){
+    var d = DIARIO[f] || {};
+    txt += f + '\n';
+    (porDia[f]||[]).forEach(function(r){ txt += '  · ' + r.lbl + ': ' + r.nombre + ' (' + r.peso + ')\n'; });
+    var e = [];
+    if(d.energia!=null) e.push('energía: '+ESCALAS.energia[d.energia]);
+    if(d.hambre!=null)  e.push('hambre: '+ESCALAS.hambre[d.hambre]);
+    if(d.bano!=null)    e.push('baño: '+ESCALAS.bano[d.bano]);
+    if(d.sueno!=null)   e.push('sueño: '+ESCALAS.sueno[d.sueno]);
+    if(e.length) txt += '  [' + e.join(' · ') + ']\n';
+    txt += '\n';
+  });
+  if(navigator.clipboard){ navigator.clipboard.writeText(txt); }
+  var b = document.getElementById('regCopiarBtn');
+  if(b){ var t=b.textContent; b.textContent='✓ Copiado'; setTimeout(function(){ b.textContent=t; },1800); }
+}
+
+function regBorrar(){
+  if(!confirm('¿Borrar todo el registro?')) return;
+  REG = []; DIARIO = {}; regGuardar(); pintarRegistro();
+}
+
+function selectOpt(mealId, idx, el){
+  el.closest('.opt-grid').querySelectorAll('.opt-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  savedOpts[mealId] = idx;
+  try{ localStorage.setItem(LS_PREFIX+'_opts', JSON.stringify(savedOpts)); }catch(e){}
+  if(typeof registrarEleccion === 'function') registrarEleccion(mealId, idx);
+}
+
+function setDay(d){
+  day = d;
+  localStorage.setItem(LS_PREFIX+'_day', d);
+  renderMeals(); if(typeof pintarRegistro==="function") pintarRegistro();
+}
+
+function buildIntro(){
+  if(!PATIENT_INTRO || !PATIENT_INTRO.paragraphs || !PATIENT_INTRO.paragraphs.length) return;
+  document.getElementById('introSectionWrap').style.display = '';
+  const parasHtml = PATIENT_INTRO.paragraphs.map(p=>`<div class="intro-text">${p}</div>`).join('');
+  document.getElementById('introCard').innerHTML = `
+    <div class="intro-greeting">${PATIENT_INTRO.greeting||''}</div>
+    ${parasHtml}
+    ${PATIENT_INTRO.signoff?`<div class="intro-signoff">${PATIENT_INTRO.signoff}</div>`:''}
+  `;
+}
+
+function buildObjectives(){
+  const hasObjectives = OBJECTIVES && OBJECTIVES.length;
+  const hasComp = BODY_COMP && BODY_COMP.length;
+  if(!hasObjectives && !hasComp) return;
+  document.getElementById('objectivesSectionWrap').style.display = '';
+  let html = '';
+  if(hasObjectives){
+    html += `<ul class="objetivo-list">${OBJECTIVES.map(o=>`<li class="objetivo-item"><span class="objetivo-check">✓</span><span>${o}</span></li>`).join('')}</ul>`;
+  }
+  if(hasComp){
+    html += `<div class="comp-grid">${BODY_COMP.map(c=>`
+      <div class="comp-card">
+        <div class="comp-label">${c.label}</div>
+        <div class="comp-row">
+          <div class="comp-val"><strong>${c.current}</strong><span>Actual</span></div>
+          <div class="comp-arrow">→</div>
+          <div class="comp-val ideal"><strong>${c.ideal}</strong><span>Meta</span></div>
+        </div>
+      </div>
+    `).join('')}</div>`;
+    html += `<span class="comp-source">Datos de composición corporal según protocolo ISAK.</span>`;
+  }
+  document.getElementById('objectivesCard').innerHTML = html;
+}
+
+function buildHydration(){
+  if(!HYDRATION_GOAL || HYDRATION_GOAL <= 0) return;
+  document.getElementById('hydrationSectionWrap').style.display = '';
+  document.getElementById('hydrationGoalLbl').textContent = HYDRATION_GOAL;
+  renderHydration();
+}
+
+function renderHydration(){
+  document.getElementById('hydrationCount').textContent = hydrationCount;
+  const drops = [];
+  for(let i=0;i<HYDRATION_GOAL;i++){
+    drops.push(`<span class="drop${i<hydrationCount?' filled':''}" onclick="setHydration(${i+1})">💧</span>`);
+  }
+  document.getElementById('hydrationDrops').innerHTML = drops.join('');
+}
+
+function setHydration(n){
+  hydrationCount = (hydrationCount === n) ? n-1 : n;
+  localStorage.setItem(LS_PREFIX+'_hydration_'+todayKey(), String(hydrationCount));
+  renderHydration();
+}
+
+function buildSupplements(){
+  if(!SUPPLEMENTS.length) return;
+  document.getElementById('suppSection').style.display = '';
+  document.getElementById('suppContainer').innerHTML = SUPPLEMENTS.map(s=>`
+    <div class="supp-item">
+      <div class="supp-icon${s.critical?' critical':''}">${s.icon}</div>
+      <div class="supp-body">
+        <div class="supp-name">${s.name}${s.badge?`<span class="supp-badge">${s.badge}</span>`:''}</div>
+        <div class="supp-dose">${s.dose}</div>
+        <div class="supp-note">${s.note}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function buildNotes(){
+  if(!NOTES.length) return;
+  document.getElementById('notesSection').style.display = '';
+  document.getElementById('notesContainer').innerHTML = NOTES.map(n=>`
+    <div class="nota-card${n.type?' '+n.type:''}">
+      <h4>${n.title}</h4>
+      <p>${n.text}</p>
+    </div>
+  `).join('');
+}
+
+function buildAllergyAlert(){
+  if(!ALLERGIES || !ALLERGIES.length) return;
+  document.getElementById('allergyAlert').style.display = '';
+  document.getElementById('allergyAlert').innerHTML = `
+    <div class="allergy-alert">
+      <div class="allergy-icon">📋</div>
+      <div class="allergy-body">
+        <strong>Lo que tuve en cuenta para tu plan</strong>
+        <div class="allergy-list">${ALLERGIES.join(' · ')}</div>
+      </div>
+    </div>
+  `;
+}
+
+function buildAppointment(){
+  if(!NEXT_APPOINTMENT || !NEXT_APPOINTMENT.date) return;
+  const target = new Date(NEXT_APPOINTMENT.date+'T00:00:00');
+  const today = new Date(); today.setHours(0,0,0,0);
+  const diff = Math.round((target-today)/(1000*60*60*24));
+  const dateFmt = target.toLocaleDateString('es-CO',{ day:'numeric', month:'long', year:'numeric' });
+  document.getElementById('appointmentBox').innerHTML = `
+    <div class="appointment-box">
+      <div class="appt-countdown"><strong>${diff>0?diff:'¡Hoy!'}</strong><span>${diff>0?'días':''}</span></div>
+      <div class="appt-info"><strong>📅 ${NEXT_APPOINTMENT.label}</strong>${dateFmt}</div>
+    </div>
+  `;
+}
+
+function buildRecs(){
+  if(typeof GENERAL_RECS === 'undefined' || !GENERAL_RECS.length) return;
+  document.getElementById('recsSection').style.display = '';
+  document.getElementById('recsContainer').innerHTML = GENERAL_RECS.map(r=>`
+    <div class="rec-row${r.destacada?' destacada':''}">
+      <div class="rec-icon">${r.icon||'•'}</div>
+      <div class="rec-text">${r.text}</div>
+    </div>
+  `).join('');
+}
+
+function buildPortionGuide(){
+  if(typeof PORTION_GUIDE === 'undefined' || !PORTION_GUIDE.length) return;
+  document.getElementById('portionSection').style.display = '';
+  document.getElementById('portionContainer').innerHTML = PORTION_GUIDE.map(g=>`
+    <div class="pg-group">
+      <div class="pg-group-title">${g.group}</div>
+      ${g.items.map(it=>`
+        <div class="pg-row">
+          <div class="pg-icon">${it.icon||'•'}</div>
+          <div class="pg-body">
+            <div class="pg-name">${it.name}</div>
+            <div class="pg-eq">${it.eq}</div>
+            ${it.note?`<div class="pg-note">${it.note}</div>`:''}
+          </div>
+        </div>`).join('')}
+    </div>
+  `).join('');
+}
+
+function buildFaq(){
+  if(typeof FAQ === 'undefined' || !FAQ.length) return;
+  document.getElementById('faqSection').style.display = '';
+  document.getElementById('faqContainer').innerHTML = FAQ.map((f,i)=>`
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(${i})" tabindex="0" role="button" aria-expanded="false">
+        <span class="faq-mark">?</span><span>${f.q}</span>
+        <span class="faq-chev" id="faqChev-${i}">▼</span>
+      </div>
+      <div class="faq-a" id="faqA-${i}">${f.a}</div>
+    </div>
+  `).join('');
+}
+
+function toggleFaq(i){
+  const a = document.getElementById('faqA-'+i);
+  const c = document.getElementById('faqChev-'+i);
+  const open = a.classList.toggle('open');
+  c.classList.toggle('open', open);
+  a.parentElement.querySelector('.faq-q').setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+function buildRestaurants(){
+  if(typeof RESTAURANTS === 'undefined' || !RESTAURANTS || !RESTAURANTS.list || !RESTAURANTS.list.length) return;
+  document.getElementById('restoSection').style.display = '';
+  const intro = RESTAURANTS.intro ? `<div class="resto-intro">${RESTAURANTS.intro}</div>` : '';
+  document.getElementById('restoContainer').innerHTML = intro + RESTAURANTS.list.map(r=>`
+    <div class="resto-card">
+      <div class="resto-head">
+        <div class="resto-logo">${r.icon||'\U0001F374'}</div>
+        <div>
+          <div class="resto-name">${r.name}</div>
+          <div class="resto-kind">${r.kind||''}</div>
+        </div>
+      </div>
+      ${r.dishes.map(d=>`<div class="resto-dish"><span class="bullet">✓</span><span>${d}</span></div>`).join('')}
+      ${r.ask?`<div class="resto-ask">${r.ask}</div>`:''}
+    </div>
+  `).join('');
+}
+
+function buildWhatsapp(){
+  if(!WHATSAPP_NUMBER) return;
+  document.getElementById('whatsappSection').style.display = '';
+  const name = document.getElementById('patientName').textContent || '';
+  const msg = encodeURIComponent(`Hola Juan Sebastián, tengo una duda sobre mi plan de alimentación (${name}).`);
+  document.getElementById('whatsappBtn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+}
+
+function normalize(str){
+  return (str||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+}
+function weekKey(){
+  const d = new Date();
+  const onejan = new Date(d.getFullYear(),0,1);
+  const week = Math.ceil((((d - onejan)/86400000) + onejan.getDay()+1)/7);
+  return d.getFullYear()+'-w'+week;
+}
+let shoppingChecked = JSON.parse(localStorage.getItem(LS_PREFIX+'_shopping_'+weekKey()) || '{}');
+
+function buildShoppingList(){
+  if(!SHOPPING_KEYWORDS || !SHOPPING_KEYWORDS.length) return;
+  let allText = '';
+  MEALS.forEach(m=>{
+    DAY_TYPES.forEach(dt=>{
+      const variant = m[dt.key];
+      if(!variant) return;
+      variant.opts.forEach(o=>{ allText += ' ' + o.name + ' ' + o.desc; });
+    });
+  });
+  const normText = normalize(allText);
+  const found = {};
+  // Un mismo alimento puede estar en dos categorias (crema de mani en Despensa
+  // y en Grasas, por ejemplo) o con dos etiquetas parecidas. La lista de
+  // mercado es para llevar al supermercado: cada cosa aparece UNA vez.
+  const yaEsta = {};
+  SHOPPING_KEYWORDS.forEach(k=>{
+    if(normText.includes(normalize(k.match))){
+      const id = normalize(k.label);
+      if(yaEsta[id]) return;
+      yaEsta[id] = true;
+      if(!found[k.category]) found[k.category] = [];
+      found[k.category].push(k.label);
+    }
+  });
+  const categories = Object.keys(found);
+  if(!categories.length) return;
+  document.getElementById('shoppingSection').style.display = '';
+  document.getElementById('shoppingContainer').innerHTML = categories.map(cat=>`
+    <div class="shopping-cat">
+      <div class="shopping-cat-title">${cat}</div>
+      <ul class="shopping-list">
+        ${found[cat].map(label=>{
+          const key = normalize(cat+'_'+label);
+          const isChecked = !!shoppingChecked[key];
+          return `<li class="shopping-item${isChecked?' checked':''}" onclick="toggleShoppingItem('${key}',this)">
+            <div class="shopping-check${isChecked?' checked':''}">✓</div>
+            <span class="label">${label}</span>
+          </li>`;
+        }).join('')}
+      </ul>
+    </div>
+  `).join('');
+}
+
+function toggleShoppingItem(key, el){
+  const nowChecked = !el.classList.contains('checked');
+  el.classList.toggle('checked', nowChecked);
+  el.querySelector('.shopping-check').classList.toggle('checked', nowChecked);
+  shoppingChecked[key] = nowChecked;
+  localStorage.setItem(LS_PREFIX+'_shopping_'+weekKey(), JSON.stringify(shoppingChecked));
+}
+
+buildAllergyAlert();
+buildAppointment();
+buildIntro();
+buildObjectives();
+buildHydration();
+buildDaySelector();
+buildDayInfo();
+renderMeals(); if(typeof pintarRegistro==="function") pintarRegistro();
+buildSupplements();
+buildNotes();
+buildShoppingList();
+buildRecs();
+buildPortionGuide();
+buildFaq();
+buildRestaurants();
+buildWhatsapp();
+</script>
+</body>
+</html>
