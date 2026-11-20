@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Plan Nutricional · Vanessa Gonzalez · JSMO</title>
+<title>Plan Nutricional · Vanessa · JSMO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -97,7 +97,14 @@ body{font-family:'Poppins',sans-serif;background:var(--cream);color:var(--navy);
 .opt-card.selected{border-color:var(--green);background:var(--green-light)}
 .opt-num{font-size:.62rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.06em}
 .opt-name{font-size:.86rem;font-weight:700;color:var(--navy);margin-top:.1rem}
-.opt-desc{font-size:.74rem;color:var(--muted);margin-top:.18rem;line-height:1.4}
+.opt-desc{font-size:.74rem;color:var(--muted);margin-top:.3rem;line-height:1.5}
+/* 28-10-2026 — Juanse: "la descripcion se ve desordenada y puede ser dificil de
+   entender... que cada alimento tenga su espacio". Antes los alimentos iban
+   todos pegados separados por un punto medio. Ahora cada uno es un renglon. */
+.opt-desc ul{list-style:none;margin:0;padding:0}
+.opt-desc li{position:relative;padding-left:.72rem;margin:.16rem 0}
+.opt-desc li::before{content:"";position:absolute;left:0;top:.52em;
+  width:.26rem;height:.26rem;border-radius:50%;background:var(--muted);opacity:.55}
 .opt-macro{font-size:.7rem;color:var(--green);font-weight:700;margin-top:.35rem}
 .totals-bar{display:flex;gap:.5rem;flex-wrap:wrap;background:var(--navy);border-radius:14px;padding:.9rem 1rem;margin:.9rem 1rem 0;color:#fff}
 .totals-item{flex:1;min-width:70px;text-align:center}
@@ -145,23 +152,91 @@ body{font-family:'Poppins',sans-serif;background:var(--cream);color:var(--navy);
 .shopping-item.checked span.label{text-decoration:line-through;opacity:.55}
 .whatsapp-card{background:linear-gradient(135deg,var(--green) 0%,#1E5C38 100%);border-radius:16px;padding:1.3rem 1.2rem;text-align:center;color:#fff;box-shadow:var(--shadow)}
 .whatsapp-card p{font-size:.85rem;opacity:.95;margin-bottom:.9rem;line-height:1.5}
+.rec-row{display:flex;gap:.65rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--border)}
+.rec-row:last-child{border-bottom:none}
+.rec-icon{font-size:1.05rem;flex-shrink:0;width:24px;text-align:center;line-height:1.4}
+.rec-text{flex:1;min-width:0;font-size:.81rem;color:var(--navy-soft);line-height:1.55}
+.rec-text b{color:var(--navy)}
+.rec-row.destacada{background:var(--gold-light);border-radius:10px;padding:.6rem .7rem;border:1px solid var(--gold);margin:.3rem 0}
+.rec-row.destacada .rec-text{color:var(--navy)}
+.pg-group{margin-bottom:1rem}
+.pg-group:last-child{margin-bottom:0}
+.pg-group-title{font-size:.72rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.45rem}
+.pg-row{display:flex;gap:.7rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--border)}
+.pg-row:last-child{border-bottom:none}
+.pg-icon{font-size:1.15rem;flex-shrink:0;width:26px;text-align:center;line-height:1.3}
+.pg-body{flex:1;min-width:0}
+.pg-name{font-size:.84rem;font-weight:700;color:var(--navy)}
+.pg-eq{font-size:.76rem;color:var(--green);font-weight:700;margin-top:.1rem}
+.pg-note{font-size:.73rem;color:var(--muted);margin-top:.12rem;line-height:1.45}
+.faq-item{background:var(--card);border:1.5px solid var(--border);border-radius:12px;margin-bottom:.5rem;overflow:hidden;box-shadow:var(--shadow)}
+.faq-q{display:flex;gap:.6rem;align-items:center;padding:.75rem .9rem;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;font-size:.84rem;font-weight:700;color:var(--navy)}
+.faq-q .faq-mark{color:var(--gold);font-weight:900;flex-shrink:0}
+.faq-chev{margin-left:auto;color:var(--muted);font-size:.85rem;transition:transform .2s;flex-shrink:0}
+.faq-chev.open{transform:rotate(180deg)}
+.faq-a{display:none;padding:0 .9rem .85rem 2.1rem;font-size:.79rem;color:var(--muted);line-height:1.6}
+.faq-a.open{display:block}
+.faq-a strong{color:var(--navy-soft)}
+.resto-intro{background:var(--green-light);border:1.5px solid var(--green);border-radius:12px;padding:.85rem 1rem;margin-bottom:.7rem;font-size:.79rem;color:var(--navy-soft);line-height:1.6}
+.resto-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:.9rem 1rem;margin-bottom:.55rem;box-shadow:var(--shadow)}
+.resto-head{display:flex;align-items:center;gap:.55rem;margin-bottom:.5rem}
+.resto-logo{width:32px;height:32px;border-radius:9px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0}
+.resto-name{font-size:.92rem;font-weight:800;color:var(--navy)}
+.resto-kind{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+.resto-dish{display:flex;gap:.5rem;align-items:flex-start;padding:.38rem 0;font-size:.79rem;color:var(--navy-soft);line-height:1.45;border-bottom:1px solid var(--border)}
+.resto-dish:last-of-type{border-bottom:none}
+.resto-dish .bullet{color:var(--green);font-weight:900;flex-shrink:0}
+.resto-dish b{color:var(--navy)}
+.resto-ask{background:var(--cream);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:.5rem .65rem;font-size:.75rem;color:var(--navy-soft);margin-top:.55rem;line-height:1.5}
+.resto-ask b{color:var(--navy)}
 .whatsapp-btn{display:inline-flex;align-items:center;gap:.5rem;background:#fff;color:var(--green);font-weight:800;font-size:.85rem;padding:.65rem 1.3rem;border-radius:999px;text-decoration:none}
 @media print{
   .sticky-bar{position:static}
   .action-toolbar, .meal-check, .drop, .shopping-check{display:none!important}
-  .meal-body{display:block!important}
+  .meal-body, .faq-a{display:block!important}
+  .faq-chev{display:none}
   .meal-chevron{display:none}
   .meal-card{break-inside:avoid}
   body{background:#fff}
 }
+
+/* ── REGISTRO DIARIO (23-10-2026) ─────────────────────────────────── */
+.opt-peso{display:inline-block;font-size:.60rem;font-weight:800;letter-spacing:.04em;
+  text-transform:uppercase;padding:2px 8px;border-radius:999px;margin-left:8px;vertical-align:middle}
+.opt-peso.liviana{background:#e8f4ff;color:#1b5e8a}
+.opt-peso.media{background:#eef0f2;color:#5a6672}
+.opt-peso.completa{background:#fff2e0;color:#8a5a1b}
+#regCard{margin:26px 0;padding:22px;border-radius:16px;background:#fff;
+  border:1px solid #e6e8ea;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+#regCard h3{margin:0 0 6px;font-size:1.05rem}
+#regCard .sub{color:#6b7580;font-size:.86rem;margin-bottom:18px;line-height:1.6}
+.regDia{border-top:1px solid #f0f1f3;padding-top:16px;margin-top:4px}
+.regFila{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:11px}
+.regFila>span.lbl{font-size:.84rem;font-weight:700;min-width:104px;color:#49535d}
+.regOpt{border:1px solid #dfe3e6;background:#fff;border-radius:9px;padding:7px 13px;
+  font-size:.82rem;cursor:pointer;font-family:inherit;color:#49535d}
+.regOpt.on{background:#123a5c;color:#fff;border-color:#123a5c;font-weight:700}
+#regLista{font-size:.86rem;line-height:1.7;max-height:210px;overflow-y:auto;
+  border-top:1px solid #f0f1f3;padding-top:12px;margin-top:16px}
+#regLista .f{font-weight:700;margin-top:10px}
+#regLista .it{color:#49535d;padding-left:14px}
+#regResumen{margin-top:14px;padding:13px 15px;background:#f7f9fa;border-radius:11px;
+  font-size:.85rem;line-height:1.7}
+#regBtns{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
+#regBtns button{border:0;border-radius:10px;padding:11px 17px;font-weight:700;
+  font-size:.86rem;cursor:pointer;font-family:inherit}
+.regMain{background:#123a5c;color:#fff}
+.regGhost{background:#eef0f2;color:#49535d}
+@media print{#regCard{display:none}}
+
 </style>
 </head>
 <body>
 
 <div class="header">
   <div class="header-badge">Plan Nutricional Deportivo</div>
-  <h1 id="patientName">Vanessa Gonzalez</h1>
-  <div class="header-sub" id="patientSub">Ganancia de Masa Muscular · Plan Progresivo por Fases</div>
+  <h1 id="patientName">Vanessa</h1>
+  <div class="header-sub" id="patientSub">Cuatro tiempos · Ganancia de masa muscular</div>
   <div class="header-note" id="patientNote"></div>
   <div id="appointmentBox"></div>
 </div>
@@ -198,6 +273,23 @@ body{font-family:'Poppins',sans-serif;background:var(--cream);color:var(--navy);
 <div class="section">
   <div class="section-title">Plan de Alimentación · 4 Opciones por Tiempo de Comida</div>
   <div id="meals-container"></div>
+<div id="regCard">
+  <h3>📓 Tu registro diario</h3>
+  <div class="sub">Dos cosas, y las dos toman segundos. Cada vez que toques la opci&oacute;n que escogiste en un tiempo de comida, queda guardada ac&aacute; con la fecha. Y abajo marcas c&oacute;mo te fue el d&iacute;a. En el control lo revisamos juntos: as&iacute; el ajuste se hace con lo que de verdad pas&oacute;, no con lo que alcancemos a recordar.</div>
+  <div class="regDia">
+    <div class="regFila"><span class="lbl">&#9889; Energ&iacute;a</span><span id="regEnergia"></span></div>
+    <div class="regFila"><span class="lbl">&#127860; Hambre</span><span id="regHambre"></span></div>
+    <div class="regFila"><span class="lbl">&#128701; Ba&ntilde;o</span><span id="regBano"></span></div>
+    <div class="regFila"><span class="lbl">&#127769; Sue&ntilde;o</span><span id="regSueno"></span></div>
+  </div>
+  <div id="regLista"></div>
+  <div id="regResumen"></div>
+  <div id="regBtns">
+    <button id="regCopiarBtn" class="regMain" onclick="regCopiar()">Copiar para envi&aacute;rselo a Juan Sebasti&aacute;n</button>
+    <button class="regGhost" onclick="regBorrar()">Borrar registro</button>
+  </div>
+</div>
+
 </div>
 
 <div class="section" id="suppSection" style="display:none">
@@ -215,6 +307,26 @@ body{font-family:'Poppins',sans-serif;background:var(--cream);color:var(--navy);
   <div class="special-card" id="shoppingContainer"></div>
 </div>
 
+<div class="section" id="recsSection" style="display:none">
+  <div class="section-title">✅ Recomendaciones Generales</div>
+  <div class="special-card" id="recsContainer"></div>
+</div>
+
+<div class="section" id="portionSection" style="display:none">
+  <div class="section-title">🥄 Guía de Porciones</div>
+  <div class="special-card" id="portionContainer"></div>
+</div>
+
+<div class="section" id="faqSection" style="display:none">
+  <div class="section-title">❓ Preguntas Frecuentes</div>
+  <div id="faqContainer"></div>
+</div>
+
+<div class="section" id="restoSection" style="display:none">
+  <div class="section-title">🍽️ Comer Afuera · Restaurantes</div>
+  <div id="restoContainer"></div>
+</div>
+
 <div class="section" id="whatsappSection" style="display:none;padding-bottom:1rem">
   <div class="whatsapp-card">
     <p>¿Dudas sobre tu plan? Escríbeme directo.</p>
@@ -225,55 +337,78 @@ body{font-family:'Poppins',sans-serif;background:var(--cream);color:var(--navy);
 <div class="footer">
   Elaborado por <strong>Juan Sebastián Muñoz Ortiz</strong><br>
   <span class="brand">JSMO Nutricionista Deportivo</span><br>
-  📱 317 549 9759 · @juanse_nutricionista
+  📱 317 549 9759 · @juansenutricionista
 </div>
 
 <script>
 /* 1) DATOS DEL PACIENTE */
-document.getElementById('patientName').textContent = "Vanessa Gonzalez";
-document.getElementById('patientSub').textContent = "Ganancia de Masa Muscular · Plan Progresivo por Fases";
-document.getElementById('patientNote').textContent = "";
-document.title = 'Plan Nutricional · Vanessa Gonzalez · JSMO';
+document.getElementById('patientName').textContent = "Vanessa";
+document.getElementById('patientSub').textContent = "Cuatro tiempos · Ganancia de masa muscular";
+document.getElementById('patientNote').textContent = "Un solo esquema para toda la semana. Escoge una opción de cada tiempo. Todo va en gramos, como tú lo manejas.";
+document.title = 'Plan Nutricional · Vanessa · JSMO';
 
 /* 2) ALERGIAS Y RESTRICCIONES */
-const ALLERGIES = ["No consume legumbres — le caen mal (antecedente de resección intestinal en 2022)", "No consume cerdo. El pollo casi no lo come, salvo en asados", "Toma levotiroxina: separarla de los lácteos (ver nota)"];
+const ALLERGIES = ["Sin pasta, sin pizza y sin comida italiana", "Sin legumbres, que te caen mal, y sin cerdo", "Las proteínas son las tuyas: atún, lomo de res, salmón, sardinas, huevo y yogurt griego", "Papa, maduro y maíz por fuera — no te gustan"];
 
 /* 3) INTRODUCCIÓN / SALUDO */
-const PATIENT_INTRO = {"greeting": "¡Hola, Vanessa!", "paragraphs": ["Soy Juan Sebastián Muñoz O., tu nutricionista deportivo. Empiezo por lo más importante que muestran tus datos: en los últimos dos meses ganaste 2 kg de masa libre de grasa. Eso es un logro real. Pero al mismo tiempo perdiste 1,6 kg de grasa, y por eso el peso no sube — estás construyendo músculo pagándolo con una grasa que ya no te sobra. Tu masa grasa está en 7,3 kg y el rango normal para ti es de 9,7 a 15,5 kg.", "La razón es una sola: no estás comiendo suficiente para lo que entrenas. Con 1.300 kcal y siete días de entrenamiento, tu cuerpo tiene que sacar la energía de algún lado. La debilidad que empezaste a sentir, los ciclos irregulares y la anemia no son casualidad — son la misma historia contada de tres formas distintas.", "Este plan sube por fases, sin saltos bruscos. Empezamos con dos, y en el control del mes definimos las siguientes. Fíjate en algo: la proteína es exactamente la misma en ambas. Tú ya tienes la proteína cubierta de sobra con tus tres batidos diarios — lo que te falta es energía. Todo lo que aumenta es carbohidrato y grasa.", "Y sí, todo está en gramos, con su equivalente en medida casera al lado. Sé que pesar la comida te da tranquilidad y no te lo voy a quitar de golpe. La medida casera está ahí desde hoy para que la vayas conociendo, y cuando llegue el momento de soltar la balanza no sea un salto al vacío."], "signoff": "Ganar músculo empieza por comer suficiente. Vamos por fases, sin afán."};
+const PATIENT_INTRO = {"greeting": "¡Hola, Vanessa!", "paragraphs": ["Soy Juan Sebastián Muñoz O., tu nutricionista deportivo. Antes de hablarte del plan nuevo quiero que mires lo que pasó en estos meses, porque es muchísimo más de lo que probablemente te parece.", "<b>Llegaste sin poder levantar una mancuerna de cinco kilos y sin poder hacer prensa ni siquiera sin peso.</b> Hoy entrenas seis días a la semana. Eso no es un detalle: es un cuerpo distinto.", "<b>Y hay algo que vale más que cualquier medida, aunque no se vea en el espejo.</b> Me contaste que tu ciclo fue irregular toda la vida — dos meses sí, otros no, y si pasaban tres meses después llegaba muy fuerte. Ahora llevas cinco meses seguidos y te viene el cinco de cada mes. <b>Eso es tu cuerpo diciéndote que por fin tiene con qué.</b> Es la señal más confiable que existe de que lo estás haciendo bien, y la conseguiste tú.", "A eso súmale cinco kilos más, cuatro centímetros de brazo y cuatro de tórax. Todo eso es lo que pediste cuando empezamos.", "<b>Ahora, lo que cambia en este plan.</b> Tú me pediste reestructurar la distribución, y tenías razón en pedirlo. Hoy comes una cantidad de comida que está bien — lo que vamos a mover es de dónde viene. Vas a ver menos proteína en polvo y más comida de verdad, más grasa buena, y más carbohidrato. El total es casi el mismo que ya comes. No es más comida: es la misma, mejor repartida.", "Y el plan ahora tiene cuatro tiempos, montados sobre tu horario nuevo del hospital."], "signoff": "Lo más difícil ya lo hiciste. Esto de aquí en adelante es ajuste fino."};
 
 /* 4) OBJETIVOS Y COMPOSICIÓN CORPORAL (ISAK pendiente) */
-const OBJECTIVES = ["Subir de peso y ganar masa muscular sin perder la grasa que ya está por debajo del rango saludable.", "Llevar tu disponibilidad energética desde 27 kcal por kilo de masa magra hacia el rango saludable, de forma progresiva.", "Recuperar un ciclo menstrual regular como marcador objetivo de que la energía es suficiente.", "Acompañar la recuperación de la anemia con una alimentación que aporte suficiente energía y hierro.", "Hacer la transición gradual de pesar la comida a manejarte con medidas caseras.", "Reducir la dependencia de la proteína en polvo y ganar espacio para comida real."];
-const BODY_COMP = [{"label": "Peso corporal", "current": "41,1 kg", "ideal": "48,5 kg (peso ideal según InBody)"}, {"label": "IMC", "current": "17,8 (bajo peso)", "ideal": "≥18,5"}, {"label": "Masa grasa", "current": "7,3 kg", "ideal": "9,7-15,5 kg (rango del equipo — hoy estás por debajo)"}, {"label": "Masa muscular esquelética", "current": "18,3 kg", "ideal": "En aumento sostenido"}, {"label": "Masa libre de grasa", "current": "33,8 kg", "ideal": "En aumento sostenido"}, {"label": "Porcentaje de grasa", "current": "17,7%", "ideal": "Mantener o subir levemente — no bajar más"}];
+const OBJECTIVES = ["Seguir sumando músculo con la misma cantidad de comida, mejor repartida", "Que la proteína venga del plato y no del polvo", "Subir la grasa buena, que es la que sostiene la tiroides y el ciclo", "Meter carne de res, que es lo que te pedí para el hierro", "Que el turno largo deje de ser diez horas sin comer", "Sostener el ciclo regular — esa es la señal que más me importa"];
+const BODY_COMP = [{"label": "Peso", "current": "45 kg", "ideal": "seguir subiendo despacio"}, {"label": "Brazo", "current": "26 cm", "ideal": "venía de 22 — cuatro centímetros"}, {"label": "Tórax", "current": "80 cm", "ideal": "venía de 76"}, {"label": "Muslo", "current": "48,5 y 49 cm", "ideal": "venía de 47"}, {"label": "Tu ciclo", "current": "5 meses seguidos, el 5 de cada mes", "ideal": "esta es la señal que importa"}, {"label": "En el gimnasio", "current": "Seis días, con peso", "ideal": "empezaste sin poder con 5 kg"}];
 
 /* 5) META DE HIDRATACIÓN */
-const HYDRATION_GOAL = 8;
+const HYDRATION_GOAL = 10;
 
 /* 6) PRÓXIMA CITA */
-const NEXT_APPOINTMENT = {"date": "2026-09-12", "label": "Control de seguimiento"};
+const NEXT_APPOINTMENT = {"date": "2026-12-19", "label": "Control y seguimiento"};
 
 /* 7) TIPOS DE DÍA */
-const DAY_TYPES = [{"key": "alta", "label": "Fase 1", "days": "Semanas 1-3", "icon": "🌱", "color": "navy", "title": "🌱 Fase 1 — Salir de la zona de riesgo", "desc": "Subimos de ~1.300 a 1.600 kcal. Con solo este paso tu disponibilidad energética pasa de 27 a ~35 kcal por kilo de masa magra, o sea por encima del umbral en el que empiezan a normalizarse los ciclos. El beneficio arranca desde acá, no hay que esperar.", "kcal": "1.600 kcal", "cho": "179 g", "choPerKg": "4,4 g/kg", "pro": "82 g (2,0 g/kg)", "fat": "62 g (1,5 g/kg)", "ref": "Disponibilidad energética ~35 kcal/kg masa magra"}, {"key": "media", "label": "Fase 2", "days": "Semanas 4-6", "icon": "🌿", "color": "green", "title": "🌿 Fase 2 — Construir sobre lo ganado", "desc": "1.800 kcal. La proteína sigue igual: todo lo que sube es carbohidrato y grasa. Acá deberías empezar a notar más fuerza en el gimnasio y menos sensación de debilidad.", "kcal": "1.800 kcal", "cho": "211 g", "choPerKg": "5,1 g/kg", "pro": "82 g (2,0 g/kg)", "fat": "70 g (1,7 g/kg)", "ref": "Disponibilidad energética ~41 kcal/kg masa magra"}];
+const DAY_TYPES = [{"key": "alta", "label": "💪 Tu Día", "days": "Todos los días", "icon": "💪", "color": "green", "title": "💪 Tu Día", "desc": "Un solo esquema para toda la semana. Entrenas casi todos los días y las sesiones son parecidas, así que no hace falta complicarlo con días distintos. Cuatro tiempos, montados sobre tu horario del hospital.", "kcal": "~1.830 kcal", "cho": "~187 g", "choPerKg": "4,2 g/kg", "pro": "~127 g (2,8 g/kg)", "fat": "~67 g (1,5 g/kg)", "ref": "Desayuno 6:00 · Gimnasio 7:00-9:20 · Al salir 9:30 · Almuerzo 12:30 · Turno 1:00-11:00 · Cena 11:00"}];
 
 /* 8) TIEMPOS DE COMIDA */
-const MEALS = [{"id": "desayuno", "alta": {"lbl": "Desayuno", "title": "Desayuno", "time": "5:00 am — antes de entrenar", "tags": ["Pre-entreno"], "tip": "Este desayuno es el que te sostiene el entrenamiento de las 7. Si tomas levotiroxina, revisa la nota sobre cómo separarla de los lácteos.", "opts": [{"name": "Huevos con arepa, queso y piña", "desc": "2 huevos enteros + 1 clara · 60 g de arepa de maíz (1 arepa pequeña) · 30 g de queso (1 tajada) · 110 g de piña (⅔ de taza picada)"}, {"name": "Avena con yogurt griego, banano y proteína", "desc": "30 g de avena (3 cucharadas soperas colmadas) · 125 g de yogurt griego San Martín (½ taza) · ½ scoop de proteína ISO 100 · 60 g de banano (½ banano) · 8 g de mantequilla de maní (½ cucharada)"}, {"name": "Pan de masa madre con huevo y aguacate", "desc": "40 g de pan de masa madre (1 tajada) · 2 huevos revueltos · 30 g de aguacate (2 cucharadas) · 100 g de papaya (⅔ de taza picada)"}, {"name": "Huevos con galletas de arroz, queso y jugo verde", "desc": "2 huevos enteros + 1 clara · 27 g de galletas de arroz (3 galletas) · 40 g de queso · 100 g de fresas (⅔ de taza) · jugo verde de espinaca, pepino y kiwi"}]}, "media": {"lbl": "Desayuno", "title": "Desayuno", "time": "5:00 am — antes de entrenar", "tags": ["Pre-entreno"], "tip": "Este desayuno es el que te sostiene el entrenamiento de las 7. Si tomas levotiroxina, revisa la nota sobre cómo separarla de los lácteos.", "opts": [{"name": "Huevos con arepa, queso y piña", "desc": "2 huevos enteros + 1 clara · 80 g de arepa (1 arepa mediana) · 30 g de queso (1 tajada) · 124 g de piña (¾ de taza picada) · 15 g de aguacate (1 cucharada)"}, {"name": "Avena con yogurt griego, banano y proteína", "desc": "40 g de avena (4 cucharadas soperas colmadas) · 125 g de yogurt griego San Martín (½ taza) · ½ scoop de proteína ISO 100 · 120 g de banano (1 banano mediano) · 16 g de mantequilla de maní (1 cucharada)"}, {"name": "Pan de masa madre con huevo y aguacate", "desc": "60 g de pan de masa madre (1½ tajada) · 2 huevos revueltos · 30 g de aguacate (2 cucharadas) · 145 g de papaya (1 taza picada)"}, {"name": "Huevos con galletas de arroz, queso y jugo verde", "desc": "2 huevos enteros + 1 clara · 36 g de galletas de arroz (4 galletas) · 50 g de queso · 144 g de fresas (1 taza) · jugo verde de espinaca, pepino y kiwi"}]}}, {"id": "postentreno", "alta": {"lbl": "Post-Entreno", "title": "Post-Entreno", "time": "9:30 am — al salir del gimnasio", "tags": ["Post-entreno"], "tip": "Esta comida no existía en tu día y es de las que más falta te hacía: es la que convierte el entrenamiento en músculo.", "opts": [{"name": "Yogurt griego con proteína y fresas", "desc": "125 g de yogurt griego San Martín (½ taza) · 1 scoop de proteína ISO 100 · 100 g de fresas (⅔ de taza)"}, {"name": "Batido de banano con avena y yogurt griego", "desc": "60 g de banano (½ banano) · 20 g de avena (2 cucharadas soperas colmadas) · 125 g de yogurt griego San Martín (½ taza)"}, {"name": "Montadito de pan de masa madre con queso y tomate", "desc": "40 g de pan de masa madre (1 tajada) · 40 g de queso · tomate en rodajas · 5 g de aceite de oliva (1 cucharadita)"}, {"name": "Galletas de arroz con atún y aguacate", "desc": "27 g de galletas de arroz (3 galletas) · 60 g de atún en agua escurrido · 30 g de aguacate (2 cucharadas)"}]}, "media": {"lbl": "Post-Entreno", "title": "Post-Entreno", "time": "9:30 am — al salir del gimnasio", "tags": ["Post-entreno"], "tip": "Esta comida no existía en tu día y es de las que más falta te hacía: es la que convierte el entrenamiento en músculo.", "opts": [{"name": "Yogurt griego con proteína y fresas", "desc": "185 g de yogurt griego San Martín (¾ de taza) · 1 scoop de proteína ISO 100 · 144 g de fresas (1 taza) · 8 g de mantequilla de maní (½ cucharada)"}, {"name": "Batido de banano con avena y yogurt griego", "desc": "120 g de banano (1 banano mediano) · 30 g de avena (3 cucharadas soperas colmadas) · 125 g de yogurt griego San Martín (½ taza)"}, {"name": "Montadito de pan de masa madre con queso y tomate", "desc": "60 g de pan de masa madre (1½ tajada) · 50 g de queso · tomate en rodajas · 5 g de aceite de oliva (1 cucharadita)"}, {"name": "Galletas de arroz con atún y aguacate", "desc": "36 g de galletas de arroz (4 galletas) · 70 g de atún en agua escurrido · 30 g de aguacate (2 cucharadas)"}]}}, {"id": "almuerzo", "alta": {"lbl": "Almuerzo", "title": "Almuerzo", "time": "11:30 am — antes de entrar al turno", "tags": [], "tip": "Cocina para el momento, como ya lo haces. Todas estas se arman en menos de 20 minutos.", "opts": [{"name": "Atún ventresca con quinoa y ensalada", "desc": "85 g de atún ventresca escurrido · 60 g de quinoa cocida (3 cucharadas soperas colmadas) · ensalada de espinaca, rúgula y tomate · 5 g de aceite de oliva (1 cucharadita)"}, {"name": "Salmón al horno con yuca y ensalada", "desc": "100 g de salmón al horno · 80 g de yuca cocida · ensalada de espinaca y tomate · 5 g de aceite de oliva (1 cucharadita)"}, {"name": "Lomo a la plancha con arepa y ensalada", "desc": "100 g de lomo a la plancha · 60 g de arepa (1 arepa pequeña) · ensalada de rúgula y tomate · 5 g de aceite de oliva (1 cucharadita)"}, {"name": "Sardinas con arroz y ensalada", "desc": "90 g de sardinas en aceite de oliva escurridas · 80 g de arroz cocido (½ taza) · ensalada de espinaca, tomate y pepino"}]}, "media": {"lbl": "Almuerzo", "title": "Almuerzo", "time": "11:30 am — antes de entrar al turno", "tags": [], "tip": "Cocina para el momento, como ya lo haces. Todas estas se arman en menos de 20 minutos.", "opts": [{"name": "Atún ventresca con quinoa y ensalada", "desc": "100 g de atún ventresca escurrido · 90 g de quinoa cocida (4-5 cucharadas soperas colmadas) · ensalada de espinaca, rúgula y tomate · 10 g de aceite de oliva (2 cucharaditas)"}, {"name": "Salmón al horno con yuca y ensalada", "desc": "110 g de salmón al horno · 110 g de yuca cocida · ensalada de espinaca y tomate · 10 g de aceite de oliva (2 cucharaditas)"}, {"name": "Lomo a la plancha con arepa y ensalada", "desc": "110 g de lomo a la plancha · 80 g de arepa (1 arepa mediana) · ensalada de rúgula y tomate · 10 g de aceite de oliva (2 cucharaditas)"}, {"name": "Sardinas con arroz y ensalada", "desc": "100 g de sardinas escurridas · 105 g de arroz cocido (⅔ de taza) · ensalada de espinaca, tomate y pepino · 15 g de aguacate (1 cucharada)"}]}}, {"id": "pm", "alta": {"lbl": "Media Tarde", "title": "Media Tarde", "time": "4:00 pm — en el turno", "tags": ["Para llevar"], "tip": "Déjalo empacado desde la mañana. En un turno largo esta comida es la que evita que llegues a las 9 de la noche con el tanque vacío.", "opts": [{"name": "Yogurt griego con papaya y granola", "desc": "125 g de yogurt griego San Martín (½ taza) · 100 g de papaya (⅔ de taza picada) · 10 g de granola libre de azúcar (1 cucharada)"}, {"name": "Galletas de arroz con queso cottage y aguacate", "desc": "27 g de galletas de arroz (3 galletas) · 42 g de queso cottage (3 cucharadas) · 30 g de aguacate (2 cucharadas)"}, {"name": "Pan de masa madre con queso cottage y banano", "desc": "40 g de pan de masa madre (1 tajada) · 42 g de queso cottage (3 cucharadas) o 40 g de queso cuajada triturado · 60 g de banano (½ banano)"}, {"name": "Batido de proteína con avena y arándanos", "desc": "½ scoop de proteína ISO 100 · 20 g de avena (2 cucharadas soperas colmadas) · 75 g de arándanos (½ taza) · agua"}]}, "media": {"lbl": "Media Tarde", "title": "Media Tarde", "time": "4:00 pm — en el turno", "tags": ["Para llevar"], "tip": "Déjalo empacado desde la mañana. En un turno largo esta comida es la que evita que llegues a las 9 de la noche con el tanque vacío.", "opts": [{"name": "Yogurt griego con papaya y granola", "desc": "185 g de yogurt griego San Martín (¾ de taza) · 145 g de papaya (1 taza picada) · 20 g de granola libre de azúcar (2 cucharadas)"}, {"name": "Galletas de arroz con queso cottage y aguacate", "desc": "36 g de galletas de arroz (4 galletas) · 56 g de queso cottage (4 cucharadas) · 30 g de aguacate (2 cucharadas)"}, {"name": "Pan de masa madre con queso cottage y banano", "desc": "60 g de pan de masa madre (1½ tajada) · 56 g de queso cottage (4 cucharadas) o 50 g de queso cuajada triturado · 120 g de banano (1 banano mediano)"}, {"name": "Batido de proteína con avena y arándanos", "desc": "½ scoop de proteína ISO 100 · 30 g de avena (3 cucharadas soperas colmadas) · 110 g de arándanos (¾ de taza) · agua"}]}}, {"id": "cena", "alta": {"lbl": "Cena", "title": "Cena", "time": "9:00 pm — al llegar del trabajo", "tags": ["Rápida"], "tip": "Llegas cansada, así que todas son de sartén y sin complicación.", "opts": [{"name": "Huevos revueltos con arepa y queso", "desc": "3 huevos revueltos · 60 g de arepa (1 arepa pequeña) · 30 g de queso · tomate y espinaca salteados"}, {"name": "Salmón con quinoa y espinaca salteada", "desc": "100 g de salmón · 60 g de quinoa cocida (3 cucharadas soperas colmadas) · espinaca salteada · 5 g de aceite de oliva (1 cucharadita)"}, {"name": "Montadito de atún sobre pan de masa madre", "desc": "85 g de atún en agua escurrido · 40 g de pan de masa madre (1 tajada) · 30 g de aguacate (2 cucharadas) · tomate y cebolla morada"}, {"name": "Tortilla de huevo con yuca y guacamole", "desc": "Tortilla de 3 huevos · 80 g de yuca cocida · tomate en rodajas · 15 g de guacamole casero (1 cucharada)"}]}, "media": {"lbl": "Cena", "title": "Cena", "time": "9:00 pm — al llegar del trabajo", "tags": ["Rápida"], "tip": "Llegas cansada, así que todas son de sartén y sin complicación.", "opts": [{"name": "Huevos revueltos con arepa y queso", "desc": "3 huevos revueltos · 80 g de arepa (1 arepa mediana) · 40 g de queso · tomate y espinaca salteados · 15 g de aguacate (1 cucharada)"}, {"name": "Salmón con quinoa y espinaca salteada", "desc": "110 g de salmón · 90 g de quinoa cocida (4-5 cucharadas soperas colmadas) · espinaca salteada · 10 g de aceite de oliva (2 cucharaditas)"}, {"name": "Montadito de atún sobre pan de masa madre", "desc": "100 g de atún en agua escurrido · 60 g de pan de masa madre (1½ tajada) · 30 g de aguacate (2 cucharadas) · tomate y cebolla morada"}, {"name": "Tortilla de huevo con yuca y guacamole", "desc": "Tortilla de 3 huevos · 110 g de yuca cocida · tomate en rodajas · 15 g de guacamole casero (1 cucharada) · 30 g de queso"}]}}, {"id": "nocturno", "alta": {"lbl": "Nocturno", "title": "Colación Nocturna", "time": "11:00 pm — antes de dormir", "tags": ["Planificada"], "tip": "El hambre de las 11 de la noche no es ansiedad: es tu cuerpo pidiendo lo que faltó en el día. En vez de pelearla, la planificamos.", "opts": [{"name": "Yogurt griego con banano", "desc": "125 g de yogurt griego San Martín (½ taza) · 60 g de banano (½ banano)"}, {"name": "Yogurt griego con proteína y galletas de arroz", "desc": "125 g de yogurt griego San Martín (½ taza) · ½ scoop de proteína ISO 100 · 18 g de galletas de arroz (2 galletas)"}, {"name": "Yogurt griego con avena y canela", "desc": "125 g de yogurt griego San Martín (½ taza) · 20 g de avena (2 cucharadas soperas colmadas) · canela"}, {"name": "Queso con pan de masa madre y piña", "desc": "40 g de queso · 40 g de pan de masa madre (1 tajada) · 110 g de piña (⅔ de taza picada)"}]}, "media": {"lbl": "Nocturno", "title": "Colación Nocturna", "time": "11:00 pm — antes de dormir", "tags": ["Planificada"], "tip": "El hambre de las 11 de la noche no es ansiedad: es tu cuerpo pidiendo lo que faltó en el día. En vez de pelearla, la planificamos.", "opts": [{"name": "Yogurt griego con banano", "desc": "185 g de yogurt griego San Martín (¾ de taza) · 120 g de banano (1 banano mediano)"}, {"name": "Yogurt griego con proteína y galletas de arroz", "desc": "185 g de yogurt griego San Martín (¾ de taza) · ½ scoop de proteína ISO 100 · 27 g de galletas de arroz (3 galletas)"}, {"name": "Yogurt griego con avena y canela", "desc": "185 g de yogurt griego San Martín (¾ de taza) · 30 g de avena (3 cucharadas soperas colmadas) · canela"}, {"name": "Queso con pan de masa madre y piña", "desc": "50 g de queso · 60 g de pan de masa madre (1½ tajada) · 124 g de piña (¾ de taza picada)"}]}}];
+const PESOS = {"desayuno|alta|0": "media", "desayuno|alta|1": "media", "desayuno|alta|2": "liviana", "desayuno|alta|3": "completa", "gym|alta|0": "media", "gym|alta|1": "media", "gym|alta|2": "media", "gym|alta|3": "media", "almuerzo|alta|0": "media", "almuerzo|alta|1": "media", "almuerzo|alta|2": "liviana", "almuerzo|alta|3": "media", "cena|alta|0": "completa", "cena|alta|1": "media", "cena|alta|2": "liviana", "cena|alta|3": "media"};
+const MEALS = [{"id": "desayuno", "alta": {"lbl": "Desayuno", "title": "🍳 Desayuno", "time": "6:00 am", "tags": ["Antes del gimnasio", "Tu yogurt griego"], "tip": "Tu desayuno es el que ya tienes, con tu yogurt griego de primero porque es tu alimento favorito desde hace años. Lo único que cambia es que ahora trae algo más de carbohidrato, que es lo que te va a sostener la hora y media de gimnasio.", "opts": [{"name": "Tu yogurt griego con proteína y frutos rojos", "desc": "250 g de yogurt griego San Martín · 1 scoop de proteína ISO 100 revuelto dentro del yogurt (30 g) · 150 g de fresas o frambuesas · 3 galletas de arroz (27 g)"}, {"name": "Tus huevos con galletas de arroz y queso", "desc": "2 huevos enteros (100 g) y 1 clara revueltos (33 g) · 1 cdita de aceite de oliva para los huevos · 3 galletas de arroz (27 g) · 40 g de queso cuajada · 1 taza de piña picada (150 g)"}, {"name": "Pan de masa madre con huevo y aguacate", "desc": "1 tajada de pan de masa madre (38 g) · 2 huevos revueltos (100 g) · 50 g de aguacate · 145 g de papaya picada"}, {"name": "Tu bowl de quinoa pops con yogurt griego", "desc": "250 g de yogurt griego San Martín · 40 g de quinoa pops · 120 g de banano · 1 cda de mantequilla de maní (15 g) · 20 g de granola Vita Granola"}]}, "media": null, "baja": null, "competencia": null, "entreno": null}, {"id": "gym", "alta": {"lbl": "Al Salir del Gimnasio", "title": "💪 Al Salir del Gimnasio", "time": "9:30 am", "tags": ["Recuperación", "Antes de arrancar el día"], "tip": "Esta comida es la que convierte el entrenamiento en músculo. Acabas de terminar y el cuerpo está listo para usar lo que entre. Las cuatro opciones se arman en minutos y tres de ellas se pueden dejar listas desde la noche anterior.", "opts": [{"name": "Tu batido de banano con avena y proteína", "desc": "120 g de banano · 60 g de avena · 1 scoop de proteína ISO 100 (30 g) · 250 ml de agua"}, {"name": "Galletas de arroz con atún y aguacate", "desc": "5 galletas de arroz (45 g) · 1 lata de atún en agua escurrida · 50 g de aguacate · tomate en rodajas con limón y sal · 150 g de fresas o frambuesas"}, {"name": "Montadito de pan de masa madre con queso y tomate", "desc": "1 ½ tajadas de pan de masa madre (57 g) · 40 g de queso · 2 huevos cocidos en rodajas (100 g) · tomate en rodajas · 1 cdita de aceite de oliva · 1 tajada de piña (115 g)"}, {"name": "Tu yogurt griego con granola y papaya", "desc": "185 g de yogurt griego San Martín · 145 g de papaya picada · 30 g de granola libre de azúcar · 1 cda de mantequilla de maní (15 g)"}]}, "media": null, "baja": null, "competencia": null, "entreno": null}, {"id": "almuerzo", "alta": {"lbl": "Almuerzo", "title": "🍽️ Almuerzo", "time": "12:30 pm", "tags": ["Antes de entrar al turno", "Para dejar listo"], "tip": "Esta es la comida más importante del día, porque después viene el turno largo. Las cuatro están pensadas para que tu empleada pueda dejarlas listas los días que va — la quinoa, la yuca y la carne aguantan perfecto en la nevera.", "opts": [{"name": "Tu atún ventresca con quinoa y ensalada", "desc": "100 g de atún ventresca escurrido · 160 g de quinoa cocida · ensalada de espinaca, rúgula y tomate · 2 cditas de aceite de oliva · 50 g de aguacate · 1 taza de piña picada de postre (150 g)"}, {"name": "Tu tortilla de huevo con yuca y guacamole", "desc": "Tortilla de 3 huevos (150 g) · 160 g de yuca cocida · tomate en rodajas · 1 cda de guacamole casero (20 g) · 30 g de queso"}, {"name": "Tu lomo de res con arepa y aguacate", "desc": "120 g de lomo de res a la plancha · 1 cdita de aceite de oliva para la plancha · 1 arepa de maíz mediana (52 g) · 50 g de aguacate · ensalada de espinaca, rúgula y tomate · 150 g de fresas o frambuesas de postre"}, {"name": "Salmón a la plancha con arroz y ensalada", "desc": "120 g de salmón a la plancha · 1 cdita de aceite de oliva para la plancha · 160 g de arroz blanco cocido · ensalada de espinaca, rúgula y tomate · 50 g de aguacate"}]}, "media": null, "baja": null, "competencia": null, "entreno": null}, {"id": "cena", "alta": {"lbl": "Cena", "title": "🌙 Cena", "time": "11:00 pm", "tags": ["Al llegar", "Ya está pensada"], "tip": "Llegas a las once y esta comida ya existe en tu día — lo único que cambia es que ahora está pensada de antemano en vez de resolverse con lo que haya. Tu bowl de yogurt griego está de primero porque es el que haces siempre, y las otras tres también se arman sin cocinar.", "opts": [{"name": "Tu bowl de yogurt griego con proteína", "desc": "250 g de yogurt griego San Martín · 1 scoop de proteína ISO 100 revuelto dentro del yogurt (30 g) · 120 g de banano · 3 galletas de arroz (27 g)"}, {"name": "Salmón con quinoa y espinaca salteada", "desc": "110 g de salmón al horno · 120 g de quinoa cocida · espinaca salteada · 2 cditas de aceite de oliva"}, {"name": "Tu burrito de carne de res", "desc": "1 tortilla integral talla M (45 g) · 100 g de carne de res desmechada o molida guisada · 2 cdas de pico de gallo · 1 cda de guacamole casero (20 g)"}, {"name": "Huevos revueltos con arepa y queso", "desc": "3 huevos revueltos (150 g) · 1 arepa de maíz pequeña (52 g) · 40 g de queso · tomate y espinaca salteados · 1 cdita de aceite de oliva"}]}, "media": null, "baja": null, "competencia": null, "entreno": null}];
 
 /* 9) SUPLEMENTACIÓN */
-const SUPPLEMENTS = [{"icon": "💊", "critical": false, "name": "Creatina Dymatize", "badge": "Ya en uso", "dose": "5 g diarios, todos los días a la misma hora", "note": "Se mantiene igual. Es de las pocas ayudas con evidencia sólida para ganar fuerza y masa muscular, y en tu caso suma."}, {"icon": "🥤", "critical": false, "name": "Proteína ISO 100", "badge": "Se reduce", "dose": "1 scoop al día (máximo 1½), no 3", "note": "Hoy tomas tres batidos diarios. Tu proteína ya está cubierta de sobra — el problema nunca fue ese. Bajarlos a uno libera espacio para comida real, que es de donde tienen que salir las calorías que te faltan."}, {"icon": "🩺", "critical": true, "name": "Levotiroxina", "badge": "Ajustar horario", "dose": "Según indicación médica — ver nota sobre lácteos", "note": "No cambiamos tu dosis, pero sí importa cuándo la tomas en relación con los lácteos. Lee la nota completa más abajo."}];
+const SUPPLEMENTS = [{"icon": "💊", "critical": true, "name": "Tu levotiroxina y el yogurt — esto hay que separarlo", "badge": "Importante", "dose": "La levotiroxina sola, con agua, en ayunas", "note": "Esto no es un suplemento nuevo: es un ajuste de horario que puede cambiar cómo te sientes, y quiero explicártelo bien.<br><br><b>El calcio bloquea la absorción de la levotiroxina.</b> No un poco: puede reducirla de forma importante. Y tu desayuno es yogurt griego, que es de los alimentos con más calcio que existen.<br><br><b>Lo que te propongo:</b> tomas la levotiroxina al levantarte, <b>sola y con agua</b>, y dejas pasar <b>al menos una hora</b> antes del yogurt. Como te levantas a las 4 y desayunas a las 6, eso te cabe perfecto sin cambiar nada de tu rutina — solo es acordarse de tomarla apenas abres los ojos.<br><br>Lo mismo aplica si algún día tomas hierro: también se separa de la levotiroxina.<br><br>Si llevabas tiempo tomándolas juntas, vale la pena que tu médico te repita la TSH en unos dos meses con este cambio hecho. El número puede moverse."}, {"icon": "💪", "name": "Tu creatina Dymatize", "badge": "Continuar", "dose": "5 g al día, todos los días", "note": "Se queda tal cual. Es el suplemento con más respaldo que existe para fuerza y es justo lo que estás construyendo.<br><br>Dos detalles: <b>la hora no importa</b> — funciona por acumulación, no por el momento de la toma, así que la limonada del almuerzo está perfecta. Y <b>tómala también los días de solo cardio</b>.<br><br>Si notas que el peso sube medio kilo rápido, eso es agua dentro del músculo. En tu caso es exactamente lo que buscamos."}, {"icon": "🥤", "name": "Tu proteína ISO 100 — cambia de lugar", "badge": "De tres veces a una", "dose": "1 scoop al día", "note": "La proteína en polvo se queda, pero le cambio el papel.<br><br>Hoy la usas tres veces al día, y es una herramienta excelente para lo que servía: <b>te ayudó a comer cuando comer costaba.</b> Eso ya lo lograste, y ahora podemos pasar a comida de verdad, que además trae hierro, zinc, grasa buena y vitaminas que el polvo no tiene.<br><br>En este plan tiene <b>un solo sitio al día</b>: el yogurt del desayuno o el bowl de la noche, el que prefieras. El resto de la proteína viene del atún, el lomo, el salmón, las sardinas, el huevo y el yogurt.<br><br>Y para que lo tengas tranquilo: aun con un solo scoop, este plan te da <b>casi tres gramos de proteína por kilo</b>, que está por encima de lo que necesita alguien que entrena para ganar músculo. No te va a faltar."}, {"icon": "🧃", "name": "El hierro — por qué lo vigilamos", "badge": "Con comida, por ahora", "dose": "La carne de res del plan", "note": "Esto es importante y por eso le dedico espacio.<br><br>Tuviste anemia y la hemoglobina te llegó a 7. Y hay tres cosas que juegan en contra al mismo tiempo: <b>no comes legumbres</b> porque te caen mal, <b>el sangrado menstrual es fuerte</b>, y <b>vives de lácteos</b> — y el calcio compite con el hierro por el mismo transportador en el intestino.<br><br>Por eso la <b>carne de res</b> que me pediste entra en el almuerzo y en la cena: es la mejor fuente de hierro que existe y además es el tipo que mejor se absorbe.<br><br><b>Dos trucos que valen mucho y no cuestan nada:</b><br>• <b>El hierro de la carne se absorbe mejor con vitamina C.</b> La piña, las fresas y el tomate de esas opciones están ahí a propósito.<br>• <b>El yogurt y el queso, mejor lejos de la carne.</b> No en la misma comida. Fíjate que las opciones con carne no traen lácteo: eso tampoco es casualidad.<br><br>Con los exámenes en la mano decidimos si hace falta algo más."}, {"icon": "🔬", "critical": true, "name": "Los exámenes, por favor", "badge": "Antes del control", "dose": "En ayunas de 8 a 12 horas", "note": "Te pido estos y te explico cada uno.<br><br><b>Hemograma, ferritina, hierro sérico, transferrina y saturación.</b> La ferritina es la clave: es la reserva, y puede estar baja aunque la hemoglobina ya se haya recuperado. Con tu historia es el primero de la lista.<br><br><b>TSH y T4 libre</b>, idealmente dos meses después de separar la levotiroxina del yogurt, para ver si el número se movió.<br><br><b>Vitamina D</b> y <b>vitamina B12</b>.<br><br><b>Perfil hormonal</b> — estradiol, FSH, LH y progesterona. Lo pido no porque sospeche algo, sino al contrario: tu ciclo lleva cinco meses regular y vale la pena dejar ese momento documentado.<br><br><b>Perfil lipídico</b> y <b>glicemia</b>, de rutina.<br><br>Tú eres médica y sabes leerlos mejor que la mayoría — mándamelos y los revisamos juntos en diciembre."}];
 
 /* 10) NOTAS CLÍNICAS */
-const NOTES = [{"type": "green", "title": "📈 Cómo funciona tu plan por fases", "text": "Arriba puedes cambiar entre la Fase 1 y la Fase 2. Cada una dura unas tres semanas y la segunda sube las porciones un poco más. Fíjate en un detalle: la proteína es idéntica en las dos (82 g). Lo único que crece es el carbohidrato y la grasa. Tú ya tienes la proteína resuelta — lo que te falta es energía. No pases a la Fase 2 hasta sentirte cómoda con la Fase 1, y en el control del mes definimos juntos los siguientes pasos."}, {"type": "", "title": "📏 Cómo leer las medidas caseras", "text": "Para que los gramos y las medidas caseras coincidan de verdad: cuando digo cucharada me refiero a la cucharada sopera, y cuando la porción va colmada lo digo explícitamente — una cucharada rasa de avena pesa la mitad que una colmada. La taza es la taza medidora estándar de 240 ml, no un pocillo cualquiera. Y la arepa, el pan, el queso y la yuca cambian mucho según la marca y el tamaño: pesa una vez la tuya, anótala, y de ahí en adelante ya sabes cuánto es."}, {"type": "", "title": "⚖️ Sobre pesar la comida", "text": "Todo está en gramos porque sé que pesar te da tranquilidad, y no te lo voy a quitar de un día para otro. Al lado de cada gramo está su equivalente en medida casera. Por ahora pesa con toda normalidad: la medida casera está ahí solo para que la vayas conociendo sin esfuerzo. Más adelante, cuando ya te sientas cómoda, te voy a proponer un juego — calcular a ojo primero y verificar después. Vas a ver que le atinas más de lo que crees."}, {"type": "green", "title": "🥛 Levotiroxina y lácteos: el detalle que puede estar restándote", "text": "El calcio reduce la absorción de la levotiroxina. La recomendación es tomarla en ayunas y esperar mínimo 30 a 60 minutos antes de una comida rica en calcio, y separarla al menos 4 horas de suplementos de calcio. Tú desayunas 60 g de queso a las 5 de la mañana y consumes lácteos todo el día. Si la estás tomando junto al desayuno, puede estar perdiendo efecto — y un hipotiroidismo mal controlado dificulta justamente lo que queremos lograr. Lo práctico: tómala apenas te levantas a las 4, con agua sola, y desayuna a las 5. Coméntalo también con tu médico."}, {"type": "", "title": "🔬 Qué dicen tus números", "text": "En dos meses ganaste 2 kg de masa libre de grasa. Eso es excelente. Pero perdiste 1,6 kg de grasa, y ahí está tu masa grasa: 7,3 kg cuando el rango normal para ti es de 9,7 a 15,5 kg. Tus proteínas, minerales y agua corporal están todos en el borde inferior de sus rangos. No es que no estés construyendo — es que estás construyendo con el tanque vacío, y eso tiene un techo."}, {"type": "green", "title": "🌙 El hambre de las 11 de la noche", "text": "Me contaste que llegas a las 9, comes algo, y a las 11 te vuelve el hambre. Eso no es ansiedad ni falta de control: es una señal fisiológica correcta de que el día se quedó corto. Por eso ese momento tiene su propio tiempo de comida en el plan, con opciones definidas. Comerlo es parte del plan, no una falla."}, {"type": "", "title": "😴 Un día de descanso de verdad", "text": "Hoy entrenas los siete días y en el que llamas de descanso haces cardio. El músculo no crece durante el entrenamiento, crece en la recuperación. Con cinco horas de sueño y turnos de 24 horas, un día completamente libre a la semana no es perder terreno: es la condición para ganarlo. Acuérdate también de que ese día se come igual."}, {"type": "green", "title": "🩸 Sobre la anemia", "text": "Una hemoglobina de 7 es un valor muy bajo y explica buena parte de la debilidad que sentiste. Las sardinas, el atún, el lomo y los huevos de tu plan aportan hierro, y acompañarlos de vitamina C (la piña, las fresas, el tomate) mejora su absorción. El café y los lácteos, en cambio, la reducen — trata de no tomarlos justo con la comida principal de hierro. Traeme tus exámenes actualizados a la próxima consulta."}, {"type": "", "title": "🏥 Los turnos de 24 horas", "text": "En los turnos largos deja empacado desde la casa el almuerzo y la media tarde. Las opciones de galletas de arroz con atún y aguacate, y la de yogurt griego con papaya y granola, aguantan bien y no necesitan preparación. Un turno de 24 horas no es excusa para comer menos: es justamente cuando más se nota."}];
+const NOTES = [{"type": "green", "title": "🎯 Lo que de verdad pasó estos meses", "text": "Quiero empezar por acá porque es fácil perderlo de vista cuando uno está adentro del proceso.<br><br><b>Subiste cinco kilos.</b> Veniste de un peso donde empezaste a sentir debilidad, y eso fue lo que te trajo. Esa debilidad ya no está.<br><br><b>Tu brazo pasó de 22 a 26 centímetros.</b> El tórax, de 76 a 80. El muslo, de 47 a 48,5. Eso es músculo nuevo, no es otra cosa.<br><br><b>Llegaste sin poder con una mancuerna de cinco kilos</b> y sin poder hacer prensa sin peso. Hoy entrenas seis días. Tú misma lo dijiste: <i>«llevo 2 meses muy contenta en el gym, me siento bien»</i>.<br><br><b>Y lo que más me importa de todo: el ciclo.</b> Me contaste que fue irregular toda tu vida. Ahora llevas cinco meses seguidos, el cinco de cada mes. Te explico por qué eso vale tanto: <b>el ciclo menstrual es de las primeras funciones que el cuerpo apaga cuando le falta energía</b>, y de las últimas que vuelve. Que haya vuelto y se mantenga significa que tu cuerpo dejó de estar en modo ahorro. Ninguna báscula dice eso.<br><br>Todo esto lo hiciste tú. Yo solo puse el orden."}, {"type": "green", "title": "⚖️ Por qué movimos la distribución", "text": "Tú me pediste reestructurar los macros, así que acá va el razonamiento completo — sé que te gusta entender el porqué.<br><br>Lo que me contaste de tu día fueron unas <b>1.870 calorías</b>, con <b>207 gramos de proteína</b>, 187 de carbohidrato y <b>34 de grasa</b>.<br><br><b>Sobre la proteína.</b> Para ganar músculo, el rango con evidencia va de 1,6 a 2,2 gramos por kilo. Tú estabas en 4,6. Y acá está lo importante: <b>la proteína que pasa de ese rango no se vuelve más músculo</b> — el cuerpo la usa como energía o la elimina. O sea que una parte del esfuerzo se estaba yendo. Y ese espacio en el plato lo estaba ocupando algo que podía trabajar más.<br><br><b>Sobre la grasa.</b> Acá está el cambio que más te va a servir. Estabas en 0,76 g/kg y el piso recomendado para una mujer es 1,0. La grasa no es relleno: <b>es la materia prima con la que el cuerpo fabrica las hormonas</b>, y eso incluye las del ciclo. Con hipotiroidismo y con un ciclo que apenas se regularizó, subirla es protegerlo. Este plan la lleva a 1,4 — aguacate, aceite de oliva, mantequilla de maní, salmón, sardinas, queso.<br><br><b>Sobre el carbohidrato.</b> Sube porque es lo que rinde en el gimnasio. Es la gasolina de las series pesadas, y con seis días de entrenamiento importa.<br><br><b>Y el total es casi el mismo que ya comes.</b> Eso quiero que quede claro: no te estoy pidiendo comer más. Te estoy proponiendo comer lo mismo, repartido distinto."}, {"type": "green", "title": "🕒 Las diez horas del turno", "text": "Tu horario cambió y ahora trabajas de una a once de la noche. Me contaste cómo quedó el día: desayunas a las seis, y después <i>«de ahí no comí nada, se fue todo el día»</i>, hasta las once de la noche.<br><br>Eso son diecisiete horas con una sola comida en el medio, y después toda la comida del día concentrada al final. No es un problema de voluntad — es un problema de horario, y por eso el plan lo resuelve con horario.<br><br><b>Los cuatro tiempos quedaron así:</b><br>• <b>6:00 — desayuno</b>, antes del gimnasio.<br>• <b>9:30 — al salir del gimnasio.</b> Esta es nueva y es la que convierte el entrenamiento en músculo.<br>• <b>12:30 — almuerzo</b>, justo antes de entrar. La más grande del día a propósito, porque después vienen muchas horas.<br>• <b>11:00 — cena</b>, al llegar. Esa ya existía; lo único que cambia es que ahora está pensada.<br><br><b>Y una cosa más, por si algún día se puede:</b> si en algún turno te queda un rato libre a eso de las seis o siete de la tarde, cualquiera de las opciones de «al salir del gimnasio» funciona perfecto como comida de bolsillo. Son todas portátiles. No es obligatorio — pero si un día sientes que llegas a las once con demasiada hambre, ahí está la respuesta."}, {"type": "", "title": "🥦 El meal prep con tu empleada", "text": "Me dijiste que va tres veces por semana y que querías mandarle instrucciones. Acá están, y el plan está armado pensando en esto.<br><br><b>Lo que se deja listo y aguanta toda la semana:</b><br>• <b>La quinoa:</b> una olla grande. Dura cinco días en la nevera y se come fría o caliente.<br>• <b>La yuca:</b> cocida y en porciones.<br>• <b>El lomo de res:</b> a la plancha, en porciones de 120 g. Y la carne desmechada guisada aparte, que es la de la cena.<br>• <b>El salmón:</b> al horno, en porciones. Aguanta tres días.<br>• <b>Las arepas:</b> armadas y crudas, listas para el asador.<br>• <b>La ensalada:</b> espinaca, rúgula y tomate lavados y secos en un recipiente con papel de cocina abajo. Así duran.<br><br><b>Lo que NO se deja listo:</b> el aguacate (se oxida) y los huevos. Esos del día.<br><br><b>Y el almuerzo es el que más vale la pena dejar armado</b>, porque es el que te toca comer de afán antes de entrar al turno. Si las cuatro opciones del almuerzo están listas en la nevera, ese tiempo deja de ser un problema."}, {"type": "", "title": "🥩 La carne de res, que la pediste tú", "text": "Me pediste meter más carne de res y latas de atún, y me pareció muy buena idea — no solo porque te gusta, sino porque resuelve algo concreto.<br><br><b>Quedó en dos sitios:</b> el lomo a la plancha con arepa y aguacate en el almuerzo, y la carne desmechada con galletas de arroz en la cena. Las dos se dejan listas desde el meal prep.<br><br><b>Y las latas de atún</b> quedaron en tres opciones distintas. Lo de en aceite o en agua: las dos sirven. La de aceite de oliva trae más grasa buena y en tu caso eso suma, así que si te gusta, úsala sin problema — solo escúrrela a medias en vez de botarle todo el aceite.<br><br>Las <b>sardinas</b> también se quedan, que me dijiste que te encantan. Son de las mejores fuentes de calcio, omega 3 y hierro que existen en una sola lata."}, {"type": "", "title": "📏 Cómo vamos a mirar si esto funciona", "text": "Tú cuentas y pesas, y no te voy a pedir que dejes de hacerlo de un día para otro. Pero sí quiero proponerte dónde poner la atención, porque algunas señales dicen muchísimo más que otras.<br><br><b>La que más me importa: el ciclo.</b> Que siga llegando el cinco de cada mes. Si algún mes no llega, eso me lo escribes el mismo día — es la alarma más temprana que existe y no hay número que la reemplace.<br><br><b>La segunda: el gimnasio.</b> Cuánto peso mueves y cómo te sientes en la tercera serie. Eso se siente antes de que se vea.<br><br><b>La tercera: el metro.</b> Brazo, tórax y muslo. Esos tres están subiendo y son los que muestran músculo.<br><br><b>Y la báscula va de última.</b> No porque no importe, sino porque sube despacio y con mucho ruido — agua, creatina, la hora del día. Una vez por semana es más que suficiente.<br><br>En diciembre medimos todo otra vez, y esta vez tomo yo las medidas para que la comparación sea limpia."}, {"type": "", "title": "🥗 Cuando comes fuera", "text": "Me contaste que a veces sales de noche a Crepes y pides una ensalada griega, y que el sushi va una vez por semana. Las dos están perfectas y no hay que cambiarlas.<br><br><b>El sushi es de lo mejor que puedes pedir</b> para lo que estamos haciendo: arroz, pescado y aguacate es exactamente la combinación del plan. Pide los rollos que no sean apanados y súmale un sashimi o un nigiri extra por la proteína.<br><br><b>De la ensalada griega:</b> si esa noche es la cena, pídele una proteína encima — pollo a la parrilla si lo hay, o atún. Sola queda corta para ser la última comida del día.<br><br>Y la regla general, que ya la aplicas: <b>una comida por fuera no mueve nada.</b> Lo que construye es lo que haces los otros seis días."}];
 
 /* 11) WHATSAPP */
-const WHATSAPP_NUMBER = "";
+const WHATSAPP_NUMBER = "573175499759";
 
-/* 12) PALABRAS CLAVE LISTA DE MERCADO */
-const SHOPPING_KEYWORDS = [{"match": "huevo", "label": "Huevos", "category": "Proteínas"}, {"match": "pollo", "label": "Pechuga/pollo", "category": "Proteínas"}, {"match": "carne", "label": "Carne de res magra", "category": "Proteínas"}, {"match": "pescado", "label": "Pescado (filete)", "category": "Proteínas"}, {"match": "salmón", "label": "Salmón", "category": "Proteínas"}, {"match": "tilapia", "label": "Tilapia", "category": "Proteínas"}, {"match": "atún", "label": "Atún en agua", "category": "Proteínas"}, {"match": "jamón de pavo zenú", "label": "Jamón de pavo Zenú", "category": "Proteínas"}, {"match": "proteína", "label": "Proteína en polvo", "category": "Proteínas"}, {"match": "tofu", "label": "Tofu", "category": "Proteínas"}, {"match": "lentejas", "label": "Lentejas", "category": "Proteínas"}, {"match": "garbanzos", "label": "Garbanzos", "category": "Proteínas"}, {"match": "hummus", "label": "Hummus casero (garbanzos)", "category": "Proteínas"}, {"match": "edamame", "label": "Edamame", "category": "Proteínas"}, {"match": "crema de maní", "label": "Crema de maní", "category": "Proteínas"}, {"match": "gelatina sin azúcar", "label": "Gelatina sin azúcar", "category": "Proteínas"}, {"match": "fríjoles", "label": "Fríjoles", "category": "Proteínas"}, {"match": "blanquillos", "label": "Fríjoles blanquillos", "category": "Proteínas"}, {"match": "yogurt griego alpina", "label": "Yogurt griego Alpina", "category": "Lácteos"}, {"match": "yogurt griego san martín", "label": "Yogurt griego San Martín", "category": "Lácteos"}, {"match": "kéfir", "label": "Kéfir", "category": "Lácteos"}, {"match": "queso colanta", "label": "Queso Colanta", "category": "Lácteos"}, {"match": "queso cuajada", "label": "Queso cuajada", "category": "Lácteos"}, {"match": "queso campesino", "label": "Queso campesino", "category": "Lácteos"}, {"match": "queso mozzarella", "label": "Queso mozzarella", "category": "Lácteos"}, {"match": "leche alquería", "label": "Leche Alquería", "category": "Lácteos"}, {"match": "leche deslactosada", "label": "Leche deslactosada", "category": "Lácteos"}, {"match": "arepa alquería", "label": "Arepa Alquería (maíz tipo tela)", "category": "Carbohidratos"}, {"match": "avena quaker", "label": "Avena Quaker", "category": "Carbohidratos"}, {"match": "pan bimbo fit", "label": "Pan Bimbo Fit", "category": "Carbohidratos"}, {"match": "pan de masa madre", "label": "Pan de masa madre (Molino)", "category": "Carbohidratos"}, {"match": "granola tosh", "label": "Granola Tosh", "category": "Carbohidratos"}, {"match": "arroz", "label": "Arroz", "category": "Carbohidratos"}, {"match": "papa", "label": "Papa", "category": "Carbohidratos"}, {"match": "yuca", "label": "Yuca", "category": "Carbohidratos"}, {"match": "pasta", "label": "Pasta", "category": "Carbohidratos"}, {"match": "plátano", "label": "Plátano maduro", "category": "Carbohidratos"}, {"match": "quinoa", "label": "Quinoa", "category": "Carbohidratos"}, {"match": "banano", "label": "Banano", "category": "Frutas y Verduras"}, {"match": "aguacate", "label": "Aguacate", "category": "Frutas y Verduras"}, {"match": "ensalada", "label": "Mix de ensalada / lechuga", "category": "Frutas y Verduras"}, {"match": "tomate", "label": "Tomate", "category": "Frutas y Verduras"}, {"match": "espinaca", "label": "Espinaca", "category": "Frutas y Verduras"}, {"match": "champiñones", "label": "Champiñones", "category": "Frutas y Verduras"}, {"match": "fresa", "label": "Fresas", "category": "Frutas y Verduras"}, {"match": "pepino", "label": "Pepino", "category": "Frutas y Verduras"}, {"match": "zanahoria", "label": "Zanahoria", "category": "Frutas y Verduras"}, {"match": "miel", "label": "Miel", "category": "Otros"}, {"match": "mermelada", "label": "Mermelada sin azúcar", "category": "Otros"}, {"match": "almendras", "label": "Almendras", "category": "Otros"}, {"match": "nueces", "label": "Nueces", "category": "Otros"}, {"match": "creatina", "label": "Creatina", "category": "Suplementos"}, {"match": "yogurt griego yen", "label": "Yogurt griego YEN", "category": "Lácteos"}, {"match": "granola yen", "label": "Granola YEN", "category": "Carbohidratos"}, {"match": "arepa de yuca yen", "label": "Arepa de yuca YEN", "category": "Carbohidratos"}, {"match": "arepa de maduro yen", "label": "Arepa de maduro YEN", "category": "Carbohidratos"}, {"match": "arepa de arroz integral yen", "label": "Arepa de arroz integral YEN", "category": "Carbohidratos"}, {"match": "arepa de pan de bono yen", "label": "Arepa de pan de bono YEN", "category": "Carbohidratos"}, {"match": "arepa de maíz yen", "label": "Arepa de maíz YEN", "category": "Carbohidratos"}, {"match": "arepa", "label": "Arepa de maíz", "category": "Carbohidratos"}, {"match": "pan de masa madre", "label": "Pan de masa madre", "category": "Carbohidratos"}, {"match": "avena", "label": "Avena en hojuelas", "category": "Carbohidratos"}, {"match": "quinoa", "label": "Quinoa", "category": "Carbohidratos"}, {"match": "galletas de arroz", "label": "Galletas de arroz", "category": "Carbohidratos"}, {"match": "arroz cocido", "label": "Arroz", "category": "Carbohidratos"}, {"match": "yuca", "label": "Yuca", "category": "Carbohidratos"}, {"match": "granola", "label": "Granola libre de azúcar", "category": "Carbohidratos"}, {"match": "yogurt griego", "label": "Yogurt griego San Martín sin azúcar", "category": "Lácteos"}, {"match": "queso", "label": "Queso", "category": "Lácteos"}, {"match": "atún ventresca", "label": "Atún ventresca", "category": "Proteínas"}, {"match": "atún en agua", "label": "Atún en agua", "category": "Proteínas"}, {"match": "salmón", "label": "Salmón", "category": "Proteínas"}, {"match": "sardinas", "label": "Sardinas en aceite de oliva", "category": "Proteínas"}, {"match": "lomo", "label": "Lomo de res", "category": "Proteínas"}, {"match": "proteína iso 100", "label": "Proteína ISO 100", "category": "Otros"}, {"match": "creatina", "label": "Creatina Dymatize", "category": "Otros"}, {"match": "mantequilla de maní", "label": "Mantequilla de maní", "category": "Otros"}, {"match": "aceite de oliva", "label": "Aceite de oliva", "category": "Otros"}, {"match": "aguacate", "label": "Aguacate", "category": "Frutas y Verduras"}, {"match": "piña", "label": "Piña", "category": "Frutas y Verduras"}, {"match": "banano", "label": "Banano", "category": "Frutas y Verduras"}, {"match": "papaya", "label": "Papaya", "category": "Frutas y Verduras"}, {"match": "fresas", "label": "Fresas", "category": "Frutas y Verduras"}, {"match": "arándanos", "label": "Arándanos", "category": "Frutas y Verduras"}, {"match": "espinaca", "label": "Espinaca", "category": "Frutas y Verduras"}, {"match": "rúgula", "label": "Rúgula", "category": "Frutas y Verduras"}, {"match": "kiwi", "label": "Kiwi", "category": "Frutas y Verduras"}, {"match": "pepino", "label": "Pepino", "category": "Frutas y Verduras"}];
+/* 12) RECOMENDACIONES GENERALES */
+const GENERAL_RECS = [{"icon": "🔥", "text": "<b>Todas las preparaciones van asadas, cocidas, a la plancha o al airfryer.</b> Frito solo en ocasiones contadas, y en el airfryer, que para efectos prácticos es lo mismo sin el aceite."}, {"icon": "⏱️", "text": "<b>Mantén horarios regulares e intenta no pasar más de 3 horas sin comer.</b> Esta es la regla que más rinde de toda la lista: los espacios largos son lo que dispara el hambre de las cinco de la tarde."}, {"icon": "🥚", "text": "<b>Incluye una fuente de proteína en cada comida</b>, incluidas las pequeñas. Lo dulce solo sube y baja; lo dulce con proteína al lado sostiene."}, {"icon": "📦", "text": "<b>No vamos a consumir productos empaquetados ni altos en azúcar</b>, y tampoco bebidas con azúcar añadida. Las opciones dulces de tu plan están puestas justo para que no te haga falta."}, {"icon": "🥗", "text": "<b>Más frutas y verduras cada día</b>, y que el plato tenga color. Las verduras de hoja van libres: ahí nunca te vas a pasar."}, {"icon": "🌾", "text": "<b>Prioriza los carbohidratos de calidad:</b> granos enteros —avena, quinoa, arroz integral—, legumbres, tubérculos y verduras. Las harinas refinadas y los azúcares añadidos son lo que de verdad cuidamos, no el carbohidrato en sí."}, {"icon": "🧂", "text": "<b>Menos sodio, más sabor natural.</b> Reduce la sal y los ultraprocesados, y gana sabor con ajo, cebolla sofrita, cilantro, comino, orégano, cúrcuma, laurel, limón y pimienta. El salero fuera de la mesa."}, {"icon": "🥣", "text": "<b>Para las ensaladas, solo limón y sal, o una vinagreta casera.</b> Las vinagretas y aderezos industriales le pueden sumar 150 calorías invisibles a un plato que creías ligero."}, {"icon": "🏠", "text": "<b>Vamos a reducir la comida de la calle.</b> La comida de tu casa siempre es la mejor opción — y cuando toque comer afuera, mira la sección de restaurantes de este plan."}, {"icon": "🥄", "text": "<b>Respeta las porciones y familiarízate con ellas.</b> Las primeras dos semanas vale la pena medir; después tu mano hace el trabajo. Tienes la guía de porciones más abajo."}, {"icon": "💧", "text": "<b>Hidrátate bien durante todo el día.</b> Mantén un termo con agua contigo durante tu jornada: es el hábito más fácil de cumplir y el que más se olvida."}, {"icon": "😴", "text": "<b>Le vamos a dar prioridad a tu descanso: procura dormir más de 7 horas.</b> No es un consejo de relleno — dormir poco sube el hambre del día siguiente y baja la recuperación. El descanso hace parte del plan igual que la comida."}, {"icon": "🍫", "text": "<b>Los antojos los manejamos con opciones dulces sin azúcar y con fruta</b>, no aguantándolos. Un antojo bien resuelto no desordena nada; un antojo aguantado tres días sí."}, {"icon": "🧘", "text": "<b>Atiende las señales de tu cuerpo.</b> Come con calma, mastica bien y reconoce cuando ya estás satisfecha. Buena parte de lo que uno come de más es por ansiedad o por aburrimiento, no por hambre."}, {"icon": "😊", "text": "<b>Vamos a disfrutar de la alimentación, sin extremos.</b> Ser feliz también hace parte de este plan de alimentación."}, {"icon": "🎯", "destacada": true, "text": "<b>Constancia sobre perfección.</b> No se trata de hacerlo perfecto, sino de ser constante. Si un día no sale como esperabas, retomas al día siguiente sin castigarte y sin compensar. Ese es el único hábito que de verdad decide el resultado."}, {"icon": "💊", "text": "<b>La levotiroxina sola y con agua, una hora antes del yogurt.</b> El calcio bloquea su absorción."}, {"icon": "🥩", "text": "<b>La carne con piña o tomate, nunca con lácteo.</b> La vitamina C sube el hierro; el calcio lo baja."}, {"icon": "💪", "text": "<b>La comida de al salir del gimnasio es la que construye.</b> Es la nueva y es la que más rinde."}, {"icon": "🧊", "text": "<b>El almuerzo, dejado listo desde el meal prep.</b> Es el que te toca comer de afán."}, {"icon": "📅", "text": "<b>Si algún mes el ciclo no llega, me escribes ese día.</b> Es la señal más importante que tenemos."}, {"icon": "🥗", "text": "<b>La ensalada no se mide.</b> Espinaca, rúgula y tomate, los que quieras."}];
+
+/* 13) GUIA DE PORCIONES */
+const PORTION_GUIDE = [{"group": "Tu mano es la báscula que siempre llevas puesta", "items": [{"icon": "🤚", "name": "Palma de tu mano (sin dedos)", "eq": "≈ 100–120 g de proteína cocida", "note": "Del grosor de tu palma también. Si la carne queda más gruesa, es más porción."}, {"icon": "✊", "name": "Tu puño cerrado", "eq": "≈ 1 taza · 1 porción de verdura cocida o de fruta picada", "note": "Las verduras de hoja van libres: ahí el puño no manda."}, {"icon": "🫴", "name": "Tu mano en forma de copa", "eq": "≈ ½ taza de arroz, pasta o granos cocidos", "note": "Es la medida del almidón en el almuerzo y la cena."}, {"icon": "👍", "name": "Tu pulgar completo", "eq": "≈ 1 cucharada de grasa (aceite, mantequilla de maní, queso crema)", "note": "La punta del pulgar (primera falange) ≈ 1 cucharadita."}, {"icon": "🤏", "name": "Tu puño y medio", "eq": "≈ el plato de verduras que buscamos en almuerzo y cena", "note": "Mitad del plato en verduras: esa es la regla que más rinde."}]}, {"group": "Proteínas", "items": [{"icon": "🍗", "name": "Pechuga de pollo", "eq": "1 pechuga mediana ≈ 150 g crudo · 1 filete delgado ≈ 100 g", "note": "Un muslo sin piel ≈ 80 g. Dos muslos ≈ 1 pechuga mediana."}, {"icon": "🥩", "name": "Carne de res o cerdo", "eq": "1 bistec del tamaño de tu palma ≈ 120 g crudo", "note": "La carne molida: ½ taza compacta ≈ 110 g cruda."}, {"icon": "🐟", "name": "Pescado", "eq": "1 filete del tamaño de tu mano abierta ≈ 150 g crudo", "note": "1 lata de atún al agua escurrida ≈ 120 g ≈ 25 g de proteína."}, {"icon": "🥚", "name": "Huevo", "eq": "1 huevo entero ≈ 6 g de proteína", "note": "2 claras ≈ 1 huevo entero en proteína, sin la grasa de la yema."}, {"icon": "🧀", "name": "Queso campesino / cuajada", "eq": "1 tajada gruesa ≈ 30 g · 1 cubo de 3 cm ≈ 30 g", "note": "Queso costeño o doble crema rinden más grasa: media tajada."}, {"icon": "🥛", "name": "Yogur griego / kumis", "eq": "1 vasito comercial ≈ 150 g · 1 taza ≈ 200 g", "note": ""}]}, {"group": "Carbohidratos", "items": [{"icon": "🍚", "name": "Arroz, pasta, quinoa (cocidos)", "eq": "½ taza ≈ 1 mano en copa ≈ 100 g · 1 cucharón raso ≈ ½ taza", "note": "Crudo pesa la tercera parte: 35 g de arroz crudo ≈ ½ taza cocida."}, {"icon": "🫘", "name": "Fríjoles, lentejas, garbanzos (cocidos)", "eq": "½ cucharón ≈ ½ taza ≈ 110 g", "note": "Si van con arroz, baja el arroz a la mitad: los dos son almidón."}, {"icon": "🥔", "name": "Papa y yuca", "eq": "1 papa del tamaño de un huevo grande ≈ 100 g · 2 papas criollas ≈ 80 g", "note": "Un trozo de yuca del largo de tu dedo índice ≈ 80 g."}, {"icon": "🍌", "name": "Plátano", "eq": "½ maduro asado ≈ 80 g · 1 patacón del tamaño de la palma ≈ 60 g", "note": ""}, {"icon": "🫓", "name": "Arepa y pan", "eq": "1 arepa delgada de 12 cm ≈ 60 g · 1 tajada de pan integral ≈ 30 g", "note": "La arepa de la plaza (gruesa, de 15 cm) son casi dos porciones."}, {"icon": "🥣", "name": "Avena en hojuelas", "eq": "4 cucharadas colmadas ≈ 30 g · ½ taza ≈ 40 g", "note": ""}]}, {"group": "Grasas (acá la medida es pequeña y sí importa)", "items": [{"icon": "🥑", "name": "Aguacate", "eq": "1 tajada del ancho de dos dedos ≈ 50 g · ⅛ de aguacate grande", "note": "Medida casera: lo que cabe en una cucharada sopera colmada."}, {"icon": "🥜", "name": "Crema de maní o de almendras", "eq": "1 cucharadita de postre rasa ≈ 8 g", "note": "Es la cucharita pequeña del juego de cubiertos, no la sopera."}, {"icon": "🫒", "name": "Aceite de oliva o de aguacate", "eq": "1 cucharadita ≈ 5 ml · 1 chorrito de sartén ≈ 1 cucharadita", "note": "Para saltear alcanza con 1 cucharadita y la sartén bien caliente."}, {"icon": "🌰", "name": "Frutos secos", "eq": "1 puñado cerrado ≈ 20 g · 7 unidades de maní · 10 almendras · 6 nueces", "note": ""}, {"icon": "🥥", "name": "Semillas (chía, linaza, ajonjolí)", "eq": "1 cucharada ≈ 10 g", "note": ""}]}, {"group": "Verduras y frutas", "items": [{"icon": "🥗", "name": "Verduras de hoja (lechuga, espinaca, rúgula)", "eq": "Libres · 2 tazas ≈ 1 porción", "note": "Nunca te van a sobrar. Entre más color tenga el plato, mejor."}, {"icon": "🥕", "name": "Verduras cocidas o en ensalada", "eq": "1 taza ≈ 1 puño ≈ 120 g", "note": ""}, {"icon": "🍎", "name": "Fruta entera", "eq": "1 unidad del tamaño de tu puño ≈ 1 porción", "note": "Banano mediano, 1 manzana, 1 pera, 2 mandarinas, 10 uvas."}, {"icon": "🍉", "name": "Fruta picada", "eq": "1 taza ≈ 1 puño ≈ 150 g", "note": ""}, {"icon": "🫐", "name": "Frutos rojos", "eq": "1 taza ≈ 150 g · 8 fresas medianas", "note": ""}]}, {"group": "Las medidas de la cocina, traducidas", "items": [{"icon": "🥄", "name": "Cucharada sopera (rasa)", "eq": "≈ 15 ml · 15 g de líquido · 10 g de harina", "note": ""}, {"icon": "🥄", "name": "Cucharadita de postre (rasa)", "eq": "≈ 5 ml · 5 g", "note": "3 cucharaditas = 1 cucharada sopera."}, {"icon": "🍲", "name": "Cucharón de servir", "eq": "1 cucharón raso ≈ ½ taza ≈ 120 ml", "note": ""}, {"icon": "🥤", "name": "Taza medidora", "eq": "1 taza ≈ 240 ml · ½ taza ≈ 120 ml · ¼ taza ≈ 60 ml", "note": "Si no tienes taza medidora, un vaso de agua corriente ≈ 1 taza."}, {"icon": "🫗", "name": "Vaso de agua", "eq": "≈ 250 ml", "note": "Es la unidad con la que contamos tu hidratación del día."}]}];
+
+/* 14) PREGUNTAS FRECUENTES */
+const FAQ = [{"q": "¿El peso de la proteína es en crudo o en cocido?", "a": "<strong>En crudo.</strong> Siempre que en tu plan diga gramos de pollo, carne, cerdo o pescado, es el peso antes de cocinar. Al cocinarse pierde entre el 20 % y el 30 % de su peso en agua, así que 150 g de pollo crudo te quedan en unos 110 g en el plato — y eso está bien, no te está faltando comida.<br><br>Si solo puedes pesarlo ya cocido, usa esta regla: <strong>multiplica por 1,3</strong>. O sea, 100 g cocidos ≈ 130 g crudos."}, {"q": "¿Y el arroz, la pasta y los granos?", "a": "Al contrario: <strong>esos van en cocido</strong>, porque es como los sirves. Media taza de arroz cocido son unos 100 g, y salen de apenas 35 g de arroz crudo. Los fríjoles, las lentejas y los garbanzos también los contamos cocidos (½ cucharón ≈ ½ taza)."}, {"q": "¿Tengo que pesar todo con báscula?", "a": "No. La báscula ayuda <strong>las primeras dos semanas</strong> para que tu ojo se calibre, y después tu mano hace el trabajo. Mira la <em>Guía de Porciones</em> de este mismo plan: la palma, el puño y el pulgar son medidas que siempre llevas puestas y no fallan tanto como uno cree.<br><br>Lo que sí vale la pena pesar siempre es la grasa (aceite, crema de maní, frutos secos), porque ahí un error pequeño pesa mucho."}, {"q": "¿Puedo cambiar una opción por otra del mismo tiempo de comida?", "a": "Sí, para eso están. <strong>Todas las opciones de un mismo tiempo son equivalentes</strong> entre ellas, así que elige la que te quede más fácil ese día. Lo que no conviene es mover una opción de almuerzo a la cena o al contrario, porque cada tiempo está armado pensando en la hora del día y en tu entrenamiento."}, {"q": "¿Puedo repetir la misma opción toda la semana?", "a": "Puedes, pero no es lo ideal. Las opciones están pensadas para que rotes y tu cuerpo reciba <strong>distintos micronutrientes</strong>: no es lo mismo comer pollo cinco días que rotar entre pollo, pescado, huevo y carne. Mi sugerencia: no repitas la misma opción más de dos días seguidos."}, {"q": "¿Qué hago si se me pasa la hora de un tiempo de comida?", "a": "Cómelo cuando puedas, aunque sea tarde, y <strong>sigue con el resto del día normal</strong>. Lo que no quiero es que te lo salten y luego \"compenses\" comiendo doble en el siguiente: eso es lo que más desordena el hambre del resto del día.<br><br>Si de plano ya no alcanza (por ejemplo, la media tarde cuando ya son las 8 p.m.), déjala pasar y come tu cena normal."}, {"q": "Me quedé con hambre después de comer. ¿Qué hago?", "a": "Primero: <strong>tómate un vaso de agua y espera 15 minutos</strong>, porque buena parte del hambre inmediata después de comer es sed o es velocidad (comer rápido no le da tiempo al cuerpo de avisar que ya está lleno).<br><br>Si el hambre sigue, súmale <strong>verduras libres</strong>: ensalada, pepino, tomate, zanahoria. Y escríbeme: si te está pasando todos los días en el mismo tiempo de comida, es información útil y ajustamos ese tiempo en el control."}, {"q": "No me cabe toda la comida. ¿Está mal si dejo?", "a": "No está mal, y no quiero que comas con angustia. Si un plato te queda grande, <strong>come primero la proteína y la verdura</strong>, y deja el almidón. Eso conserva lo más importante del plato.<br><br>Pero igual cuéntame, porque si te pasa seguido significa que tenemos que redistribuir: quizá te sirve mejor comer un poco menos en cada tiempo y agregar uno más."}, {"q": "¿Puedo tomar café?", "a": "Sí. <strong>Hasta 3 tazas al día está perfecto</strong>, mejor antes de las 4 p.m. para que no te toque el sueño. Lo que cuidamos no es el café: es lo que le pones. Sin azúcar y sin crema de leche. Con un chorrito de leche no hay problema."}, {"q": "¿Y los endulzantes?", "a": "Puedes usarlos. Los que mejor tolera la mayoría son <strong>estevia y sucralosa</strong>. Si te caen pesados o te inflan, prueba con menos cantidad: casi siempre el problema es la dosis, no el producto. Lo ideal a mediano plazo es que tu paladar se vaya acostumbrando a menos dulce en general."}, {"q": "¿Tengo que hacer el plan perfecto para que funcione?", "a": "No, y esta es probablemente la idea más importante de toda esta sección. En consulta yo trabajo con el <strong>principio del 80-20</strong>, y funciona así: si el <strong>80 % de tus hábitos</strong> —la alimentación, el entrenamiento, el descanso y la hidratación— hacen parte de un estilo de vida saludable y siguen tu plan, entonces no va a haber mayor inconveniente en que en el <strong>20 % restante</strong> te permitas una comida por fuera, un postre, disfrutar un poquito de la vida.<br><br>Fíjate en lo que eso significa en la práctica: de las 35 comidas que haces en una semana, unas 28 son tu plan y <strong>unas 7 pueden ser flexibles</strong>. Eso es mucho más espacio del que la gente cree que tiene, y es justamente lo que hace que un proceso se sostenga durante años en lugar de durar tres semanas.<br><br>Y al revés también: el problema nunca es la comida del 20 %. El problema es cuando el 20 % se vuelve 50 % sin que uno se dé cuenta. Por eso prefiero decírtelo con un número."}, {"q": "¿Y si me invitan a una comida o a un cumpleaños?", "a": "Vas y comes. Eso es exactamente el 20 % del que te hablé arriba: <strong>un día no desarma un proceso</strong>, igual que un día perfecto no lo arma. Lo que sí funciona: ese día desayuna y almuerza normal (no llegues con hambre acumulada), sírvete primero proteína y verdura, y al otro día retomas tu plan sin \"castigos\" ni ayunos de compensación.<br><br>Mira también la sección de <em>Comer Afuera</em>: ahí te dejé qué pedir en los restaurantes a los que más vas."}, {"q": "¿Qué hago el fin de semana?", "a": "El plan aplica los siete días, pero <strong>el fin de semana lo manejamos con más flexibilidad</strong>: uno o dos tiempos libres, no dos días libres completos. Ahí está otra vez el 80-20 — una comida por fuera el sábado cabe de sobra; el sábado y el domingo enteros por fuera, no, porque eso ya son seis o siete comidas y se te fue el 20 % completo en dos días.<br><br>Mi recomendación: sábado o domingo, elige una comida que de verdad disfrutes y planéala. Lo que desordena no es el antojo: es el antojo sin plan."}, {"q": "Me dan muchas ganas de dulce. ¿Eso se quita?", "a": "Se baja bastante, sí, y hay dos razones por las que aparece: <strong>comer poca proteína</strong> y <strong>dejar pasar muchas horas sin comer</strong>. Si tus tiempos están completos y en hora, el antojo pierde fuerza en unas dos semanas.<br><br>Mientras tanto, no pelees con él: en tu plan hay opciones dulces pensadas para eso. Úsalas."}, {"q": "¿Puedo cambiar el pollo por pescado, o la carne por cerdo?", "a": "Sí, dentro del mismo grupo son intercambiables: <strong>pollo, pavo, pescado blanco, cerdo magro y res magra</strong> juegan en el mismo equipo con la misma porción. El pescado azul (salmón, trucha) trae más grasa buena, así que si lo usas, baja un poco el aceite de ese plato."}, {"q": "¿Cuánta agua debo tomar?", "a": "Tu meta diaria está marcada en la sección de hidratación de este plan, en vasos, para que la vayas marcando. Reparte: un vaso al despertar, uno con cada comida y uno entre comidas. <strong>Si tu orina es amarillo claro, vas bien</strong>; si es oscura, te falta agua."}, {"q": "¿Puedo echarle sal a la comida?", "a": "Sí, en cantidad normal al cocinar. Lo que no conviene es el salero en la mesa y, sobre todo, el <strong>sodio escondido</strong>: caldos en cubo, embutidos, salsas listas, snacks de paquete y sopas de sobre. Ahí está el 70 % del sodio que uno come sin darse cuenta."}, {"q": "¿Cuándo voy a ver cambios?", "a": "Lo primero que cambia no se ve en la báscula: <strong>energía, digestión y sueño mejoran en la primera o segunda semana</strong>. Los cambios en el cuerpo se ven bien al mes, y eso es lo que comparamos en tu control cuando te vuelvo a medir.<br><br>La báscula sube y baja hasta 2 kg en un mismo día por agua, sal y ciclo menstrual. No tomes decisiones con un solo número."}, {"q": "¿Tengo que tomar los suplementos para que el plan funcione?", "a": "No. <strong>El plan funciona por sí solo</strong>; los suplementos están ahí para hacerte más fácil llegar a la meta, no para reemplazar comida. Si alguno no está a tu alcance este mes, dímelo y te doy el equivalente en comida real."}, {"q": "Me sentí mal del estómago / me inflé con algo del plan. ¿Qué hago?", "a": "Sácalo por ahora y <strong>escríbeme contándome qué fue</strong>. No hay un alimento imprescindible: siempre hay cómo reemplazarlo. Lo que no quiero es que aguantes incomodidad en silencio, porque eso es lo que termina tumbando los procesos."}, {"q": "¿Cómo te aviso si algo no me está funcionando?", "a": "Por WhatsApp, con el botón que está al final de este plan. Mientras más concreto, mejor: <strong>qué tiempo de comida, qué opción y qué te pasó</strong>. Con eso ajusto sin tener que esperar al control."}, {"q": "¿Por qué me bajaron la proteína si quiero ganar músculo?", "a": "Porque la que pasa del rango útil no se vuelve músculo: el cuerpo la usa como energía o la elimina. El rango con evidencia para ganar músculo va de 1,6 a 2,2 g por kilo, y <b>este plan te deja en 2,8</b> — por encima del rango, no por debajo. No te va a faltar. Lo que pasa es que ahora ese espacio en el plato lo ocupa algo que también trabaja."}, {"q": "¿La grasa no me va a hacer subir grasa corporal?", "a": "No. Lo que define si subes grasa es el <b>total</b> del día, no de dónde vienen las calorías — y el total de este plan es casi el mismo que ya comes. Lo que sí hace la grasa es dar la materia prima para fabricar hormonas, incluidas las del ciclo. Con hipotiroidismo, subirla de 0,76 a 1,4 g/kg es de las cosas que más te protegen."}, {"q": "¿Y si un día no me da hambre?", "a": "Escoge las opciones líquidas o de yogurt, que entran sin pesar. El bowl de yogurt griego, el batido de banano con avena. <b>Comer algo siempre es mejor que saltarse el tiempo</b>, y nadie espera que todos los días sean iguales."}, {"q": "¿Puedo seguir tomando la creatina con la limonada del almuerzo?", "a": "Sí, perfecto. La creatina funciona por acumulación, no por el momento de la toma, así que da igual la hora y da igual con qué la mezcles."}, {"q": "¿Cada cuánto me peso?", "a": "Una vez por semana es más que suficiente, el mismo día y a la misma hora. El peso sube despacio y con mucho ruido. Lo que de verdad te va a decir cómo vas es el metro en el brazo y el tórax, el peso que mueves en el gimnasio, y que el ciclo siga llegando."}];
+
+/* 15) RESTAURANTES RECOMENDADOS */
+const RESTAURANTS = {"intro": "Comer afuera hace parte de la vida, y tu plan no se cae por eso. Acá te dejo <strong>qué pedir en los sitios a los que uno de verdad va un fin de semana</strong>. La lógica es siempre la misma: una proteína a la plancha o al horno, un almidón del tamaño de tu mano en copa y todas las verduras que quieras. Las salsas y los acompañamientos aparte — ese solo cambio te ahorra la mitad.", "list": [{"icon": "🥘", "name": "Crepes & Waffles", "kind": "Ensaladas · crepes · pitas", "dishes": ["<b>Ensaladas de la carta</b> con proteína (pollo, salmón o camarón) y el aderezo aparte — es la opción más completa del menú.", "<b>Pita o crepe salado</b> de pollo o de verduras: una sola unidad queda bien de porción.", "<b>Bowls y platos con quinoa o fríjol</b>: buena fibra y buena proteína en el mismo plato.", "Si vas por el helado: <b>una bola pequeña</b>, no la copa con topping. La copa es un postre de tres porciones."], "ask": "<b>Cómo pedirlo:</b> \"el aderezo aparte, por favor\" y sin pan de acompañamiento. Las ensaladas de la casa ya vienen generosas: no necesitas entrada."}, {"icon": "🥣", "name": "Bacu", "kind": "Bowls · armas el tuyo", "dishes": ["<b>Arma tu propio bowl</b>: 1 proteína (pollo, salmón, carne), 1 base de almidón, 3 verduras y la salsa aparte. Es la opción más fácil de ajustar de toda esta lista.", "<b>Bowls de salmón con quinoa</b> o de pollo con vegetales: proteína alta y grasa controlada.", "Pide la <b>base de verduras o de quinoa</b> en lugar de arroz si ese día ya comiste almidón.", "Evita las salsas cremosas (sour cream, queso); las vinagretas y las de yogur rinden igual de rico."], "ask": "<b>Cómo pedirlo:</b> \"la salsa aparte y doble verdura en lugar de doble base\". Eso te sube el volumen del plato sin subir las calorías."}, {"icon": "🌮", "name": "Chilitaco", "kind": "Tex-Mex · armas el tuyo", "dishes": ["<b>Bowl</b> (sin tortilla) con pollo o carne a la parrilla, fríjol negro, lechuga y pico de gallo — es la opción más fácil de ajustar de toda la carta.", "<b>Soft tacos</b>, dos o tres, en lugar del burrito completo: la misma proteína con la mitad del almidón.", "<b>La proteína:</b> pollo a la parrilla o carne a la parrilla antes que las carnitas de cerdo o la barbacoa, que vienen más grasosas.", "<b>Pide el guacamole</b> y sáltate la sour cream y el queso derretido. El guacamole es grasa buena; los otros dos son los que pesan.", "Lo que cuidamos: <b>crispy tacos, burrito melt, totopos, chicharrón y plátano</b>. Ahí se duplica el plato sin que se note."], "ask": "<b>Cómo pedirlo:</b> \"bowl de pollo a la parrilla con fríjol negro, doble lechuga y pico de gallo, con guacamole y sin crema ni queso\". Y agua en vez de gaseosa."}, {"icon": "🍔", "name": "El Corral / hamburguesería", "kind": "Hamburguesas", "dishes": ["<b>Hamburguesa sencilla de carne o de pollo a la plancha</b>, sin tocineta y sin doble queso.", "Cambia las <b>papas por ensalada</b> o pide la porción pequeña y compártela.", "Si hay <b>pollo a la plancha en pan integral</b>, esa es la mejor carta del sitio.", "Pide las <b>salsas aparte</b>: una hamburguesa bañada en salsa de la casa suma fácil 200 kcal invisibles."], "ask": "<b>Cómo pedirlo:</b> \"sencilla, sin tocineta, salsas aparte y cambio las papas por ensalada\". Y si el pan viene gigante, dejar la mitad de la tapa es totalmente válido."}, {"icon": "🥗", "name": "Subway", "kind": "Sándwiches armados", "dishes": ["<b>Sub de 15 cm</b> (no el de 30) en pan integral, con pollo, pavo o atún.", "<b>Todas las verduras</b> que ofrezcan: ahí es gratis subir el volumen del plato.", "<b>Salsas:</b> mostaza, vinagre, aceite de oliva en poca cantidad. Las cremosas (ranch, chipotle, miel mostaza) son las que pesan.", "Opción aún mejor: pide <b>la ensalada</b> con la misma proteína, y un pan aparte si quieres almidón."], "ask": "<b>Cómo pedirlo:</b> \"integral de 15, doble verdura, sin queso y la salsa aparte\". Es probablemente el sitio más fácil de ajustar que existe."}, {"icon": "🍛", "name": "Corrientazo / comida criolla", "kind": "Almuerzo del día", "dishes": ["<b>Pide la proteína a la plancha, al horno o sudada</b>, no frita ni apanada. Casi siempre tienen las dos opciones.", "<b>Elige entre arroz O el fríjol/lenteja O el plátano</b> — un almidón, no tres. Pide doble ensalada en lugar de los otros dos.", "<b>La sopa</b> es buena entrada si es de verduras; si viene con papa, yuca y plátano, es ya el almidón del día.", "<b>El jugo:</b> pídelo en agua y sin azúcar. El jugo en leche con azúcar es casi un postre."], "ask": "<b>Cómo pedirlo:</b> \"con doble ensalada en vez de papa, y el jugo en agua sin azúcar\". Nadie se molesta y te cambia el plato por completo."}, {"icon": "🔥", "name": "Asadero / parrilla / churrasquería", "kind": "Carnes", "dishes": ["<b>Lomo, punta de anca o pechuga a la parrilla</b>: término medio o tres cuartos, sin mantequilla encima.", "<b>Chuzo de pollo o de carne</b> con ensalada y arepa delgada.", "Pide <b>ensalada verde o verduras asadas</b> como acompañamiento en lugar de papa a la francesa y yuca frita.", "<b>El chicharrón, la morcilla y la papa rellena</b> son los acompañantes que más grasa suman: uno, para probar, y compartido."], "ask": "<b>Cómo pedirlo:</b> \"sin mantequilla, con ensalada y una sola porción de almidón\". Si la carne llega del tamaño de dos palmas, lleva la mitad para la casa."}, {"icon": "🍣", "name": "Sushi / comida asiática", "kind": "Sushi · wok · bowls", "dishes": ["<b>Sashimi, niguiri o rollos sin tempura y sin salsas dulces</b> — ahí el pescado es la estrella.", "<b>Wok de pollo, camarón o carne</b> con verduras y arroz integral si lo tienen; pide media porción de arroz o de noodles.", "<b>Edamame</b> es la mejor entrada del menú: proteína, fibra y nada más.", "Lo que cuidamos: <b>tempura, rollos apanados, salsa de anguila y mayonesa picante</b>. Son los que convierten el sushi en un plato pesado."], "ask": "<b>Cómo pedirlo:</b> \"sin tempura, sin salsas dulces, y la soya baja en sodio\". Pide la mitad del arroz y compensa con sashimi."}, {"icon": "🍕", "name": "Pizzería", "kind": "Pizza · pasta", "dishes": ["<b>2 porciones de pizza de masa delgada</b> con proteína (pollo, jamón, atún) y muchas verduras, acompañadas de ensalada grande.", "Masa delgada sobre masa gruesa o rellena: <b>la misma porción, la mitad del almidón</b>.", "Si es pasta: <b>salsa roja o al ajillo</b>, no las cremosas (alfredo, carbonara, cuatro quesos).", "<b>Empieza por la ensalada.</b> Es el truco más viejo y el que mejor funciona en una pizzería."], "ask": "<b>Cómo pedirlo:</b> \"masa delgada, doble vegetal y sin borde de queso\". Y pide una ensalada para la mesa antes de que llegue la pizza."}, {"icon": "☕", "name": "Café / panadería (Juan Valdez, Tostao, panadería del barrio)", "kind": "Media mañana · media tarde", "dishes": ["<b>Café negro, americano o tinto</b> sin azúcar. Con leche deslactosada también está bien.", "<b>Yogur con fruta y granola</b> (la granola en poca cantidad) o un <b>sándwich de pollo o pavo</b> en pan integral.", "<b>Huevo cocido o pan con queso campesino</b> si hay: suma proteína, que es justo lo que falta en una panadería.", "Lo que cuidamos: <b>frappés, capuchinos saborizados y jugos de botella</b>. Un frappé grande puede ser una comida entera en azúcar."], "ask": "<b>Cómo pedirlo:</b> \"sin azúcar, sin crema batida y sin sirope\". Si quieres algo dulce, un pan pequeño con tu café rinde más que una bebida dulce."}, {"icon": "🛵", "name": "Domicilio en casa", "kind": "Cuando se pide y no se sale", "dishes": ["<b>Pide el plato, no el combo.</b> El combo casi siempre es lo que te sobra: gaseosa, papas y postre.", "<b>Sirve en plato</b> y guarda el resto antes de empezar a comer. Comer del empaque es comer sin medida.", "<b>Añádele tú la verdura</b>: una ensalada rápida de lechuga, tomate y pepino al lado de lo que pediste cambia el plato entero.", "<b>Agua o gaseosa sin azúcar.</b> Es el cambio más grande con el menor esfuerzo de toda esta lista."], "ask": "<b>El filtro de los 30 segundos:</b> antes de confirmar el pedido, pregúntate dónde está la proteína y dónde está la verdura. Si no están, añádelas — casi siempre se puede."}]};
+
+/* 16) PALABRAS CLAVE LISTA DE MERCADO */
+const SHOPPING_KEYWORDS = [{"match": "huevo", "label": "Huevos", "category": "Proteínas"}, {"match": "pollo", "label": "Pechuga/pollo", "category": "Proteínas"}, {"match": "carne", "label": "Carne de res magra", "category": "Proteínas"}, {"match": "pescado", "label": "Pescado (filete)", "category": "Proteínas"}, {"match": "salmón", "label": "Salmón", "category": "Proteínas"}, {"match": "tilapia", "label": "Tilapia", "category": "Proteínas"}, {"match": "atún", "label": "Atún en agua", "category": "Proteínas"}, {"match": "jamón de pavo zenú", "label": "Jamón de pavo Zenú", "category": "Proteínas"}, {"match": "proteína", "label": "Proteína en polvo", "category": "Proteínas"}, {"match": "tofu", "label": "Tofu", "category": "Proteínas"}, {"match": "lentejas", "label": "Lentejas", "category": "Proteínas"}, {"match": "garbanzos", "label": "Garbanzos", "category": "Proteínas"}, {"match": "hummus", "label": "Hummus casero (garbanzos)", "category": "Proteínas"}, {"match": "edamame", "label": "Edamame", "category": "Proteínas"}, {"match": "crema de maní", "label": "Crema de maní", "category": "Proteínas"}, {"match": "gelatina sin azúcar", "label": "Gelatina sin azúcar", "category": "Proteínas"}, {"match": "fríjoles", "label": "Fríjoles", "category": "Proteínas"}, {"match": "blanquillos", "label": "Fríjoles blanquillos", "category": "Proteínas"}, {"match": "yogurt griego alpina", "label": "Yogurt griego Alpina", "category": "Lácteos"}, {"match": "yogurt griego san martín", "label": "Yogurt griego San Martín", "category": "Lácteos"}, {"match": "kéfir", "label": "Kéfir", "category": "Lácteos"}, {"match": "queso colanta", "label": "Queso Colanta", "category": "Lácteos"}, {"match": "queso cuajada", "label": "Queso cuajada", "category": "Lácteos"}, {"match": "queso campesino", "label": "Queso campesino", "category": "Lácteos"}, {"match": "queso mozzarella", "label": "Queso mozzarella", "category": "Lácteos"}, {"match": "leche alquería", "label": "Leche Alquería", "category": "Lácteos"}, {"match": "leche deslactosada", "label": "Leche deslactosada", "category": "Lácteos"}, {"match": "arepa alquería", "label": "Arepa Alquería (maíz tipo tela)", "category": "Carbohidratos"}, {"match": "avena quaker", "label": "Avena Quaker", "category": "Carbohidratos"}, {"match": "pan bimbo fit", "label": "Pan Bimbo Fit", "category": "Carbohidratos"}, {"match": "pan de masa madre", "label": "Pan de masa madre (Molino)", "category": "Carbohidratos"}, {"match": "granola tosh", "label": "Granola Tosh", "category": "Carbohidratos"}, {"match": "arroz", "label": "Arroz", "category": "Carbohidratos"}, {"match": "papa", "label": "Papa", "category": "Carbohidratos"}, {"match": "yuca", "label": "Yuca", "category": "Carbohidratos"}, {"match": "pasta", "label": "Pasta", "category": "Carbohidratos"}, {"match": "plátano", "label": "Plátano maduro", "category": "Carbohidratos"}, {"match": "quinoa", "label": "Quinoa", "category": "Carbohidratos"}, {"match": "banano", "label": "Banano", "category": "Frutas y Verduras"}, {"match": "aguacate", "label": "Aguacate", "category": "Frutas y Verduras"}, {"match": "ensalada", "label": "Mix de ensalada / lechuga", "category": "Frutas y Verduras"}, {"match": "tomate", "label": "Tomate", "category": "Frutas y Verduras"}, {"match": "espinaca", "label": "Espinaca", "category": "Frutas y Verduras"}, {"match": "champiñones", "label": "Champiñones", "category": "Frutas y Verduras"}, {"match": "fresa", "label": "Fresas", "category": "Frutas y Verduras"}, {"match": "pepino", "label": "Pepino", "category": "Frutas y Verduras"}, {"match": "zanahoria", "label": "Zanahoria", "category": "Frutas y Verduras"}, {"match": "miel", "label": "Miel", "category": "Otros"}, {"match": "mermelada", "label": "Mermelada sin azúcar", "category": "Otros"}, {"match": "almendras", "label": "Almendras", "category": "Otros"}, {"match": "nueces", "label": "Nueces", "category": "Otros"}, {"match": "creatina", "label": "Creatina", "category": "Suplementos"}, {"match": "yogurt griego yen", "label": "Yogurt griego YEN", "category": "Lácteos"}, {"match": "granola yen", "label": "Granola YEN", "category": "Carbohidratos"}, {"match": "arepa de yuca yen", "label": "Arepa de yuca YEN", "category": "Carbohidratos"}, {"match": "arepa de maduro yen", "label": "Arepa de maduro YEN", "category": "Carbohidratos"}, {"match": "arepa de arroz integral yen", "label": "Arepa de arroz integral YEN", "category": "Carbohidratos"}, {"match": "arepa de pan de bono yen", "label": "Arepa de pan de bono YEN", "category": "Carbohidratos"}, {"match": "arepa de maíz yen", "label": "Arepa de maíz YEN", "category": "Carbohidratos"}];
 
 /* ═══════════════════════════════════════════════════════════════════════
    MOTOR — NO EDITAR DE AQUÍ EN ADELANTE
    ═══════════════════════════════════════════════════════════════════════ */
-const COLOR_MAP = { gold:'var(--gold)', green:'var(--green)', navy:'var(--navy)' };
-const COLOR_LIGHT_MAP = { gold:'var(--gold-light)', green:'var(--green-light)', navy:'var(--cream)' };
+const COLOR_MAP = { gold:'var(--gold)', green:'var(--green)', navy:'var(--navy)', blue:'var(--navy-soft)' };
+const COLOR_LIGHT_MAP = { gold:'var(--gold-light)', green:'var(--green-light)', navy:'var(--cream)', blue:'var(--cream)' };
+/* 07-10-2026 — BUG ENCONTRADO EN PRODUCCIÓN.
+   Si un day_type trae un color que no está en COLOR_MAP, el lookup devolvía
+   undefined y el botón activo se quedaba con fondo blanco mientras la clase
+   .day-btn.active le pone color:#fff → TEXTO BLANCO SOBRE FONDO BLANCO: el
+   botón se veía vacío, solo con el emoji. Pasó con color:"blue" en los planes
+   de Olga Lucía, María Alejandra y Tatiana.
+   Estas dos funciones hacen que un color desconocido caiga en navy en vez de
+   romperse. Usar SIEMPRE cMain()/cLight(), nunca COLOR_MAP[...] directo. */
+function cMain(dt){ return COLOR_MAP[dt && dt.color] || COLOR_MAP.navy; }
+function cLight(dt){ return COLOR_LIGHT_MAP[dt && dt.color] || COLOR_LIGHT_MAP.navy; }
 
 const LS_PREFIX = 'jsmo_' + (document.getElementById('patientName').textContent || 'plan').replace(/\s+/g,'_');
 let day = localStorage.getItem(LS_PREFIX+'_day') || DAY_TYPES[0].key;
@@ -286,7 +421,7 @@ let hydrationCount = parseInt(localStorage.getItem(LS_PREFIX+'_hydration_'+today
 function buildDaySelector(){
   const wrap = document.getElementById('daySelector');
   wrap.innerHTML = DAY_TYPES.map(dt => `
-    <button class="day-btn" data-key="${dt.key}" style="border-color:${COLOR_MAP[dt.color]}" onclick="setDay('${dt.key}')">
+    <button class="day-btn" data-key="${dt.key}" style="border-color:${cMain(dt)}" onclick="setDay('${dt.key}')">
       ${dt.label}
       <small>${dt.days||''}</small>
     </button>
@@ -296,10 +431,10 @@ function buildDaySelector(){
 function buildDayInfo(){
   const wrap = document.getElementById('dayInfoWrap');
   wrap.innerHTML = DAY_TYPES.map(dt => `
-    <div class="day-info" id="info-${dt.key}" style="background:${COLOR_LIGHT_MAP[dt.color]};border-color:${COLOR_MAP[dt.color]}">
+    <div class="day-info" id="info-${dt.key}" style="background:${cLight(dt)};border-color:${cMain(dt)}">
       <div class="day-info-top">
-        <div class="day-dot" style="background:${COLOR_MAP[dt.color]}"></div>
-        <div class="day-info-title" style="color:${COLOR_MAP[dt.color]}">${dt.title}</div>
+        <div class="day-dot" style="background:${cMain(dt)}"></div>
+        <div class="day-info-title" style="color:${cMain(dt)}">${dt.title}</div>
       </div>
       <div class="day-info-desc">${dt.desc}</div>
       <div class="macro-row">
@@ -317,7 +452,7 @@ function getMdata(m){ return m[day]; }
 function getActiveMeals(){ return MEALS.filter(m => m[day] !== null && m[day] !== undefined); }
 
 function renderMeals(){
-  ['alta','media','baja','competencia'].forEach(k=>{
+  ['alta','media','baja','competencia','entreno'].forEach(k=>{
     const el = document.getElementById(`info-${k}`);
     if(el) el.style.display = (k===day) ? '' : 'none';
   });
@@ -325,7 +460,7 @@ function renderMeals(){
     const dt = DAY_TYPES.find(d=>d.key===b.dataset.key);
     const isActive = b.dataset.key === day;
     b.classList.toggle('active', isActive);
-    b.style.background = isActive ? COLOR_MAP[dt.color] : '#fff';
+    b.style.background = isActive ? cMain(dt) : '#fff';
   });
 
   const container = document.getElementById('meals-container');
@@ -341,9 +476,9 @@ function renderMeals(){
       <div class="opt-card${i===savedOpt?' selected':''}" tabindex="0"
            onclick="selectOpt('${m.id}',${i},this)"
            onkeydown="if(event.key==='Enter'||event.key===' ')selectOpt('${m.id}',${i},this)">
-        <div class="opt-num">Opción ${i+1}</div>
+        <div class="opt-num">Opción ${i+1}${(typeof PESOS!=='undefined'&&PESOS[m.id+'|'+day+'|'+i])?`<span class="opt-peso ${PESOS[m.id+'|'+day+'|'+i]}">${PESOS[m.id+'|'+day+'|'+i]}</span>`:''}</div>
         <div class="opt-name">${o.name}</div>
-        <div class="opt-desc">${o.desc}</div>
+        <div class="opt-desc"><ul>${o.desc.split(" · ").map(x=>`<li>${x.trim()}</li>`).join("")}</ul></div>
         ${o.macro?`<div class="opt-macro">${o.macro}</div>`:''}
       </div>
     `).join('');
@@ -351,7 +486,7 @@ function renderMeals(){
     card.innerHTML = `
       <div class="meal-header" onclick="toggleMeal(this)">
         <div class="meal-check${isChecked?' checked':''}" title="Marcar como consumida" onclick="event.stopPropagation();toggleMealCheck('${m.id}',this)">✓</div>
-        <div class="meal-lbl" style="background:${COLOR_MAP[dt.color]}">${data.lbl}</div>
+        <div class="meal-lbl" style="background:${cMain(dt)}">${data.lbl}</div>
         <div class="meal-title-wrap">
           <div class="meal-title">${data.title}</div>
           <div class="meal-time">${data.time||''}</div>
@@ -384,17 +519,153 @@ function toggleMealCheck(mealId, el){
   localStorage.setItem(LS_PREFIX+'_checked_'+todayKey(), JSON.stringify(checkedMeals));
 }
 
+
+// ══════════════════════════════════════════════════════════════════════
+// REGISTRO DIARIO — elecciones + energía, hambre, baño y sueño
+// El motor ya guardaba la última opción escogida, pero sin fecha y sin
+// historia, así que esa información se perdía. Acá se convierte en un
+// registro que la paciente puede mandar, y el control se arma con datos
+// en vez de con memoria.
+// ══════════════════════════════════════════════════════════════════════
+var REG_KEY = LS_PREFIX + '_registro';
+var REG = [];
+try { REG = JSON.parse(localStorage.getItem(REG_KEY) || '[]'); } catch(e) { REG = []; }
+var DIA_KEY = LS_PREFIX + '_diario';
+var DIARIO = {};
+try { DIARIO = JSON.parse(localStorage.getItem(DIA_KEY) || '{}'); } catch(e) { DIARIO = {}; }
+
+var ESCALAS = {
+  energia: ['En el piso','Bajita','Normal','Bien','Con pila de sobra'],
+  hambre:  ['Sin hambre','Poca','Normal','Bastante','Con mucha hambre'],
+  bano:    ['No fui','Me costó','Normal'],
+  sueno:   ['Dormí mal','Regular','Bien','Muy bien']
+};
+
+function regGuardar(){
+  try{
+    localStorage.setItem(REG_KEY, JSON.stringify(REG.slice(-500)));
+    localStorage.setItem(DIA_KEY, JSON.stringify(DIARIO));
+  }catch(e){}
+}
+function regHoy(){
+  var f = new Date();
+  return f.getFullYear()+'-'+String(f.getMonth()+1).padStart(2,'0')+'-'+String(f.getDate()).padStart(2,'0');
+}
+
+function registrarEleccion(mealId, idx){
+  var meal = MEALS.find(function(x){ return x.id === mealId; });
+  if(!meal) return;
+  var data = meal[day] || meal.alta; if(!data) return;
+  var o = data.opts[idx]; if(!o) return;
+  var fecha = regHoy();
+  REG = REG.filter(function(r){ return !(r.fecha===fecha && r.meal===mealId); });
+  REG.push({fecha:fecha, dia:day, meal:mealId, lbl:data.lbl, idx:idx, nombre:o.name,
+            peso:(typeof PESOS!=='undefined' ? (PESOS[mealId+'|'+day+'|'+idx]||'media') : 'media')});
+  regGuardar(); pintarRegistro();
+}
+
+function marcarDiario(campo, valor){
+  var f = regHoy();
+  DIARIO[f] = DIARIO[f] || {};
+  DIARIO[f][campo] = (DIARIO[f][campo] === valor) ? null : valor;
+  regGuardar(); pintarRegistro();
+}
+
+function pintarEscalas(){
+  var f = regHoy(), hoy = DIARIO[f] || {};
+  [['regEnergia','energia'],['regHambre','hambre'],['regBano','bano'],['regSueno','sueno']]
+  .forEach(function(par){
+    var el = document.getElementById(par[0]); if(!el) return;
+    el.innerHTML = ESCALAS[par[1]].map(function(t,i){
+      return '<button class="regOpt'+(hoy[par[1]]===i?' on':'')+'" onclick="marcarDiario(\''+par[1]+'\','+i+')">'+t+'</button>';
+    }).join(' ');
+  });
+}
+
+function pintarRegistro(){
+  pintarEscalas();
+  var cont = document.getElementById('regLista');
+  var res  = document.getElementById('regResumen');
+  if(!cont) return;
+  var porDia = {};
+  REG.forEach(function(r){ (porDia[r.fecha] = porDia[r.fecha] || []).push(r); });
+  Object.keys(DIARIO).forEach(function(f){ porDia[f] = porDia[f] || []; });
+  var fechas = Object.keys(porDia).sort().reverse().slice(0,14);
+
+  if(!fechas.length){
+    cont.innerHTML = '<div style="color:#8a929b">Todavía no hay nada registrado. Toca la opción que escogiste en cada tiempo de comida y marca cómo te fue el día.</div>';
+    res.innerHTML = ''; return;
+  }
+  cont.innerHTML = fechas.map(function(f){
+    var d = DIARIO[f] || {};
+    var extra = [];
+    if(d.energia!=null) extra.push('energía: '+ESCALAS.energia[d.energia]);
+    if(d.hambre!=null)  extra.push('hambre: '+ESCALAS.hambre[d.hambre]);
+    if(d.bano!=null)    extra.push('baño: '+ESCALAS.bano[d.bano]);
+    if(d.sueno!=null)   extra.push('sueño: '+ESCALAS.sueno[d.sueno]);
+    return '<div class="f">'+f+(extra.length?' <span style="font-weight:400;color:#6b7580">— '+extra.join(' · ')+'</span>':'')+'</div>'
+      + (porDia[f]||[]).map(function(r){
+          return '<div class="it">· '+r.lbl+': '+r.nombre+' <span class="opt-peso '+r.peso+'">'+r.peso+'</span></div>';
+        }).join('');
+  }).join('');
+
+  var cuenta = {}, livianas = 0;
+  REG.forEach(function(r){
+    var k = r.lbl+' · '+r.nombre;
+    cuenta[k] = (cuenta[k]||0)+1;
+    if(r.peso==='liviana') livianas++;
+  });
+  var top = Object.keys(cuenta).sort(function(a,b){return cuenta[b]-cuenta[a];}).slice(0,3);
+  var txt = '<b>'+REG.length+' comidas registradas en '+fechas.length+' días.</b>';
+  if(top.length) txt += '<br>Lo que más repites: ' + top.map(function(k){ return k+' ('+cuenta[k]+')'; }).join(' · ');
+  if(REG.length){
+    var pct = Math.round(livianas/REG.length*100);
+    txt += '<br>Proporción de opciones livianas: <b>'+pct+'%</b>';
+    if(pct > 55) txt += ' — coméntaselo a Juan Sebastián en el control.';
+  }
+  res.innerHTML = txt;
+}
+
+function regCopiar(){
+  var porDia = {};
+  REG.forEach(function(r){ (porDia[r.fecha] = porDia[r.fecha] || []).push(r); });
+  Object.keys(DIARIO).forEach(function(f){ porDia[f] = porDia[f] || []; });
+  var nom = document.getElementById('patientName');
+  var txt = 'Registro de ' + (nom ? nom.textContent.trim() : '') + '\n\n';
+  Object.keys(porDia).sort().forEach(function(f){
+    var d = DIARIO[f] || {};
+    txt += f + '\n';
+    (porDia[f]||[]).forEach(function(r){ txt += '  · ' + r.lbl + ': ' + r.nombre + ' (' + r.peso + ')\n'; });
+    var e = [];
+    if(d.energia!=null) e.push('energía: '+ESCALAS.energia[d.energia]);
+    if(d.hambre!=null)  e.push('hambre: '+ESCALAS.hambre[d.hambre]);
+    if(d.bano!=null)    e.push('baño: '+ESCALAS.bano[d.bano]);
+    if(d.sueno!=null)   e.push('sueño: '+ESCALAS.sueno[d.sueno]);
+    if(e.length) txt += '  [' + e.join(' · ') + ']\n';
+    txt += '\n';
+  });
+  if(navigator.clipboard){ navigator.clipboard.writeText(txt); }
+  var b = document.getElementById('regCopiarBtn');
+  if(b){ var t=b.textContent; b.textContent='✓ Copiado'; setTimeout(function(){ b.textContent=t; },1800); }
+}
+
+function regBorrar(){
+  if(!confirm('¿Borrar todo el registro?')) return;
+  REG = []; DIARIO = {}; regGuardar(); pintarRegistro();
+}
+
 function selectOpt(mealId, idx, el){
   el.closest('.opt-grid').querySelectorAll('.opt-card').forEach(c=>c.classList.remove('selected'));
   el.classList.add('selected');
   savedOpts[mealId] = idx;
-  localStorage.setItem(LS_PREFIX+'_opts', JSON.stringify(savedOpts));
+  try{ localStorage.setItem(LS_PREFIX+'_opts', JSON.stringify(savedOpts)); }catch(e){}
+  if(typeof registrarEleccion === 'function') registrarEleccion(mealId, idx);
 }
 
 function setDay(d){
   day = d;
   localStorage.setItem(LS_PREFIX+'_day', d);
-  renderMeals();
+  renderMeals(); if(typeof pintarRegistro==="function") pintarRegistro();
 }
 
 function buildIntro(){
@@ -486,9 +757,9 @@ function buildAllergyAlert(){
   document.getElementById('allergyAlert').style.display = '';
   document.getElementById('allergyAlert').innerHTML = `
     <div class="allergy-alert">
-      <div class="allergy-icon">⚠️</div>
+      <div class="allergy-icon">📋</div>
       <div class="allergy-body">
-        <strong>Alergias / Restricciones</strong>
+        <strong>Lo que tuve en cuenta para tu plan</strong>
         <div class="allergy-list">${ALLERGIES.join(' · ')}</div>
       </div>
     </div>
@@ -507,6 +778,77 @@ function buildAppointment(){
       <div class="appt-info"><strong>📅 ${NEXT_APPOINTMENT.label}</strong>${dateFmt}</div>
     </div>
   `;
+}
+
+function buildRecs(){
+  if(typeof GENERAL_RECS === 'undefined' || !GENERAL_RECS.length) return;
+  document.getElementById('recsSection').style.display = '';
+  document.getElementById('recsContainer').innerHTML = GENERAL_RECS.map(r=>`
+    <div class="rec-row${r.destacada?' destacada':''}">
+      <div class="rec-icon">${r.icon||'•'}</div>
+      <div class="rec-text">${r.text}</div>
+    </div>
+  `).join('');
+}
+
+function buildPortionGuide(){
+  if(typeof PORTION_GUIDE === 'undefined' || !PORTION_GUIDE.length) return;
+  document.getElementById('portionSection').style.display = '';
+  document.getElementById('portionContainer').innerHTML = PORTION_GUIDE.map(g=>`
+    <div class="pg-group">
+      <div class="pg-group-title">${g.group}</div>
+      ${g.items.map(it=>`
+        <div class="pg-row">
+          <div class="pg-icon">${it.icon||'•'}</div>
+          <div class="pg-body">
+            <div class="pg-name">${it.name}</div>
+            <div class="pg-eq">${it.eq}</div>
+            ${it.note?`<div class="pg-note">${it.note}</div>`:''}
+          </div>
+        </div>`).join('')}
+    </div>
+  `).join('');
+}
+
+function buildFaq(){
+  if(typeof FAQ === 'undefined' || !FAQ.length) return;
+  document.getElementById('faqSection').style.display = '';
+  document.getElementById('faqContainer').innerHTML = FAQ.map((f,i)=>`
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(${i})" tabindex="0" role="button" aria-expanded="false">
+        <span class="faq-mark">?</span><span>${f.q}</span>
+        <span class="faq-chev" id="faqChev-${i}">▼</span>
+      </div>
+      <div class="faq-a" id="faqA-${i}">${f.a}</div>
+    </div>
+  `).join('');
+}
+
+function toggleFaq(i){
+  const a = document.getElementById('faqA-'+i);
+  const c = document.getElementById('faqChev-'+i);
+  const open = a.classList.toggle('open');
+  c.classList.toggle('open', open);
+  a.parentElement.querySelector('.faq-q').setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+function buildRestaurants(){
+  if(typeof RESTAURANTS === 'undefined' || !RESTAURANTS || !RESTAURANTS.list || !RESTAURANTS.list.length) return;
+  document.getElementById('restoSection').style.display = '';
+  const intro = RESTAURANTS.intro ? `<div class="resto-intro">${RESTAURANTS.intro}</div>` : '';
+  document.getElementById('restoContainer').innerHTML = intro + RESTAURANTS.list.map(r=>`
+    <div class="resto-card">
+      <div class="resto-head">
+        <div class="resto-logo">${r.icon||'\U0001F374'}</div>
+        <div>
+          <div class="resto-name">${r.name}</div>
+          <div class="resto-kind">${r.kind||''}</div>
+        </div>
+      </div>
+      ${r.dishes.map(d=>`<div class="resto-dish"><span class="bullet">✓</span><span>${d}</span></div>`).join('')}
+      ${r.ask?`<div class="resto-ask">${r.ask}</div>`:''}
+    </div>
+  `).join('');
 }
 
 function buildWhatsapp(){
@@ -540,10 +882,17 @@ function buildShoppingList(){
   });
   const normText = normalize(allText);
   const found = {};
+  // Un mismo alimento puede estar en dos categorias (crema de mani en Despensa
+  // y en Grasas, por ejemplo) o con dos etiquetas parecidas. La lista de
+  // mercado es para llevar al supermercado: cada cosa aparece UNA vez.
+  const yaEsta = {};
   SHOPPING_KEYWORDS.forEach(k=>{
     if(normText.includes(normalize(k.match))){
+      const id = normalize(k.label);
+      if(yaEsta[id]) return;
+      yaEsta[id] = true;
       if(!found[k.category]) found[k.category] = [];
-      if(!found[k.category].includes(k.label)) found[k.category].push(k.label);
+      found[k.category].push(k.label);
     }
   });
   const categories = Object.keys(found);
@@ -581,10 +930,14 @@ buildObjectives();
 buildHydration();
 buildDaySelector();
 buildDayInfo();
-renderMeals();
+renderMeals(); if(typeof pintarRegistro==="function") pintarRegistro();
 buildSupplements();
 buildNotes();
 buildShoppingList();
+buildRecs();
+buildPortionGuide();
+buildFaq();
+buildRestaurants();
 buildWhatsapp();
 </script>
 </body>
